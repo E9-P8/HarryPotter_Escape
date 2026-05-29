@@ -1,0 +1,26 @@
+<div class="intro-container">
+  <div class="dialoge-box" [ngClass]="">
+    <div class="character">
+      <img
+        [src]="script[currentLine].image"
+        [alt]="script[currentLine].character"
+      />
+    </div>
+    <div class="dialog-text">
+      <p>{{ script[currentLine].character }}</p>
+      <p>{{ script[currentLine].text }}</p>
+    </div>
+    <div class="control-bnt">
+      <button
+        class="btn-prev"
+        (click)="prevLine()"
+        [disabled]="currentLine === 0"
+      >
+        Prev
+      </button>
+      <button class="btn-next" (click)="nextLine()">
+        {{ currentLine === script.length - 1 ? "Comincia la storia" : "Next" }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<div class="letter-screen" *ngIf="currentWelcomeStep === 1">
+  <div class="hogwarts-letter">
+    <div class="letter-header">
+      <p class="school-name">SCUOLA DI MAGIA E STREGONERIA DI HOGWARTS</p>
+      <p class="headmaster">Preside: Albus Silente</p>
+      <p class="titles">
+        (Ordine di Merlino, Prima Classe, Grande Mago, Stregone Capo)
+      </p>
+    </div>
+    <div class="letter-body">
+      <p>
+        Cara/o <span class="wizard-name">{{ wizardPlayerName }}</span
+        >,
+      </p>
+      <p>
+        Siamo lieti di informarla che lei ha un posto presso la Scuola di Magia
+        e Stregoneria di Hogwarts. Le lettere non mentono, il sangue magico
+        scorre in lei, anche se ha vissuto fino a oggi nel mondo babbano, ignaro
+        del suo vero potenziale.
+      </p>
+      <p>
+        Troverà presto l'elenco di tutti i libri di testo e delle attrezzature
+        necessarie. L'anno scolastico ha inizio il 1° settembre. Restiamo in
+        attesa del suo gufo entro e non oltre il 31 luglio.
+      </p>
+      <p class="signature">
+        Con la massima considerazione,<br />
+        <strong class="mcgonagall">Minerva McGranitt</strong><br />
+        <span>Vicepreside</span>
+      </p>
+    </div>
+  </div>
+
+  <button class="btn-startGame" (click)="startGame()">
+    <!--Sali sul Binario 9 ¾-->
+    Comincia il gioco!
+  </button>
+</div>
+
+<div class="train-screen" *ngIf="currentWelcomeStep === 2">
+  <div class="narrative-box">
+    <h2>Il Viaggio ha Inizio</h2>
+    <p>
+      Londra, 1° settembre. {{ wizardPlayerName }}, sei riuscito a superare la
+      barriera di mattoni tra i binari 9 e 10 della stazione di King's Cross.
+      Davanti a te, avvolto dal vapore, l'Espresso per Hogwarts fischia pronto
+      alla partenza.
+    </p>
+    <p>
+      Il treno è affollatissimo. Cammini lungo il corridoio cercando un posto
+      libero, finché non rimproverai l'ultimo scompartimento. All'interno siede
+      un ragazzo magrolino, con gli occhiali rotondi riparati dallo scotch e una
+      bizzarra cicatrice a forma di saetta sulla fronte.
+    </p>
+    <p>
+      Ti siedi di fronte a lui. Vi scambiate uno sguardo, un sorriso timido, e
+      vi presentate. Si chiama <strong>Harry Potter</strong>. In questo preciso
+      istante, mentre il treno si avvia verso la Scozia, non sapete ancora che i
+      vostri destini si sono appena legati... e che vi attendono sette anni di
+      segreti, pericoli e magia.
+    </p>
+  </div>
+
+  <button class="btn-startFirstYear" (click)="startFirstYear()">
+    Inizia il Primo Anno
+  </button>
+</div>

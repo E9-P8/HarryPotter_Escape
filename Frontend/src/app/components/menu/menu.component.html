@@ -1,0 +1,31 @@
+<div class="menu-container">
+  <h1>Harry Potter Escape Room</h1>
+  <h2>Il Platano Picchiatore</h2>
+  <div class="introGame" *ngIf="!showInsertName">
+    <p>
+      Sette anni di oscuri misteri, trappole e incantesimi ti attendono. In
+      questa avventura interattiva, rivivrai la storia passo dopo passo a fianco
+      di Harry Potter, affrontando le sfide che hanno segnato il suo destino.
+      Per superare gli ostacoli che incontrerete, la magia da sola non basterà:
+      dovrai attingere al potere dell'ingegno e usare la logica babbana per
+      risolvere gli enigmi più complessi. Preparati a dimostrare il tuo valore.
+      Il viaggio nel Mondo Magico comincia da qui.
+    </p>
+    <button (click)="registration()" class="registration">
+      Registrati per iniziare
+    </button>
+  </div>
+  <div class="InsertName" *ngIf="showInsertName">
+    <p>Scrivi il tuo nome</p>
+    <input
+      type="text"
+      class="registration-box"
+      id="wizardName"
+      name="wizardName"
+      required
+      [(ngModel)]="wizardName"
+      [ngModelOptions]="{ standalone: true }"
+    />
+    <button (click)="startGame()" class="startGame">Inizia l'Avventura</button>
+  </div>
+</div>
