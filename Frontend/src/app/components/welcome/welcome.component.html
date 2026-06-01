@@ -1,40 +1,43 @@
-<div class="letter-screen" *ngIf="currentWelcomeStep === 1">
-  <div class="hogwarts-letter">
-    <div class="letter-header">
-      <p class="school-name">SCUOLA DI MAGIA E STREGONERIA DI HOGWARTS</p>
-      <p class="headmaster">Preside: Albus Silente</p>
-      <p class="titles">
-        (Ordine di Merlino, Prima Classe, Grande Mago, Stregone Capo)
-      </p>
-    </div>
-    <div class="letter-body">
+<div
+  class="temporal-limbo"
+  [ngClass]="{ 'fade-to-black': isLensTransited }"
+  *ngIf="currentWelcomeStep === 1"
+>
+  <div
+    class="temporal-lens"
+    [ngClass]="{ 'lens-active': isLensOpen, 'lens-explode': isLensTransited }"
+  >
+    <div class="lens-content" [ngClass]="{ 'fade-out-text': isLensTransited }">
       <p>
-        Cara/o <span class="wizard-name">{{ wizardPlayerName }}</span
+        Il Destino del Mondo Magico è nelle tue mani
+        <span class="wizard-name">{{ wizardPlayerName }}</span
         >,
       </p>
       <p>
-        Siamo lieti di informarla che lei ha un posto presso la Scuola di Magia
-        e Stregoneria di Hogwarts. Le lettere non mentono, il sangue magico
-        scorre in lei, anche se ha vissuto fino a oggi nel mondo babbano, ignaro
-        del suo vero potenziale.
+        Tu non sei un semplice babbano, e non sei ancora un mago che cammina tra
+        le mura di Hogwarts. Sei un'entità senza tempo, un Custode della Logica
+        e della Magia richiamato dal futuro. La storia che stai per rivivere è
+        fragile. Il percorso di Harry Potter, dal suo primo respiro nel nostro
+        mondo fino alle sfide più oscure, è costellato di nodi temporali ed
+        enigmi che lui, da solo, non potrebbe mai superare. Il tuo compito è
+        guidarlo nell'ombra, usando la tua mente per sbrogliare i fili del
+        destino e proteggere il suo cammino passo dopo passo. La tua presenza
+        inizierà dove tutto ha avuto origine. Molti anni prima che tu possa
+        stringere la tua bacchetta o salire sul treno.
       </p>
       <p>
-        Troverà presto l'elenco di tutti i libri di testo e delle attrezzature
-        necessarie. L'anno scolastico ha inizio il 1° settembre. Restiamo in
-        attesa del suo gufo entro e non oltre il 31 luglio.
-      </p>
-      <p class="signature">
-        Con la massima considerazione,<br />
-        <strong class="mcgonagall">Minerva McGranitt</strong><br />
-        <span>Vicepreside</span>
+        Preparati. Stiamo per tornare a quella fredda notte a Privet Drive...
       </p>
     </div>
   </div>
-
-  <button class="btn-startGame" (click)="startGame()">
-    <!--Sali sul Binario 9 ¾-->
-    Comincia il gioco!
-  </button>
+  <div class="button-container">
+    <button class="btn-time-travel" (click)="startGame()">
+      <!--Sali sul Binario 9 ¾-->
+      <span class="btn-text"
+        >Comincia il viaggio> <span class="hourglass-icon">⏳</span>
+      </span>
+    </button>
+  </div>
 </div>
 
 <div class="train-screen" *ngIf="currentWelcomeStep === 2">
@@ -65,3 +68,36 @@
     Inizia il Primo Anno
   </button>
 </div>
+
+<!--LETTERA PER LA SCUOOLA 
+<div class="letter-header">
+      <p class="school-name">SCUOLA DI MAGIA E STREGONERIA DI HOGWARTS</p>
+      <p class="headmaster">Preside: Albus Silente</p>
+      <p class="titles">
+        (Ordine di Merlino, Prima Classe, Grande Mago, Stregone Capo)
+      </p>
+    </div>
+    
+<div class="letter-body">
+      <p>
+        Cara/o <span class="wizard-name">{{ wizardPlayerName }}</span
+        >,
+      </p>
+      <p>
+        Siamo lieti di informarla che lei ha un posto presso la Scuola di Magia
+        e Stregoneria di Hogwarts. Le lettere non mentono, il sangue magico
+        scorre in lei, anche se ha vissuto fino a oggi nel mondo babbano, ignaro
+        del suo vero potenziale.
+      </p>
+      <p>
+        Troverà presto l'elenco di tutti i libri di testo e delle attrezzature
+        necessarie. L'anno scolastico ha inizio il 1° settembre. Restiamo in
+        attesa del suo gufo entro e non oltre il 31 luglio.
+      </p>
+      <p class="signature">
+        Con la massima considerazione,<br />
+        <strong class="mcgonagall">Minerva McGranitt</strong><br />
+        <span>Vicepreside</span>
+      </p>
+    </div>
+    -->

@@ -1,26 +1,62 @@
 <div class="intro-container">
-  <div class="dialoge-box" [ngClass]="">
-    <div class="character">
-      <img
-        [src]="script[currentLine].image"
-        [alt]="script[currentLine].character"
-      />
-    </div>
-    <div class="dialog-text">
-      <p>{{ script[currentLine].character }}</p>
-      <p>{{ script[currentLine].text }}</p>
-    </div>
-    <div class="control-bnt">
+  <div class="video-overlay" *ngIf="isVideo1Playing">
+    <video
+      src="assets/video/Silente_spegninoParte1.mp4"
+      autoplay
+      muted
+      playsinline
+    ></video>
+  </div>
+  <div class="video-overlay" *ngIf="isVideo2Playing">
+    <video
+      src="assets/video/Silente_spegninoParte2.mp4"
+      autoplay
+      muted
+      playsinline
+    ></video>
+  </div>
+  <div
+    class="story-flow"
+    *ngIf="!isVideo1Playing && !isVideo2Playing"
+    [style.background-image]="'url(' + script[currentLine].image + ')'"
+  >
+    <ng-container *ngIf="isMinigameActive">
       <button
-        class="btn-prev"
-        (click)="prevLine()"
-        [disabled]="currentLine === 0"
+        *ngFor="let light of streetLights"
+        class="lamp-btn"
+        [ngClass]="{ 'is-on': light.isOn, 'is-off': !light.isOn }"
+        [style.top]="light.top"
+        [style.left]="light.left"
+        [disabled]="!light.isOn"
+        (click)="turnOffLight(light.id)"
       >
-        Prev
+        <span class="light-glow" *ngIf="light.isOn"></span>
       </button>
-      <button class="btn-next" (click)="nextLine()">
-        {{ currentLine === script.length - 1 ? "Comincia la storia" : "Next" }}
-      </button>
+    </ng-container>
+
+    <div class="dialoge-box" [ngClass]="dialogClasses">
+      <div class="dialog-text">
+        <p *ngIf="script[currentLine].character">
+          {{ script[currentLine].character }}
+        </p>
+        <p>{{ script[currentLine].text }}</p>
+      </div>
+
+      <div class="control-bnt">
+        <button
+          class="btn-prev"
+          (click)="prevLine()"
+          [disabled]="currentLine === 0 || isMinigameActive"
+        >
+          Prev
+        </button>
+
+        <button class="btn-next" (click)="nextLine()" *ngIf="!isMinigameActive">
+          {{
+            currentLine === script.length - 1 ? "Comincia la storia" : "Next"
+          }}
+        </button>
+      </div>
     </div>
   </div>
 </div>

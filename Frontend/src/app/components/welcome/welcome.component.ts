@@ -14,13 +14,28 @@ export class WelcomeComponent implements OnInit {
   wizardPlayerName = "";
   currentWelcomeStep: number = 1;
 
+  isLensOpen : boolean = false;
+  isLensTransited : boolean= false;
+
   ngOnInit(): void {
     this.wizardPlayerName = this.gameData.wizardName;
     this.currentWelcomeStep = this.gameData.currentWelcomeStep;
+
+    setTimeout(()=> {
+      this.isLensOpen = true;
+      }, 100);
   }
 
   startGame(){ 
-    this.router.navigate(['/intro']);
+    this.isLensOpen = false;
+    this.isLensTransited= true;
+    setTimeout(()=>{
+      this.router.navigate(['/intro']);
+     }, 1000);
+    
+
   }
   startFirstYear(){ }
+
+
 }

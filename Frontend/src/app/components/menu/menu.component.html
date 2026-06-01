@@ -1,31 +1,47 @@
 <div class="menu-container">
-  <h1>Harry Potter Escape Room</h1>
-  <h2>Il Platano Picchiatore</h2>
-  <div class="introGame" *ngIf="!showInsertName">
-    <p>
-      Sette anni di oscuri misteri, trappole e incantesimi ti attendono. In
-      questa avventura interattiva, rivivrai la storia passo dopo passo a fianco
-      di Harry Potter, affrontando le sfide che hanno segnato il suo destino.
-      Per superare gli ostacoli che incontrerete, la magia da sola non basterà:
-      dovrai attingere al potere dell'ingegno e usare la logica babbana per
-      risolvere gli enigmi più complessi. Preparati a dimostrare il tuo valore.
-      Il viaggio nel Mondo Magico comincia da qui.
-    </p>
-    <button (click)="registration()" class="registration">
-      Registrati per iniziare
+  <div class="particles-container">
+    <div *ngFor="let p of particles" class="particle" [ngStyle]="p.style"></div>
+  </div>
+  <div
+    class="intro-overlay"
+    *ngIf="!hideOverlayDOM"
+    [ngClass]="{ 'fade-out-overlay': !showOverlay }"
+  >
+    <div class="glow-effect"></div>
+  </div>
+  <div class="menu-header">
+    <h1>Harry Potter Escape Room</h1>
+    <h2>Il tranello del diavolo</h2>
+  </div>
+  <div
+    class="introGame"
+    *ngIf="!showInsertName"
+    [ngClass]="{ 'parchment-open': isParchmentOpen }"
+  >
+    <p class="typewriter-text">{{ displayedText }}</p>
+    <button
+      *ngIf="isTextWritingComplete()"
+      (click)="registration()"
+      class="btn-registration"
+    >
+      ▶
     </button>
   </div>
-  <div class="InsertName" *ngIf="showInsertName">
-    <p>Scrivi il tuo nome</p>
+  <div class="registration-box" *ngIf="showInsertName">
+    <p class="form-title">Scrivi il tuo nome, giovane mago:</p>
     <input
       type="text"
-      class="registration-box"
-      id="wizardName"
       name="wizardName"
-      required
       [(ngModel)]="wizardName"
       [ngModelOptions]="{ standalone: true }"
+      placeholder="Inserisci il tuo nome..."
     />
-    <button (click)="startGame()" class="startGame">Inizia l'Avventura</button>
+    <button
+      (click)="startGame()"
+      class="startGame"
+      [disabled]="!wizardName || !wizardName.trim()"
+    >
+      Varca la Soglia 🚪
+    </button>
   </div>
 </div>

@@ -1,0 +1,151 @@
+.temporal-limbo {
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle, #0f0f1a 0%, #050508 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    padding: 2rem 0;
+    box-sizing: border-box;
+}
+.temporal-limbo.fade-to-black {
+    background: #000000;
+    transition: background 1s ease-in-out;
+   
+}
+.temporal-lens {
+    width: 580px;
+    height: 580px;
+    border-radius: 50%;
+    background-image: url("../../../assets/img/PrivetDrive_lens.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-blend-mode: overlay;
+    background-color: rgba(15, 15, 25, 0.65);
+    border: 6px double #c59b4c;
+    box-shadow:
+        0 0 30px rgba(0, 0, 0, 0.8),
+        0 0 40px rgba(197, 155, 76, 0.4),
+        inset 0 0 50px rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3.5rem;
+    box-sizing: border-box;
+    margin-bottom: 3rem;
+    position: relative;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+}
+.temporal-lens.lens-explode {
+    transform: scale(5);
+    opacity: 0;
+    box-shadow: none;
+    border-color: transparent;
+    transition: transform 4s cubic-bezier(0.07, 0, 0.3, 1), opacity 0.9s ease-in;
+}
+.temporal-lens.lens-active {
+    opacity: 1;
+    transform: scale(1);
+}
+.lens-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.2rem;
+    text-align: center;
+    width: 100%;
+    z-index: 2;
+}
+.lens-content p {
+    font-family: 'Georgia', serif;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #e2b659;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
+    margin: 0;
+}
+.lens-content p:first-child {
+    font-family: "Mystery Quest", system-ui;
+    font-size: 1.35rem;
+    color: #ffd895;
+    text-shadow: 0 0 10px rgba(226, 182, 89, 0.5);
+}
+.lens-content.fade-out-text,
+.button-container.fade-out-text{
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-out;
+}
+.wizard-name {
+    color: #f1ffa3;
+    text-shadow: 0 0 8px #ffd895;
+    font-weight: bold;
+}
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: -4.5rem;
+    z-index: 10;
+}
+.btn-time-travel {
+    font-family: "Mystery Quest", system-ui;
+    font-size: 1.15rem;
+    font-weight: bold;
+    color: #dfba6b;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.95);
+
+    background-image: url("../../../assets/img/btn-clock.png");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+
+    width: 21rem;
+    height: auto;
+    aspect-ratio: 390/165;
+
+    position: relative;
+
+    border: none;
+    cursor: pointer;
+    outline: none;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s;
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.6));
+}
+.btn-text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom:19%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+.btn-time-travel:hover {
+transform: translateY(-3px) scale(1.02);
+    filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.7)) brightness(1.1);
+}
+.btn-time-travel:hover .hourglass-icon {
+    display: inline-block;
+    animation: tickTok 1s infinite linear;
+}
+@keyframes tickTok {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(180deg);
+    }
+}
