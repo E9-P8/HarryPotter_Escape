@@ -1,1 +1,22 @@
-<p>part1 works!</p>
+<div class="part1-container">
+  <div
+    class="black-overlay"
+    *ngIf="isBlackScreen"
+    [ngClass]="{ 'fade-out': isFadeOutActive }"
+  ></div>
+
+  <div class="video-scene" *ngIf="isVideoPlaying">
+    <video
+      src="assets/video/Harry_sveglia.mp4"
+      autoplay
+      playsinline
+      (ended)="onVideoEnd()"
+    ></video>
+  </div>
+
+  <div class="gameplay-layer" *ngIf="isGameplayReady">
+    <p style="color: white; text-align: center; padding-top: 20%">
+      La storia ha inizio...
+    </p>
+  </div>
+</div>

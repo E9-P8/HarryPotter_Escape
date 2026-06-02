@@ -19,7 +19,13 @@
     class="story-flow"
     *ngIf="!isVideo1Playing && !isVideo2Playing"
     [style.background-image]="'url(' + script[currentLine].image + ')'"
+    [ngClass]="{ 'magical-flash': isTransforming }"
   >
+    <img
+      [src]="script[currentLine].image"
+      class="bg-image-render"
+      alt="Story Scene"
+    />
     <ng-container *ngIf="isMinigameActive">
       <button
         *ngFor="let light of streetLights"
@@ -34,7 +40,15 @@
       </button>
     </ng-container>
 
-    <div class="dialoge-box" [ngClass]="dialogClasses">
+    <div class="dialoge-box" [ngClass]="{ 'hagrid-rumble': isHagridArriving }">
+      <button
+        class="btn-prev"
+        (click)="prevLine()"
+        [disabled]="currentLine === 0 || isMinigameActive"
+      >
+        Prev
+      </button>
+
       <div class="dialog-text">
         <p *ngIf="script[currentLine].character">
           {{ script[currentLine].character }}
@@ -42,21 +56,9 @@
         <p>{{ script[currentLine].text }}</p>
       </div>
 
-      <div class="control-bnt">
-        <button
-          class="btn-prev"
-          (click)="prevLine()"
-          [disabled]="currentLine === 0 || isMinigameActive"
-        >
-          Prev
-        </button>
-
-        <button class="btn-next" (click)="nextLine()" *ngIf="!isMinigameActive">
-          {{
-            currentLine === script.length - 1 ? "Comincia la storia" : "Next"
-          }}
-        </button>
-      </div>
+      <button class="btn-next" (click)="nextLine()" *ngIf="!isMinigameActive">
+        {{ currentLine === script.length - 1 ? "Comincia la storia" : "Next" }}
+      </button>
     </div>
   </div>
 </div>

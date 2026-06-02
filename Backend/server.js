@@ -3,10 +3,9 @@ const app = express();
 const PORT = 3000;
 
 app.use(express.json());
-app.use(express.static("public"));
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/views/intro.html");
+app.get("/api/status", (req, res) => {
+  res.json({ messaggio: "Il Platano Picchiatore è attivo e pronto!" });
 });
 
 app.listen(PORT, () => {

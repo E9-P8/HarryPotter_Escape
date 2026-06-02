@@ -53,7 +53,7 @@ export class IntroComponent implements OnInit {
     { 
     character: 'Gatto',
     image: 'assets/img/McGranitt_gatto.png', 
-    text: "Miao! *Cliccalo per rivelare la magia*"
+    text: "Miao! *Rivela la magia*"
     },
     { 
     character: 'Prof.ssa McGranitt',
@@ -115,8 +115,11 @@ export class IntroComponent implements OnInit {
   this.isTransforming = true;
     setTimeout(() => {
         this.currentLine++;
+      }, 1500); 
+      setTimeout(() => {
         this.isTransforming = false;
       }, 2000); 
+    
     }else if (this.currentLine === 5) {
       this.isHagridArriving = true; 
       setTimeout(() => {
