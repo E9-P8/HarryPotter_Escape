@@ -1,4 +1,4 @@
-<div class="part1-container">
+<div class="part1-container" *ngIf="HarrysAlarm">
   <div
     class="black-overlay"
     *ngIf="isBlackScreen"
@@ -19,4 +19,32 @@
       La storia ha inizio...
     </p>
   </div>
+</div>
+<div class="understairs-container" *ngIf="actualFase === 'understairs'">
+  <div #roomViewport tabindex="0" class="understairs-viewport">
+    <div
+      class="understairs-panoramic"
+      [style.background-image]="'url(assets/img/Understairs.png)'"
+      (mousemove)="updateFlashlight($event)"
+      (touchmove)="updateFlashlightTouch($event)"
+    >
+      <div
+        *ngIf="!isRoomIlluminated"
+        class="flashlight-overlay"
+        [style.mask-image]="flashlightStyle"
+        [style.-webkit-mask-image]="flashlightStyle"
+      ></div>
+
+      <button class="interactive-item item-glasses" (click)="findGlasses()">
+        👓
+      </button>
+      <button class="door" (click)="openDoor()">Apri la porta</button>
+    </div>
+  </div>
+</div>
+<div class="kitchen-container" *ngIf="actualFase === 'kitchen'">
+  <div class="kitchen-viewport"></div>
+</div>
+<div class="reptiles-container" *ngIf="actualFase === 'reptiles'">
+  <div class="reptiles-viewport"></div>
 </div>

@@ -1,31 +1,27 @@
 .part1-container {
+position: fixed;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #000;
-    margin: 0;
-    padding: 0;
-    position: relative;
-    overflow: hidden;
+    z-index: 100;
+    background: black;
 }
 
 
 .black-overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #060305;
-    z-index: 99;
-    opacity: 1;
-    transition: opacity 2.5s cubic-bezier(0.42, 0, 0.58, 1);
+        width: 100%;
+        height: 100%;
+        background: black;
+        transition: opacity 2.5s;
    
 }
 .black-overlay::before {
     content: '';
     position: absolute;
     inset: 0;
-   background: radial-gradient(circle at 50% 40%, rgba(32, 12, 15, 0.4) 0%, rgba(6, 3, 5, 0) 70%);
+   background: radial-gradient(circle at 50% 40%, rgba(46, 16, 21, 0.5) 0%, rgba(31, 13, 25, 0.514) 70%);
     animation: phospheneDream 6s ease-in-out infinite alternate;
     mix-blend-mode: screen;
 }
@@ -41,11 +37,9 @@
    animation: eyeNoise 0.2s infinite;
     pointer-events: none;
 }
-
 .black-overlay.fade-out {
     opacity: 0;
 }
-
 .video-scene {
     position: absolute;
     top: 0;
@@ -54,20 +48,17 @@
     height: 100%;
     z-index: 50;
 }
-
 .video-scene video {
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     object-fit: cover;
 }
-
 .gameplay-layer {
     position: relative;
     width: 100%;
     height: 100%;
     z-index: 10;
 }
-
 @keyframes phospheneDream {
     0% {
         transform: scale(1) translate(0, 0);
@@ -128,4 +119,60 @@
     100% {
         transform: translate(0, 0);
     }
+}
+.understairs-container,
+.kitchen-container,
+.reptiles-container {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #000;
+    position: relative;
+}
+.understairs-viewport {
+    width: 100%;
+    height: 100%;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    outline: none;
+}
+.understairs-viewport::-webkit-scrollbar {
+    display: none;
+}
+
+.understairs-panoramic {
+    width: 350vw;
+    height: 150vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+.flashlight-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.91);
+    z-index: 2;
+    pointer-events: none;
+}
+.interactive-item {
+    position: absolute;
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    z-index: 3;
+    outline: none;
+}
+.item-glasses {
+    top: 65%;
+    left: 130vw;
+}
+
+.door {
+    z-index: 3;
+    top: 65%;
+    left: 50vw;
 }
