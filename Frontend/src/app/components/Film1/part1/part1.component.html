@@ -24,10 +24,15 @@
   <div #roomViewport tabindex="0" class="understairs-viewport">
     <div
       class="understairs-panoramic"
-      [style.background-image]="'url(assets/img/Understairs.png)'"
       (mousemove)="updateFlashlight($event)"
       (touchmove)="updateFlashlightTouch($event)"
     >
+      <img
+        src="assets/img/Understairs.png"
+        class="panorama-img"
+        alt="Sottoscala"
+      />
+
       <div
         *ngIf="!isRoomIlluminated"
         class="flashlight-overlay"
@@ -35,10 +40,18 @@
         [style.-webkit-mask-image]="flashlightStyle"
       ></div>
 
-      <button class="interactive-item item-glasses" (click)="findGlasses()">
-        👓
+      <div class="wall-text eyeglasses">
+        La verità si rileva solo a chi sa guardare oltre l'oscurità...
+      </div>
+      <div class="wall-text door">Il mondo fuori ti aspetta ...</div>
+
+      <button
+        class="interactive-item item-glasses"
+        (click)="findGlasses()"
+      ></button>
+      <button class="interactive-item item-door" (click)="openDoor()">
+        <span class="door-glow"></span>
       </button>
-      <button class="door" (click)="openDoor()">Apri la porta</button>
     </div>
   </div>
 </div>

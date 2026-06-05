@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GameDataService } from '../../services/game-data.service';
+import { AudioService } from '../../services/audio.service';
 
 interface Particle {
   id: number;
@@ -36,7 +37,7 @@ export class MenuComponent implements OnInit {
   private particleInterval: any;
   private idCounter = 0;
 
-  constructor(private router: Router, private gameData: GameDataService) { }
+  constructor(private router: Router, private gameData: GameDataService, private audioService: AudioService) { }
 
   ngOnInit(): void {
     this.particleInterval = setInterval(() => {
@@ -68,7 +69,7 @@ export class MenuComponent implements OnInit {
       this.particles = this.particles.filter(p => p.id !== newId);
     }, 5000);
   }
-ngOnDestroy(): void {
+  ngOnDestroy(): void {
     if (this.particleInterval) {
       clearInterval(this.particleInterval);
     }
@@ -87,6 +88,7 @@ ngOnDestroy(): void {
       setTimeout(() => {
         this.hideOverlayDOM = true;
         this.isParchmentOpen = true;
+        this.audioService.playSound('writingPen', 0.6);
         setTimeout(() => {
           this.typeWriter(0);
         }, 800);
@@ -100,7 +102,9 @@ ngOnDestroy(): void {
       this.typewriterTimeout = setTimeout(() => {
         this.typeWriter(index + 1);
       }, 30); 
-    }
+    } else {
+      this.audioService.stopSound('writingPen');
+     }
   }
 
   isTextWritingComplete(): boolean {
@@ -109,6 +113,7 @@ ngOnDestroy(): void {
 
   registration(){
     this.showInsertName = true;
+    this.audioService.playSound('parchment', 0.6);
   }
 
   startGame(){

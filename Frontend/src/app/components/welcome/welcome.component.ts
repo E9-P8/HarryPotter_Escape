@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GameDataService } from '../../services/game-data.service';
+import { AudioService } from '../../services/audio.service';
 
 @Component({
   selector: 'app-welcome',
@@ -9,7 +10,7 @@ import { GameDataService } from '../../services/game-data.service';
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor(private router: Router, private gameData: GameDataService) { }
+  constructor(private router: Router, private gameData: GameDataService, private audioService: AudioService) { }
 
   wizardPlayerName = "";
   currentWelcomeStep: number = 1;
@@ -29,9 +30,11 @@ export class WelcomeComponent implements OnInit {
   startGame(){ 
     this.isLensOpen = false;
     this.isLensTransited= true;
+    this.audioService.playSound('timeMachine');
     setTimeout(()=>{
       this.router.navigate(['/intro']);
-     }, 1000);
+      this.audioService.stopSound('timeMachine');
+     }, 1500);
     
 
   }

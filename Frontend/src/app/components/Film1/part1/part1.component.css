@@ -141,11 +141,17 @@ position: fixed;
 }
 
 .understairs-panoramic {
-    width: 350vw;
-    height: 150vh;
-    background-size: cover;
-    background-position: center;
+    width: 340vw;
+    aspect-ratio: 1920 / 1080;
+    height: auto;
+    overflow: hidden;
     position: relative;
+}
+.panorama-img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    display: block;
 }
 .flashlight-overlay {
     position: absolute;
@@ -153,7 +159,7 @@ position: fixed;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.91);
+    background-color: rgba(0, 0, 0, 0.90);
     z-index: 2;
     pointer-events: none;
 }
@@ -161,18 +167,55 @@ position: fixed;
     position: absolute;
     background: transparent;
     border: none;
-    color: white;
     cursor: pointer;
-    z-index: 3;
+    z-index: 1;
     outline: none;
 }
 .item-glasses {
-    top: 65%;
-    left: 130vw;
+    top: 57%;
+    left: 86%;
+    background-image: url(../../../../assets/img/eyeglasses.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 2.5%;
+    height: 3.5%;
 }
 
+.item-door {
+    top: 51.5%;
+    left: 23.5%;
+    width: 2.5%;
+    height: 0.7%;
+}
+.item-door:hover .door-glow {
+    position: absolute;
+    inset: 0;
+    border: 2px  rgba(92, 85, 45, 0.6);
+    box-shadow: 0 0 15px rgba(180, 166, 87, 0.8);
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+.wall-text{
+    position: absolute;
+    font-size: 3vw;
+    font-family: 'Indie Flower', cursive;
+    text-align: center;
+    line-height: 1.4;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4), 0 0 5px rgba(255, 215, 0, 0.1);
+    z-index: 1;
+    pointer-events: none;
+}
+.eyeglasses {
+    top: 34%;
+    left: 56%;
+    width: 9%;
+    color: rgb(138 113 83 / 68%);
+}
 .door {
-    z-index: 3;
-    top: 65%;
-    left: 50vw;
+    top: 64%;
+    left: 30%;
+    width: 8%;
+    color: rgb(122 113 100 / 91%);
 }

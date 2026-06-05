@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AudioService } from '../../services/audio.service';
 
 interface introDialogue{
   character : string;
@@ -53,7 +54,7 @@ export class IntroComponent implements OnInit {
     { 
     character: 'Gatto',
     image: 'assets/img/McGranitt_gatto.png', 
-    text: "Miao! *Rivela la magia*"
+    text: "Sapevo di trovarla qui, Prof.ssa McGranitt *Rivela la magia*"
     },
     { 
     character: 'Prof.ssa McGranitt',
@@ -83,7 +84,7 @@ export class IntroComponent implements OnInit {
     { 
       character : 'Silente',
       image : 'assets/img/Silente_culla.png',
-      text : "Sì. è meglio che cresca lontano da tutto questo, finché non sarà pronto. Questo non è un vedo addio dopotutto."
+      text : "Sì. è meglio che cresca lontano da tutto questo, finché non sarà pronto. Questo non è un vero addio dopotutto."
     },
     { 
       character : 'Silente',
@@ -92,7 +93,7 @@ export class IntroComponent implements OnInit {
     }
   ]
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private audioService: AudioService) { }
 
   ngOnInit(): void {
     setTimeout(() => { 
@@ -101,44 +102,17 @@ export class IntroComponent implements OnInit {
     },7000 );
   }
 
-  nextLine() {
-  if (this.currentLine >= this.script.length - 1) {
-    this.isDialogueEnd = true;
-    this.router.navigate(['/part1']);
-    return;
-  }
 
-  if (this.currentLine === 0) {
-    return; 
-    }
- if (this.currentLine === 2) {
-  this.isTransforming = true;
-    setTimeout(() => {
-        this.currentLine++;
-      }, 1500); 
-      setTimeout(() => {
-        this.isTransforming = false;
-      }, 2000); 
-    
-    }else if (this.currentLine === 5) {
-      this.isHagridArriving = true; 
-      setTimeout(() => {
-        this.currentLine++;
-        this.isHagridArriving = false;
-      }, 3000); 
-    }
-     else {
-      this.currentLine++;
-    }
-}
 turnOffLight(id: number) {
     const light = this.streetLights.find(l => l.id === id);
     if (light) {
+      this.audioService.playSound('switchOnOff');
       light.isOn = false;
     }
 
     if (this.streetLights.every(l => !l.isOn)) {
       this.isMinigameActive = false; 
+      console.log(this.currentLine);
       this.isVideo2Playing = true;   
 
       setTimeout(() => {
@@ -147,7 +121,41 @@ turnOffLight(id: number) {
       }, 5000); 
     }
   }
+    nextLine() {
+  if (this.currentLine >= this.script.length - 1) {
+    this.isDialogueEnd = true;
+    this.router.navigate(['/part1']);
+    return;
+  }
+
+  if (this.currentLine === 0 && !this.isMinigameActive) {
+    
+    }
+
+ if (this.currentLine === 2) {
+  this.isTransforming = true;
+  this.audioService.playSound('traformation');
+    setTimeout(() => {
+        this.currentLine++;
+      }, 1500); 
+      setTimeout(() => {
+        this.isTransforming = false;
+      }, 3500); 
+    
+    }else if (this.currentLine === 5) {
+      this.isHagridArriving = true;
+      this.audioService.playSound('motorcycle'); 
+      setTimeout(() => {
+        this.currentLine++;
+        this.isHagridArriving = false;
+      }, 4500); 
+    }
+     else {
+      this.currentLine++;
+    }
+}
   prevLine(){
+    console.log(this.currentLine);
     if(this.currentLine > 0){
        this.currentLine--;
      }
