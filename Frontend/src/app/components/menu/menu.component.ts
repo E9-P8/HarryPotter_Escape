@@ -37,15 +37,20 @@ export class MenuComponent implements OnInit {
   private particleInterval: any;
   private idCounter = 0;
 
-  constructor(private router: Router, private gameData: GameDataService, private audioService: AudioService) { }
+  constructor(private router: Router, private gameData: GameDataService, public audioService: AudioService) { }
 
-  ngOnInit(): void {
+ngOnInit(): void {
+    this.audioService.startGlobalBackground('intro', 0.1);
+
     this.particleInterval = setInterval(() => {
       this.createParticle();
     }, 500);
 
     this.prepareIntroText();
-    this.startIntroSequence();
+  }
+
+  toggleAudio(): void {
+    this.audioService.toggleGlobalMute(0.1);
   }
 
   createParticle() {
@@ -83,18 +88,19 @@ export class MenuComponent implements OnInit {
       "Preparati a dimostrare il tuo valore. Il viaggio nel Mondo Magico comincia da qui.";
   }
   startIntroSequence() {
-    setTimeout(() => {
       this.showOverlay = false;
+      
       setTimeout(() => {
+        this.audioService.startGlobalBackground('intro', 0.1);
+        this.audioService.isMuted= false;
         this.hideOverlayDOM = true;
         this.isParchmentOpen = true;
-        this.audioService.playSound('writingPen', 0.6);
+        this.audioService.playSound('writingPen', 0.8);
         setTimeout(() => {
           this.typeWriter(0);
         }, 800);
 
       }, 1000);
-    }, 3000);
   }
   typeWriter(index: number) {
     if (index < this.fullStoryText.length) {

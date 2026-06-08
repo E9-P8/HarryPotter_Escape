@@ -93,15 +93,20 @@ export class IntroComponent implements OnInit {
     }
   ]
 
-  constructor(private router: Router, private audioService: AudioService) { }
+  constructor(private router: Router, public audioService: AudioService) { }
 
+  toggleAudio(): void {
+  this.audioService.toggleGlobalMute(0.2);
+}
   ngOnInit(): void {
-    setTimeout(() => { 
-      this.isVideo1Playing = false;
-      this.isMinigameActive= true;
-    },7000 );
-  }
+  this.audioService.startGlobalBackground('mistery', 0.2);
 
+  setTimeout(() => { 
+    this.isVideo1Playing = false;
+    this.isMinigameActive = true;
+  }, 7000);
+}
+ 
 
 turnOffLight(id: number) {
     const light = this.streetLights.find(l => l.id === id);
@@ -122,15 +127,16 @@ turnOffLight(id: number) {
     }
   }
     nextLine() {
-  if (this.currentLine >= this.script.length - 1) {
-    this.isDialogueEnd = true;
-    this.router.navigate(['/part1']);
-    return;
-  }
+        if (this.currentLine >= this.script.length - 1) {
+          this.isDialogueEnd = true;
+          this.router.navigate(['/part1']);
+          //this.audioService.muteIntro('intro');
+          return;
+        }
 
-  if (this.currentLine === 0 && !this.isMinigameActive) {
-    
-    }
+        if (this.currentLine === 0 && !this.isMinigameActive) {
+          
+          }
 
  if (this.currentLine === 2) {
   this.isTransforming = true;
