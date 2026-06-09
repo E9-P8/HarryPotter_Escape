@@ -89,10 +89,11 @@ ngOnInit(): void {
   }
   startIntroSequence() {
       this.showOverlay = false;
+      this.audioService.isMuted = false;
+      this.audioService.startGlobalBackground('intro', 0.1);
+      console.log("Stato mute dopo il click:", this.audioService.isMuted);
       
       setTimeout(() => {
-        this.audioService.startGlobalBackground('intro', 0.1);
-        this.audioService.isMuted= false;
         this.hideOverlayDOM = true;
         this.isParchmentOpen = true;
         this.audioService.playSound('writingPen', 0.8);
@@ -118,6 +119,7 @@ ngOnInit(): void {
   }
 
   registration(){
+    this.audioService.stopSound('writingPen');
     this.showInsertName = true;
     this.audioService.playSound('parchment', 0.6);
   }

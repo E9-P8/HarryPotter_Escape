@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { AudioService } from '../../../services/audio.service';
 
 interface kitchenDialogue{
@@ -21,13 +22,13 @@ interface kitchenDialogue{
 export class Part1Component implements OnInit {
 
 
-  constructor(public audioService : AudioService) { }
+  constructor(private router: Router, public audioService : AudioService) { }
 
   @ViewChild('roomViewport') roomViewport!: ElementRef;
 
   isBlackScreen: boolean = true;     
   isFadeOutActive: boolean = false;   
-  isVideoPlaying: boolean = false;    
+  isVideoPlaying: boolean = false;     
   isGameplayReady: boolean = false;  
   HarrysAlarm : boolean = true;
 
@@ -62,7 +63,7 @@ export class Part1Component implements OnInit {
   } 
 
   startIntroSequence() {
-    this.audioService.startGlobalBackground('intro', 0.1); 
+    this.audioService.startGlobalBackground('forest', 0.3); 
 
       setTimeout(() => {
         this.isFadeOutActive = true;
@@ -119,6 +120,7 @@ export class Part1Component implements OnInit {
     if(this.isRoomIlluminated === true ){
       this.audioService.playSound('doorOpening'); 
         setTimeout(() => {
+          this.audioService.startGlobalBackground('wizard', 0.1);
           this.actualFase = 'kitchen';
           this.startDialogue();
         }, 2000);
@@ -183,7 +185,7 @@ export class Part1Component implements OnInit {
       this.isDialogueEnd = true;
       return;
     } 
-    if (this.currentLineKitchen === 0) {
+    if (this.currentLineKitchen === 0 || this.currentLineKitchen === 2) {
       this.audioService.playSound('kiss');
     }
   
@@ -224,7 +226,7 @@ export class Part1Component implements OnInit {
 
   script2 : reptilesDialogue[] = [
     { 
-      character : '',
+      character : 'Dudley',
       image: "assets/img/WaitingSnake.png",
       text : "E fallo muovere! MUOVITI!"
     },
@@ -236,7 +238,7 @@ export class Part1Component implements OnInit {
     { 
     character: 'Serpente', 
     image: "assets/img/snake.png",
-    text: ""
+    text: "SsSsSsSs...."
     },
     { 
     character: 'Harry', 
@@ -246,7 +248,7 @@ export class Part1Component implements OnInit {
     { 
     character: 'Serpente', 
     image: "assets/img/snake.png",
-    text: "Io non parlo sssssssspesso con le persssssone... ssssssssssssono cressssssssssssssssciuto in cattività... ssssssssssssscusa, puoi sssssentirmi?"
+    text: "Io non parlo <span translate='no'>ssssssss</span>spesso con le per<span translate='no'>sssss</span>one... <span translate='no'>ssssssssssss</span>ono cre<span translate='no'>sssssssssssssss</span>ciuto in cattività... <span translate='no'>sssssssssssss</span>cusa, tu puoi <span translate='no'>sssss</span>entirmi?"
     },
     { 
       character : 'Dudley',
@@ -254,23 +256,48 @@ export class Part1Component implements OnInit {
       text : "Mamma, papà, venite qui! Venite a vedere cosa fa il serpente!!"
     },
     { 
-      character : '',
+      character : 'Serpente',
       image: "assets/img/SnakeTerrarium.png",
-      text : ""
+      text : "SsSsSsSs...."
     },
     { 
       character : 'Dudley',
       image: "assets/img/DudleyTerrarium.png",
       text : "Mamma! Mamma! Aiutami! Aiutami ti prego!"
+    },
+    { 
+      character : 'Zia Petunia & Dudley',
+      image: "assets/img/Zia&Dudley_Home.png",
+      text : ""
+    },
+    { 
+      character : 'Zio Vernon ',
+      image: "assets/img/AngryZio.png",
+      text : "COSA E' SUCCESSO?!"
+    },
+    { 
+      character : 'Harry',
+      image: "assets/img/ScariedHarry.png",
+      text : "Giuro non lo so! Un minuto prima c'era il vetro e un minuto dopo è sparito.. come per magia!"
+    },
+    { 
+      character : 'Zio Vernon',
+      image: "assets/img/Harry&Zio_understairs.png",
+      text : "NON ESISTE LA MAGIA!"
     }
   ]
 
   startReptilesDialogue(){
     if(this.currentLineReptiles >= this.script2.length){
       this.isReptilesDialogueEnd = true;
+
+       setTimeout(()=>{ 
+            this.router.navigate(['/part2']);
+          }, 3000)
+           
       return;
     } 
-      if (this.currentLineReptiles === 2) {
+      if (this.currentLineReptiles === 2 || this.currentLineReptiles === 4 ) {
         this.audioService.playSound('snake_hiss');
       }
     
@@ -280,6 +307,7 @@ export class Part1Component implements OnInit {
       }
       
       if(this.currentLineReptiles === 6 && this.glassClicks < 10){
+        this.audioService.playSound('snake_hiss');
       console.log("TAP TAP");
         return;
       }
@@ -291,8 +319,7 @@ export class Part1Component implements OnInit {
     }
      
     checkSnakeEnigma() {
-      if (this.userSnakeInput.toUpperCase().trim() === 'HELPME') {
-        this.audioService.playSound('snake_hiss'); 
+      if (this.userSnakeInput.toUpperCase().trim() === 'HELP ME') {
         this.solveReptilesEnigma(); 
       } else {
         alert("Il serpente sibila in modo strano... sembra voglia dirti qualcosa.");

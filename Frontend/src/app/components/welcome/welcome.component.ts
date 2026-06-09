@@ -37,8 +37,9 @@ export class WelcomeComponent implements OnInit {
     this.isLensTransited= true;
     this.audioService.playSound('timeMachine');
     setTimeout(()=>{
-      this.router.navigate(['/intro']);
       this.audioService.stopSound('timeMachine');
+      this.router.navigate(['/intro']);
+      
      }, 1500);
     
 

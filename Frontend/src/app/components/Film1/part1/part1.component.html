@@ -54,7 +54,7 @@
       ></div>
 
       <div class="wall-text eyeglasses">
-        La verità si rileva solo a chi sa guardare oltre l'oscurità...
+        La verità si rivela solo a chi sa guardare oltre l'oscurità...
       </div>
       <div class="wall-text door">Il mondo fuori ti aspetta ...</div>
 
@@ -155,12 +155,12 @@
         (click)="onGlassClick()"
       ></button>
 
-      <div class="dialogue-box">
+      <div class="reptiles-dialogue-box">
         <div class="dialog-text">
           <p *ngIf="script2[currentLineReptiles].character">
             {{ script2[currentLineReptiles].character }}
           </p>
-          <p>{{ script2[currentLineReptiles].text }}</p>
+          <p [innerHTML]="script2[currentLineReptiles].text"></p>
         </div>
         <div
           class="snake-input-container"

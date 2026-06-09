@@ -29,7 +29,6 @@ export class AudioService {
   private activeAudios: { [key: string]: HTMLAudioElement } = {};
   public isMuted: boolean = true;
   private currentBackgroundKey: string = 'intro';
-  private kitchenTimer1: boolean = true;
 
   constructor() {
     this.preloadSounds();
@@ -42,7 +41,23 @@ export class AudioService {
       this.activeAudios[key] = audio;
     });
   }
-  startGlobalBackground(soundName: string, volume: number = 0.2): void {
+ startGlobalBackground(soundName: string, volume: number = 0.2, forcePlay: boolean = false): void { 
+
+    if (this.currentBackgroundKey !== soundName) {
+      const oldAudio = this.activeAudios[this.currentBackgroundKey];
+      if (oldAudio) {
+        oldAudio.pause();      
+        oldAudio.currentTime = 0; 
+      }
+    }
+    if (this.currentBackgroundKey === soundName && this.activeAudios[soundName] && !this.activeAudios[soundName].paused && !forcePlay) {
+      return; 
+    }
+
+    if (forcePlay) {
+      this.isMuted = false;
+    }
+
     this.currentBackgroundKey = soundName;
     const audio = this.activeAudios[soundName];
     
@@ -51,8 +66,10 @@ export class AudioService {
     audio.loop = true;
     audio.volume = volume;
 
-    if (!this.isMuted && audio.paused) {
-      audio.play().catch(err => console.log("Autoplay bloccato:", err));
+    if (!this.isMuted) {
+      audio.play().catch(err => console.log("Riproduzione sottofondo in attesa:", err));
+    } else {
+      audio.pause();
     }
   }
 
@@ -72,32 +89,17 @@ toggleGlobalMute(volumeIfPlaying: number = 0.2): void {
 
   playSound(soundName: string, volume: number = 0.5, loop: boolean = false): void {
     if (this.isMuted) return;
-    
-    if (loop) {
-      const audio = this.activeAudios[soundName];
-      if (audio) {
-        audio.loop = true;
-        audio.volume = volume;
-        if (audio.paused) {
-          audio.play().catch(error => console.warn(`Errore riproduzione loop ${soundName}:`, error));
-        }
+
+    const audio = this.activeAudios[soundName];
+    if (audio) {
+      audio.loop = loop;
+      audio.volume = volume;
+      
+     if (!loop) {
+        audio.currentTime = 0;
       }
-      return;
-    }
 
-    const audioUrl = this.sounds[soundName];
-    if (!audioUrl) return;
-
-    if (this.activeAudios[soundName] && soundName !== this.currentBackgroundKey) {
-      this.activeAudios[soundName].pause();
-    }
-
-    const audio = new Audio(audioUrl);
-    audio.volume = volume;
-    audio.loop = loop; 
-
-    if (!this.isMuted) {
-      audio.play().catch(error => console.warn(`Errore SFX:`, error));
+      audio.play().catch(error => console.warn(`Errore riproduzione SFX ${soundName}:`, error));
     }
   }
 
@@ -109,6 +111,7 @@ toggleGlobalMute(volumeIfPlaying: number = 0.2): void {
   const audio = this.activeAudios[soundName];
   if (audio) {
     audio.pause();
+    audio.loop = false;
     audio.currentTime = 0; 
   }
 }
