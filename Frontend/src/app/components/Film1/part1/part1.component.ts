@@ -188,11 +188,14 @@ export class Part1Component implements OnInit {
     if (this.currentLineKitchen === 0 || this.currentLineKitchen === 2) {
       this.audioService.playSound('kiss');
     }
+    if (this.currentLineKitchen === 3 || this.currentLineKitchen === 5|| this.currentLineKitchen === 7 ) {
+      this.audioService.playSound('angryDudley');
+    }
   
     setTimeout(() => {
       this.currentLineKitchen++;
       this.startDialogue()
-        }, 4000); 
+        }, 3000); 
           
   }
   openTimer(){ 
@@ -211,7 +214,7 @@ export class Part1Component implements OnInit {
       this.isTimerOpened = false; 
         setTimeout(()=>{ 
             this.audioService.playSound('car');
-        }, 1000)
+        }, 800)
           setTimeout(()=>{ 
             this.actualFase = 'reptiles';
             this.startReptilesDialogue();
@@ -248,7 +251,7 @@ export class Part1Component implements OnInit {
     { 
     character: 'Serpente', 
     image: "assets/img/snake.png",
-    text: "Io non parlo <span translate='no'>ssssssss</span>spesso con le per<span translate='no'>sssss</span>one... <span translate='no'>ssssssssssss</span>ono cre<span translate='no'>sssssssssssssss</span>ciuto in cattività... <span translate='no'>sssssssssssss</span>cusa, tu puoi <span translate='no'>sssss</span>entirmi?"
+    text: "Io non parlo <span translate='no'>ssssssss</span>pesso con le per<span translate='no'>sssss</span>one... <span translate='no'>ssssssssss</span>ono cre<span translate='no'>ssssssssssssss</span>ciuto in cattività... <span translate='no'>sssssssssss</span>cusa, tu puoi <span translate='no'>sssss</span>entirmi?"
     },
     { 
       character : 'Dudley',
@@ -297,6 +300,10 @@ export class Part1Component implements OnInit {
            
       return;
     } 
+    if (this.currentLineReptiles === 0 ) {
+        this.audioService.playSound('knockingWindow');
+      }
+
       if (this.currentLineReptiles === 2 || this.currentLineReptiles === 4 ) {
         this.audioService.playSound('snake_hiss');
       }
@@ -311,11 +318,14 @@ export class Part1Component implements OnInit {
       console.log("TAP TAP");
         return;
       }
+      if(this.currentLineReptiles === 9 || this.currentLineReptiles === 11){
+        this.audioService.playSound('angryZio');
+      }
 
           setTimeout(() => {
           this.currentLineReptiles++;
           this.startReptilesDialogue();
-        }, 5000); 
+        }, 3000); 
     }
      
     checkSnakeEnigma() {
@@ -336,10 +346,10 @@ export class Part1Component implements OnInit {
     onGlassClick() {
       if (this.currentLineReptiles === 6 && this.glassClicks < 10) {
         this.glassClicks++;
-        this.audioService.playSound('glass_tap');
+        this.audioService.playSound('glass_knock');
 
-        if (this.glassClicks === 10) {
-          this.audioService.playSound('glass_shatter');
+        if (this.glassClicks === 10) { 
+          this.audioService.playSound('breaking_glass');
           this.currentLineReptiles++;
           this.startReptilesDialogue();
         }

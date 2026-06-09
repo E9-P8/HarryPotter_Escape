@@ -23,7 +23,16 @@ export class AudioService {
     doorOpening:'assets/sound/doorOpening.mp3',
     car:'assets/sound/car.mp3',
     kiss: 'assets/sound/ZiaKiss.mp3',
-    snake_hiss: 'assets/sound/snake.mp3'
+    snake_hiss: 'assets/sound/snake.mp3',
+    breaking_glass: 'assets/sound/breaking-glass.mp3',
+    angryZio: 'assets/sound/angryZio.mp3',
+    laughing_people: 'assets/sound/laughing-people.mp3',
+    angry_crowd: 'assets/sound/angry-crowd.mp3',
+    babblingBrook: 'assets/sound/babbling-brook.mp3',
+    angryDudley: 'assets/sound/angryDudley.mp3',
+    knockingDoor: 'assets/sound/knockingDoor.mp3',
+    knockingWindow: 'assets/sound/knockingWindow.mp3',
+    glass_knock: 'assets/sound/glass-knock.mp3' 
 
   };
   private activeAudios: { [key: string]: HTMLAudioElement } = {};

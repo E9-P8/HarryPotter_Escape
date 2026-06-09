@@ -11,7 +11,7 @@ export class Part2Component implements OnInit {
 
   constructor(private router: Router, public audioService : AudioService) { }
 
-  actualFase: 'firePlace' | 'lightHouse' | 'diagonAlley' = 'firePlace';
+  actualFase: 'firePlace' | 'lightHouse' | 'diagonAlley' | 'letter' = 'letter';
 
   toggleAudio(): void {
   this.audioService.toggleGlobalMute(0.2);
