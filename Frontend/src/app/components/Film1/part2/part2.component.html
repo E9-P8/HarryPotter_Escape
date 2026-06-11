@@ -11,30 +11,121 @@
     />
   </svg>
 </button>
-<div *ngIf="actualFase === 'letter'">
-  <img src="assets/img/PrivetDrive_door.png" class="firePlace-img" alt="Privet door" />
+<div class="letter-container" *ngIf="actualFase === 'letter'">
+  <img
+    src="assets/img/Part2/PrivetDrive_door.png"
+    class="door-img"
+    alt="Privet door"
+  />
+  <button
+    *ngIf="!letterIsOpen"
+    class="open-letter-btn"
+    (click)="openLetter()"
+  ></button>
+  <div
+    class="hogwarts-letter-box"
+    *ngIf="letterIsOpen"
+    [class.is-flipped]="letterIsFlipped"
+    (click)="toggleLetterFlip()"
+  >
+    <div class="letter-card-inner">
+      <div class="letter-face front">
+        <img
+          src="assets/img/Part2/letterFront.png"
+          alt="Hogwarts Letter Front"
+        />
+      </div>
+
+      <div class="letter-face back">
+        <img src="assets/img/Part2/letterBack.png" alt="Hogwarts Letter Back" />
+      </div>
+    </div>
+  </div>
 </div>
 <div class="firePlace-container" *ngIf="actualFase === 'firePlace'">
   <div tabindex="0" class="firePlace-viewport">
     <div class="firePlace-view">
       <img src="assets/img/" class="firePlace-img" alt="FirePlace" />
+      <button class="" (click)="nonLoSo()">Prepara le valige</button>
     </div>
   </div>
 </div>
 <div class="lightHouse-container" *ngIf="actualFase === 'lightHouse'">
   <div class="lightHouse-viewport">
     <div class="lightHouse-view">
+      <!--<video
+        *ngIf="showlightHouseVideo"
+        src="assets/img/Part2/"
+        class="fullscreen-video"
+        autoplay
+        muted
+        playsinline
+        (ended)="onVideoEnded()"
+      ></video>-->
+      <img
+        *ngIf="!showlightHouseVideo"
+        [src]="script[currentLinelightHouse].image"
+        class="lightHouse-img"
+        alt="lightHouse Scene"
+      />
+      <button
+        class="interactive-door"
+        *ngIf="currentLinelightHouse === 1 && doorClicks < 6"
+        (click)="onDoorClick()"
+      ></button>
       <div class="dialogue-box">
-        <div class="dialog-text"></div>
+        <div class="dialog-text">
+          <p *ngIf="script[currentLinelightHouse].character">
+            {{ script[currentLinelightHouse].character }}
+          </p>
+          <p>{{ script[currentLinelightHouse].text }}</p>
+        </div>
       </div>
+      <button class="followHagrid" (click)="followHagrid()">
+        followHagrid
+      </button>
     </div>
   </div>
 </div>
 <div class="diagonAlley-container" *ngIf="actualFase === 'diagonAlley'">
   <div class="diagonAlley-viewport">
     <div class="diagonAlley-view">
-      <div class="diagonAlley-dialogue-box">
-        <div class="dialog-text"></div>
+      <img
+        *ngIf="!showVideo"
+        [src]="script2[currentLinePub].image"
+        class="pub-img"
+        alt="Pub Scene"
+      />
+      <video
+        *ngIf="showVideo"
+        src="assets/img/Part2/DiagonAlley.mp4"
+        class="fullscreen-video"
+        autoplay
+        muted
+        playsinline
+        (ended)="onVideoEnded()"
+      ></video>
+      <div
+        class="wall-bricks-container"
+        *ngIf="currentLinePub === 5 && !isPubEnigmaSolved"
+      >
+        <button class="brick-btn btn-0" (click)="onBrickClick(0)"></button>
+        <button class="brick-btn btn-1" (click)="onBrickClick(1)"></button>
+        <button class="brick-btn btn-2" (click)="onBrickClick(2)"></button>
+        <button
+          class="brick-btn btn-3"
+          [class.pulse-hint]="userPubSequence.length === 0"
+          (click)="onBrickClick(3)"
+        ></button>
+        <button class="brick-btn btn-4" (click)="onBrickClick(4)"></button>
+      </div>
+      <div class="dialogue-box">
+        <div class="dialog-text">
+          <p *ngIf="script2[currentLinePub].character">
+            {{ script2[currentLinePub].character }}
+          </p>
+          <p>{{ script2[currentLinePub].text }}</p>
+        </div>
       </div>
     </div>
   </div>

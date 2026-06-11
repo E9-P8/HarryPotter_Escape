@@ -303,16 +303,13 @@ export class Part1Component implements OnInit {
     if (this.currentLineReptiles === 0 ) {
         this.audioService.playSound('knockingWindow');
       }
-
       if (this.currentLineReptiles === 2 || this.currentLineReptiles === 4 ) {
         this.audioService.playSound('snake_hiss');
-      }
-    
+      } 
       if(this.currentLineReptiles === 4 && !this.isReptilesEnigmaSolved){
       console.log("Attesa di risoluzione enigma");
         return;
       }
-      
       if(this.currentLineReptiles === 6 && this.glassClicks < 10){
         this.audioService.playSound('snake_hiss');
       console.log("TAP TAP");
