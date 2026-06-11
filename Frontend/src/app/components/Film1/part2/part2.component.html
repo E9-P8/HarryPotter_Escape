@@ -68,11 +68,15 @@
         class="lightHouse-img"
         alt="lightHouse Scene"
       />
-      <button
-        class="interactive-door"
-        *ngIf="currentLinelightHouse === 1 && doorClicks < 6"
-        (click)="onDoorClick()"
-      ></button>
+      <div class="door-opened" *ngIf="currentLinelightHouse === 1">
+        <img
+          src="../../../../assets/img/Part2/lightHouse_Door.png"
+          class="door-zoom-img"
+          alt="door"
+        />
+        <button class="interactive-door" *ngIf="currentLinelightHouse === 1 && doorClicks < 6"
+        (click)="onDoorClick()"></button>
+      </div>
       <div class="dialogue-box">
         <div class="dialog-text">
           <p *ngIf="script[currentLinelightHouse].character">

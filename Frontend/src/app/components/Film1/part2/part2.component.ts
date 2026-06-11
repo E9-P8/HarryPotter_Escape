@@ -74,12 +74,17 @@ export class Part2Component implements OnInit {
     script : lightHouseDialogue[] = [
       { 
         character : 'Harry',
-        image: "assets/img/Part2/", //suona bip
+        image: "assets/img/Part2/HarryBirthday.png", //suona bip
         text : "Esprimi un desiderio Harry"
       },
       { 
+        character : '',
+        image: "assets/img/Part2/lightHouse_emptyDoor.png", //bottone da cliccare 6 volte 
+        text : ""
+      },
+      { 
         character : 'Hagrid',
-        image: "assets/img/Part2/", //bottone da cliccare 6 volte 
+        image: "assets/img/Part2/lightHouse_HagridDoor.png",
         text : "Scusate tanto!"
       },
       { 
@@ -94,7 +99,7 @@ export class Part2Component implements OnInit {
       },
       { 
         character : 'Hagrid',
-        image: "assets/img/Part2/", //torta
+        image: "assets/img/Part2/HarryCake.png", 
         text : "Tieni Harry, ho qualcosa per te. Mica tutti i giorni un giovanotto compie 11 anni eh!"
       },
       { 
@@ -131,7 +136,6 @@ export class Part2Component implements OnInit {
   startlightHousePubDialogue(){
       if(this.currentLinelightHouse >= this.script.length){
         this.islightHouseDialogueEnd = true;
-        this.followHagrid();
         return;
       } 
       if (this.currentLinelightHouse === 0) {

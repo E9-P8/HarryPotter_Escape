@@ -134,7 +134,7 @@
     }
 }
 
-/***************** DIAGON ALLEY ************************ */
+/***************** ************************ */
 .diagonAlley-viewport,
 .diagonAlley-view,
 .lightHouse-viewport,
@@ -182,7 +182,6 @@
     flex-direction: column;
     justify-content: center;
 }
-
 .dialog-text {
     flex-grow: 1;
     color: #fff2b9;
@@ -194,8 +193,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
-    width: 20%;
-    height: 25%;
+    width: 25%;
+    height: 65%;
 
     border: none;
     outline: none;
@@ -207,6 +206,7 @@
     align-items: center;
 
     background: radial-gradient(circle, rgb(192 190 190 / 24%) 0%, rgba(255, 255, 255, 0) 60%);
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 
@@ -217,8 +217,27 @@
 .interactive-door:hover {
     animation-duration: 0.9s;
 }
+.door-opened {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 132vmin;
+    height: 90vmin;
+    aspect-ratio: 1 / 1;
 
-/*************************/
+    z-index: 100;
+    display: block;
+}
+
+.door-zoom-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/***************** DIAGON ALLEY  ********/
 .wall-bricks-container {
     position: absolute;
     width: 100%;
