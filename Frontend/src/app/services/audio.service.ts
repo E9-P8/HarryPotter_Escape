@@ -32,7 +32,16 @@ export class AudioService {
     angryDudley: 'assets/sound/angryDudley.mp3',
     knockingDoor: 'assets/sound/knockingDoor.mp3',
     knockingWindow: 'assets/sound/knockingWindow.mp3',
-    glass_knock: 'assets/sound/glass-knock.mp3' 
+    glass_knock: 'assets/sound/glass-knock.mp3',
+    shot: 'assets/sound/shot.mp3',
+    fireOn: 'assets/sound/fireOn.mp3',
+    fireFailed: 'assets/sound/fireFailed.mp3',
+    dragonWingsFlapping: 'assets/sound/dragonWingsFlapping.mp3',
+    magic_shoot: 'assets/sound/magic_shoot.mp3',
+    spark_fail: 'assets/sound/spark_fail.mp3' ,
+    PunchingDoor: 'assets/sound/PunchingDoor.mp3',
+    BlowingCandle: 'assets/sound/BlowingCandle.mp3',
+    clockTwelve: 'assets/sound/clockTwelve.mp3'
 
   };
   private activeAudios: { [key: string]: HTMLAudioElement } = {};

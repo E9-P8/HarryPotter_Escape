@@ -60,7 +60,12 @@ export class Part2Component implements OnInit {
   }
 
   ngOnInit(): void {
+    this.startIntroSequence();
   }
+  startIntroSequence() {
+    this.audioService.startGlobalBackground('forest', 0.3); 
+  }
+
   openLetter() {
   this.audioService.playSound(''); 
   this.letterIsOpen = true;
@@ -91,7 +96,7 @@ export class Part2Component implements OnInit {
       },
       { 
         character : '*TOC TOC*',
-        image: "assets/img/Part2/lightHouse_emptyDoor.png", //bottone da cliccare 6 volte 
+        image: "assets/img/Part2/lightHouse_emptyDoor.png", 
         text : "*Qualcuno sta bussando alla porta*"
       },
       { 
@@ -180,7 +185,13 @@ export class Part2Component implements OnInit {
         return;
       } 
       if (this.currentLinelightHouse === 0) {
-        this.audioService.playSound(""); //bip mezzanotte 
+        this.audioService.playSound("clockTwelve"); //bip mezzanotte 
+        setTimeout(() =>{
+          this.audioService.playSound("BlowingCandle");
+        }, 300  )
+      }
+      if (this.currentLinelightHouse === 4) {
+        this.audioService.playSound("shot");
       }
       if (this.currentLinelightHouse === 1 && this.doorClicks < 6) {
         this.audioService.playSound(""); //sbattere la porta a ogni click 
@@ -204,7 +215,7 @@ export class Part2Component implements OnInit {
       onDoorClick() {
         if (this.currentLinelightHouse === 1 && this.doorClicks < 6) {
           this.doorClicks++;
-          this.audioService.playSound('');
+          this.audioService.playSound('PunchingDoor');
 
           this.isDoorVibrating = true;
 
@@ -223,7 +234,7 @@ export class Part2Component implements OnInit {
           if (this.isFirePlaceSolved) return;
           this.userFireplaceSequence.push(item);
           
-          this.audioService.playSound('item_click'); 
+          this.audioService.playSound('switchOnOff'); 
 
           if (this.userFireplaceSequence.length === 2) {
             
@@ -232,13 +243,13 @@ export class Part2Component implements OnInit {
 
             if (isSequenceCorrect) {
               this.isFirePlaceSolved = true;
-              this.audioService.playSound('fire_burst'); // Suono fiammata
-              this.userFireplaceSequence = []; // Svuota
+              this.audioService.playSound('fireOn'); 
+              this.userFireplaceSequence = []; 
               
               this.currentLinelightHouse = 7;
               this.startlightHousePubDialogue();
             } else {
-              this.audioService.playSound('smoke_fail'); 
+              this.audioService.playSound('fireFailed'); 
               this.showSmoke = true;
               this.userFireplaceSequence = []; 
 
