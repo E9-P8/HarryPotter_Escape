@@ -68,27 +68,129 @@
         class="lightHouse-img"
         alt="lightHouse Scene"
       />
-      <div class="door-opened" *ngIf="currentLinelightHouse === 1">
+      <div
+        class="dudley-container"
+        *ngIf="currentLinelightHouse === 15 || currentLinelightHouse === 16"
+      >
+        <img
+          [src]="script[currentLinelightHouse].image"
+          class="lightHouse-img"
+        />
+
+        <div
+          class="magic-flash-point"
+          [class.active]="isDudleyTransformed"
+        ></div>
+      </div>
+
+      <div class="smoke-overlay" *ngIf="showSmoke">
+        <div class="smoke-particle p1"></div>
+        <div class="smoke-particle p2"></div>
+        <div class="smoke-particle p3"></div>
+      </div>
+      <div
+        class="door-opened"
+        *ngIf="currentLinelightHouse === 1"
+        [class.vibrate]="isDoorVibrating"
+      >
         <img
           src="../../../../assets/img/Part2/lightHouse_Door.png"
           class="door-zoom-img"
           alt="door"
         />
-        <button class="interactive-door" *ngIf="currentLinelightHouse === 1 && doorClicks < 6"
-        (click)="onDoorClick()"></button>
       </div>
-      <div class="dialogue-box">
-        <div class="dialog-text">
-          <p *ngIf="script[currentLinelightHouse].character">
-            {{ script[currentLinelightHouse].character }}
-          </p>
-          <p>{{ script[currentLinelightHouse].text }}</p>
+      <button
+        class="interactive-door"
+        *ngIf="currentLinelightHouse === 1 && doorClicks < 6"
+        (click)="onDoorClick()"
+      ></button>
+      <div
+        class="fireplace-inventory"
+        *ngIf="currentLinelightHouse === 6 && !isFirePlaceSolved && !showSmoke"
+      >
+        <p class="inventory-hint">
+          Seleziona nell'ordine corretto i due elementi per accendere il fuoco:
+        </p>
+        <div class="inventory-row">
+          <div class="inventory-slot" (click)="useFireplaceItem('wood')">
+            <img
+              src="assets/img/Part2/items/wood_real.png"
+              alt="Legna Secca"
+              class="item-img-fluid"
+            />
+            <span class="item-label">Legna secca</span>
+          </div>
+          <div class="inventory-slot" (click)="useFireplaceItem('oil')">
+            <img
+              src="assets/img/Part2/items/oil_real.png"
+              alt="Olio da lampada"
+              class="item-img-fluid"
+            />
+            <span class="item-label">Olio da lampada</span>
+          </div>
+          <div class="inventory-slot" (click)="useFireplaceItem('match')">
+            <img
+              src="assets/img/Part2/items/match_real.png"
+              alt="Fiammifero"
+              class="item-img-fluid"
+            />
+            <span class="item-label">Fiammifero</span>
+          </div>
+          <div class="inventory-slot" (click)="useFireplaceItem('wetNews')">
+            <img
+              src="assets/img/Part2/items/newspaper_real.png"
+              alt="Giornale bagnato"
+              class="item-img-fluid"
+            />
+            <span class="item-label">Giornale bagnato</span>
+          </div>
         </div>
       </div>
-      <button class="followHagrid" (click)="followHagrid()">
-        followHagrid
+    </div>
+    <div
+      class="dialogue-box"
+      *ngIf="
+        !(currentLinelightHouse === 6 && !isFirePlaceSolved) &&
+        !isUmbrellaGameActive &&
+        currentLinelightHouse !== 15 &&
+        currentLinelightHouse !== 16
+      "
+    >
+      <div class="dialog-text">
+        <p *ngIf="script[currentLinelightHouse].character">
+          {{ script[currentLinelightHouse].character }}
+        </p>
+        <p>{{ script[currentLinelightHouse].text }}</p>
+      </div>
+    </div>
+    <div
+      class="umbrella-game-container"
+      *ngIf="isUmbrellaGameActive && !this.isUmbrellaSolved"
+    >
+      <p class="umbrella-hint">
+        Colpisci quando il cursore è perfettamente al centro!
+      </p>
+
+      <div class="precision-bar" (click)="onUmbrellaShoot()">
+        <div class="magic-zone">
+          <span class="sparkle s1"></span>
+          <span class="sparkle s2"></span>
+        </div>
+
+        <div class="moving-cursor" [style.left.%]="cursorPosition"></div>
+      </div>
+
+      <button class="shoot-btn" (click)="onUmbrellaShoot()">
+        ⚡ SCAGLIA IL COLPO! ⚡
       </button>
     </div>
+    <button
+      class="followHagrid"
+      *ngIf="currentLinelightHouse === 17 && isUmbrellaSolved"
+      (click)="followHagrid()"
+    >
+      followHagrid
+    </button>
   </div>
 </div>
 <div class="diagonAlley-container" *ngIf="actualFase === 'diagonAlley'">
