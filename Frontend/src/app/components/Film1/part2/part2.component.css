@@ -134,11 +134,13 @@
     }
 }
 
-/***************** ************************ */
+/***************** COMMON ************************ */
 .diagonAlley-viewport,
 .diagonAlley-view,
 .lightHouse-viewport,
-.lightHouse-view{
+.lightHouse-view,
+.firePlace-viewport,
+.firePlace-view{
     width: 100%;
     height: 100%;
     position: absolute;
@@ -146,14 +148,9 @@
     left: 0;
 }
 
-.pub-img {
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-    display: block;
-    z-index: 1;
-}
-.lightHouse-img {
+.pub-img,
+.lightHouse-img,
+.firePlace-img {
     width: 100%;
     height: 100%;
     object-fit: fill;
@@ -187,6 +184,182 @@
     color: #fff2b9;
     text-align: center;
 }
+/********************** FIREPLACE **************************/
+.fireplace-dialogue-box {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 55%;
+    max-width: 800px;
+    min-height: 70px;
+
+    background: rgba(34, 18, 7, 0.85);
+    border: 1px solid #3a2f1d;
+    border-radius: 8px;
+    padding: 10px;
+
+    z-index: 10;
+    box-shadow: 0 10px 30px rgba(50, 27, 0, 0.5);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.text-in-black {
+    position: absolute;
+    top:50%;
+    left: 50%;
+    color: #fff2b9;
+    font-family: 'Georgia', serif;
+    font-size: 0.8em;
+    font-weight: bold;
+    z-index: 20;
+    letter-spacing: 1px;
+}
+.GoToLighthouse {
+    position: absolute;
+    bottom: 13%;
+    right: 38%;
+    padding: 5px 5px;
+    color: #294252;
+    font-family: 'Georgia', serif;
+    font-size: 0.6em;
+    font-weight: bold;
+    cursor: pointer;
+    transform: rotate(5deg);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), inset 0 0 5px rgb(57 69 57);
+    transition: all 0.3s ease;
+    z-index: 20;
+    text-transform: uppercase;
+}
+.storm-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    perspective: 1200px;
+    z-index: 5;
+}
+.letter-shoot {
+    position: absolute;
+    width: 75px;
+    height: 48px;
+    cursor: pointer;
+    pointer-events: auto;
+    transform-style: preserve-3d;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translate3d(0, 0, 0);
+}
+.letter-shoot .letter-face.back {
+    transform: rotateY(0deg);
+    z-index: 2;
+}
+.letter-shoot .letter-face.front {
+    transform: rotateY(180deg);
+    z-index: 1;
+}
+.letter-shoot.showing-retro {
+    transform: rotateY(180deg);
+}
+.minigame-ui {
+    position: absolute;
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 55%;
+    max-width: 800px;
+    background: rgba(15, 21, 17, 0.9);
+    border: 1px solid #1c2e2a;
+    border-radius: 8px;
+    padding: 12px 20px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+    pointer-events: auto;
+}
+.ui-bar-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.ui-label {
+    color: #fff2b9;
+    font-family: 'Georgia', serif;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.ui-bar-bg {
+    width: 100%;
+    height: 12px;
+    background: #090d0b;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #131f1c;
+}
+.ui-bar-fill {
+    height: 100%;
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+.stress-fill {
+    background: linear-gradient(90deg, #9e2a2b, #ff5e62);
+    box-shadow: 0 0 8px rgba(255, 94, 98, 0.5);
+}
+
+.focus-fill {
+    background: linear-gradient(90deg, #2b9348, #00b4d8);
+    box-shadow: 0 0 8px rgba(0, 180, 216, 0.5);
+}
+.zoom-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+.hogwarts-letter-zoom {
+    width: 420px;
+    height: auto;
+    animation: popInLetterStatic 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.hogwarts-letter-zoom img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+}
+
+@keyframes popInLetterStatic {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+/********************* LIGHTHOUSE ************************/
 .interactive-door {
     position: absolute;
     top: 46%;
@@ -441,41 +614,40 @@
 }
 .dudley-container {
     position: relative;
+    isolation: isolate;
+}
+.lightHouse-view .magic-flash-point {
+    position: absolute;
+    top: 50%;
+    left: 23%;
+    transform: translate(-50%, -50%) scale(0.2);
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 200, 240, 0.6) 50%, transparent 70%);
+    opacity: 0;
+    z-index: 99;
+    transition: opacity 0.15s ease-in-out;
 }
-.magic-flash-point {
-    position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 30;
-        background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 180, 230, 0.6) 40%, transparent 70%);
-        opacity: 0;
-        transition: opacity 0.1s;
-}
-.magic-flash-point.active {
-    animation: magicPointFlash 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+
+.lightHouse-view .magic-flash-point.active {
+    animation: magicPointFlash 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 .followHagrid {
     position: absolute;
-    bottom: 30px;
-    right: 30px;
-    padding: 12px 25px;
-    background: linear-gradient(135deg, #2c1e38 0%, #1a0f21 100%);
-    border: 2px solid #6b4a8c;
+    bottom: 50%;
+    right: 5%;
+    padding: 10px 10px;
+    background: linear-gradient(135deg, #272117 0%, #334036 100%);
+    border: 2px solid #041009;
     border-radius: 8px;
-    color: #f0e6ff;
+    color: #fff2b9;
     font-family: 'Georgia', serif;
-    font-size: 16px;
+    font-size:0.8em;;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), inset 0 0 5px rgba(107, 74, 140, 0.5);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), inset 0 0 5px rgb(57 69 57);
     transition: all 0.3s ease;
     z-index: 20;
     text-transform: uppercase;
@@ -483,9 +655,9 @@
 }
 
 .followHagrid:hover {
-    background: linear-gradient(135deg, #3d2a4f 0%, #251630 100%);
-    border-color: #a782cc;
-    box-shadow: 0 0 20px rgba(167, 130, 204, 0.4);
+    background: linear-gradient(135deg, #304132 0%, #444937 100%);
+    border-color: #29310c;
+    box-shadow: 0 0 20px rgba(55, 65, 38, 0.4);
     transform: scale(1.05);
 }
 
@@ -494,19 +666,27 @@
     background: #1a0f21;
 }
 @keyframes magicPointFlash {
-0% {
+    0% {
         transform: translate(-50%, -50%) scale(0.2);
         opacity: 0;
     }
 
-    20% {
+    15% {
         opacity: 1;
-        filter: brightness(3);
+        filter: brightness(2.5);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 1;
+        /* Mantiene la luce solida mentre avviene lo scambio immagini */
+        filter: brightness(2);
     }
 
     100% {
-        transform: translate(-50%, -50%) scale(2.0);
+        transform: translate(-50%, -50%) scale(2.5);
         opacity: 0;
+        /* Svanisce dolcemente */
     }
 }
 @keyframes sparklePulse {

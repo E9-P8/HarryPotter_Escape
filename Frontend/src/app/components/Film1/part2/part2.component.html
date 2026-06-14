@@ -43,25 +43,127 @@
   </div>
 </div>
 <div class="firePlace-container" *ngIf="actualFase === 'firePlace'">
-  <div tabindex="0" class="firePlace-viewport">
+  <div
+    class="firePlace-viewport"
+    (mousedown)="attivaConcentrazione()"
+    (mouseup)="disattivaConcentrazione()"
+    (mouseleave)="disattivaConcentrazione()"
+    (touchstart)="attivaConcentrazione()"
+    (touchend)="disattivaConcentrazione()"
+  >
     <div class="firePlace-view">
-      <img src="assets/img/" class="firePlace-img" alt="FirePlace" />
-      <button class="" (click)="nonLoSo()">Prepara le valige</button>
+      <img
+        [src]="script0[currentfirePlace].image"
+        class="firePlace-img"
+        alt="FirePlace"
+      />
+      <div class="storm-area">
+        <div
+          *ngFor="let letter of flyingLetters; trackBy: trackByLetteraId"
+          class="letter-shoot"
+          [class.showing-retro]="isConcentrazioneActive"
+          [style.left.%]="letter.positionX"
+          [style.top.%]="letter.positionY"
+          (click)="clickLetter(letter); $event.stopPropagation()"
+        >
+          <img
+            [src]="letter.FrontImg"
+            class="letter-face front"
+            alt="Lettera"
+          />
+
+          <img
+            [src]="letter.BackImg"
+            class="letter-face back"
+            alt="Icona Retro"
+          />
+        </div>
+      </div>
+      <div
+        class="zoom-overlay"
+        *ngIf="isCatchLetterSolved && currentfirePlace === 7"
+      >
+        <div class="hogwarts-letter-zoom">
+          <img
+            src="assets/img/Part2/HogwartsFront.png"
+            alt="Hogwarts Letter Captured"
+          />
+        </div>
+      </div>
+
+      <div
+        class="minigame-ui"
+        *ngIf="currentfirePlace === 7 && !isCatchLetterSolved"
+      >
+        <div class="ui-bar-container stress-container">
+          <span class="ui-label">Rabbia di Zio Vernon</span>
+          <div class="ui-bar-bg">
+            <div
+              class="ui-bar-fill stress-fill"
+              [style.width.%]="stressVernon"
+            ></div>
+          </div>
+        </div>
+
+        <div class="ui-bar-container focus-container">
+          <span class="ui-label"
+            >Concentrazione (Tieni premuto per rallentare)</span
+          >
+          <div class="ui-bar-bg">
+            <div
+              class="ui-bar-fill focus-fill"
+              [style.width.%]="concentrazioneHarry"
+            ></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-in-black" *ngIf="currentfirePlace === 3">
+        Qualche giorno dopo ...
+      </div>
+      <div
+        class="fireplace-dialogue-box"
+        *ngIf="
+          !(
+            currentfirePlace === 3 ||
+            currentfirePlace === 8 ||
+            currentfirePlace === 9 ||
+            currentfirePlace === 10 ||
+            currentfirePlace === 11 ||
+            (currentfirePlace === 7 && !isCatchLetterSolved)
+          )
+        "
+      >
+        <div class="dialog-text">
+          <p *ngIf="script0[currentfirePlace].character">
+            {{ script0[currentfirePlace].character }}
+          </p>
+          <p>{{ script0[currentfirePlace].text }}</p>
+        </div>
+      </div>
+
+      <button
+        *ngIf="currentfirePlace === 11 && isCatchLetterSolved"
+        class="GoToLighthouse"
+        (click)="GoToLighthouse()"
+      >
+        Vai alla casa sul faro
+      </button>
     </div>
   </div>
 </div>
 <div class="lightHouse-container" *ngIf="actualFase === 'lightHouse'">
   <div class="lightHouse-viewport">
     <div class="lightHouse-view">
-      <!--<video
+      <video
         *ngIf="showlightHouseVideo"
-        src="assets/img/Part2/"
+        src="assets/video/StormLighthouse.mp4"
         class="fullscreen-video"
         autoplay
         muted
         playsinline
-        (ended)="onVideoEnded()"
-      ></video>-->
+        (ended)="onLighthouseVideoEnded()"
+      ></video>
       <img
         *ngIf="!showlightHouseVideo"
         [src]="script[currentLinelightHouse].image"
@@ -76,12 +178,8 @@
           [src]="script[currentLinelightHouse].image"
           class="lightHouse-img"
         />
-
-        <div
-          class="magic-flash-point"
-          [class.active]="isDudleyTransformed"
-        ></div>
       </div>
+      <div class="magic-flash-point" [class.active]="isDudleyTransformed"></div>
 
       <div class="smoke-overlay" *ngIf="showSmoke">
         <div class="smoke-particle p1"></div>
@@ -153,7 +251,8 @@
         !(currentLinelightHouse === 6 && !isFirePlaceSolved) &&
         !isUmbrellaGameActive &&
         currentLinelightHouse !== 15 &&
-        currentLinelightHouse !== 16
+        currentLinelightHouse !== 16 &&
+        !showlightHouseVideo
       "
     >
       <div class="dialog-text">
@@ -189,7 +288,7 @@
       *ngIf="currentLinelightHouse === 17 && isUmbrellaSolved"
       (click)="followHagrid()"
     >
-      followHagrid
+      Segui Hagrid
     </button>
   </div>
 </div>
