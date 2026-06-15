@@ -112,17 +112,17 @@ export class Part2Component implements OnInit {
       { 
         character : 'Zio Vernon',
         image: "assets/img/Part2/AngryZio_letter.png", 
-        text : "Chi ti scrive?! Chi sa del sottoscala?! Non ci saranno risposte! Questa lettera verrà bruciata!"
+        text : "Chi mai ti scriverebbe?!"
       },
       { 
         character : 'Harry',
         image: "assets/img/Part2/Harry1.png", 
-        text : "Ma era mia! C'era il mio nome sopra!"
+        text : "Ridammela quella è mia!"
       },
       { 
         character : 'Zio Vernon',
         image: "assets/img/Part2/AngryZio_letter2.png", 
-        text : ""
+        text : "Non ci saranno risposte! Questa lettera verrà bruciata!"
       },
       { 
         character : '',
@@ -130,24 +130,24 @@ export class Part2Component implements OnInit {
         text : ""
       },
       { 
-        character : '',
+        character : 'Zio Vernon',
         image: "assets/img/Part2/Sunday.png", 
         text : "La domenica è il giorno più bello di tutti! Niente posta la domenica!"
       },
       { 
-        character : '',
+        character : 'Zio Vernon',
         image: "assets/img/Part2/Sunday1.png", 
-        text : ""
+        text : "Neanche una schifosa, miserab...."
       },
       { 
-        character : '',
+        character : 'Zio Vernon',
         image: "assets/img/Part2/Sunday2.png", 
-        text : ""
+        text : "Levatevi di dosso!"
       },
       { 
-        character : '',
+        character : 'Zio Vernon',
         image: "assets/img/Part2/Sunday3.png", 
-        text : ""
+        text : "Non vi sopporto! BASTA! BASTA!"
       },
       { 
         character : '',
@@ -359,12 +359,12 @@ export class Part2Component implements OnInit {
       { 
         character : 'Hagrid',
         image: "assets/img/Part2/HagridFucile.png",
-        text : "Essiccati Sursley, vecchia prugna (?)"//suono di sparo
+        text : "Essiccati Dursley, vecchia prugna (?)"//suono di sparo
       },
       { 
         character : 'Hagrid',
         image: "assets/img/Part2/HarryCake.png", 
-        text : "Tieni Harry, ho qualcosa per te. Mica tutti i giorni un giovanotto compie 11 anni eh!" //accende fuoco
+        text : "Tieni Harry, ho qualcosa per te. Mica tutti i giorni un giovanotto compie 11 anni eh!" 
       },
       { 
         character : 'Hagrid', 
@@ -379,16 +379,16 @@ export class Part2Component implements OnInit {
       { 
         character : 'Hagrid', //dialogo hagrid e harry
         image: "assets/img/Part2/HagridLetter.png",
-        text : ""
+        text : "Io sono Rubeus Hagrd. Custode delle chiavi a Hogwarts."
       },
       { 
         character : 'Harry', //dialogo hagrid e harry
         image: "assets/img/Part2/HarryLetter.png",
-        text : ""
+        text : "Mi spiace, io non conosco Hogwarts..."
       },{ 
         character : 'Hagrid', //mettere lettera di benvenuto
         image: "assets/img/Part2/HogwartsLetter12.png",
-        text : ""
+        text : "Tu sei un mago Harry! Un mago coi fiocchi direi.. una volta studiato un pochetto!"
       },
       { 
         character : 'Zio Vernon',

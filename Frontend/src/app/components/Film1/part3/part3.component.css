@@ -19,19 +19,147 @@
     transition: transform 0.3s ease, opacity 0.3s ease;
     opacity: 0.6;
 }
-
 .audio-icon {
     width: 100%;
     height: 100%;
     fill: #fdfde2;
     transition: fill 0.3s ease;
 }
-
 .audio-toggle-btn:hover {
     transform: scale(1.08);
     opacity: 1;
 }
-
 .audio-toggle-btn.muted {
     opacity: 0.25;
+}
+.broom-container,
+.Gringott-container,
+.Ollivander-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #000;
+}
+.broom-viewport,
+.broom-view,
+.Gringott-viewport,
+.Gringott-view,
+.Ollivander-viewport,
+.Ollivander-view {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.broom-img,
+.Gringott-img,
+.Ollivander-img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    display: block;
+    z-index: 1;
+}
+
+.dialogue-box {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 55%;
+    max-width: 800px;
+    min-height: 70px;
+
+    background: rgba(36, 28, 17, 0.85);
+    border: 1px solid #2b1e0d;
+    border-radius: 8px;
+    padding: 10px;
+
+    z-index: 10;
+    box-shadow: 0 10px 30px rgba(50, 27, 0, 0.5);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.dialog-text {
+    flex-grow: 1;
+    color: #fff2b9;
+    text-align: center;
+}
+
+.EnterOllivander {
+    position: absolute;
+    bottom: 13%;
+    right: 38%;
+    cursor: pointer;
+    z-index: 20;
+}
+.EnterGringott{
+    position: absolute;
+    bottom: 33%;
+    right: 19%;
+    width: 7%;
+    background-color: #342a208c;
+    color: #c7c1b5;
+    cursor: pointer;
+    z-index: 20;
+}
+.GoToStation {
+    position: absolute;
+    bottom: 197%;
+    right: 91%;
+    width: 15%;
+    background-color: #392b1a75;
+    color: #c7c1b5;
+    cursor: pointer;
+    z-index: 20;
+}
+
+/****************** OLIVANDER *************************/
+.btn-box{
+    position: absolute;
+    width: 100%;
+    height: 10%;
+    bottom: 18%;
+    z-index: 20;
+}
+.btn-box button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12%;
+    height: 80%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+.btn-box .box-1{
+    left: 21%;
+    transform: translateY(-50%) rotate(-17deg);
+}
+.btn-box .box-2 {
+    left: 39%;
+    transform: translateY(-50%) rotate(-17deg);
+}
+.btn-box .box-3 {
+    left: 58%;
+    transform: translateY(-50%) rotate(-17deg);
+}
+.btn-box .box-4 {
+    left: 78%;
+    transform: translateY(-50%) rotate(-17deg);
+}
+.fullscreen-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 8;
+    background-color: #000;
 }
