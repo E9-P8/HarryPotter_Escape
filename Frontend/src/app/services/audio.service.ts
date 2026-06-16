@@ -44,7 +44,11 @@ export class AudioService {
     clockTwelve: 'assets/sound/clockTwelve.mp3',
     rainAndThunder: 'assets/sound/rainAndThunder.mp3',
     LetTheMysteryUnfold: 'assets/sound/LetTheMysteryUnfold.mp3',
-    QueenGhosts: 'assets/sound/QueenGhosts.mp3'
+    QueenGhosts: 'assets/sound/QueenGhosts.mp3',
+    stonesFalling: 'assets/sound/stones-falling.mp3',
+    brick: 'assets/sound/brick.mp3',
+    owl: 'assets/sound/owl_hooting.mp3',
+    flyingPaper: 'assets/sound/flyingPaper.mp3'
 
   };
   private activeAudios: { [key: string]: HTMLAudioElement } = {};

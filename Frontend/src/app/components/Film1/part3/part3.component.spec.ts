@@ -12,7 +12,7 @@ describe('Part3Component', () => {
     })
     .compileComponents();
   }));
-
+ 
   beforeEach(() => {
     fixture = TestBed.createComponent(Part3Component);
     component = fixture.componentInstance;

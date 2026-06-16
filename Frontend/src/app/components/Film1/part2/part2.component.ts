@@ -176,9 +176,19 @@ export class Part2Component implements OnInit {
           this.isfirePlaceDialogueEnd = true;
           return;
         } 
+        if( this.currentfirePlace === 5 ||this.currentfirePlace === 6){
+          this.audioService.playSound('flyingPaper');
+        }
+       
       if(this.currentfirePlace === 7 && !this.isfirePlaceEnigmaSolved){
         this.initStormLetters();
+        this.audioService.playSound('flyingPaper');
         return;
+        } 
+        if( this.currentfirePlace === 7 || this.currentfirePlace === 8 || this.currentfirePlace === 9 || 
+          this.currentfirePlace === 10|| this.currentfirePlace === 11 ){
+            this.audioService.stopSound('flyingPaper');
+        this.audioService.playSound('owl');
         } 
       setTimeout(() => {
           this.currentfirePlace++;
@@ -638,7 +648,7 @@ export class Part2Component implements OnInit {
 
     onBrickClick(brickIndex: number): void {
 
-        this.audioService.playSound('brick_click'); 
+        this.audioService.playSound('brick'); 
         this.userPubSequence.push(Number(brickIndex));
 
       if (this.userPubSequence.length === this.correctPubSequence.length) {
@@ -649,6 +659,8 @@ export class Part2Component implements OnInit {
 
         if (isSequenceCorrect) {
           this.solvePubEnigma();
+          this.audioService.playSound('stonesFalling'); 
+          
         } else {
           alert("Il muro non si muove... la combinazione sembra sbagliata.");
           this.userPubSequence = []; 
