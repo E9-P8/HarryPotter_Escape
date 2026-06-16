@@ -72,7 +72,7 @@
     max-width: 800px;
     min-height: 70px;
 
-    background: rgba(36, 28, 17, 0.85);
+    background: rgba(36, 28, 17, 0.85); 
     border: 1px solid #2b1e0d;
     border-radius: 8px;
     padding: 10px;
@@ -117,7 +117,91 @@
     cursor: pointer;
     z-index: 20;
 }
+/****************** GRINGOTT **************************/
+.pression-tube {
+    position: absolute;
+    top: 45%;
+    /* Posiziona il pannello al centro verticale dello schermo */
+    left: 50%;
+    /* Lo centra orizzontalmente */
+    transform: translate(-50%, -50%);
+    /* Centratura matematica perfetta */
 
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    width: 450px;
+    /* Dimensione fissa per contenere comodamente il tubo e le 3 valvole */
+    height: 300px;
+    background: rgba(26, 20, 14, 0.92);
+    /* Colore scuro metallo/legno antico in stile Gringott */
+    border: 3px solid #5a452a;
+    /* Bordo color bronzo */
+    border-radius: 15px;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 100;
+    /* Forza l'enigma a stare SOPRA l'immagine Gringott-img */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+.glass-tube {
+    position: relative;
+    width: 40px;
+    height: 250px;
+    background: rgba(0, 0, 0, 0.5);
+    /* Sfondo scuro interno al tubo per far risaltare il liquido */
+    border: 3px solid #888;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.magic-liquid {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(to top, #00ffcc, #00aaff);
+    transition: height 0.2s ease-out;
+}
+
+.target-line {
+    position: absolute;
+    bottom: 93.75%;
+    width: 100%;
+    height: 4px;
+    background-color: #ffd700;
+    box-shadow: 0 0 8px #ffd700;
+    z-index: 10;
+}
+.valve-control-panel {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.valve-wrapper {
+    width: 95px;
+    /* Dimensione aumentata per rendere le immagini delle valvole ben visibili e cliccabili */
+    height: 95px;
+    cursor: grab;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.valve-wrapper:active {
+    cursor: grabbing;
+}
+
+.manopola-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    user-select: none;
+    -webkit-user-drag: none;
+    transform-origin: center center;
+}
 /****************** OLIVANDER *************************/
 .btn-box{
     position: absolute;

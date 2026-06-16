@@ -35,7 +35,14 @@
     </button>
   </div>
 </div>
-<div class="Gringott-container" *ngIf="actualFase === 'Gringott'">
+<div
+  class="Gringott-container"
+  *ngIf="actualFase === 'Gringott'"
+  (mousemove)="onDragging($event)"
+  (touchmove)="onDragging($event)"
+  (mouseup)="stopGame()"
+  (touchend)="stopGame()"
+>
   <div class="Gringott-viewport">
     <div class="Gringott-view">
       <img
@@ -44,12 +51,56 @@
         alt="Gringott"
       />
 
-      <div class="Gringott-dialogue-box" *ngIf="this.currentLineGringott === 6">
+      <div class="dialogue-box" *ngIf="currentLineGringott !== 6">
         <div class="dialog-text">
           <p *ngIf="script1[currentLineGringott].character">
             {{ script1[currentLineGringott].character }}
           </p>
           <p>{{ script1[currentLineGringott].text }}</p>
+        </div>
+      </div>
+      <div class="pression-tube" *ngIf="currentLineGringott === 6">
+        <div class="glass-tube">
+          <div class="target-line"></div>
+          <div
+            class="magic-liquid"
+            [style.height.%]="(liquidLevel / maxLiquid) * 100"
+          ></div>
+        </div>
+
+        <div class="valve-control-panel">
+          <div class="valve-wrapper">
+            <img
+              src="assets/img/Part3/ValveA.png"
+              class="manopola-img"
+              [style.transform]="'rotate(' + angleValveA + 'deg)'"
+              (mousedown)="startGame($event, 'A')"
+              (touchstart)="startGame($event, 'A')"
+              alt="Runa del Fuoco"
+            />
+          </div>
+
+          <div class="valve-wrapper">
+            <img
+              src="assets/img/Part3/ValveB.png"
+              class="manopola-img"
+              [style.transform]="'rotate(' + angleValveB + 'deg)'"
+              (mousedown)="startGame($event, 'B')"
+              (touchstart)="startGame($event, 'B')"
+              alt="Runa dell'Aria"
+            />
+          </div>
+
+          <div class="valve-wrapper">
+            <img
+              src="assets/img/Part3/ValveC.png"
+              class="manopola-img"
+              [style.transform]="'rotate(' + angleValveC + 'deg)'"
+              (mousedown)="startGame($event, 'C')"
+              (touchstart)="startGame($event, 'C')"
+              alt="Runa della Terra"
+            />
+          </div>
         </div>
       </div>
 

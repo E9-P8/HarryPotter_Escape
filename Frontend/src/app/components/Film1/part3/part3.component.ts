@@ -31,7 +31,21 @@ export class Part3Component implements OnInit {
   isbroomDialogueEnd: boolean = false;
 
   currentLineGringott = 0;
+  liquidLevel: number = 0;
+  liquidTarget: number = 15;
+  maxLiquid :number = 16;
   isGringottDialogueEnd: boolean = false;
+
+  isDraggingValve: boolean = false;
+  activeValve: 'A' | 'B' | 'C' | null = null;
+  Xcentre: number = 0;
+  Ycentre: number = 0;
+  startAngle: number = 0;
+  accumulatedRotation: number = 0; 
+
+  angleValveA: number = 0;
+  angleValveB: number = 0;
+  angleValveC: number = 0;
 
   currentLineOllivander = 0;
   isOllivanderDialogueEnd: boolean = false;
@@ -101,72 +115,72 @@ export class Part3Component implements OnInit {
     script1 : GringottDialogue[] = [
       { 
         character : 'Harry',
-        image: "assets/img/Part2/", 
+        image: "assets/img/Part3/", 
         text : "Hagrid, cosa sono esattamente questi cosi?"
       },
       { 
         character : 'Hagrid',
-        image: "assets/img/Part2/",
+        image: "assets/img/Part3/",
         text : "Sono i folletti, astuti come non mai ma non tra le bestie piu amichevoli" 
       },
       { 
         character : 'Hagrid',
-        image: "assets/img/Part2/",
+        image: "assets/img/Part3/",
         text : "Il signor harry potter desidera fare un prelievo"
       },
       { 
         character : 'Folletto',
-        image: "assets/img/Part2/",
+        image: "assets/img/Part3/",
         text : "Il signor harry potter ha la sua chiave?"
       },
       { 
         character : 'Hagrid',
-        image: "assets/img/Part2/",
+        image: "assets/img/Part3/",
         text : "Oh! Un momento, ce l'ho da qualche parte... Oh eccola la diavoletta!"
       },
       { 
         character : 'Hagrid',
-        image: "assets/img/Part2/",
+        image: "assets/img/Part3/",
         text : "E ho anche questa cosa... riguarda lei sa cosa.. la camera blindata lei sa quale ... "
       }, 
       { 
         character : 'Folletto',
-        image: "assets/img/Part2/",//ENIGMA
+        image: "assets/img/Part3/EnigmaGringott.png",//ENIGMA
         text : "Il carrello non si muove finchè il freno di sicurezza non viene sbloccato."
       },
       { 
         character : 'Folletto',
-        image: "assets/img/Part2/",
+        image: "assets/img/Part3/",
         text : "Camera blindata 687.. la lampada prego!" //dare lampada
       },
       { 
         character : 'Folletto',
-        image: "assets/img/Part2/",
+        image: "assets/img/Part3/",
         text : "La chiave prego!" //dare chiave
       },
       { 
         character : 'Hagrid',
-        image: "assets/img/Part2/",
+        image: "assets/img/Part3/",
         text : "Non avrai pensato che i tuoi genitori ti avevano lasciato all'asciutto!"
       },
       { 
         character : 'Harry',
-        image: "assets/img/Part2/",
+        image: "assets/img/Part3/",
         text : "Hagrid, cosa c'è nella 713?"
       },
       { 
         character : 'Hagrid',
-        image: "assets/img/Part2/",
+        image: "assets/img/Part3/",
         text : "Affari di hogwarts! SEGRETISSIMI!"
       },
       { 
         character : 'Harry',
-        image: "assets/img/Part2/", //qui sono in strada
+        image: "assets/img/Part3/", //qui sono in strada
         text : "Mi manca ancora ... una bacchetta!"
       },
       { 
         character : 'Hagrid',
-        image: "assets/img/Part2/", 
+        image: "assets/img/Part3/", 
         text : "allora ci vuole Ollivander! Non c'è posto migliore! Aspettami li, non ci metterò molto"
       }
     ]
@@ -175,18 +189,116 @@ export class Part3Component implements OnInit {
           this.isGringottDialogueEnd = true;
           return;
        }
+       if(this.currentLineGringott === 6 && this.liquidLevel !== this.liquidTarget){ 
+return;
+       }
         setTimeout(() => {
           this.currentLineGringott++;
           this.startGringottDialogue();
-            }, 3000);
+            }, 1000);
     }
-  EnterOllivander(){
+
+    startGame(event: MouseEvent | TouchEvent, valve: 'A' | 'B' | 'C') {
+      this.activeValve = valve;
+      this.isDraggingValve = true;
+  
+     // centro della manopola sullo schermo
+     const rect = (event.target as HTMLElement).getBoundingClientRect();
+     this.Xcentre = rect.left + rect.width / 2;
+     this.Ycentre = rect.top + rect.height / 2;
+  
+     // posizione attuale del mouse/dito
+     const clientX = event instanceof MouseEvent ? event.clientX : event.touches[0].clientX;
+     const clientY = event instanceof MouseEvent ? event.clientY : event.touches[0].clientY;
+  
+    // angolo iniziale trigonometria
+    this.startAngle = Math.atan2(clientY - this.Ycentre, clientX - this.Xcentre) * (180 / Math.PI);
+   }
+
+   onDragging(event: MouseEvent | TouchEvent) {
+    if (!this.isDraggingValve || !this.activeValve) return;
+
+    const clientX = event instanceof MouseEvent ? event.clientX : event.touches[0].clientX;
+    const clientY = event instanceof MouseEvent ? event.clientY : event.touches[0].clientY;
+
+    const currentAngle = Math.atan2(clientY - this.Ycentre, clientX - this.Xcentre) * (180 / Math.PI);
+
+    let angleDifference = currentAngle - this.startAngle;
+
+    if (angleDifference > 180) angleDifference -= 360;
+    if (angleDifference < -180) angleDifference += 360;
+
+    if (this.activeValve === 'A') {
+      this.angleValveA += angleDifference;
+    } else if (this.activeValve === 'B') {
+      this.angleValveB += angleDifference;
+    } else if (this.activeValve === 'C') {
+      this.angleValveC += angleDifference;
+    }
+
+    this.accumulatedRotation += angleDifference;
+    this.startAngle = currentAngle;
+    const sogliaScatto = 90; 
+
+    if (this.accumulatedRotation >= sogliaScatto) {
+        this.applyValveEffect(this.activeValve, 'orario');
+        this.accumulatedRotation = 0;
+
+       } else if (this.accumulatedRotation <= -sogliaScatto) {
+          this.applyValveEffect(this.activeValve, 'antiorario');
+          this.accumulatedRotation = 0;
+    }
+    }
+    applyValveEffect(valve: 'A' | 'B' | 'C', direction: 'orario' | 'antiorario') {
+      let variation = 0;
+
+          if (valve === 'A') {
+    if (direction === 'orario') {
+      variation = 5;
+    } else {
+      variation = -5;
+    }
+           }
+  
+          if (valve === 'B') {
+    if (direction === 'orario') {
+      variation = 3;
+    } else {
+      variation = -3;
+    }
+            }
+          if (valve === 'C') {
+    if (direction === 'orario') {
+      variation = 2;
+    } else {
+      variation = -2;
+    }
+           }
+       this.liquidLevel = Math.max(0, this.liquidLevel + variation);
+       if (this.liquidLevel >= this.maxLiquid) {
+        //mettere suono
+      this.liquidLevel = 0;
+      alert("Sfiato di pressione! Il tubo si è svuotato.");
+      return; 
+    } 
+    if (this.liquidLevel === this.liquidTarget) {
+        this.currentLineGringott++;
+        this.startGringottDialogue();
+    }
+    }
+    stopGame() {
+    this.isDraggingValve = false;
+    this.activeValve = null;
+    this.accumulatedRotation = 0;
+  }
+  
+    EnterOllivander(){
     this.actualFase= 'Ollivander';
     this.audioService.startGlobalBackground('rainAndThunder', 0.3);
 
     this.currentLineOllivander = 0;
     this.startOllivanderDialogue();
-  }
+    }
   /***************** Ollivander ************************ */
 
     script2 : OllivanderDialogue[] = [
