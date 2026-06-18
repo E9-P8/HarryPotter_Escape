@@ -92,10 +92,13 @@
 
 .EnterOllivander {
     position: absolute;
-    bottom: 13%;
-    right: 38%;
-    cursor: pointer;
-    z-index: 20;
+        bottom: 45%;
+        right: 93%;
+        cursor: pointer;
+        z-index: 20;
+        width: 5%;
+        color: #ada092;
+        background-color: #1c160a57;
 }
 .EnterGringott{
     position: absolute;
@@ -120,21 +123,20 @@
 /****************** GRINGOTT **************************/
 .pression-tube {
     position: absolute;
-    top: 49%;
-    left: 53%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 50%;
-    height: 69%;
+        top: 37.5%;
+        left: 53.5%;
+        transform: translate(-50%, -50%);
+        width: 6%;
+        height: 35%;
+        z-index: 5;
 }
+
 .glass-tube {
     position: relative;
-    width: 57px;
-    height: 292px;
+    width: 100%;
+    height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
+    border-radius: 6px;
     overflow: hidden;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
 }
@@ -152,36 +154,80 @@
     bottom: 93.75%;
     width: 100%;
     height: 4px;
-    background-color: #ffd700;
-    box-shadow: 0 0 8px #ffd700;
+    background-color: #fff4bc;
+    box-shadow: 0 0 8px #ff9d00;
     z-index: 10;
 }
-.valve-control-panel {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-}
-
 .valve-wrapper {
-    width: 95px;
-    height: 95px;
+    position: absolute;
+    transform: translate(-50%, -50%);
     cursor: grab;
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 6;
 }
-
 .valve-wrapper:active {
     cursor: grabbing;
+}
+.valve-wrapper.valveA {
+    top: 67.5%;
+    left: 39.2%;
+    width: 15.8%;
+    height: 25%;
+}
+.valve-wrapper.valveB {
+    top: 70%;
+    left: 54%;
+    width: 9.2%;
+    height: 15.2%;
+}
+
+.valve-wrapper.valveC {
+    top: 69.5%;
+    left: 68.6%;
+    width: 12.8%;
+    height: 22%;
 }
 
 .manopola-img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    user-select: none;
+    object-fit: fill;
+   user-select: none;
     -webkit-user-drag: none;
     transform-origin: center center;
+}
+.items {
+    position: absolute;
+        bottom: 32px;
+        left: 67%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 30px;
+        z-index: 15;
+}
+
+.inventory-item {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    cursor: grab;
+    transition: transform 0.2s ease;
+    -webkit-user-drag: none;
+}
+
+.inventory-item:hover {
+    transform: scale(1.1);
+}
+
+.inventory-item.dragging {
+    position: fixed;
+    z-index: 999;
+    pointer-events: none;
+    transform: scale(1.2);
+    cursor: grabbing;
+    transition: none;
 }
 /****************** OLIVANDER *************************/
 .btn-box{

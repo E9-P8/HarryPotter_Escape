@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { AudioService } from '../../../services/audio.service';
 
@@ -32,9 +32,10 @@ export class Part3Component implements OnInit {
 
   currentLineGringott = 0;
   liquidLevel: number = 0;
-  liquidTarget: number = 15;
-  maxLiquid :number = 16;
+  liquidTarget: number = 21;
+  maxLiquid :number = 23;
   isGringottDialogueEnd: boolean = false;
+  gringottTimer: any;
 
   isDraggingValve: boolean = false;
   activeValve: 'A' | 'B' | 'C' | null = null;
@@ -42,10 +43,19 @@ export class Part3Component implements OnInit {
   Ycentre: number = 0;
   startAngle: number = 0;
   accumulatedRotation: number = 0; 
+  hasTriggeredThisDrag: boolean = false; 
 
   angleValveA: number = 0;
   angleValveB: number = 0;
   angleValveC: number = 0;
+
+  gaveLamp : boolean = false;
+  gaveKeys: boolean = false;
+  activeItem: 'lamp' | 'key' | 'coin' | null = null;
+  itemX: number = 0;
+  itemY: number = 0;
+  private dragOffsetX: number = 0;
+  private dragOffsetY: number = 0;
 
   currentLineOllivander = 0;
   isOllivanderDialogueEnd: boolean = false;
@@ -115,32 +125,32 @@ export class Part3Component implements OnInit {
     script1 : GringottDialogue[] = [
       { 
         character : 'Harry',
-        image: "assets/img/Part3/", 
+        image: "assets/img/Part3/FollettiBank.png", 
         text : "Hagrid, cosa sono esattamente questi cosi?"
       },
       { 
         character : 'Hagrid',
-        image: "assets/img/Part3/",
+        image: "assets/img/Part3/HagridEntrata.png",
         text : "Sono i folletti, astuti come non mai ma non tra le bestie piu amichevoli" 
       },
       { 
         character : 'Hagrid',
-        image: "assets/img/Part3/",
+        image: "assets/img/Part3/Prelievo.png",
         text : "Il signor harry potter desidera fare un prelievo"
       },
       { 
         character : 'Folletto',
-        image: "assets/img/Part3/",
+        image: "assets/img/Part3/FolletoPrelievo.png",
         text : "Il signor harry potter ha la sua chiave?"
       },
       { 
         character : 'Hagrid',
-        image: "assets/img/Part3/",
+        image: "assets/img/Part3/ChiaveRoom.png",
         text : "Oh! Un momento, ce l'ho da qualche parte... Oh eccola la diavoletta!"
       },
       { 
         character : 'Hagrid',
-        image: "assets/img/Part3/",
+        image: "assets/img/Part3/HagridSegreto.png",
         text : "E ho anche questa cosa... riguarda lei sa cosa.. la camera blindata lei sa quale ... "
       }, 
       { 
@@ -150,37 +160,37 @@ export class Part3Component implements OnInit {
       },
       { 
         character : 'Folletto',
-        image: "assets/img/Part3/",
+        image: "assets/img/Part3/follettoRoom2.png",
         text : "Camera blindata 687.. la lampada prego!" //dare lampada
       },
       { 
         character : 'Folletto',
-        image: "assets/img/Part3/",
+        image: "assets/img/Part3/FollettoRoom.png",
         text : "La chiave prego!" //dare chiave
       },
       { 
         character : 'Hagrid',
-        image: "assets/img/Part3/",
+        image: "assets/img/Part3/Room643.png",
         text : "Non avrai pensato che i tuoi genitori ti avevano lasciato all'asciutto!"
       },
       { 
         character : 'Harry',
-        image: "assets/img/Part3/",
+        image: "assets/img/Part3/UscitaStanza.png",
         text : "Hagrid, cosa c'è nella 713?"
       },
       { 
         character : 'Hagrid',
-        image: "assets/img/Part3/",
+        image: "assets/img/Part3/UscitaStanza.png",
         text : "Affari di hogwarts! SEGRETISSIMI!"
       },
       { 
         character : 'Harry',
-        image: "assets/img/Part3/", //qui sono in strada
+        image: "assets/img/Part3/HagridToOlivander.png", //qui sono in strada
         text : "Mi manca ancora ... una bacchetta!"
       },
       { 
         character : 'Hagrid',
-        image: "assets/img/Part3/", 
+        image: "assets/img/Part3/HagridToOlivander.png", 
         text : "allora ci vuole Ollivander! Non c'è posto migliore! Aspettami li, non ci metterò molto"
       }
     ]
@@ -190,36 +200,124 @@ export class Part3Component implements OnInit {
           return;
        }
        if(this.currentLineGringott === 6 && this.liquidLevel !== this.liquidTarget){ 
-return;
+          return;
        }
+       if (this.currentLineGringott === 7 && !this.gaveLamp) {
+          return;
+       }
+
+    
+      if (this.currentLineGringott === 8 && !this.gaveKeys) {
+        return;
+      }
         setTimeout(() => {
           this.currentLineGringott++;
           this.startGringottDialogue();
-            }, 1000);
+            }, 3000);
     }
 
-    startGame(event: MouseEvent | TouchEvent, valve: 'A' | 'B' | 'C') {
-      this.activeValve = valve;
-      this.isDraggingValve = true;
-  
-     // centro della manopola sullo schermo
-     const rect = (event.target as HTMLElement).getBoundingClientRect();
-     this.Xcentre = rect.left + rect.width / 2;
-     this.Ycentre = rect.top + rect.height / 2;
-  
-     // posizione attuale del mouse/dito
-     const clientX = event instanceof MouseEvent ? event.clientX : event.touches[0].clientX;
-     const clientY = event instanceof MouseEvent ? event.clientY : event.touches[0].clientY;
-  
-    // angolo iniziale trigonometria
-    this.startAngle = Math.atan2(clientY - this.Ycentre, clientX - this.Xcentre) * (180 / Math.PI);
-   }
 
-   onDragging(event: MouseEvent | TouchEvent) {
-    if (!this.isDraggingValve || !this.activeValve) return;
-
+    startItemDrag(event: MouseEvent | TouchEvent, item: 'lamp' | 'key' | 'coin') {
+    this.activeItem = item;
+    
     const clientX = event instanceof MouseEvent ? event.clientX : event.touches[0].clientX;
     const clientY = event instanceof MouseEvent ? event.clientY : event.touches[0].clientY;
+    
+    const rect = (event.target as HTMLElement).getBoundingClientRect();
+    
+    this.dragOffsetX = clientX - rect.left;
+    this.dragOffsetY = clientY - rect.top;
+
+    this.itemX = rect.left;
+    this.itemY = rect.top;
+  }
+
+    checkItemDrop() {
+    const imgElement = document.querySelector(`.inventory-item.dragging`);
+    
+    if (!imgElement) {
+      this.resetItemPosition();
+      return;
+    }
+    const rect = imgElement.getBoundingClientRect();
+    const currentGlobalX = rect.left + rect.width / 2;
+    const currentGlobalY = rect.top + rect.height / 2;
+
+    const insideCenterX = currentGlobalX > window.innerWidth * 0.30 && currentGlobalX < window.innerWidth * 0.70;
+    const insideCenterY = currentGlobalY > window.innerHeight * 0.25 && currentGlobalY < window.innerHeight * 0.70;
+
+    if (insideCenterX && insideCenterY) {
+      if (this.activeItem === 'coin') {
+        alert("Folletto: 'Non accettiamo mance qui!'");
+        this.resetItemPosition();
+        return;
+      }
+
+      if (this.currentLineGringott === 7) {
+        if (this.activeItem === 'lamp') {
+          this.gaveLamp = true;
+          this.currentLineGringott++; 
+          this.resetItemPosition();
+          this.startGringottDialogue();
+        } else if (this.activeItem === 'key') {
+          alert("Folletto: 'Ho chiesto LA LAMPADA, non la chiave! Senti il peso degli anni, mago?'");
+        }
+      } 
+      
+      else if (this.currentLineGringott === 8) {
+        if (this.activeItem === 'key') {
+          this.gaveKeys = true;
+          this.currentLineGringott++;
+          this.resetItemPosition();
+          this.startGringottDialogue();
+        } else if (this.activeItem === 'lamp') {
+          alert("Folletto: 'Cosa me ne faccio di un'altra lampada?! Mi serve LA CHIAVE della camera blindata!'");
+        }
+      }
+      this.resetItemPosition();
+
+    }
+  }
+  resetItemPosition() {
+    this.activeItem = null;
+  }
+
+ startGame(event: MouseEvent | TouchEvent, valve: 'A' | 'B' | 'C') {
+    this.activeValve = valve;
+    this.isDraggingValve = true;
+    this.hasTriggeredThisDrag = false; 
+    const rect = (event.target as HTMLElement).getBoundingClientRect();
+    this.Xcentre = rect.left + rect.width / 2;
+    this.Ycentre = rect.top + rect.height / 2;
+ 
+    const clientX = event instanceof MouseEvent ? event.clientX : event.touches[0].clientX;
+    const clientY = event instanceof MouseEvent ? event.clientY : event.touches[0].clientY;
+ 
+    this.startAngle = Math.atan2(clientY - this.Ycentre, clientX - this.Xcentre) * (180 / Math.PI);
+  }
+
+  @HostListener('window:mousemove', ['$event'])
+  @HostListener('window:touchmove', ['$event'])
+  onDragging(event: MouseEvent | TouchEvent) {
+    const clientX = event instanceof MouseEvent ? event.clientX : event.touches[0].clientX;
+    const clientY = event instanceof MouseEvent ? event.clientY : event.touches[0].clientY;
+
+    if (this.activeItem) {
+      const imgElement = document.querySelector(`.inventory-item[alt*="${this.activeItem === 'lamp' ? 'Lamp' : this.activeItem === 'key' ? 'Key' : 'Coin'}"]`);
+      let parentOffsetLeft = 0;
+      let parentOffsetTop = 0;
+
+      if (imgElement && imgElement.parentElement) {
+        const parentRect = imgElement.parentElement.getBoundingClientRect();
+        parentOffsetLeft = parentRect.left;
+        parentOffsetTop = parentRect.top;
+      }
+      
+      this.itemX = clientX - parentOffsetLeft - this.dragOffsetX;
+      this.itemY = clientY - parentOffsetTop - this.dragOffsetY;
+      return;
+    }
+    if (!this.isDraggingValve || !this.activeValve || this.hasTriggeredThisDrag) return;
 
     const currentAngle = Math.atan2(clientY - this.Ycentre, clientX - this.Xcentre) * (180 / Math.PI);
 
@@ -241,55 +339,54 @@ return;
     const sogliaScatto = 90; 
 
     if (this.accumulatedRotation >= sogliaScatto) {
-        this.applyValveEffect(this.activeValve, 'orario');
-        this.accumulatedRotation = 0;
+      this.hasTriggeredThisDrag = true; 
+      this.applyValveEffect(this.activeValve, 'orario');
+      this.accumulatedRotation = 0;
+    } else if (this.accumulatedRotation <= -sogliaScatto) {
+      this.hasTriggeredThisDrag = true; 
+      this.applyValveEffect(this.activeValve, 'antiorario');
+      this.accumulatedRotation = 0;
+    }
+  }
 
-       } else if (this.accumulatedRotation <= -sogliaScatto) {
-          this.applyValveEffect(this.activeValve, 'antiorario');
-          this.accumulatedRotation = 0;
-    }
-    }
-    applyValveEffect(valve: 'A' | 'B' | 'C', direction: 'orario' | 'antiorario') {
-      let variation = 0;
+  applyValveEffect(valve: 'A' | 'B' | 'C', direction: 'orario' | 'antiorario') {
+    let variation = 0;
 
-          if (valve === 'A') {
-    if (direction === 'orario') {
-      variation = 5;
-    } else {
-      variation = -5;
+    if (valve === 'A') {
+      variation = direction === 'orario' ? 9 : -9;
     }
-           }
-  
-          if (valve === 'B') {
-    if (direction === 'orario') {
-      variation = 3;
-    } else {
-      variation = -3;
+    if (valve === 'B') {
+      variation = direction === 'orario' ? 5 : -5;
     }
-            }
-          if (valve === 'C') {
-    if (direction === 'orario') {
-      variation = 2;
-    } else {
-      variation = -2;
+    if (valve === 'C') {
+      variation = direction === 'orario' ? 2 : -2;
     }
-           }
-       this.liquidLevel = Math.max(0, this.liquidLevel + variation);
-       if (this.liquidLevel >= this.maxLiquid) {
-        //mettere suono
+    
+    this.liquidLevel = Math.max(0, this.liquidLevel + variation);
+    
+    if (this.liquidLevel >= this.maxLiquid) {
+
       this.liquidLevel = 0;
-      alert("Sfiato di pressione! Il tubo si è svuotato.");
+      alert("Sfiato di pressione! Il liquido ha strabordato!.");
+      this.stopGame(); 
       return; 
     } 
+
     if (this.liquidLevel === this.liquidTarget) {
-        this.currentLineGringott++;
-        this.startGringottDialogue();
+      this.currentLineGringott++;
+      this.startGringottDialogue();
     }
+  }
+  @HostListener('window:mouseup')
+  @HostListener('window:touchend')
+  stopGame() {
+    if (this.activeItem) {
+      this.checkItemDrop();
     }
-    stopGame() {
     this.isDraggingValve = false;
     this.activeValve = null;
     this.accumulatedRotation = 0;
+    this.hasTriggeredThisDrag = false;
   }
   
     EnterOllivander(){

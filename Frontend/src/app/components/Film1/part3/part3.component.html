@@ -59,52 +59,94 @@
           <p>{{ script1[currentLineGringott].text }}</p>
         </div>
       </div>
-      <div class="pression-tube" *ngIf="currentLineGringott === 6">
-        <div class="glass-tube">
-          <div class="target-line"></div>
-          <div
-            class="magic-liquid"
-            [style.height.%]="(liquidLevel / maxLiquid) * 100"
-          ></div>
-        </div>
 
-        <div class="valve-control-panel">
-          <div class="valve-wrapper">
-            <img
-              src="assets/img/Part3/ValveA.png"
-              class="manopola-img"
-              [style.transform]="'rotate(' + angleValveA + 'deg)'"
-              (mousedown)="startGame($event, 'A')"
-              (touchstart)="startGame($event, 'A')"
-              alt="Runa del Fuoco"
-            />
-          </div>
+      <div
+        class="items"
+        *ngIf="currentLineGringott === 7 || currentLineGringott === 8"
+      >
+        <img
+          src="assets/img/Part3/lamp_item.png"
+          class="inventory-item"
+          [style.left.px]="activeItem === 'lamp' ? itemX : null"
+          [style.top.px]="activeItem === 'lamp' ? itemY : null"
+          [class.dragging]="activeItem === 'lamp'"
+          (mousedown)="startItemDrag($event, 'lamp')"
+          (touchstart)="startItemDrag($event, 'lamp')"
+          alt="Lamp"
+        />
 
-          <div class="valve-wrapper">
-            <img
-              src="assets/img/Part3/ValveB.png"
-              class="manopola-img"
-              [style.transform]="'rotate(' + angleValveB + 'deg)'"
-              (mousedown)="startGame($event, 'B')"
-              (touchstart)="startGame($event, 'B')"
-              alt="Runa dell'Aria"
-            />
-          </div>
-
-          <div class="valve-wrapper">
-            <img
-              src="assets/img/Part3/ValveC.png"
-              class="manopola-img"
-              [style.transform]="'rotate(' + angleValveC + 'deg)'"
-              (mousedown)="startGame($event, 'C')"
-              (touchstart)="startGame($event, 'C')"
-              alt="Runa della Terra"
-            />
-          </div>
-        </div>
+        <img
+          src="assets/img/Part3/key_item.png"
+          class="inventory-item"
+          [style.left.px]="activeItem === 'key' ? itemX : null"
+          [style.top.px]="activeItem === 'key' ? itemY : null"
+          [class.dragging]="activeItem === 'key'"
+          (mousedown)="startItemDrag($event, 'key')"
+          (touchstart)="startItemDrag($event, 'key')"
+          alt="Key"
+        />
+        <img
+          src="assets/img/Part3/coin_item.png"
+          class="inventory-item"
+          [style.left.px]="activeItem === 'coin' ? itemX : null"
+          [style.top.px]="activeItem === 'coin' ? itemY : null"
+          [class.dragging]="activeItem === 'coin'"
+          (mousedown)="startItemDrag($event, 'coin')"
+          (touchstart)="startItemDrag($event, 'coin')"
+          alt="Coin"
+        />
       </div>
 
-      <button class="EnterOllivander" (click)="EnterOllivander()" *ngIf="currentLineGringott === 13">
+      <ng-container *ngIf="currentLineGringott === 6">
+        <div class="pression-tube">
+          <div class="glass-tube">
+            <div class="target-line"></div>
+            <div
+              class="magic-liquid"
+              [style.height.%]="(liquidLevel / maxLiquid) * 100"
+            ></div>
+          </div>
+        </div>
+
+        <div class="valve-wrapper valveA">
+          <img
+            src="assets/img/Part3/ValveA.png"
+            class="manopola-img"
+            [style.transform]="'rotate(' + angleValveA + 'deg)'"
+            (mousedown)="startGame($event, 'A')"
+            (touchstart)="startGame($event, 'A')"
+            alt="Runa del Fuoco"
+          />
+        </div>
+
+        <div class="valve-wrapper valveB">
+          <img
+            src="assets/img/Part3/ValveB.png"
+            class="manopola-img"
+            [style.transform]="'rotate(' + angleValveB + 'deg)'"
+            (mousedown)="startGame($event, 'B')"
+            (touchstart)="startGame($event, 'B')"
+            alt="Runa dell'Aria"
+          />
+        </div>
+
+        <div class="valve-wrapper valveC">
+          <img
+            src="assets/img/Part3/ValveC.png"
+            class="manopola-img"
+            [style.transform]="'rotate(' + angleValveC + 'deg)'"
+            (mousedown)="startGame($event, 'C')"
+            (touchstart)="startGame($event, 'C')"
+            alt="Runa della Terra"
+          />
+        </div>
+      </ng-container>
+
+      <button
+        class="EnterOllivander"
+        (click)="EnterOllivander()"
+        *ngIf="currentLineGringott === 13"
+      >
         Entra da Ollivander
       </button>
     </div>
@@ -133,7 +175,7 @@
         ></video>
         <video
           *ngIf="isBox2Clicked"
-          src="assets/video/OlivanderMess1.mp4"
+          src="assets/video/OlivanderMess2.mp4"
           class="fullscreen-video"
           autoplay
           muted
@@ -142,7 +184,7 @@
         ></video>
         <video
           *ngIf="isBox3Clicked"
-          src="assets/video/OlivanderMess1.mp4"
+          src="assets/video/OlivanderMess3.mp4"
           class="fullscreen-video"
           autoplay
           muted
