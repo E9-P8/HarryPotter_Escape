@@ -11,3 +11,66 @@
     />
   </svg>
 </button>
+<div class="GreatHall-container" *ngIf="actualFase === 'GreatHall'">
+  <div class="GreatHall-viewport">
+    <div class="GreatHall-view"></div>
+    <img
+      [src]="script0[currentLineGreatHall].image"
+      class="GreatHall-img"
+      alt="GreatHall"
+    />
+    <div class="dialogue-box">
+      <div class="dialog-text">
+        <p *ngIf="script0[currentLineGreatHall].character">
+          {{ script0[currentLineGreatHall].character }}
+        </p>
+        <p>{{ script0[currentLineGreatHall].text }}</p>
+      </div>
+    </div>
+    <button class="goToSpellsClass" (click)="goToSpellsClass()"></button>
+  </div>
+</div>
+<div class="SpellsClass-container" *ngIf="actualFase === 'SpellsClass'">
+  <div class="SpellsClass-viewport">
+    <div class="SpellsClass-view">
+      <img
+        [src]="script1[currentLineSpellsClass].image"
+        class="SpellsClass-img"
+        alt="SpellsClass"
+      />
+
+      <div class="SpellsClass-dialogue-box" *ngIf="">
+        <div class="dialog-text">
+          <p *ngIf="script1[currentLineSpellsClass].character">
+            {{ script1[currentLineSpellsClass].character }}
+          </p>
+          <p>{{ script1[currentLineSpellsClass].text }}</p>
+        </div>
+      </div>
+
+      <button class="findTroll" (click)="findTroll()"></button>
+    </div>
+  </div>
+</div>
+<div class="GirlsBathroom-container" *ngIf="actualFase === 'GirlsBathroom'">
+  <div class="GirlsBathroom-viewport">
+    <div class="GirlsBathroom-view">
+      <img
+        *ngIf=""
+        [src]="script2[currentLineGirlsBathroom].image"
+        class="GirlsBathroom-img"
+        alt="GirlsBathroomScene"
+      />
+
+      <div class="dialogue-box">
+        <div class="dialog-text">
+          <p *ngIf="script2[currentLineGirlsBathroom].character">
+            {{ script2[currentLineGirlsBathroom].character }}
+          </p>
+          <p>{{ script2[currentLineGirlsBathroom].text }}</p>
+        </div>
+        <button class="thirdFloor" (click)="thirdFloor()"></button>
+      </div>
+    </div>
+  </div>
+</div>

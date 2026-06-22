@@ -32,3 +32,196 @@
 .audio-toggle-btn.muted {
     opacity: 0.25;
 }
+
+/************** COMMON ***************/
+.Station-container,
+.Wagon-container,
+.Lake-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.Station-viewport,
+.Station-view,
+.Wagon-viewport,
+.Wagon-view,
+.Lake-viewport,
+.Lake-view {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.Station-img,
+.Wagon-img,
+.Lake-img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    display: block;
+    z-index: 1;
+}
+
+.dialogue-box {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 55%;
+    max-width: 800px;
+    min-height: 70px;
+
+    background: rgb(15 21 17 / 85%);
+    border: 1px solid #0e1615;
+    border-radius: 8px;
+    padding: 10px;
+
+    z-index: 10;
+    box-shadow: 0 10px 30px rgba(50, 27, 0, 0.5);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.dialog-text {
+    flex-grow: 1;
+    color: #fff2b9;
+    text-align: center;
+}
+.EnterTrain {
+    position: absolute;
+        bottom: 41%;
+        right: 52%;
+        cursor: pointer;
+        z-index: 20;
+        width: 11%;
+        color: #ada092;
+        background-color: #1c160a57;
+}
+.getOffTrain{
+        position: absolute;
+        bottom: 41%;
+        right: 52%;
+        cursor: pointer;
+        z-index: 20;
+        width: 11%;
+        color: #ada092;
+        background-color: #1c160a57;
+    }
+.startLakeGame{
+    position: absolute;
+    bottom: 12%;
+    right: 52%;
+    cursor: pointer;
+    z-index: 20;
+    width: 11%;
+    color: #ada092;
+    background-color: #0c1d3263;
+    }
+.Lake-gameplay-view {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #000;
+}
+.lake-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('/assets/img/Part4/lake-background.png') no-repeat center/cover;
+    z-index: 0;
+}
+.darkness-overlay {
+position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+
+    background: rgba(0, 0, 0, var(--dark-level));
+    mask-image: radial-gradient(ellipse 300px 500px at var(--hagrid-pos) 85%,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(255, 255, 255, 0.3) 40%,
+            transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 300px 500px at var(--hagrid-pos) 85%,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(255, 255, 255, 0.3) 40%,
+            transparent 100%);
+        }
+.water-reflections {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 45%;
+    background: url('/assets/img/Part4/waves.png') repeat-y bottom;
+    animation: scrollWaves 20s linear infinite;
+    z-index: 1;
+    opacity: 0.2;
+}
+
+.fog-layer {
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    background: url('/assets/img/Part4/fog.png') repeat-x;
+    animation: scrollFog 20s linear infinite;
+    z-index: 3;
+    opacity: 0.5;
+}
+.light-cone {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle 250px at var(--hagrid-pos) 80%, rgba(255, 230, 100, 0.2), transparent 70%);
+    z-index: 3;
+    pointer-events: none;
+}
+.hagrid-boat {
+    position: absolute;
+    bottom: 10%;
+    width: 40%;
+    transition: left 1s linear;
+    z-index: 3;
+}
+
+.player-boat {
+    position: absolute;
+    bottom: 0%;
+    width: 70%;
+    transition: left 0.1s linear;
+    z-index: 4;
+}
+
+.hagrid-boat img,
+.player-boat img {
+    width: 100%;
+    height: auto;
+}
+@keyframes scrollWaves {
+    from {
+        background-position: 0 100%;
+    }
+    to {
+        background-position: 0 0;
+    }
+}
+@keyframes scrollFog {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}

@@ -11,3 +11,128 @@
     />
   </svg>
 </button>
+<div class="Station-container" *ngIf="actualFase === 'Station'">
+  <div class="Station-viewport">
+    <div class="Station-view"></div>
+    <img
+      [src]="script0[currentLineStation].image"
+      class="Station-img"
+      alt="Station"
+    />
+    <div
+      class="dialogue-box"
+      *ngIf="currentLineStation !== 5 && currentLineStation !== 6"
+    >
+      <div class="dialog-text">
+        <p *ngIf="script0[currentLineStation].character">
+          {{ script0[currentLineStation].character }}
+        </p>
+        <p>{{ script0[currentLineStation].text }}</p>
+      </div>
+    </div>
+    <button
+      class="EnterTrain"
+      *ngIf="currentLineStation === 6"
+      (click)="EnterTrain()"
+    >
+      Sali sul treno
+    </button>
+  </div>
+</div>
+<div class="Wagon-container" *ngIf="actualFase === 'Wagon'">
+  <div class="Wagon-viewport">
+    <div class="Wagon-view">
+      <img
+        [src]="script1[currentLineWagon].image"
+        class="Wagon-img"
+        alt="Wagon"
+      />
+
+      <div class="dialogue-box">
+        <div class="dialog-text">
+          <p *ngIf="script1[currentLineWagon].character">
+            {{ script1[currentLineWagon].character }}
+          </p>
+          <p>{{ script1[currentLineWagon].text }}</p>
+        </div>
+      </div>
+
+      <button class="getOffTrain" (click)="getOffTrain()">
+        Get off the train
+      </button>
+    </div>
+  </div>
+</div>
+<div class="Lake-container" *ngIf="actualFase === 'Lake'">
+  <div class="Lake-viewport" *ngIf="!isGameStarted && !isVictory">
+    <div class="Lake-view">
+      <img
+        [src]="script2[currentLineLake].image"
+        class="Lake-img"
+        alt="LakeScene"
+      />
+      <div class="dialogue-box" *ngIf="currentLineLake !== 2">
+        <div class="dialog-text">
+          <p *ngIf="script2[currentLineLake].character">
+            {{ script2[currentLineLake].character }}
+          </p>
+          <p>{{ script2[currentLineLake].text }}</p>
+        </div>
+      </div>
+
+      <button
+        *ngIf="currentLineLake === 2"
+        class="startLakeGame"
+        (click)="startGame()"
+      >
+        Attraversa il Lago
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="Lake-gameplay-view"
+    *ngIf="isGameStarted"
+    [style.--hagrid-pos.%]="hagridX"
+    [style.--dark-level]="'0.8'"
+    [style.--light-radius]="'250px'"
+  >
+    <div class="lake-background"></div>
+
+    <div class="water-reflections"></div>
+    <div class="fog-layer"></div>
+
+    <div class="hagrid-boat" [style.left.%]="hagridX">
+      <img src="../../../../assets/img/Part4/hagrid-boat.png" alt="Hagrid" />
+    </div>
+
+    <div
+      class="player-boat"
+      [style.left.%]="playerX"
+      [ngClass]="getBoatDirectionClass()"
+    >
+      <img [src]="gameLevels[currentWave - 1].boatImg" alt="PlayerBoat" />
+    </div>
+
+    <div class="darkness-overlay"></div>
+    <!-- 
+    <div
+      class="control-zone left-zone"
+      (mousedown)="startMoving('left')"
+      (mouseup)="stopMoving()"
+      (mouseleave)="stopMoving()"
+    ></div>
+    <div
+      class="control-zone right-zone"
+      (mousedown)="startMoving('right')"
+      (mouseup)="stopMoving()"
+      (mouseleave)="stopMoving()"
+    ></div>
+  </div>-->
+
+    <div class="victory-screen" *ngIf="isVictory">
+      <img src="assets/img/Part4/hogwarts_castle.png" />
+      <button (click)="goToCastle()">Entra nel Castello</button>
+    </div>
+  </div>
+</div>
