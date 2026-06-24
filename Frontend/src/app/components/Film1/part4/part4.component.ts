@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AudioService } from '../../../services/audio.service';
+import { HostListener } from '@angular/core';
 
 interface StationDialogue{
   character : string;
@@ -39,18 +40,23 @@ export class Part4Component implements OnInit {
   isLakeDialogueEnd: boolean = false;
 
   isGameStarted = false;
+  isWaveComplete = false;
   isVictory = false;
-  isOutOfRoute = false;
+  currentWave = 1;
+  darknessLevel = 0.5;
+  
+  // Posizioni
   hagridX = 50;
   playerX = 50;
-  playerDirection: 'left' | 'right' | 'straight' = 'straight';
-  currentWave = 1;
+  private movingDir: 'left' | 'right' | null = null;
+  
+  // Animation
+  private animationFrameId: number = 0;
+  private lastTimestamp: number = 0;
+  private hagridProgress: number = 0;
+  private currentPathIndex: number = 0;
 
-  private gameInterval: any;
-  private waveInterval: any;
-  private moveInterval: any;
-  private dialogueTimer: any;
-
+  // Dati
   gameLevels = [
     { name: 'Harry', boatImg: 'assets/img/Part4/harry-boat.png' },
     { name: 'Ron', boatImg: 'assets/img/Part4/ron-boat.png' },
@@ -63,24 +69,19 @@ export class Part4Component implements OnInit {
     3: [50, 20, 80, 50]
   };
 
- 
 
   toggleAudio(): void {
   this.audioService.toggleGlobalMute(0.2);
   } 
-
   ngOnInit(): void {
     this.audioService.startGlobalBackground('LetTheMysteryUnfold', 0.3);
     this.startStationDialogue();
   }
-
   ngOnDestroy() {
-    clearTimeout(this.dialogueTimer);
-    clearInterval(this.gameInterval);
-    clearInterval(this.waveInterval);
-    clearInterval(this.moveInterval);
-  }
-
+  if (this.animationFrameId) {
+    cancelAnimationFrame(this.animationFrameId);
+  }  }
+  
    /***************** STATION ************************ */
 
 
@@ -175,12 +176,12 @@ export class Part4Component implements OnInit {
     script2 : LakeDialogue[] = [
       { 
         character : 'Hagrid',
-        image: "assets/img/Part4/", 
+        image: "assets/img/Part4/Hagrid_welcome.png", 
         text : "Primo anno, da questa parte! Su dai, non siate timidi!"
       },
       { 
         character : 'Hagrid',
-        image: "assets/img/Part4/", 
+        image: "assets/img/Part4/Hagrid_welcome2.png", 
         text : "Bene, da questa parte per le barche, seguitemi!"
       },
       { 
@@ -203,54 +204,103 @@ export class Part4Component implements OnInit {
             }, 3000);
     }
 
-    startGame() {
+  startGame() {
     this.isGameStarted = true;
-    this.audioService.startGlobalBackground('LakeActionTheme', 0.4);
-    this.startWave(1);
-    
-    /*
-    this.gameInterval = setInterval(() => {
-      this.isOutOfRoute = Math.abs(this.hagridX - this.playerX) > 20;
-    }, 100);*/
-    }
-  startWave(wave: number) {
-    this.currentWave = wave;
-    let step = 0;
-    const path = this.hagridPaths[wave];
+    this.isVictory = false;
+    this.currentWave = 1;
+    this.resetWaveState();
+    this.lastTimestamp = 0;
+    this.animationFrameId = requestAnimationFrame(this.gameLoop);
+  }
 
-    /*this.waveInterval = setInterval(() => {
-      this.hagridX = path[step];
-      step++;
-      if (step >= path.length) {
-        clearInterval(this.waveInterval);
-        if (this.currentWave < 3) this.startWave(this.currentWave + 1);
-        else { this.isVictory = true; this.isGameStarted = false; }
+  resetWaveState() {
+    this.currentPathIndex = 0;
+    this.hagridProgress = 0;
+    this.hagridX = 50;
+    this.playerX = 50;
+    this.darknessLevel = 0.5;
+    this.isWaveComplete = false;
+    this.movingDir = null;
+  }
+
+  completeWave() {
+    if (this.currentWave < 3) {
+    this.currentWave++;
+    this.resetWaveState();
+    this.isGameStarted = true; 
+    this.isWaveComplete = false; 
+    this.lastTimestamp = 0;
+    this.animationFrameId = requestAnimationFrame(this.gameLoop);
+  } else {
+    this.isVictory = true;
+    this.isGameStarted = false;
+  }
+  }
+gameLoop = (timestamp: number) => {
+    if (!this.isGameStarted) return;
+
+    if (this.lastTimestamp === 0) this.lastTimestamp = timestamp;
+    const dt = Math.min(timestamp - this.lastTimestamp, 32);
+    this.lastTimestamp = timestamp;
+
+    this.updateHagrid(dt);
+    this.updatePlayerPosition();
+
+    const distance = Math.abs(this.hagridX - this.playerX);
+    this.darknessLevel = distance > 25 
+      ? Math.min(0.95, this.darknessLevel + 0.01) 
+      : Math.max(0.5, this.darknessLevel - 0.02);
+
+    if (distance > 45) this.resetWaveState();
+
+    if (this.darknessLevel >= 0.95) {
+    this.resetWaveState();
+    this.isGameStarted = false; 
+    alert("Hagrid è scomparso nell'oscurità! Ricomincia la sfida.");
+  }
+
+    this.animationFrameId = requestAnimationFrame(this.gameLoop);
+  };
+
+  updateHagrid(dt: number) {
+    const path = this.hagridPaths[this.currentWave];
+    const speed = 0.0005;
+
+    this.hagridProgress += dt * speed;
+
+    if (this.hagridProgress >= 1) {
+      this.hagridProgress = 0;
+      this.currentPathIndex++;
+
+      if (this.currentPathIndex >= path.length - 1) {
+        this.isWaveComplete = true;
+        this.isGameStarted = false;
+        this.hagridX = path[path.length - 1];
+        return;
       }
-    }, 1000);*/
-   }
-/*
-  startMoving(dir: 'left' | 'right') {
-  this.playerDirection = dir;
-  if (this.moveInterval) clearInterval(this.moveInterval);
-
-  this.moveInterval = setInterval(() => {
-    // Aumentato step a 2.5 per essere più reattivo
-    const step = 2.5; 
-    if (dir === 'left') {
-      this.playerX = Math.max(5, this.playerX - step);
-    } else {
-      this.playerX = Math.min(85, this.playerX + step);
     }
-  }, 30); // 30ms è più fluido
-}
-  stopMoving() {
-    this.playerDirection = 'straight';
-    clearInterval(this.moveInterval);
+    this.hagridX = path[this.currentPathIndex] + 
+      (path[this.currentPathIndex + 1] - path[this.currentPathIndex]) * this.hagridProgress;
   }
-*/
-  getBoatDirectionClass() {
-   // return { 'turn-left': this.playerDirection === 'left', 'turn-right': this.playerDirection === 'right' };
+
+  updatePlayerPosition() {
+    if (this.movingDir === 'left') this.playerX = Math.max(0, this.playerX - 0.5);
+    if (this.movingDir === 'right') this.playerX = Math.min(100, this.playerX + 0.5);
   }
+
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    if (!this.isGameStarted) return;
+    if (event.key === 'ArrowLeft') this.movingDir = 'left';
+    if (event.key === 'ArrowRight') this.movingDir = 'right';
+  }
+
+  @HostListener('window:keyup', ['$event'])
+  handleKeyUp() { this.movingDir = null; }
+
+  startMoving(dir: 'left' | 'right') { this.movingDir = dir; }
+  stopMoving() { this.movingDir = null; }
 
     goToCastle(){
       this.router.navigate(['/part5']);

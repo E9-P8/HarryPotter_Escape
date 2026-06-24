@@ -64,7 +64,10 @@
   </div>
 </div>
 <div class="Lake-container" *ngIf="actualFase === 'Lake'">
-  <div class="Lake-viewport" *ngIf="!isGameStarted && !isVictory">
+  <div
+    class="Lake-viewport"
+    *ngIf="!isGameStarted && !isVictory && !isWaveComplete"
+  >
     <div class="Lake-view">
       <img
         [src]="script2[currentLineLake].image"
@@ -93,29 +96,24 @@
   <div
     class="Lake-gameplay-view"
     *ngIf="isGameStarted"
-    [style.--hagrid-pos.%]="hagridX"
-    [style.--dark-level]="'0.8'"
-    [style.--light-radius]="'250px'"
+    [style.--hagrid-pos]="hagridX + '%'"
   >
     <div class="lake-background"></div>
-
     <div class="water-reflections"></div>
-    <div class="fog-layer"></div>
 
     <div class="hagrid-boat" [style.left.%]="hagridX">
       <img src="../../../../assets/img/Part4/hagrid-boat.png" alt="Hagrid" />
     </div>
 
     <div
-      class="player-boat"
-      [style.left.%]="playerX"
-      [ngClass]="getBoatDirectionClass()"
-    >
+      class="darkness-overlay"
+      [style.--darkness-level]="darknessLevel"
+    ></div>
+
+    <div class="player-boat" [style.left.%]="playerX">
       <img [src]="gameLevels[currentWave - 1].boatImg" alt="PlayerBoat" />
     </div>
 
-    <div class="darkness-overlay"></div>
-    <!-- 
     <div
       class="control-zone left-zone"
       (mousedown)="startMoving('left')"
@@ -128,11 +126,20 @@
       (mouseup)="stopMoving()"
       (mouseleave)="stopMoving()"
     ></div>
-  </div>-->
+  </div>
+  <div class="wave-complete-screen" *ngIf="isWaveComplete && !isVictory">
+    <button
+      *ngIf="currentWave < 3"
+      class="completeWave"
+      (click)="completeWave()"
+    >
+      Aiuta {{ gameLevels[currentWave - 1].name }} ad attraversare il lago
+    </button>
+  </div>
 
-    <div class="victory-screen" *ngIf="isVictory">
-      <img src="assets/img/Part4/hogwarts_castle.png" />
-      <button (click)="goToCastle()">Entra nel Castello</button>
-    </div>
+  <div class="victory-screen" *ngIf="isVictory">
+    <!--Qui mettere video -->
+    <p>Hai attraversato il lago con successo!</p>
+    <button (click)="goToCastle()">Entra nel Castello</button>
   </div>
 </div>
