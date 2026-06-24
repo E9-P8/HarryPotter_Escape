@@ -114,6 +114,11 @@
         color: #ada092;
         background-color: #1c160a57;
     }
+
+
+
+    
+/******************** LAKE *****************/
 .startLakeGame{
     position: absolute;
     bottom: 29%;
@@ -167,8 +172,8 @@
     z-index: 3;
     background: rgba(0, 0, 0, var(--darkness-level));
     pointer-events: none;
-    -webkit-mask-image: radial-gradient(circle 250px at var(--hagrid-pos) 85%, transparent 0%, black 100%);
-    mask-image: radial-gradient(circle 250px at var(--hagrid-pos) 85%, transparent 0%, black 100%);
+    -webkit-mask-image: radial-gradient(circle 250px at var(--hagrid-pos) 90%, transparent 0%, black 100%);
+    mask-image: radial-gradient(circle 250px at var(--hagrid-pos) 90%, transparent 0%, black 100%);
 }
 .water-reflections {
     position: absolute;
@@ -187,7 +192,7 @@
     height: 100%;
     background: url('/assets/img/Part4/fog.png') repeat-x;
     animation: scrollFog 20s linear infinite;
-    z-index: 4;
+    z-index: 6;
     pointer-events: none;
     opacity: 0.5;
 }
@@ -197,22 +202,34 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle 250px at var(--hagrid-pos) 80%, rgba(255, 230, 100, 0.2), transparent 70%);
+    
+  
+
+  background: radial-gradient(
+      circle 300px at var(--hagrid-pos) 60%, 
+      rgba(255, 235, 160, 0.5) 0%,   
+      rgba(255, 220, 120, 0.3) 30%, 
+      rgba(255, 200, 80, 0.12) 55%, 
+      transparent 80%
+    );
+
+
+    mix-blend-mode: screen;
     z-index: 5;
     pointer-events: none;
 }
 .hagrid-boat {
     position: absolute;
-    bottom: 35%;
-    width: 8%;
+    bottom: 38%;
+    width: 5%;
     transition: left 1s linear;
-    z-index: 2;
+    z-index: 4;
 }
 
 .player-boat {
     position: absolute;
     bottom: 0%;
-    width: 40%;
+    width: 20%;
     transition: left 0.1s linear;
     z-index: 5;
 }
@@ -237,6 +254,16 @@
 }
 .right-zone {
     right: 0;
+}
+.fullscreen-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background-color: #000;
 }
 @keyframes scrollWaves {
     from {

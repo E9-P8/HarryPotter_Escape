@@ -42,8 +42,9 @@ export class Part4Component implements OnInit {
   isGameStarted = false;
   isWaveComplete = false;
   isVictory = false;
+  showCastleVideo = false;
   currentWave = 1;
-  darknessLevel = 0.5;
+  darknessLevel = 0.8;
   
   // Posizioni
   hagridX = 50;
@@ -55,6 +56,9 @@ export class Part4Component implements OnInit {
   private lastTimestamp: number = 0;
   private hagridProgress: number = 0;
   private currentPathIndex: number = 0;
+  private inactivityTimer: number = 0;
+  private readonly MAX_INACTIVITY = 3000;
+  private isAlertActive = false;
 
   // Dati
   gameLevels = [
@@ -218,7 +222,7 @@ export class Part4Component implements OnInit {
     this.hagridProgress = 0;
     this.hagridX = 50;
     this.playerX = 50;
-    this.darknessLevel = 0.5;
+    this.darknessLevel = 0.8;
     this.isWaveComplete = false;
     this.movingDir = null;
   }
@@ -233,6 +237,7 @@ export class Part4Component implements OnInit {
     this.animationFrameId = requestAnimationFrame(this.gameLoop);
   } else {
     this.isVictory = true;
+    this.showCastleVideo = true;
     this.isGameStarted = false;
   }
   }
@@ -243,6 +248,22 @@ gameLoop = (timestamp: number) => {
     const dt = Math.min(timestamp - this.lastTimestamp, 32);
     this.lastTimestamp = timestamp;
 
+    if(this.movingDir === null){
+      this.inactivityTimer += dt;
+    } else {
+      this.inactivityTimer = 0;
+    }
+
+    if(this.inactivityTimer > this.MAX_INACTIVITY){
+      this.isAlertActive = true;
+      alert("Aiuta " + this.gameLevels[this.currentWave -1].name + ' ad attraversare il lago.');
+
+      this.resetWaveState;
+      this.inactivityTimer = 0;
+      this.isAlertActive = false;
+      this.lastTimestamp = 0;
+    }
+
     this.updateHagrid(dt);
     this.updatePlayerPosition();
 
@@ -251,11 +272,12 @@ gameLoop = (timestamp: number) => {
       ? Math.min(0.95, this.darknessLevel + 0.01) 
       : Math.max(0.5, this.darknessLevel - 0.02);
 
-    if (distance > 45) this.resetWaveState();
+    if (distance > 45) {
+      this.resetWaveState();
+    }
 
     if (this.darknessLevel >= 0.95) {
     this.resetWaveState();
-    this.isGameStarted = false; 
     alert("Hagrid è scomparso nell'oscurità! Ricomincia la sfida.");
   }
 
@@ -268,16 +290,28 @@ gameLoop = (timestamp: number) => {
 
     this.hagridProgress += dt * speed;
 
-    if (this.hagridProgress >= 1) {
-      this.hagridProgress = 0;
-      this.currentPathIndex++;
+    
+    if (this.currentPathIndex < path.length - 2) {
+        if (this.hagridProgress >= 1) {
+          this.hagridProgress = 0;
+          this.currentPathIndex++;
+        }
+    
+      } else {
+          if (this.hagridProgress >= 1) {
+            this.hagridX = path[path.length - 1];
 
-      if (this.currentPathIndex >= path.length - 1) {
-        this.isWaveComplete = true;
-        this.isGameStarted = false;
-        this.hagridX = path[path.length - 1];
-        return;
-      }
+            this.isGameStarted = false;
+
+            if (this.currentWave === 3) {
+              this.isVictory = true;
+              this.showCastleVideo = true;
+            } else {
+              this.isWaveComplete = true;
+            }
+
+            return;
+          }
     }
     this.hagridX = path[this.currentPathIndex] + 
       (path[this.currentPathIndex + 1] - path[this.currentPathIndex]) * this.hagridProgress;
@@ -302,7 +336,9 @@ gameLoop = (timestamp: number) => {
   startMoving(dir: 'left' | 'right') { this.movingDir = dir; }
   stopMoving() { this.movingDir = null; }
 
-    goToCastle(){
-      this.router.navigate(['/part5']);
+  onCastleVideoEnded(): void {
+      this.showCastleVideo = true;   
+      this.router.navigate(['/part5']); 
     }
+  
 } 

@@ -100,6 +100,8 @@
   >
     <div class="lake-background"></div>
     <div class="water-reflections"></div>
+    <div class="fog-layer"></div>
+    <div class="light-cone"></div>
 
     <div class="hagrid-boat" [style.left.%]="hagridX">
       <img src="../../../../assets/img/Part4/hagrid-boat.png" alt="Hagrid" />
@@ -133,13 +135,17 @@
       class="completeWave"
       (click)="completeWave()"
     >
-      Aiuta {{ gameLevels[currentWave - 1].name }} ad attraversare il lago
+      Aiuta {{ gameLevels[currentWave].name }} ad attraversare il lago
     </button>
   </div>
 
-  <div class="victory-screen" *ngIf="isVictory">
-    <!--Qui mettere video -->
-    <p>Hai attraversato il lago con successo!</p>
-    <button (click)="goToCastle()">Entra nel Castello</button>
-  </div>
+  <video
+        *ngIf="showCastleVideo"
+        src="assets/video/CastleVideo.mp4"
+        class="fullscreen-video"
+        autoplay
+        muted
+        playsinline
+        (ended)="onCastleVideoEnded()"
+      ></video>
 </div>
