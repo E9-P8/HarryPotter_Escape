@@ -19,6 +19,30 @@
       class="Station-img"
       alt="Station"
     />
+    <div class="Station-game" *ngIf="currentLineStation === 5">
+      <div
+        class="babbano"
+        *ngFor="let babbano of babbani"
+        [style.left.%]="babbano.x"
+        [style.top.%]="babbano.y"
+        [style.z-index]="calculateZIndex(babbano)"
+        [style.transform]="getTransform(babbano)"
+      >
+        <img [src]="babbano.image" />
+      </div>
+      <div class="harry-container" [class.is-advancing]="isHarryAdvancing">
+        <img [src]="harryImages[harryState]" alt="Harry" />
+      </div>
+      <img
+        src="../../../../assets/img/Part4/station-game-column.png"
+        class="column"
+      />
+      <div class="flash-overlay" [class.active]="isFlashActive"></div>
+      <button class="onWallClick" (click)="onWallClick()"></button>
+    </div>
+    <button class="talk" (click)="talk()" *ngIf="currentLineStation === 2">
+      Parla con lei
+    </button>
     <div
       class="dialogue-box"
       *ngIf="currentLineStation !== 5 && currentLineStation !== 6"
@@ -48,7 +72,14 @@
         alt="Wagon"
       />
 
-      <div class="dialogue-box">
+      <div
+        class="dialogue-box"
+        *ngIf="
+          currentLineWagon !== 5 &&
+          currentLineWagon !== 8 &&
+          currentLineWagon !== 9
+        "
+      >
         <div class="dialog-text">
           <p *ngIf="script1[currentLineWagon].character">
             {{ script1[currentLineWagon].character }}
@@ -56,11 +87,99 @@
           <p>{{ script1[currentLineWagon].text }}</p>
         </div>
       </div>
-
-      <button class="getOffTrain" (click)="getOffTrain()">
-        Get off the train
+      <button
+        *ngIf="currentLineWagon === 4"
+        class="chooseCandy"
+        (click)="chooseCandy()"
+      >
+        Compra i dolci dal carrello
       </button>
     </div>
+    <div class="candies" *ngIf="currentLineWagon === 5">
+      <div class="instructions">
+        <ol>
+          <li>
+            Alla Cioccorana piace sempre stare al centro e preferisce l'altura.
+          </li>
+          <li>
+            Le Jelly Beans e i Calderotti stanno sempre vicini, ma mai troppo.
+          </li>
+          <li>
+            Il Lecca-Lecca blu deve stare esattamente sotto la Cioccorana.
+          </li>
+          <li>
+            La Liquirizia nera non può stare nella fila alta, però sta sempre
+            vicino alle Jelly Beans e mai vicino alle Pasticche vomitose.
+          </li>
+        </ol>
+      </div>
+
+      <div class="candy-grid">
+        <div
+          class="drop-zone"
+          *ngFor="let item of placedItems; let i = index"
+          (mouseup)="dropItem(i)"
+        >
+          <img *ngIf="item" [src]="getItemImage(item)" class="dropped-candy" />
+        </div>
+      </div>
+
+      <div class="items-pool">
+        <img
+          src="assets/img/Part4/Cauldron-wagon.png"
+          class="candy-item"
+          (mousedown)="startItemDrag($event, 'cauldron')"
+        />
+        <img
+          src="assets/img/Part4/GellyBeans-wagon.png"
+          class="candy-item"
+          (mousedown)="startItemDrag($event, 'jellyBeans')"
+        />
+        <img
+          src="assets/img/Part4/Liquorice-wagon.png"
+          class="candy-item"
+          (mousedown)="startItemDrag($event, 'liquorice')"
+        />
+        <img
+          src="assets/img/Part4/Lollipop-wagon.png"
+          class="candy-item"
+          (mousedown)="startItemDrag($event, 'lollipop')"
+        />
+        <img
+          src="assets/img/Part4/Toad-wagon.png"
+          class="candy-item"
+          (mousedown)="startItemDrag($event, 'toad')"
+        />
+        <img
+          src="assets/img/Part4/VomitPills-wagon.png"
+          class="candy-item"
+          (mousedown)="startItemDrag($event, 'vomitPills')"
+        />
+      </div>
+      <div class="controls">
+        <button (click)="checkSolution()">Controlla Risposta</button>
+      </div>
+    </div>
+
+    <div class="glasses-container" *ngIf="currentLineWagon === 8">
+      <div *ngIf="showSparkles" class="magic-sparkles"></div>
+      <div
+        class="magic-target"
+        (mousedown)="startCharging()"
+        (mouseup)="stopCharging()"
+        (mouseleave)="stopCharging()"
+        [class.charging]="isCharging"
+      >
+        <div class="progress-ring"></div>
+      </div>
+    </div>
+    <button
+      *ngIf="currentLineWagon === 10"
+      class="getOffTrain"
+      (click)="getOffTrain()"
+    >
+      Scendi dal treno
+    </button>
   </div>
 </div>
 <div class="Lake-container" *ngIf="actualFase === 'Lake'">
@@ -140,12 +259,12 @@
   </div>
 
   <video
-        *ngIf="showCastleVideo"
-        src="assets/video/CastleVideo.mp4"
-        class="fullscreen-video"
-        autoplay
-        muted
-        playsinline
-        (ended)="onCastleVideoEnded()"
-      ></video>
+    *ngIf="showCastleVideo"
+    src="assets/video/CastleVideo.mp4"
+    class="fullscreen-video"
+    autoplay
+    muted
+    playsinline
+    (ended)="onCastleVideoEnded()"
+  ></video>
 </div>

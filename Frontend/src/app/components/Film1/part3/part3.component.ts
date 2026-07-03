@@ -56,6 +56,7 @@ export class Part3Component implements OnInit {
   itemY: number = 0;
   private dragOffsetX: number = 0;
   private dragOffsetY: number = 0;
+  showControlPanelVideo= false;
 
   currentLineOllivander = 0;
   isOllivanderDialogueEnd: boolean = false;
@@ -373,8 +374,8 @@ export class Part3Component implements OnInit {
     } 
 
     if (this.liquidLevel === this.liquidTarget) {
-      this.currentLineGringott++;
-      this.startGringottDialogue();
+      this.isDraggingValve = false;
+      this.showControlPanelVideo = true;
     }
   }
   @HostListener('window:mouseup')
@@ -388,7 +389,12 @@ export class Part3Component implements OnInit {
     this.accumulatedRotation = 0;
     this.hasTriggeredThisDrag = false;
   }
-  
+  onPanelVideoEnded(): void {
+      this.showControlPanelVideo = false; 
+      this.currentLineGringott++;
+      
+      this.startGringottDialogue();
+    }
     EnterOllivander(){
     this.actualFase= 'Ollivander';
     this.audioService.startGlobalBackground('rainAndThunder', 0.3);

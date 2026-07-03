@@ -45,6 +45,15 @@
 >
   <div class="Gringott-viewport">
     <div class="Gringott-view">
+      <video
+        *ngIf="showControlPanelVideo"
+        src="assets/video/controlPanelVideo.mp4"
+        class="fullscreen-video"
+        autoplay
+        muted
+        playsinline
+        (ended)="onPanelVideoEnded()"
+      ></video>
       <img
         [src]="script1[currentLineGringott].image"
         class="Gringott-img"

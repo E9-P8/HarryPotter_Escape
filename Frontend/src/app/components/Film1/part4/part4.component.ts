@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AudioService } from '../../../services/audio.service';
 import { HostListener } from '@angular/core';
+import { GameDataService } from '../../../services/game-data.service';
+
 
 interface StationDialogue{
   character : string;
@@ -19,6 +21,24 @@ interface StationDialogue{
   text : string;
  }
 
+ interface Babbano {
+  id: number;
+  image: string;
+  startX: number;
+  startY: number;
+  endX: number;
+  endY: number;
+  x: number;   
+  y: number;  
+  progress: number;
+  active: boolean;
+  speed: number;
+  flipTimer: number;      
+  flipInterval: number;  
+  isCurrentlyFlipped: boolean;
+  defaultDirection: 'left' | 'right';
+}
+
 @Component({
   selector: 'app-part4',
   templateUrl: './part4.component.html',
@@ -26,15 +46,54 @@ interface StationDialogue{
 })
 export class Part4Component implements OnInit {
 
-  constructor(private router: Router, public audioService : AudioService) { }
+  constructor(private router: Router, private gameData: GameDataService, public audioService : AudioService) { }
 
   actualFase: 'Station' | 'Wagon' | 'Lake'  = 'Station';
 
   currentLineStation = 0;
   isStationDialogueEnd: boolean = false;
 
+babbani = [
+  { id: 1, image: 'assets/img/Part4/babbana-1.png', startX: 46, startY: 10, endX: -25, endY: 55, x: 46, y: 10, progress: 0, active: false, direction: 'down', speed: 0.03, flipTimer: 0, flipInterval: 3000, isCurrentlyFlipped: false, defaultDirection: 'right'},
+  { id: 2, image: 'assets/img/Part4/babbano-2.png', startX: -10, startY: 61, endX: 48, endY: 6, x: -6, y: 71, progress: 0, active: false , direction: 'up', speed: 0.04, flipTimer: 0, flipInterval: 2000, isCurrentlyFlipped: false, defaultDirection: 'right'},
+  { id: 3, image: 'assets/img/Part4/babbano-3.png', startX: 40, startY: 22, endX: 1, endY: 80, x: 40, y: 22, progress: 0, active: false, direction: 'down', speed: 0.02, flipTimer: 0, flipInterval: 6000, isCurrentlyFlipped: false, defaultDirection: 'right'},
+  { id: 4, image: 'assets/img/Part4/babbana-4.png', startX: 100, startY: 170, endX: 48, endY: 8, x: 100, y: 170, progress: 0, active: false, direction: 'up', speed: 0.05, flipTimer: 0, flipInterval: 4000, isCurrentlyFlipped: false, defaultDirection: 'left'},
+  { id: 5, image: 'assets/img/Part4/babbano-5.png', startX: 48, startY: 12, endX: 130, endY: 60, x: 48, y: 8, progress: 0, active: false, direction: 'down', speed: 0.02,flipTimer: 0, flipInterval: 7000, isCurrentlyFlipped: false,  defaultDirection: 'left'},
+  { id: 5, image: 'assets/img/Part4/babbana-6.png', startX: 4, startY: 140, endX: 42, endY: 7, x: 11, y: 69, progress: 0, active: false, direction: 'up', speed: 0.04, flipTimer: 0, flipInterval: 5000, isCurrentlyFlipped: false, defaultDirection: 'right'}
+];
+
+private talkWithWeasley: boolean = false;
+private globalResetTimer: number = 0;
+private isTheRightTime: boolean = false;
+private winWindowTimer: number = 0;
+
+  harryState: 'ready' | 'newspaper' | 'shoes' | 'scratching' = 'ready';
+
+  harryImages = {
+  ready: 'assets/img/Part4/Harry-ready.png',
+  newspaper: 'assets/img/Part4/Harry-newspaper.png',
+  shoes: 'assets/img/Part4/Harry-shoes.png',
+  scratching: 'assets/img/Part4/Harry-scratching.png'
+  };
+  isHarryAdvancing: boolean = false;
+  isFlashActive: boolean = false;
+
   currentLineWagon = 0;
   isWagonDialogueEnd: boolean = false;
+  isChooseCandyClicked = false;
+  correctOrder = ['jellyBeans', 'toad', 'cauldron', 'liquorice', 'lollipop', 'vomitPills'];
+  placedItems: (string | null)[] = [null, null, null, null, null, null];
+  isOrderCorrect: boolean | null = null;
+  itemX: number = 0;
+  itemY: number = 0;
+  private dragOffsetX: number = 0;
+  private dragOffsetY: number = 0;
+  isEnigmaActive: boolean = false;
+  activeItem: 'cauldron' | 'jellyBeans' | 'liquorice' | 'lollipop' | 'toad' |'vomitPills' | null = null;
+  isCharging = false;
+  chargeTimer: any;
+  showSparkles = false;
+
 
   currentLineLake = 0;
   isLakeDialogueEnd: boolean = false;
@@ -68,9 +127,9 @@ export class Part4Component implements OnInit {
   ];
 
   private hagridPaths: any = {
-    1: [50, 40, 30, 40, 50],
-    2: [50, 60, 70, 60, 50],
-    3: [50, 20, 80, 50]
+    1: [50, 40, 30, 40, 50, 20, 60, 40],
+    2: [50, 60, 20, 70, 50, 10, 40, 10],
+    3: [50, 20, 80, 50, 10, 30, 0, 50]
   };
 
 
@@ -80,15 +139,20 @@ export class Part4Component implements OnInit {
   ngOnInit(): void {
     this.audioService.startGlobalBackground('LetTheMysteryUnfold', 0.3);
     this.startStationDialogue();
+
+    this.animationFrameId = requestAnimationFrame(this.gameLoop);
+
+    const name = this.gameData.wizardName;
+    this.script1[3].text += name;
+    
   }
   ngOnDestroy() {
   if (this.animationFrameId) {
     cancelAnimationFrame(this.animationFrameId);
-  }  }
+  }  
+}
   
    /***************** STATION ************************ */
-
-
     script0 : StationDialogue[] = [
       { 
         character : 'Hagrid',
@@ -117,7 +181,7 @@ export class Part4Component implements OnInit {
       },
       { 
         character : '',
-        image: "assets/img/Part4/Harry enigma.png",
+        image: "assets/img/Part4/station-game.png",
         text : ""  //ENIGMA
       },
       { 
@@ -131,11 +195,134 @@ export class Part4Component implements OnInit {
           this.isStationDialogueEnd = true;
           return;
        }
+   
+      if(this.currentLineStation === 2 && !this.talkWithWeasley) {
+      return;
+      }
+
+       if(this.currentLineStation === 5) {
+      return;
+      }
         setTimeout(() => {
           this.currentLineStation++;
           this.startStationDialogue();
-            }, 1000);
+            }, 3000);
     }
+
+  talk(){
+    this.talkWithWeasley = true;
+    this.currentLineStation === 3;
+    this.currentLineStation++;
+    this.startStationDialogue();
+  }
+
+  calculateZIndex(b: Babbano): number {
+    return Math.floor(b.y * 100);
+  }
+
+getScale(b: Babbano): number {
+  const minScale = 0.2;
+  const maxScale = 2.7;
+  const normalizedY = b.y / 100;
+  return minScale + (maxScale - minScale) * normalizedY;
+}
+
+getTransform(b: Babbano): string {
+  const scaleValue = this.getScale(b);
+  
+  const flipValue = b.isCurrentlyFlipped ? -1 : 1;
+
+  return `scaleX(${flipValue}) scale(${scaleValue})`;
+}
+
+startBabbaniMovement() {
+  this.babbani.forEach(b => {
+    b.active = true;
+    b.progress = 0;
+  });
+}
+updateBabbani(dt: number) {
+  this.globalResetTimer += dt;
+  const forceFlip = this.globalResetTimer >= 15000;
+
+  if (this.globalResetTimer >= 15000) {
+    this.isTheRightTime = true; 
+    this.winWindowTimer = 0;   
+    
+    this.babbani.forEach(b => {
+      b.isCurrentlyFlipped = !b.isCurrentlyFlipped;
+    });
+
+    this.globalResetTimer = 0; 
+  }
+
+  if (this.isTheRightTime) {
+    this.winWindowTimer += dt;
+    if (this.winWindowTimer >= 2000) { 
+      this.isTheRightTime = false;
+    }
+  }
+
+  this.babbani.forEach(b => {
+    if (!b.active) return;
+
+    b.flipTimer += dt;
+    if (b.flipTimer >= b.flipInterval) {
+      b.isCurrentlyFlipped = !b.isCurrentlyFlipped;
+      b.flipTimer = 0;
+    }
+
+    if (forceFlip) {
+      b.isCurrentlyFlipped = !b.isCurrentlyFlipped;
+    }
+
+    b.progress += b.speed * (dt / 1000);
+
+    if (b.progress >= 1) {
+      b.progress = 0;
+      b.x = b.startX;
+      b.y = b.startY;
+    } else {
+      b.x = b.startX + (b.endX - b.startX) * b.progress;
+      b.y = b.startY + (b.endY - b.startY) * b.progress;
+    }
+  });
+
+  if (forceFlip) {
+    this.globalResetTimer = 0;
+  }
+}
+    
+
+onWallClick(){
+  
+  console.log(this.isTheRightTime);
+
+    if (this.isTheRightTime) {
+    this.isHarryAdvancing = true;
+
+    this.isFlashActive = true; 
+
+      setTimeout(()=> {
+        this.isFlashActive = false;
+        this.currentLineStation = 6;
+      }, 3000);
+  } else {
+    this.changeErrorState();
+  }
+
+  }
+
+  changeErrorState(){
+  const errorStates: ('newspaper' | 'shoes' | 'scratching')[] = ['newspaper', 'shoes', 'scratching'];
+  const randomIndex = Math.floor(Math.random() * errorStates.length);
+  
+  this.harryState = errorStates[randomIndex];
+
+  setTimeout(() => {
+    this.harryState = 'ready';
+  }, 1500);
+}
   EnterTrain(){
     this.actualFase= 'Wagon';
     this.audioService.startGlobalBackground('rainAndThunder', 0.3);
@@ -148,26 +335,154 @@ export class Part4Component implements OnInit {
  /***************** WAGON ************************ */
       script1 : WagonDialogue[] = [
       { 
-        character : 'Hagrid',
-        image: "assets/img/Part2/", 
-        text : "Qui troverai le penne d'oca e l'inchiostro.. e di la tutte le cianfrusaglie per fare le stregonerie"
+        character : 'Ron',
+        image: "assets/img/Part4/Ron-wagon.png", 
+        text : "Scusa, ti dispiace? il treno è tutto occupato!"
       },
       { 
-        character : 'Ragazzi in sottofondo',
-        image: "assets/img/Part2/",
-        text : "Una scopa da corsa bellissima! Guardate che roba, la  nuova Ninbus 2000!" 
+        character : 'Ron',
+        image: "assets/img/Part4/Ron&Harry-presentation.png",
+        text : "A proposito, io sono Ron, Ron Weasley" 
+      },
+      { 
+        character : 'Harry',
+        image: "assets/img/Part4/Ron&Harry-presentation.png",
+        text : "Io sono Harry, Harry Potter" 
+      },
+      { 
+        character : 'Harry & Ron',
+        image: "assets/img/Part4/YourPresentation.png",
+        text : "E tu devi essere "
+      },
+      { 
+        character : 'Strega del carrello',
+        image: "assets/img/Part4/TrolleyWitch.png",
+        text : "Qualcosa dal carrello, cari?" 
+      },
+      { 
+        character : '..',
+        image: "assets/img/Part4/Wagon-Enigma.png", //ENIGMA
+        text : "" 
+      },
+      { 
+        character : 'Hermione',
+        image: "assets/img/Part4/Hermione-door.png",
+        text : "Qualcuno ha visto un rospo? Oh! State facendo magie! Naturalmente anche io ho provato a farne alcuni semplici e mi sono riusciti sempre!" 
+      },
+      { 
+        character : 'Hermione',
+        image: "assets/img/Part4/Hermione-magia.png",
+        text : "Lasciate che vi mostri." 
+      },
+      { 
+        character : '',
+        image: "assets/img/Part4/brokenGlasses.png", //magia
+        text : "" 
+      },
+      { 
+        character : '',
+        image: "assets/img/Part4/repairedGlasses.png.png",
+        text : "" 
+      },
+      { 
+        character : 'Hermione',
+        image: "assets/img/Part4/Hermione-exit.png",
+        text : "Vi conviene indossare le vostre divise, credo che manchi poco all'arrivo." 
       }
     ]
     startWagonDialogue(){
-        if(this.currentLineWagon >= this.script1.length){
+      
+      if(this.currentLineWagon >= this.script1.length){
           this.isWagonDialogueEnd = true;
           return;
+       }
+       if(this.currentLineWagon === 4 && !this.isChooseCandyClicked){
+        return;
+       }
+       if(this.currentLineWagon === 8){
+        return;
+       }
+       if(this.currentLineWagon === 5){
+        this.isEnigmaActive = true;
+        return;
        }
         setTimeout(() => {
           this.currentLineWagon++;
           this.startWagonDialogue();
             }, 3000);
     }
+    chooseCandy(){
+      console.log(this.currentLineWagon);
+      this.isChooseCandyClicked = true;
+      this.currentLineWagon++;
+    }
+    startItemDrag(event: MouseEvent | TouchEvent, item: 'cauldron' | 'jellyBeans' | 'liquorice' | 'lollipop' | 'toad' |'vomitPills' ) {
+    this.activeItem = item;
+    
+    const clientX = event instanceof MouseEvent ? event.clientX : event.touches[0].clientX;
+    const clientY = event instanceof MouseEvent ? event.clientY : event.touches[0].clientY;
+    
+    const rect = (event.target as HTMLElement).getBoundingClientRect();
+    
+    this.dragOffsetX = clientX - rect.left;
+    this.dragOffsetY = clientY - rect.top;
+
+    this.itemX = rect.left;
+    this.itemY = rect.top;
+  }
+  dropItem(zoneIndex: number) {
+  if (this.activeItem) {
+    this.placedItems[zoneIndex] = this.activeItem;
+    this.activeItem = null; 
+  }
+}
+   getItemImage(item: string): string {
+  const paths: any = {
+    'cauldron': 'assets/img/Part4/Cauldron-wagon.png',
+    'jellyBeans': 'assets/img/Part4/GellyBeans-wagon.png',
+    'liquorice': 'assets/img/Part4/Liquorice-wagon.png',
+    'lollipop': 'assets/img/Part4/Lollipop-wagon.png',
+    'toad': 'assets/img/Part4/Toad-wagon.png',
+    'vomitPills': 'assets/img/Part4/VomitPills-wagon.png'
+  };
+  return paths[item];
+   }
+   checkSolution() {
+  this.isOrderCorrect = this.placedItems.every((item, index) => item === this.correctOrder[index]);
+  
+  if (this.isOrderCorrect) {
+    this.currentLineWagon++; 
+     this.startWagonDialogue(); 
+  } else {
+    setTimeout(() => {
+      this.placedItems = [null, null, null, null, null, null];
+      this.isOrderCorrect = null;
+    }, 1000);
+  }
+   }
+    startCharging() {
+    this.isCharging = true;
+    this.chargeTimer = setTimeout(() => {
+      this.repair();
+    }, 2000);
+  }
+  stopCharging() {
+    if (this.isCharging) { 
+       this.isCharging = false;
+    }
+  }
+
+  repair() {
+  this.isCharging = false;
+    this.showSparkles = true;  
+    
+    setTimeout(() => {
+      this.showSparkles = false;
+      this.currentLineWagon ++;
+      this.startWagonDialogue();
+    }, 600);
+  }
+
     getOffTrain(){
       this.actualFase= 'Lake';
       this.audioService.startGlobalBackground('rainAndThunder', 0.3);
@@ -242,7 +557,18 @@ export class Part4Component implements OnInit {
   }
   }
 gameLoop = (timestamp: number) => {
-    if (!this.isGameStarted) return;
+
+    if (this.actualFase === 'Station') {
+        if (this.currentLineStation === 5) {
+             if (!this.babbani[0].active) this.startBabbaniMovement();
+             
+             if (this.lastTimestamp === 0) this.lastTimestamp = timestamp;
+             const dt = Math.min(timestamp - this.lastTimestamp, 32);
+             this.lastTimestamp = timestamp;
+
+             this.updateBabbani(dt);
+        }
+    } else if (this.isGameStarted) {
 
     if (this.lastTimestamp === 0) this.lastTimestamp = timestamp;
     const dt = Math.min(timestamp - this.lastTimestamp, 32);
@@ -280,13 +606,14 @@ gameLoop = (timestamp: number) => {
     this.resetWaveState();
     alert("Hagrid è scomparso nell'oscurità! Ricomincia la sfida.");
   }
-
+}
     this.animationFrameId = requestAnimationFrame(this.gameLoop);
   };
 
   updateHagrid(dt: number) {
     const path = this.hagridPaths[this.currentWave];
-    const speed = 0.0005;
+    const baseSpeed = 0.0005;
+    const speed = baseSpeed * (1 + (this.currentWave - 1) * 0.25);
 
     this.hagridProgress += dt * speed;
 
@@ -322,14 +649,12 @@ gameLoop = (timestamp: number) => {
     if (this.movingDir === 'right') this.playerX = Math.min(100, this.playerX + 0.5);
   }
 
-
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
     if (!this.isGameStarted) return;
     if (event.key === 'ArrowLeft') this.movingDir = 'left';
     if (event.key === 'ArrowRight') this.movingDir = 'right';
   }
-
   @HostListener('window:keyup', ['$event'])
   handleKeyUp() { this.movingDir = null; }
 
