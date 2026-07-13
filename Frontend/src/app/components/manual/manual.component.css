@@ -1,0 +1,91 @@
+.book-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.book-content {
+    width: 1000px;
+    height: 600px;
+    background-image: url('../../../assets/img/Part5/HogwartsManual.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 50px 130px;
+    box-sizing: border-box;
+    color: #3e2723;
+    font-family: 'Georgia', serif;
+    overflow-y: auto;
+    position: relative;
+}
+
+.book-content h1 {
+    font-size: 23px;
+    text-transform: uppercase;
+    font-family: 'Indie Flower', cursive;
+}
+
+.book-container {
+    display: flex;
+    width: 90%;
+    overflow: hidden;
+    margin: 10px 0px 30px 60px;
+}
+
+.page {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.left-page {
+    border-right: 2px solid #3e2723;
+}
+
+.title-part {
+    white-space: nowrap;
+    font-size: 1.5rem;
+    letter-spacing: -0.5px;
+    margin: 0;
+    padding: 0 10px;
+    text-align: center;
+}
+
+
+
+.parchment-text {
+    column-count: 2;
+    -moz-column-gap: 40px;
+    column-gap: 110px;
+    height: 420px;
+    margin-left: 31px;
+    font-size: 14px;
+    overflow: hidden;
+    font-family: 'Indie Flower', cursive;
+}
+
+.parchment-text h3 {
+    break-after: avoid;
+}
+
+.close-book-btn {
+    position: absolute;
+    bottom: 34px;
+    right: 78px;
+    background: transparent;
+    color: #4b3823;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+

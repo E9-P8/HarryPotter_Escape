@@ -1,0 +1,53 @@
+<div class="book-overlay" *ngIf="gameService.isManualOpen">
+  <div class="book-content">
+    <!--<h1 style="text-align: center">
+      REGOLAMENTO E CONSIGLI DELLO STUDENTE DI HOGWARTS
+    </h1>-->
+    <div class="book-container">
+      <div class="page left-page">
+        <h1 class="title-part">REGOLAMENTO E CONSIGLI</h1>
+      </div>
+      <div class="page right-page">
+        <h1 class="title-part">DELLO STUDENTE DI HOGWARTS</h1>
+      </div>
+    </div>
+
+    <div class="parchment-text">
+      <h3>Lo spirito della Casa</h3>
+      <p>
+        Il valore risiede nel coraggio di affrontare l'ignoto. Tuttavia,
+        l'audacia senza giudizio è imprudenza, e il Regolamento Scolastico non
+        ammette eccezioni.
+      </p>
+
+      <h3>Gestione della Reputazione</h3>
+      <p>
+        I professori osservano costantemente il tuo comportamento. Un
+        atteggiamento rispettoso durante i dialoghi può mitigare le conseguenze
+        di passi falsi commessi altrove.
+      </p>
+      <h3>Zona Proibita</h3>
+      <p>
+        L'esplorazione di aree vietate può rivelare segreti preziosi, ma il
+        rischio di essere scoperti è elevato. Se decidi di procedere, fallo con
+        determinazione: il tempo è un fattore critico.
+      </p>
+      <h3>La via della Sincerità</h3>
+      <p>
+        La verità è spesso la via più sicura per mantenere alta la stima dei
+        docenti, ma potrebbe non essere la più vantaggiosa per scoprire la
+        verità nascosta tra le mura della scuola.
+      </p>
+      <h3>Osservazione</h3>
+      <p>
+        Non tutte le scelte hanno lo stesso peso. Le decisioni prese nelle fasi
+        iniziali dell'anno possono influenzare drasticamente le opportunità che
+        ti si presenteranno in seguito.
+      </p>
+    </div>
+
+    <button (click)="closeManual()" class="close-book-btn">
+      Chiudi il volume
+    </button>
+  </div>
+</div>

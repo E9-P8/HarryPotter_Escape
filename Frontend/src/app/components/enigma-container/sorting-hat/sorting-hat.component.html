@@ -1,0 +1,24 @@
+<div class="sorting-hat-container">
+  <div class="sorting-background"></div>
+
+  <img
+    [src]="hatImageSource"
+    class="sorting-hat-img fading-in"
+    alt="Cappello Parlante"
+  />
+
+  <div class="sorting-hat-overlay">
+    <p>{{ quizData?.questions[currentQuestionIndex].text }}</p>
+
+    <div class="options-area">
+      <button
+        *ngFor="let opt of quizData?.questions[currentQuestionIndex].options"
+        (mouseenter)="setHatState('thinking')"
+        (mouseleave)="setHatState('neutral')"
+        (click)="handleAnswer(opt)"
+      >
+        {{ opt.text }}
+      </button>
+    </div>
+  </div>
+</div>

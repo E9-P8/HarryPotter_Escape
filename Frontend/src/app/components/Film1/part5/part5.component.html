@@ -11,65 +11,64 @@
     />
   </svg>
 </button>
-<div class="GreatHall-container" *ngIf="actualFase === 'GreatHall'">
-  <div class="GreatHall-viewport">
-    <div class="GreatHall-view"></div>
-    <img
-      [src]="script0[currentLineGreatHall].image"
-      class="GreatHall-img"
-      alt="GreatHall"
-    />
-    <div class="dialogue-box">
-      <div class="dialog-text">
-        <p *ngIf="script0[currentLineGreatHall].character">
-          {{ script0[currentLineGreatHall].character }}
+<button
+  class="manual"
+  title="Apri il manuale"
+  (click)="openManual()"
+  alt="Open the manual"
+  *ngIf="!gameService.isManualOpen"
+></button>
+<div class="Part5-container" *ngIf="actualPhase">
+  <div class="Part5-viewport">
+    <div class="Part5-view">
+      <div class="scene-visuals" *ngIf="actualPhase.type !== 'enigma'">
+        <img
+          class="Part5-img"
+          [src]="
+            actualPhase.image_id
+              ? '../../../../assets/img/Part5/' + actualPhase.image_id + '.png'
+              : 'assets/img/default.png'
+          "
+          alt="Scena"
+        />
+      </div>
+      <div class="dialogue-box" *ngIf="actualPhase.type !== 'enigma'">
+        <div class="dialog-text">
+          <p *ngIf="actualPhase.character">{{ actualPhase.character }}</p>
+          <p>{{ updateTextWithWizardName(actualPhase.text) }}</p>
+        </div>
+
+        <div
+          class="options-area"
+          *ngIf="!actualPhase.type && actualPhase.options"
+        >
+          <button
+            *ngFor="let opt of actualPhase.options"
+            (click)="manageChoice(opt)"
+          >
+            {{ opt.text }}
+          </button>
+        </div>
+      </div>
+      <div class="enigma-area" *ngIf="actualPhase?.type === 'enigma'">
+        <app-enigma-hub [enigmaId]="actualPhase.enigma_id"></app-enigma-hub>
+        <!--<p>Enigma in corso: {{ actualPhase.enigma_id }}...</p>
+        <button (click)="ManageEnigmaResult(true)">Simula Successo</button>-->
+      </div>
+
+      <div class="special-choice-area" *ngIf="actualPhase.id === 'Seeker'">
+        <p>
+          Baston ti guarda intensamente: "Allora, che mi dici? Entri in
+          squadra?"
         </p>
-        <p>{{ script0[currentLineGreatHall].text }}</p>
-      </div>
-    </div>
-    <button class="goToSpellsClass" (click)="goToSpellsClass()"></button>
-  </div>
-</div>
-<div class="SpellsClass-container" *ngIf="actualFase === 'SpellsClass'">
-  <div class="SpellsClass-viewport">
-    <div class="SpellsClass-view">
-      <img
-        [src]="script1[currentLineSpellsClass].image"
-        class="SpellsClass-img"
-        alt="SpellsClass"
-      />
 
-      <div class="SpellsClass-dialogue-box" *ngIf="">
-        <div class="dialog-text">
-          <p *ngIf="script1[currentLineSpellsClass].character">
-            {{ script1[currentLineSpellsClass].character }}
-          </p>
-          <p>{{ script1[currentLineSpellsClass].text }}</p>
-        </div>
-      </div>
+        <button (click)="confirmTeam(true)" *ngIf="isAlreadySeeker()">
+          Accetto! Entro in squadra.
+        </button>
 
-      <button class="findTroll" (click)="findTroll()"></button>
-    </div>
-  </div>
-</div>
-<div class="GirlsBathroom-container" *ngIf="actualFase === 'GirlsBathroom'">
-  <div class="GirlsBathroom-viewport">
-    <div class="GirlsBathroom-view">
-      <img
-        *ngIf=""
-        [src]="script2[currentLineGirlsBathroom].image"
-        class="GirlsBathroom-img"
-        alt="GirlsBathroomScene"
-      />
-
-      <div class="dialogue-box">
-        <div class="dialog-text">
-          <p *ngIf="script2[currentLineGirlsBathroom].character">
-            {{ script2[currentLineGirlsBathroom].character }}
-          </p>
-          <p>{{ script2[currentLineGirlsBathroom].text }}</p>
-        </div>
-        <button class="thirdFloor" (click)="thirdFloor()"></button>
+        <button (click)="confirmTeam(false)">
+          No, preferisco concentrarmi sullo studio.
+        </button>
       </div>
     </div>
   </div>

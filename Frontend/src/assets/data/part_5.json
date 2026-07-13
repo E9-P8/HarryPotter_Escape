@@ -1,0 +1,159 @@
+{
+  "part_id": 5,
+  "nodes": [
+    {
+      "id": "benvenuto",
+      "image_id": "HogwartsWelcome",
+      "text": "Benvenuti ad hogwarts. tra qualche minuto varcherete questa soglia e vi unirete ai vostri compagni ma prima verrete smistati nelle vostre case. Sono: GRIFONDORO, TASSOROSSO, CORVONERO e SERPEVERDE. Per il tempo che starete qui la vostra casa sarà la vostra famiglia. I trionfi che otterrete le faranno guadagnare puntie ogni violazione delle regole le farà perdere punti. A fine anno, alla casa con più punti verrà assegnata la coppa delle case. La cerimonia dello smistamento inizierà tra pochissimo!",
+      "options": [
+        { "text": "Consulta il Manuale dello Studente", "next_node": "manual" },
+        { "text": "Procedi alla Cerimonia", "next_node": "smistamento" }
+      ]
+    },
+    {
+      "id": "manual",
+      "image_id": "",
+      "next_node": "smistamento"
+    },
+    {
+      "id": "smistamento",
+      "type": "enigma",
+      "enigma_id": "QUIZ_CASA",
+      "success_node": "banchetto",
+      "fail_node": "smistamento"
+    },
+    {
+      "id": "banchetto",
+      "image_id": "empty_banchetto",
+      "type": "animation",
+      "next_node": "dormitorio"
+    },
+    {
+      "id": "dormitorio",
+      "image_id": "",
+      "type": "animation",
+      "text": "Prefetto: 'Questa è la via per il dormitorio. Attenzione alle scale.. a loro piace cambiare",
+      "next_node": "keyword"
+    },
+    {
+      "id": "keyword",
+      "image_id": "",
+      "type": "enigma",
+      "enigma_id": "QUIZ_FRAME",
+      "success_node": "dormitorio1",
+      "fail_node": "keyword"
+    },
+    {
+      "id": "dormitorio1",
+      "image_id": "",
+      "type": "animation",
+      "next_node": "lateness"
+    },
+    {
+      "id": "lateness",
+      "image_id": "",
+      "text": "Buongiorno, ragazzi",
+      "options": [
+        { "text": "È stata maledettamente brava!", "impact": { "reputazione": 0 }, "next_node": "piton" },
+        { "text": "Siamo stati fortunati a non essere espulsi.", "impact": { "reputazione": 0 }, "next_node": "piton" }
+      ]
+    },
+    {
+      "id": "piton_1",
+      "image_id": "",
+      "text": "Piton: 'Potter! Dimmi, cosa ottengo se verso radice di asfodelo in un infuso di artemisia?'",
+      "options": [
+        { "text": "Rispondi correttamente (Pozione di morte vivente)", 
+        "impact": { "reputazione": 20 }, 
+         "next_node": "posta" 
+        },
+        { "text": "Non lo so, professore.", 
+          "impact": { "reputazione": -10 }, 
+          "next_node": "piton_2" 
+        }
+      ]
+    },
+    {
+  "id": "piton_2",
+      "image_id": "",
+  "text": "Piton: 'Non lo sai? Bene, riproviamo. Dove guarderesti Potter se ti chiedessi di trovare un bezoar?'",
+  "options": [
+       { 
+      "text": "Nello stomaco di una capra.", 
+      "impact": { "reputazione": 10 }, 
+      "next_node": "posta" 
+       },
+       { 
+      "text": "Non lo so, professore.", 
+      "impact": { "reputazione": -20 }, 
+      "next_node": "posta" 
+       }
+     ]
+    },
+    {
+      "id": "posta",
+      "image_id": "",
+      "text": "Harry: Posta in arrivo! La Gringott è stata scassinata! La camera 713... è lì che siamo andati con Hagrid!",
+      "next_node": "lezione_volo"
+    },
+    {
+      "id": "lezione_volo",
+      "image_id": "",
+      "text": "Madama bom: mettetevi alla sinistra della vostra scopa, stendete la mano destra sulla scopa e dite 'SU!' Una volta afferrata la scopa voglio che ci montiate. E aggrappatevi bene. Quando soffio col fischietto con i piedi vi darete una spinta. Tenete la scopa ben salda. Inclinatevi leggermente in avanti e tornate per terra. Al mio fischio ..",
+      "type": "enigma",
+      "enigma_id": "ENIGMA_SCOPA",
+      "success_node": "malfoy_volo",
+      "fail_node": "malfoy"
+    },
+    {
+      "id": "malfoy",
+      "image_id": "",
+      "text": "Malfoy: Che ne dici se la metto in un posto difficile da arrivarci?",
+      "next_node": "hermione_advise"
+    },
+    {
+      "id": "hermione_advise",
+      "image_id": "",
+      "text": "Hermione: *wizardName* non se ne parla, Madama Bom l'ha vietato e per di più non sai nemmeno volare.",
+      "next_node": "malfoy_volo"
+    },
+    {
+      "id": "malfoy_volo",
+      "image_id": "",
+      "text": "Malfoy: Cosa c'è Potter, pensi di non arrivarci?",
+      "options": [
+        { "text": "Insegui Malfoy", "impact": { "audacia": 0 }, "next_node": "mcgranitt_reprimand" },
+        { "text": "Ascolta Hermione e resta a terra", "impact": { "reputazione": 0 }, "next_node": "fine" }
+      ] 
+    },
+    {
+      "id": "mcgranitt_reprimand",
+      "image_id": "",
+      "text": "McGranitt:'Potter, seguimi!'",
+      "next_node": "mcgranitt_baston"
+    },
+    {
+      "id": "mcgranitt_baston",
+      "image_id": "",
+      "text": "McGranitt: Potter, lui è Oliver Baston. Baston, ti ho trovato un cercatore!",
+      "next_node": "Seeker"
+    },
+    {
+      "id": "Seeker",
+      "text": "Ron: 'Harry, non sapevo che tuo padre fosse un cercatore!'",
+      "options": [
+    { 
+      "text": "Chiedi di entrare in squadra", 
+      "condition": "isSeeker == true", 
+      "impact": { "status": "quidditch_team" },
+      "next_node": "chiusura" 
+    },
+    { 
+      "text": "Rifiuta la proposta di Baston", 
+      "condition": "isSeeker == true", 
+      "next_node": "chiusura" 
+    }
+  ]
+    }
+  ]
+}

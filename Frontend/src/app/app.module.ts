@@ -16,6 +16,13 @@ import { Part5Component } from './components/Film1/part5/part5.component';
 import { Part6Component } from './components/Film1/part6/part6.component';
 import { Part7Component } from './components/Film1/part7/part7.component';
 
+import { HttpClientModule } from '@angular/common/http';
+import { ManualComponent } from './components/manual/manual.component';
+import { EnigmaHubComponent } from './components/enigma-container/enigma-hub/enigma-hub.component';
+import { SortingHatComponent } from './components/enigma-container/sorting-hat/sorting-hat.component';
+import { PuzzleFrameComponent } from './components/enigma-container/puzzle-frame/puzzle-frame.component';
+import { EnigmaBroomComponent } from './components/enigma-container/enigma-broom/enigma-broom.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,12 +35,18 @@ import { Part7Component } from './components/Film1/part7/part7.component';
     Part4Component,
     Part5Component,
     Part6Component,
-    Part7Component
+    Part7Component,
+    ManualComponent,
+    EnigmaHubComponent,
+    SortingHatComponent,
+    PuzzleFrameComponent,
+    EnigmaBroomComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,22 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { AudioService } from '../../../services/audio.service';
+import { GameDataService } from '../../../services/game-data.service'
+import { Router } from '@angular/router';
 
-interface GreatHallDialogue{
-  character : string;
-  image: string;
-  text : string;
- }
- interface SpellsClassDialogue{
-  character : string;
-  image: string;
-  text : string;
- }
- interface GirlsBathroomDialogue{
-  character : string;
-  image: string;
-  text : string;
- }
 
 @Component({
   selector: 'app-part5',
@@ -25,126 +12,95 @@ interface GreatHallDialogue{
 })
 export class Part5Component implements OnInit {
 
-  constructor(private router: Router, public audioService : AudioService) { }
+  Data: any;     
+  actualPhase: any;    
+  wizardName: string = "Harry"; 
 
-  currentLineGreatHall = 0;
-  isGreatHallDialogueEnd: boolean = false;
+  constructor(private http: HttpClient,
+    public gameService: GameDataService, 
+    public audioService : AudioService,
+  private router: Router) { }
 
-  currentLineSpellsClass = 0;
-  isSpellsClassDialogueEnd: boolean = false;
-
-  currentLineGirlsBathroom = 0;
-  isGirlsBathroomDialogueEnd: boolean = false;
 
   toggleAudio(): void {
   this.audioService.toggleGlobalMute(0.2);
   }
 
   ngOnInit(): void {
-    this.startIntroSequence();
-    this.startSpellsClassDialogue();
-  }
-  startIntroSequence() {
-    this.audioService.startGlobalBackground('LetTheMysteryUnfold', 0.3); 
+    this.wizardName = this.gameService.wizardName;
+    this.loadPart();
   }
 
-   actualFase: 'GreatHall' | 'SpellsClass' | 'GirlsBathroom'  = 'GreatHall';
-
-/***************** GreatHall ************************ */
-
-    script0 : GreatHallDialogue[] = [
-      { 
-        character : 'Harry',
-        image: "assets/img/Part2/", 
-        text : "Hagrid, cosa sono esattamente questi cosi?"
-      },
-      { 
-        character : 'Folletto',
-        image: "assets/img/Part2/",
-        text : "Il signor harry potter ha la sua chiave?"
-      },
-      { 
-        character : 'Folletto',
-        image: "assets/img/Part2/",
-        text : "La chiave prego!" //dare chiave
-      }
-    ]
-    startGreatHallDialogue(){
-        if(this.currentLineGreatHall >= this.script0.length){
-          this.isGreatHallDialogueEnd = true;
-          return;
-       }
-        setTimeout(() => {
-          this.currentLineGreatHall++;
-          this.startGreatHallDialogue();
-            }, 3000);
-    }
-  goToSpellsClass(){
-    this.actualFase= 'SpellsClass';
-    this.audioService.startGlobalBackground('rainAndThunder', 0.3);
-
-    this.currentLineSpellsClass = 0;
-    this.startSpellsClassDialogue();
+  loadPart() {
+    this.http.get('assets/data/part_5.json').subscribe(data => {
+      this.Data = data;
+      this.actualPhase = this.Data.nodes[0];
+    });
   }
 
-   /***************** SpellsClass ************************ */
-
-    script1 : SpellsClassDialogue[] = [
-      { 
-        character : 'Hagrid',
-        image: "assets/img/Part2/", 
-        text : "Qui troverai le penne d'oca e l'inchiostro.. e di la tutte le cianfrusaglie per fare le stregonerie"
-      },
-      { 
-        character : 'Ragazzi in sottofondo',
-        image: "assets/img/Part2/",
-        text : "Una scopa da corsa bellissima! Guardate che roba, la  nuova Ninbus 2000!" 
-      }
-    ]
-    startSpellsClassDialogue(){
-        if(this.currentLineSpellsClass >= this.script1.length){
-          this.isSpellsClassDialogueEnd = true;
-          return;
-       }
-        setTimeout(() => {
-          this.currentLineSpellsClass++;
-          this.startSpellsClassDialogue();
-            }, 3000);
+  manageChoice(option: any) {
+    // 1. Applica impatto se esiste (reputazione, audacia, ecc.)
+    if (option.impact) {
+      this.gameService.updateStats(option.impact);
     }
-    findTroll(){
-      this.actualFase= 'GirlsBathroom';
-      this.audioService.startGlobalBackground('rainAndThunder', 0.3);
-
-      this.currentLineGirlsBathroom = 0;
-      this.startGirlsBathroomDialogue();
+    if (option.next_node === 'manual') {
+    this.gameService.openManual();
+    return; 
     }
+
+    if (option.next_node === "mcgranitt_reprimand") {
+      this.gameService.setFlag("isSeeker", true);
+    }
+
+    const nextNodeId = option.next_node;
+    const nextNode = this.Data.nodes.find((n: any) => n.id === nextNodeId);
+
+if (nextNode) {
+        this.actualPhase = nextNode; 
+
+        if (this.actualPhase.type === 'enigma') {
+            console.log("Nodo enigma caricato:", this.actualPhase.enigma_id);
+            return; 
+        }
+        if (this.actualPhase.type === 'animation') {
+            setTimeout(() => {
+                this.manageChoice({ next_node: this.actualPhase.next_node });
+            }, 2000);
+        }
+    }
+  }
+
+  openManual(){ 
+    this.gameService.isManualOpen= true;
+    this.gameService.openManual();
+  }
+
+  updateTextWithWizardName(text: string): string {
+    if (!text) return "";
+    return text.replace('*wizardName*', this.wizardName);
+  }
+  ManageEnigmaResult(successo: boolean) {
+  const nextNodeId = successo ? this.actualPhase.success_node : this.actualPhase.fail_node;
   
-  /***************** GirlsBathroom ************************ */
+  this.actualPhase = this.Data.nodes.find((n: any) => n.id === nextNodeId);
+}
 
-    script2 : GirlsBathroomDialogue[] = [
-      { 
-        character : 'Harry',
-        image: "assets/img/Part2/", 
-        text : "C'è nessuno?"
-      },
-      { 
-        character : 'Hagrid',
-        image: "assets/img/Part2/", //hagrid che bussa con una civetta
-        text : "Harry! Buon compleanno!"
-      }
-    ]
-    startGirlsBathroomDialogue(){
-        if(this.currentLineGirlsBathroom >= this.script2.length){
-          this.isGirlsBathroomDialogueEnd = true;
-          return;
-       }
-        setTimeout(() => {
-          this.currentLineGirlsBathroom++;
-          this.startGirlsBathroomDialogue();
-            }, 3000);
-    }
-    thirdFloor(){
-      this.router.navigate(['/part6']);
-    }
+
+  closeManual() {
+    this.gameService.closeManual();
+  }
+
+
+  isAlreadySeeker(): boolean {
+  return this.gameService.getFlag("isSeeker");
+}
+
+  confirmTeam(choice: boolean) {
+    this.gameService.setFlag("isSeeker", choice);
+    /*Opzionale: salva il completamento della parte 5 prima di uscire
+  this.gameService.navigateTo("part6_start", 6);*/
+
+    this.router.navigate(['/part6']);
+  }
 
 } 

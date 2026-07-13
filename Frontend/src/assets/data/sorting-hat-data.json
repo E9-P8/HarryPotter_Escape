@@ -1,0 +1,104 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "text": "Ti trovi di fronte a un ponte pericolante che devi attraversare per aiutare un amico. Cosa fai?",
+      "options": [
+        { "text": "Attraversi di corsa senza esitare.", "casa": "GRIFONDORO", "audio": "hover_courage.mp3" },
+        { "text": "Analizzi la stabilità prima di passare.", "casa": "CORVONERO", "audio": "hover_wisdom.mp3" },
+        { "text": "Cerchi un percorso più sicuro.", "casa": "SERPEVERDE", "audio": "hover_ambition.mp3" },
+        { "text": "Aspetti che arrivi qualcun altro.", "casa": "TASSOROSSO", "audio": "hover_loyalty.mp3" }
+      ]
+    },
+    {
+      "id": 2,
+      "text": "Quale di queste qualità consideri il tuo più grande punto di forza?",
+      "options": [
+        { "text": "Agire con fermezza anche quando sono spaventato.", "casa": "GRIFONDORO", "audio": "hover_courage.mp3" },
+        { "text": "La mia curiosità e la sete di apprendere.", "casa": "CORVONERO", "audio": "hover_wisdom.mp3" },
+        { "text": "La determinazione nei miei obiettivi.", "casa": "SERPEVERDE", "audio": "hover_ambition.mp3" },
+        { "text": "La mia dedizione verso chi amo.", "casa": "TASSOROSSO", "audio": "hover_loyalty.mp3" }
+      ]
+    },
+    {
+      "id": 3,
+      "text": "Se dovessi essere ricordato nella storia di Hogwarts, per cosa vorresti che fosse?",
+      "options": [
+        { "text": "Per un atto di coraggio che ha salvato la scuola.", "casa": "GRIFONDORO", "audio": "hover_courage.mp3" },
+        { "text": "Per aver scoperto un antico segreto magico.", "casa": "CORVONERO", "audio": "hover_wisdom.mp3" },
+        { "text": "Per essere diventato un mago potente.", "casa": "SERPEVERDE", "audio": "hover_ambition.mp3" },
+        { "text": "Per essere stato l'amico più leale.", "casa": "TASSOROSSO", "audio": "hover_loyalty.mp3" }
+      ]
+    },
+    {
+      "id": 4,
+      "text": "Vedi un compagno vittima di un'ingiustizia, come reagisci?",
+      "options": [
+        { "text": "Affronto apertamente l'insegnante.", "casa": "GRIFONDORO", "audio": "hover_courage.mp3" },
+        { "text": "Aspetto per discutere logicamente l'errore.", "casa": "CORVONERO", "audio": "hover_wisdom.mp3" },
+        { "text": "Osservo, valutando se intervenire.", "casa": "SERPEVERDE", "audio": "hover_ambition.mp3" },
+        { "text": "Cerco di consolare il compagno.", "casa": "TASSOROSSO", "audio": "hover_loyalty.mp3" }
+      ]
+    },
+    {
+      "id": 5,
+      "text": "Quale di questi oggetti magici sceglieresti di possedere?",
+      "options": [
+        { "text": "Una spada leggendaria.", "casa": "GRIFONDORO", "audio": "hover_courage.mp3" },
+        { "text": "Un libro di conoscenza perduta.", "casa": "CORVONERO", "audio": "hover_wisdom.mp3" },
+        { "text": "Un anello di comando.", "casa": "SERPEVERDE", "audio": "hover_ambition.mp3" },
+        { "text": "Una coppa che si condivide con tutti.", "casa": "TASSOROSSO", "audio": "hover_loyalty.mp3" }
+      ]
+    },
+    {
+      "id": 6,
+      "text": "Di fronte a un enigma magico che blocca una porta, come ti comporti?",
+      "options": [
+        { "text": "Provo a forzare la porta.", "casa": "GRIFONDORO", "audio": "hover_courage.mp3" },
+        { "text": "Studio i dettagli dell'enigma.", "casa": "CORVONERO", "audio": "hover_wisdom.mp3" },
+        { "text": "Cerco un modo per aggirarlo.", "casa": "SERPEVERDE", "audio": "hover_ambition.mp3" },
+        { "text": "Collaboro con gli altri.", "casa": "TASSOROSSO", "audio": "hover_loyalty.mp3" }
+      ]
+    },
+    {
+      "id": 7,
+      "text": "Cosa temi di più?",
+      "options": [
+        { "text": "Essere un codardo.", "casa": "GRIFONDORO", "audio": "hover_courage.mp3" },
+        { "text": "Essere considerato ignorante.", "casa": "CORVONERO", "audio": "hover_wisdom.mp3" },
+        { "text": "Rimanere nell'oscurità.", "casa": "SERPEVERDE", "audio": "hover_ambition.mp3" },
+        { "text": "Restare solo.", "casa": "TASSOROSSO", "audio": "hover_loyalty.mp3" }
+      ]
+    },
+    {
+      "id": 8,
+      "text": "Qual è il tuo ambiente ideale?",
+      "options": [
+        { "text": "Davanti a un camino con amici.", "casa": "GRIFONDORO", "audio": "hover_courage.mp3" },
+        { "text": "Una biblioteca silenziosa.", "casa": "CORVONERO", "audio": "hover_wisdom.mp3" },
+        { "text": "Uno studio privato.", "casa": "SERPEVERDE", "audio": "hover_ambition.mp3" },
+        { "text": "Un giardino accogliente.", "casa": "TASSOROSSO", "audio": "hover_loyalty.mp3" }
+      ]
+    },
+    {
+      "id": 9,
+      "text": "Come preferiresti vincere una competizione?",
+      "options": [
+        { "text": "Con audacia superiore.", "casa": "GRIFONDORO", "audio": "hover_courage.mp3" },
+        { "text": "Con una strategia brillante.", "casa": "CORVONERO", "audio": "hover_wisdom.mp3" },
+        { "text": "Sfruttando le debolezze altrui.", "casa": "SERPEVERDE", "audio": "hover_ambition.mp3" },
+        { "text": "Con duro lavoro e regole.", "casa": "TASSOROSSO", "audio": "hover_loyalty.mp3" }
+      ]
+    },
+    {
+      "id": 10,
+      "text": "Quale animale sceglieresti come compagno?",
+      "options": [
+        { "text": "Un falco fiero.", "casa": "GRIFONDORO", "audio": "hover_courage.mp3" },
+        { "text": "Un gufo sapiente.", "casa": "CORVONERO", "audio": "hover_wisdom.mp3" },
+        { "text": "Un gatto scaltro.", "casa": "SERPEVERDE", "audio": "hover_ambition.mp3" },
+        { "text": "Un cane fedele.", "casa": "TASSOROSSO", "audio": "hover_loyalty.mp3" }
+      ]
+    }
+  ]
+}
