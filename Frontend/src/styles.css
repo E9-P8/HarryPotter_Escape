@@ -3,3 +3,29 @@
 body,html {
     margin: 0;
 }
+.rotate-warning {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #111;
+    color: white;
+    z-index: 99999;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: sans-serif;
+}
+
+@media screen and (orientation: portrait) {
+
+    .rotate-warning {
+        display: flex;
+    }
+    app-root {
+        display: none;
+    }
+}

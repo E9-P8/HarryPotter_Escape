@@ -541,3 +541,79 @@ position: fixed;
         transform: translate(-50%, -50%) scale(0.95);
     }
 }
+
+
+@media screen and (max-width: 932px) and (orientation: landscape) {
+
+    html body .audio-toggle-btn {
+        top: 12px;
+        left: 12px;
+        width: 22px;
+        height: 22px;
+        opacity: 0.5;
+    }
+
+    .audio-toggle-btn .audio-icon {
+        width: 100%;
+        height: 100%;
+    }
+
+    .inputs-container {
+        gap: 3vmin;
+    }
+    .inputs-container input {
+        width: 3.5vmin;
+        height: 3.5vmin;
+    }
+
+    .dialogue-box,
+    .reptiles-dialogue-box {
+        bottom: 6px;
+        left: 50%;
+        transform: translateX(-50%);
+
+        width: 75%;
+        height: 10vh;
+        min-height: 50px;
+        padding: 4px 12px;
+        box-sizing: border-box;
+    }
+
+    .dialogue-box .dialog-text,
+    .reptiles-dialogue-box .dialog-text {
+        font-size: 0.6rem;
+        line-height: 1.2;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .reptiles-dialogue-box .snake-input-container {
+        margin-top: 2px;
+        gap: 6px;
+    }
+
+    .snake-input-container input,
+    .snake-input-container button {
+        padding: 2px 8px;
+        font-size: 0.7rem;
+    }
+    .snake-input-container input {
+        height: 3vh;
+    }
+    .snake-input-container button {
+        height: 5vh;
+    }
+    .dialogue-box .dialog-text *,
+    .reptiles-dialogue-box .dialog-text * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .dialog-text .character-name {
+        margin-bottom: 2px;
+    }
+}
