@@ -237,3 +237,26 @@ background: #f7d8ab;
       opacity: 0;
    }
 }
+
+@media screen and (max-width: 932px) and (orientation: landscape) {
+   h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 2px;
+   }
+   h2 {
+      font-size: 1.3rem;
+   }
+   .typewriter-text {
+      font-size: 0.7rem;
+      line-height: 1.6;
+   }
+   .introGame {
+      min-height: 325px;
+      width: 75%;
+   }
+   .registration-box input,
+   .registration-box button {
+      font-size: 0.8rem;
+      }
+ }

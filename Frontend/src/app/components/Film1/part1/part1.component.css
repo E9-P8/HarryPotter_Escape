@@ -384,18 +384,25 @@ position: fixed;
     display: block;
 }
 
+.enigma-text{
+    position: absolute;
+    top: 4%;
+    right: 0%;
+    width: 42%;
+    line-height: 1.6rem; 
+}
 .inputs-container {
     position: absolute;
     display: flex;
-    gap: 5vmin;
-    top: 55%;
-    left: 18%;
+    gap: 4.5vmin;
+    top: 54.5%;
+    left: 23.5%;
     transform: translate(-50%, -50%) rotate(3deg) skewY(4deg);
 }
 
 .inputs-container input {
-    width: 4.5vmin;
-    height: 4.5vmin;
+    width: 4vmin;
+    height: 4vmin;
     font-size: 3.5vmin;
     text-align: center;
     background: #b0aa99;
@@ -404,11 +411,11 @@ position: fixed;
 }
 .spegniTimer {
     position: absolute;
-    top: 25%;
-    left: 22%;
+    top: 27%;
+    left: 26%;
     transform: translateX(-50%);
     width: 9%;
-    height: 7%;
+    height: 7%; 
     background: transparent;
     border: none;
     cursor: pointer;
@@ -419,8 +426,8 @@ position: fixed;
     transition: all 0.2s ease-in-out;
 }
 .closeTimer{
-    top: 71%;
-    left: 34.5%;
+    top: 68%;
+    left: 38%;
     width: 6%;
     position: absolute;
     background: transparent;
@@ -509,7 +516,7 @@ position: fixed;
     justify-content: center;
     align-items: center;
 
-    background: radial-gradient(circle, rgb(192 190 190 / 24%) 0%, rgba(255, 255, 255, 0) 60%);
+    background: radial-gradient(circle, rgb(192 190 190 / 24%) 0%, rgba(255, 255, 255, 0) 80%);
     background-position: center;
     background-repeat: no-repeat;
 
@@ -559,7 +566,8 @@ position: fixed;
     }
 
     .inputs-container {
-        gap: 3vmin;
+        gap: 3.5vmin;
+        left: 23.5%;
     }
     .inputs-container input {
         width: 3.5vmin;
@@ -573,7 +581,7 @@ position: fixed;
         transform: translateX(-50%);
 
         width: 75%;
-        height: 10vh;
+        height: 20vh;
         min-height: 50px;
         padding: 4px 12px;
         box-sizing: border-box;
@@ -582,7 +590,7 @@ position: fixed;
     .dialogue-box .dialog-text,
     .reptiles-dialogue-box .dialog-text {
         font-size: 0.6rem;
-        line-height: 1.2;
+        line-height: 2.2;
         margin: 0;
         display: flex;
         flex-direction: column;
@@ -602,6 +610,7 @@ position: fixed;
         font-size: 0.7rem;
     }
     .snake-input-container input {
+        width: 40%;
         height: 3vh;
     }
     .snake-input-container button {
@@ -615,5 +624,24 @@ position: fixed;
     
     .dialog-text .character-name {
         margin-bottom: 2px;
+    }
+
+    .closeTimer{
+        left: 37.5%;
+        top:68%;
+        width: 7%;
+        font-size: 0.5rem;
+    }
+    .spegniTimer {
+        top: 27%;
+        left: 26%;
+    }
+    .enigma-text {
+        position: absolute;
+        top: 6%;
+        right: 0%;
+        width: 42%;
+        line-height: 0.8rem;
+        font-size: 0.55rem;
     }
 }

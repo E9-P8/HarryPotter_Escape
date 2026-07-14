@@ -249,7 +249,7 @@ export class Part1Component implements OnInit {
     text: "Riesci a sentirmi? Vedi... non ho mai parlato con un serpente"
     },
     { 
-    character: 'Serpente', 
+    character: '', 
     image: "assets/img/snake.png",
     text: "Io non parlo <span translate='no'>ssssssss</span>pesso con le per<span translate='no'>sssss</span>one... <span translate='no'>ssssssssss</span>ono cre<span translate='no'>ssssssssssssss</span>ciuto in cattività... <span translate='no'>sssssssssss</span>cusa, tu puoi <span translate='no'>sssss</span>entirmi?"
     },
