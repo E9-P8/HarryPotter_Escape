@@ -41,7 +41,7 @@
       <button class="onWallClick" (click)="onWallClick()"></button>
     </div>
     <button class="talk" (click)="talk()" *ngIf="currentLineStation === 2">
-      Parla con lei
+      Parla con la signora Weasley
     </button>
     <div
       class="dialogue-box"
@@ -118,7 +118,8 @@
         <div
           class="drop-zone"
           *ngFor="let item of placedItems; let i = index"
-          (mouseup)="dropItem(i)"
+          [attr.data-zone-index]="i"
+          (click)="removePlacedItem(i)"
         >
           <img *ngIf="item" [src]="getItemImage(item)" class="dropped-candy" />
         </div>
@@ -128,32 +129,62 @@
         <img
           src="assets/img/Part4/Cauldron-wagon.png"
           class="candy-item"
+          [style.left.px]="activeItem === 'cauldron' ? itemX : null"
+          [style.top.px]="activeItem === 'cauldron' ? itemY : null"
+          [class.dragging]="activeItem === 'cauldron'"
           (mousedown)="startItemDrag($event, 'cauldron')"
+          (touchstart)="startItemDrag($event, 'cauldron')"
+          alt="Cauldron"
         />
         <img
           src="assets/img/Part4/GellyBeans-wagon.png"
           class="candy-item"
+          [style.left.px]="activeItem === 'jellyBeans' ? itemX : null"
+          [style.top.px]="activeItem === 'jellyBeans' ? itemY : null"
+          [class.dragging]="activeItem === 'jellyBeans'"
           (mousedown)="startItemDrag($event, 'jellyBeans')"
+          (touchstart)="startItemDrag($event, 'jellyBeans')"
+          alt="Jelly Beans"
         />
         <img
           src="assets/img/Part4/Liquorice-wagon.png"
           class="candy-item"
+          [style.left.px]="activeItem === 'liquorice' ? itemX : null"
+          [style.top.px]="activeItem === 'liquorice' ? itemY : null"
+          [class.dragging]="activeItem === 'liquorice'"
           (mousedown)="startItemDrag($event, 'liquorice')"
+          (touchstart)="startItemDrag($event, 'liquorice')"
+          alt="Liquorice"
         />
         <img
           src="assets/img/Part4/Lollipop-wagon.png"
           class="candy-item"
+          [style.left.px]="activeItem === 'lollipop' ? itemX : null"
+          [style.top.px]="activeItem === 'lollipop' ? itemY : null"
+          [class.dragging]="activeItem === 'lollipop'"
           (mousedown)="startItemDrag($event, 'lollipop')"
+          (touchstart)="startItemDrag($event, 'lollipop')"
+          alt="Lollipop"
         />
         <img
           src="assets/img/Part4/Toad-wagon.png"
           class="candy-item"
+          [style.left.px]="activeItem === 'toad' ? itemX : null"
+          [style.top.px]="activeItem === 'toad' ? itemY : null"
+          [class.dragging]="activeItem === 'toad'"
           (mousedown)="startItemDrag($event, 'toad')"
+          (touchstart)="startItemDrag($event, 'toad')"
+          alt="Toad"
         />
         <img
           src="assets/img/Part4/VomitPills-wagon.png"
           class="candy-item"
+          [style.left.px]="activeItem === 'vomitPills' ? itemX : null"
+          [style.top.px]="activeItem === 'vomitPills' ? itemY : null"
+          [class.dragging]="activeItem === 'vomitPills'"
           (mousedown)="startItemDrag($event, 'vomitPills')"
+          (touchstart)="startItemDrag($event, 'vomitPills')"
+          alt="Vomit Pills"
         />
       </div>
       <div class="controls">
@@ -240,12 +271,18 @@
       (mousedown)="startMoving('left')"
       (mouseup)="stopMoving()"
       (mouseleave)="stopMoving()"
+      (touchstart)="$event.preventDefault(); startMoving('left')"
+      (touchend)="stopMoving()"
+      (touchcancel)="stopMoving()"
     ></div>
     <div
       class="control-zone right-zone"
       (mousedown)="startMoving('right')"
       (mouseup)="stopMoving()"
       (mouseleave)="stopMoving()"
+      (touchstart)="$event.preventDefault(); startMoving('right')"
+      (touchend)="stopMoving()"
+      (touchcancel)="stopMoving()"
     ></div>
   </div>
   <div class="wave-complete-screen" *ngIf="isWaveComplete && !isVictory">

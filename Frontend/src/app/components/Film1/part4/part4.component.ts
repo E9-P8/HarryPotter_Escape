@@ -90,6 +90,9 @@ private winWindowTimer: number = 0;
   private dragOffsetY: number = 0;
   isEnigmaActive: boolean = false;
   activeItem: 'cauldron' | 'jellyBeans' | 'liquorice' | 'lollipop' | 'toad' |'vomitPills' | null = null;
+  
+  isDragging: boolean = false;
+  
   isCharging = false;
   chargeTimer: any;
   showSparkles = false;
@@ -116,7 +119,7 @@ private winWindowTimer: number = 0;
   private hagridProgress: number = 0;
   private currentPathIndex: number = 0;
   private inactivityTimer: number = 0;
-  private readonly MAX_INACTIVITY = 3000;
+  private readonly MAX_INACTIVITY = 4000;
   private isAlertActive = false;
 
   // Dati
@@ -127,9 +130,9 @@ private winWindowTimer: number = 0;
   ];
 
   private hagridPaths: any = {
-    1: [50, 40, 30, 40, 50, 20, 60, 40],
-    2: [50, 60, 20, 70, 50, 10, 40, 10],
-    3: [50, 20, 80, 50, 10, 30, 0, 50]
+    1: [50, 40, 30, 40, 50, 20, 60, 40, 70],
+    2: [50, 60, 20, 70, 50, 10, 40, 10, 50,90, 20],
+    3: [50, 20, 80, 50, 10, 30, 0, 50, 10, 90, 60, 70, 20, 50]
   };
 
 
@@ -211,7 +214,7 @@ private winWindowTimer: number = 0;
 
   talk(){
     this.talkWithWeasley = true;
-    this.currentLineStation === 3;
+    this.currentLineStation = 3;
     this.currentLineStation++;
     this.startStationDialogue();
   }
@@ -220,20 +223,20 @@ private winWindowTimer: number = 0;
     return Math.floor(b.y * 100);
   }
 
-getScale(b: Babbano): number {
-  const minScale = 0.2;
-  const maxScale = 2.7;
-  const normalizedY = b.y / 100;
-  return minScale + (maxScale - minScale) * normalizedY;
-}
+  getScale(b: Babbano): number {
+    const minScale = 0.2;
+    const maxScale = 2.7;
+    const normalizedY = b.y / 100;
+    return minScale + (maxScale - minScale) * normalizedY;
+  }
 
-getTransform(b: Babbano): string {
-  const scaleValue = this.getScale(b);
-  
-  const flipValue = b.isCurrentlyFlipped ? -1 : 1;
+  getTransform(b: Babbano): string {
+    const scaleValue = this.getScale(b);
+    
+    const flipValue = b.isCurrentlyFlipped ? -1 : 1;
 
-  return `scaleX(${flipValue}) scale(${scaleValue})`;
-}
+    return `scaleX(${flipValue}) scale(${scaleValue})`;
+  }
 
 startBabbaniMovement() {
   this.babbani.forEach(b => {
@@ -251,6 +254,7 @@ updateBabbani(dt: number) {
     
     this.babbani.forEach(b => {
       b.isCurrentlyFlipped = !b.isCurrentlyFlipped;
+      b.flipTimer = 0;
     });
 
     this.globalResetTimer = 0; 
@@ -271,10 +275,10 @@ updateBabbani(dt: number) {
       b.isCurrentlyFlipped = !b.isCurrentlyFlipped;
       b.flipTimer = 0;
     }
-
+/*
     if (forceFlip) {
       b.isCurrentlyFlipped = !b.isCurrentlyFlipped;
-    }
+    }*/
 
     b.progress += b.speed * (dt / 1000);
 
@@ -287,10 +291,10 @@ updateBabbani(dt: number) {
       b.y = b.startY + (b.endY - b.startY) * b.progress;
     }
   });
-
+/*
   if (forceFlip) {
     this.globalResetTimer = 0;
-  }
+  }*/
 }
     
 
@@ -429,13 +433,79 @@ onWallClick(){
 
     this.itemX = rect.left;
     this.itemY = rect.top;
+    }
+    removePlacedItem(index: number) {
+    if (this.placedItems[index] !== null) {
+      this.placedItems[index] = null;
+    }
+    }
+
+
+    @HostListener('window:mousemove', ['$event'])
+  @HostListener('window:touchmove', ['$event'])
+  onDragging(event: MouseEvent | TouchEvent) {
+    if (!this.activeItem) return;
+
+    const clientX = event instanceof MouseEvent ? event.clientX : event.touches[0].clientX;
+    const clientY = event instanceof MouseEvent ? event.clientY : event.touches[0].clientY;
+
+    this.itemX = clientX - this.dragOffsetX;
+    this.itemY = clientY - this.dragOffsetY;
   }
-  dropItem(zoneIndex: number) {
+
+checkItemDrop() {
+    const imgElement = document.querySelector(`.candy-item.dragging`);
+    
+    if (!imgElement || !this.activeItem) {
+      this.resetItemPosition();
+      return;
+    }
+
+    const rect = imgElement.getBoundingClientRect();
+    const currentGlobalX = rect.left + rect.width / 2;
+    const currentGlobalY = rect.top + rect.height / 2;
+
+    const dropZones = document.querySelectorAll('.drop-zone');
+    let targetZoneIndex: number | null = null;
+
+for (let i = 0; i < dropZones.length; i++) {
+    const zone = dropZones[i];
+    const zoneRect = zone.getBoundingClientRect();
+    const zoneIndexAttr = zone.getAttribute('data-zone-index');
+    
+    const insideX = currentGlobalX > zoneRect.left && currentGlobalX < zoneRect.right;
+    const insideY = currentGlobalY > zoneRect.top && currentGlobalY < zoneRect.bottom;
+
+    if (insideX && insideY && zoneIndexAttr !== null) {
+      targetZoneIndex = Number(zoneIndexAttr);
+      break; 
+    }
+  }
+  if (targetZoneIndex !== null && !isNaN(targetZoneIndex)) {
+    this.placedItems[targetZoneIndex] = this.activeItem;
+  }
+
+  this.resetItemPosition();
+   }
+
+  @HostListener('window:mouseup')
+  @HostListener('window:touchend')
+  stopDrag() {
+    if (this.activeItem) {
+      this.checkItemDrop();
+    }
+  }
+
+  resetItemPosition() {
+    this.activeItem = null;
+  }
+
+  /*dropItem(zoneIndex: number) {
   if (this.activeItem) {
     this.placedItems[zoneIndex] = this.activeItem;
     this.activeItem = null; 
   }
-}
+  }*/
    getItemImage(item: string): string {
   const paths: any = {
     'cauldron': 'assets/img/Part4/Cauldron-wagon.png',

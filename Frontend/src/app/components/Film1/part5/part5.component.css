@@ -148,3 +148,26 @@ position: fixed;
 .manual:hover {
     transform: scale(1.10);
 }
+
+
+@media screen and (max-width: 932px) and (orientation: landscape) {
+
+    .dialogue-box {
+        width: 80%;
+    }
+
+    .dialog-text {
+        font-size: 0.7rem;
+        line-height: 1;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+    .options-area button {
+        font-size: 0.6rem;
+        padding: 3px 10px;
+    }
+}

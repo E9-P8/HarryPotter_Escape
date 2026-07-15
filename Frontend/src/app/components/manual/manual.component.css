@@ -89,3 +89,43 @@
     border-radius: 5px;
 }
 
+@media screen and (max-width: 932px) and (orientation: landscape) {
+    .book-content {
+        /* Usiamo dimensioni proporzionali all'altezza dello schermo per non farlo sbordare */
+        width: 85vw;
+        height: 90vh;
+        /* Riduciamo drasticamente il padding laterale per dare spazio al testo */
+        padding: 30px 60px;
+    }
+
+    .book-container {
+        width: 100%;
+        margin: 5px 0 15px 0;
+        /* Rimuoviamo il marcatissimo margin-left da 60px */
+    }
+
+    .book-content h1 {
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    .title-part {
+        font-size: 1rem;
+    }
+
+    .parchment-text {
+        column-gap: 50px;
+        height: 60vh;
+        margin-left: 0;
+        font-size: 0.6rem;
+        line-height: 1.1;
+    }
+
+    .close-book-btn {
+        /* Riposizioniamo il bottone di chiusura in modo sicuro dentro il nuovo padding */
+        bottom: 15px;
+        right: 40px;
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+}
