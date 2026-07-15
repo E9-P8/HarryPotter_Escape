@@ -59,7 +59,7 @@
     transform: translate(-50%, -50%);
     width: 8%;
     height: 4%;
-    background: radial-gradient(circle, rgba(255, 235, 150, 0.6) 0%, rgba(255, 255, 255, 0) 70%);
+    background: radial-gradient(circle, rgba(255, 235, 150, 0.6) 0%, rgba(255, 255, 255, 0) 90%);
     border: none;
     outline: none;
     cursor: pointer;
@@ -861,4 +861,37 @@
     left: 0;
     z-index: 8;
     background-color: #000;
+}
+
+@media screen and (max-width: 932px) and (orientation: landscape) {
+
+    .dialogue-box,
+    .fireplace-dialogue-box {
+        bottom: 6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        height: 20vh;
+        min-height: 50px;
+        padding: 4px 12px;
+        box-sizing: border-box;
+    }
+
+    .dialog-text {
+        font-size: 0.8rem;
+        line-height: 1;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+    .minigame-ui {
+        bottom: 0px;
+    }
+    .letter-shoot {
+        width: 55px;
+        height: 28px;
+    }
 }

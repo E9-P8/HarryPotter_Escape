@@ -77,3 +77,19 @@ gap: 10px;
     box-shadow: 0 0 10px rgba(216, 186, 87, 0.5);
     transform: translateY(-2px);
 }
+
+@media screen and (max-width: 932px) and (orientation: landscape) {
+    .sorting-hat-overlay {
+       font-size: 0.7rem;
+        padding: 0px 10px 20px 10px;
+        height: 30vh;
+    }
+    .options-area button{
+        padding: 5px 15px;
+        font-size: 0.6rem;
+    }
+    .sorting-hat-img{
+        bottom: 18%;
+    }
+    
+}
