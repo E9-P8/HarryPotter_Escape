@@ -88,12 +88,35 @@
     cursor: pointer;
     border-radius: 5px;
 }
+    .flipPageNext {
+        position: absolute;
+        bottom: 59px;
+        right: 82px;
+        background: transparent;
+        color: #4b3823;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .flipPageBack {
+        position: absolute;
+        bottom: 40px;
+        left: 137px;
+        background: transparent;
+        color: #4b3823;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
 
 @media screen and (max-width: 932px) and (orientation: landscape) {
     .book-content {
-        width: 85vw;
-        height: 90vh;
-        padding: 30px 60px;
+        width: 90vw;
+        height: 100vh;
+        padding: 30px 70px;
     }
 
     .book-container {
@@ -109,22 +132,35 @@
     .title-part {
         font-size: 1rem;
     }
-
     .parchment-text {
         -moz-column-gap: 50px;
         column-gap: 50px;
-        height: 60vh;
+        height: 70vh;
         width: 60vw;
         padding-left: 32px;
         margin-left: 0;
         font-size: 0.58rem;
         line-height: 1.1;
     }
-
     .close-book-btn {
-        bottom: 21px;
-        right: 47px;
+        bottom: 32px;
+        right: 58px;
         font-size: 10px;
-        padding: 5px 10px;
+        padding: 0;
     }
+    .flipPageNext {
+        font-size: 0.55rem;
+        bottom: 44px;
+        right: 57px;
+        padding: 0;
+    }
+    .flipPageBack {
+        font-size: 0.55rem;
+        bottom: 35px;
+        left: 88px;
+        padding: 0;
+    }
+    
+
+
 }

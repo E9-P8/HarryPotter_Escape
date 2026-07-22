@@ -1,0 +1,538 @@
+:root {
+    --ruby-red: #a81313;
+    --sapphire-blue: #0f4c81;
+    --emerald-green: #1b7a3e;
+    --topaz-yellow: #d99b00;
+}
+.Frame-view {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    perspective: 1200px;
+    overflow: hidden;
+}
+
+.Frame-img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    display: block;
+    z-index: 1;
+    transform-origin: right center;
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.Frame-img.door-open {
+    transform: rotateY(-105deg);
+}
+
+
+.enigma-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #000;
+}
+.Frame-view {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.Frame-gameplay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    transition: opacity 0.5s ease;
+}
+.frame-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: fill;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../../../assets/img/Part5/fatWomen_QuizFrame.png');
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+    filter: brightness(0.85) contrast(1.1);
+}
+.title-frame{
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    }
+
+.golden-frame {
+    position: relative;
+    z-index: 10;
+    width: 63%;
+    border-radius: 0.75rem;
+    text-align: center;
+    overflow: hidden;
+    background: rgba(20, 14, 10, 0.6);
+    backdrop-filter: blur(4px);
+    box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.95), 0 0 15px rgba(0, 0, 0, 0.5);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.enigma-title {
+    margin-top: 0;
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0rem;
+    color: #eec98d;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9), 0 0 10px rgba(212, 175, 55, 0.3);
+    }
+.enigma-subtitle {
+    font-size: 1.1rem;
+    font-style: italic;
+    margin: 8px;
+    color: #ffedc9;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+.compass-circle {
+    position: relative;
+    width: 16rem;
+    height: 16rem;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, rgba(38, 28, 18, 0.85) 0%, rgba(12, 8, 5, 0.95) 100%);
+    border: 4px solid #5a4528;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.9);
+}
+
+.slot-point {
+    position: absolute;
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    border: 2px dashed #574a34;
+    background: rgba(18, 12, 7, 0.85);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.slot-point:not(.filled) .slot-label,
+.slot-point:not(.filled) .slot-icon {
+    color: #8c6f3d;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+.slot-point:not(.filled):hover {
+    border-color: var(--gold-light);
+    box-shadow: 0 0 15px rgba(255, 212, 58, 0.4);
+}
+
+.slot-point .gem-stone {
+    width: 48px;
+    height: 48px;
+    box-shadow: inset -4px -4px 8px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.slot-point .gem-rune {
+    font-size: 14px;
+}
+
+.slot-north {
+    top: 12px;
+    left: calc(50% - 43px);
+}
+
+.slot-east {
+    right: 12px;
+    top: calc(50% - 43px);
+}
+
+.slot-south {
+    bottom: 12px;
+    left: calc(50% - 43px);
+}
+
+.slot-west {
+    left: 12px;
+    top: calc(50% - 43px);
+}
+
+.slot-point:hover {
+    border-color: var(--gold-light);
+    box-shadow: 0 0 15px rgba(255, 212, 58, 0.6);
+    transform: scale(1.08);
+}
+
+.slot-point.filled {
+    border-style: solid;
+    background: rgba(35, 25, 15, 0.95);
+    transition: all 0.3s ease;
+}
+/* Rubino*/
+.slot-point.filled:has(.gem-red) {
+    box-shadow: inset 0 0 15px rgba(70, 6, 6, 0.6), 0 0 18px rgba(255, 77, 77, 0.5);
+}
+.slot-point.filled:has(.gem-red) .slot-label {
+    color: rgba(230, 0, 0, 0.6);
+}
+
+/*Zaffiro */
+.slot-point.filled:has(.gem-blue) {
+    box-shadow: inset 0 0 15px rgb(0 0 0 / 60%), 0 0 18px rgb(0 127 255 / 50%);
+}
+.slot-point.filled:has(.gem-blue) .slot-label {
+    color: rgba(58, 14, 255, 0.6);
+}
+
+/*Smerald*/
+.slot-point.filled:has(.gem-green) {
+    box-shadow: inset 0 0 15px rgba(11, 58, 28, 0.6), 0 0 18px rgba(92, 214, 92, 0.5);
+}
+.slot-point.filled:has(.gem-green) .slot-label {
+    color: rgb(29 255 47 / 60%);
+}
+
+/*Topazio */
+.slot-point.filled:has(.gem-yellow) {
+    box-shadow: inset 0 0 15px rgba(121, 87, 1, 0.6), 0 0 18px rgba(255, 238, 85, 0.5);
+}
+
+.slot-point.filled:has(.gem-yellow) .slot-label {
+    color: rgba(255, 183, 0, 0.6);
+}
+
+.slot-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+.slot-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+}
+
+.lock-core {
+    position: absolute;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #3d2d1a 0%, #171007 100%);
+    border: 3px solid var(--gold-vintage);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.4), inset 0 0 8px rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    z-index: 5;
+}
+
+.palette-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #c5b496;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.gems-palette {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 95%;
+    gap: 1rem;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    background: rgba(15, 10, 6, 0.75);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
+}
+
+.gem-selection-slot {
+    padding: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 5rem;
+    border-radius: 0.75rem;
+    transition: all 0.2s ease;
+}
+
+.gem-selection-slot.active {
+    border: 2px solid var(--gold-light);
+    background: rgba(212, 175, 55, 0.2);
+    box-shadow: 0 0 15px rgba(255, 212, 58, 0.4);
+}
+
+.gem-name {
+    font-size: 10px;
+    margin-top: 0.25rem;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+.gem-stone {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    position: relative;
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset -6px -6px 12px rgba(0, 0, 0, 0.8), 0 6px 15px rgba(0, 0, 0, 0.7);
+}
+
+.gem-stone:active {
+    cursor: grabbing;
+    transform: scale(0.9);
+}
+
+.gem-red {
+    background: radial-gradient(circle at 35% 35%, #ff4d4d 0%, var(--ruby-red) 70%, #3a0000 100%);
+    box-shadow: inset -6px -6px 12px rgba(0, 0, 0, 0.7), 0 0 18px rgba(255, 77, 77, 0.6);
+}
+
+.gem-blue {
+    background: radial-gradient(circle at 35% 35%, #4da6ff 0%, var(--sapphire-blue) 70%, #001f3f 100%);
+    box-shadow: inset -6px -6px 12px rgba(0, 0, 0, 0.7), 0 0 18px rgba(77, 166, 255, 0.6);
+}
+
+.gem-green {
+    background: radial-gradient(circle at 35% 35%, #5cd65c 0%, var(--emerald-green) 70%, #002e00 100%);
+    box-shadow: inset -6px -6px 12px rgba(0, 0, 0, 0.7), 0 0 18px rgba(92, 214, 92, 0.6);
+}
+
+.gem-yellow {
+    background: radial-gradient(circle at 35% 35%, #ffee55 0%, var(--topaz-yellow) 70%, #473500 100%);
+    box-shadow: inset -6px -6px 12px rgba(0, 0, 0, 0.7), 0 0 18px rgba(255, 238, 85, 0.6);
+}
+
+.gem-rune {
+    font-family: 'Cinzel', serif;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
+    font-weight: 900;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.9), 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+.action-buttons {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1rem;
+    width: 36%;
+}
+.btn-primary {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: linear-gradient(135deg, #e5b35d 0%, #7d501a 100%);
+    color: #120c04;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 0.5rem;
+    font-size: 0.6rem;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    transition: all 0.2s ease;
+}
+.btn-primary:hover {
+    background: linear-gradient(135deg, #ffe066 0%, #d4af37 100%);
+    box-shadow: 0 0 15px rgba(255, 212, 58, 0.5);
+}
+.btn-primary:active {
+    transform: scale(0.95);
+}
+.btn-secondary {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(35, 25, 15, 0.85);
+    border: 1px solid #5a4528;
+    color: #d1c2a5;
+    font-size: 0.6rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.btn-secondary:hover {
+    background: rgba(55, 40, 25, 0.95);
+    color: #fff;
+    border-color: var(--gold-vintage);
+}
+.btn-secondary:active {
+    transform: scale(0.95);
+}
+
+/*
+.icon-yellow {
+    color: rgba(234, 179, 8, 0.5);
+}
+
+.icon-red {
+    color: rgba(239, 68, 68, 0.5);
+}
+
+.icon-green {
+    color: rgba(34, 197, 94, 0.5);
+}
+
+.icon-blue {
+    color: rgba(59, 130, 246, 0.5);
+}*/
+
+.enigma-feedback {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    min-height: 24px;
+    letter-spacing: 0.025em;
+    color: #eec98d;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+/*------------------------------------------------*/
+
+@media screen and (max-width: 932px) and (orientation: landscape) {
+
+.enigma-title {
+    margin-top: -3px;
+    font-size: 1rem;
+}
+
+.enigma-subtitle {
+    font-size: 0.7rem;
+    margin: 2px 0;
+}
+.golden-frame {
+    padding: 4px;
+}
+.compass-circle {
+    border: 1px solid #5a4528;
+    width: 10rem;
+    height: 10rem;
+}
+
+.slot-point{
+    width: 40px;
+    height: 40px;
+}
+.slot-north {
+    top: 6px;
+    left: calc(50% - 25px);
+}
+
+.slot-east {
+    right: 6px;
+    top: calc(50% - 25px);
+}
+
+.slot-south {
+    bottom: 6px;
+    left: calc(50% - 25px);
+}
+
+.slot-west {
+    left: 6px;
+    top: calc(50% - 25px);
+}
+.slot-label {
+    font-size: 7px;
+    margin-bottom: 0.1rem;
+}
+
+.slot-icon {
+    width: 1.1rem;
+    height: 1.1rem;
+}
+.lock-core{
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+}
+.gem-stone {
+    width: 30px;
+    height: 30px;
+}
+
+.slot-point .gem-stone {
+    width: 30px;
+    height: 30px;
+}
+
+.gem-rune {
+    font-size: 12px;
+}
+.palette-title {
+    font-size: 0.6rem;
+    margin: 4px;
+}
+.gems-palette {
+    padding: 0.25rem;
+    gap: 0.5rem;
+}
+.gem-selection-slot {
+    width: 3.5rem;
+    padding: 0.25rem;
+}
+
+.gem-name {
+    font-size: 8px;
+}
+
+.enigma-feedback {
+    margin-top: 0.25rem;
+    font-size: 0.7rem;
+    min-height: 18px;
+}
+.action-buttons {
+    width: 70%;
+    padding-top: 0.4rem;
+    gap: 0.5rem;
+}
+.btn-primary{
+    padding: 0.4rem 0.5rem;
+    font-size: 0.5rem;
+}
+.btn-primary,
+.btn-secondary {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.55rem;
+}
+}

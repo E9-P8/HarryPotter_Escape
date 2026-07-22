@@ -13,12 +13,14 @@
     <div class="options-area">
       <button
         *ngFor="let opt of quizData?.questions[currentQuestionIndex].options"
-        (mouseenter)="setHatState('thinking')"
-        (mouseleave)="setHatState('neutral')"
+        [disabled]="isProcessingAnswer"
+        (mouseenter)="!isProcessingAnswer && setHatState('thinking')"
+        (mouseleave)="!isProcessingAnswer && setHatState('neutral')"
         (click)="handleAnswer(opt)"
       >
         {{ opt.text }}
       </button>
     </div>
+    <button class="skip" (click)="skip()">skip</button>
   </div>
 </div>

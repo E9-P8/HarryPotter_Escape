@@ -14,7 +14,8 @@ export class Part5Component implements OnInit {
 
   Data: any;     
   actualPhase: any;    
-  wizardName: string = "Harry"; 
+  wizardName: string = "Esempio"; 
+  showBanchetto: boolean = false;
 
   constructor(private http: HttpClient,
     public gameService: GameDataService, 
@@ -40,6 +41,10 @@ export class Part5Component implements OnInit {
 
   manageChoice(option: any) {
     // 1. Applica impatto se esiste (reputazione, audacia, ecc.)
+    const nextNodeId = (typeof option === 'string') ? option : option.next_node;
+    const nextNode = this.Data.nodes.find((n: any) => n.id === nextNodeId);
+
+   
     if (option.impact) {
       this.gameService.updateStats(option.impact);
     }
@@ -47,48 +52,74 @@ export class Part5Component implements OnInit {
     this.gameService.openManual();
     return; 
     }
-
     if (option.next_node === "mcgranitt_reprimand") {
       this.gameService.setFlag("isSeeker", true);
     }
 
-    const nextNodeId = option.next_node;
-    const nextNode = this.Data.nodes.find((n: any) => n.id === nextNodeId);
 
 if (nextNode) {
         this.actualPhase = nextNode; 
 
         if (this.actualPhase.type === 'enigma') {
             console.log("Nodo enigma caricato:", this.actualPhase.enigma_id);
-            return; 
         }
         if (this.actualPhase.type === 'animation') {
-            setTimeout(() => {
-                this.manageChoice({ next_node: this.actualPhase.next_node });
-            }, 2000);
+            this.handleAnimation(this.actualPhase.id);
+        }
+        else {
+           console.error("Nodo non trovato:", nextNodeId);
         }
     }
   }
-
   openManual(){ 
     this.gameService.isManualOpen= true;
     this.gameService.openManual();
+  }
+  closeManual() {
+    this.gameService.closeManual();
+  }
+
+  handleAnimation(animationId: string) {
+  switch (animationId) {
+    case 'banchetto':
+      this.startBanchettoAnimation();
+      break;
+    
+    case 'dormitorio':
+      this.startScaleAnimation();
+      break;
+
+    default:
+      setTimeout(() => {
+        this.manageChoice({ next_node: this.actualPhase.next_node });
+      }, 2000);
+      break;
+  }
+}
+
+  startBanchettoAnimation(){ 
+    console.log("startBanchettoAnimation")
+    setTimeout(() => {
+      this.showBanchetto = true; 
+      
+      setTimeout(() => {
+        this.showBanchetto = false; 
+        this.manageChoice({ next_node: this.actualPhase.next_node });
+      }, 4000);
+    }, 1000);
+  }
+  startScaleAnimation() {
+    setTimeout(() => {
+      this.manageChoice({ next_node: this.actualPhase.next_node });
+    }, 7000);
   }
 
   updateTextWithWizardName(text: string): string {
     if (!text) return "";
     return text.replace('*wizardName*', this.wizardName);
   }
-  ManageEnigmaResult(successo: boolean) {
-  const nextNodeId = successo ? this.actualPhase.success_node : this.actualPhase.fail_node;
+
   
-  this.actualPhase = this.Data.nodes.find((n: any) => n.id === nextNodeId);
-}
-
-
-  closeManual() {
-    this.gameService.closeManual();
-  }
 
 
   isAlreadySeeker(): boolean {

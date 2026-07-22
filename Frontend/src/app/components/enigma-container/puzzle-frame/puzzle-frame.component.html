@@ -1,1 +1,224 @@
-<p>puzzle-frame works!</p>
+<div class="enigma-container">
+  <div class="Frame-view">
+    <img
+      src="/assets/img/Part5/fatWomen_QuizFrame.png"
+      alt="Frame Background"
+      class="Frame-img"
+      [class.door-open]="isDoorOpening"
+    />
+    <div class="Frame-gameplay" *ngIf="!isEnigmaHidden">
+      <div class="title-frame">
+        <h3 class="enigma-title">Cornice dei Quattro Elementi</h3>
+        <p class="enigma-subtitle">
+          "Disponi i sigilli di ciascun fondatore secondo il calcolo
+          elementale."
+        </p>
+      </div>
+      <div class="golden-frame">
+        <div class="compass-circle">
+          <!-- Nord (Terra / Tassorosso) -->
+          <div
+            id="slot-N"
+            class="slot-point slot-north"
+            [class.filled]="board['N']"
+            (click)="interactWithSlot('N')"
+          >
+            <span class="slot-label">Nord</span>
+
+            <!-- Icona slot vuoto -->
+            <div *ngIf="!board['N']" class="slot-placeholder">
+              <svg
+                class="slot-icon icon-yellow"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 21h18M3 21l8-16 8 16M13 13l3-3 5 5"
+                ></path>
+              </svg>
+            </div>
+
+            <!-- Gemma incastonata -->
+            <div
+              *ngIf="board['N']"
+              class="gem-stone"
+              [ngClass]="'gem-' + board['N']"
+            >
+              <span class="gem-rune">{{ gemsData[board["N"]!].rune }}</span>
+            </div>
+          </div>
+
+          <!-- Est (Fuoco / Grifondoro) -->
+          <div
+            id="slot-E"
+            class="slot-point slot-east"
+            [class.filled]="board['E']"
+            (click)="interactWithSlot('E')"
+          >
+            <span class="slot-label">Est</span>
+
+            <div *ngIf="!board['E']" class="slot-placeholder">
+              <svg
+                class="slot-icon icon-red"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"
+                ></path>
+              </svg>
+            </div>
+
+            <div
+              *ngIf="board['E']"
+              class="gem-stone"
+              [ngClass]="'gem-' + board['E']"
+            >
+              <span class="gem-rune">{{ gemsData[board["E"]!].rune }}</span>
+            </div>
+          </div>
+
+          <!-- Sud (Acqua / Serpeverde) -->
+          <div
+            id="slot-S"
+            class="slot-point slot-south"
+            [class.filled]="board['S']"
+            (click)="interactWithSlot('S')"
+          >
+            <span class="slot-label">Sud</span>
+
+            <div *ngIf="!board['S']" class="slot-placeholder">
+              <svg
+                class="slot-icon icon-green"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 10h18M3 14h18M3 18h18M3 6h18"
+                ></path>
+              </svg>
+            </div>
+
+            <div
+              *ngIf="board['S']"
+              class="gem-stone"
+              [ngClass]="'gem-' + board['S']"
+            >
+              <span class="gem-rune">{{ gemsData[board["S"]!].rune }}</span>
+            </div>
+          </div>
+
+          <!-- Ovest (Aria / Corvonero) -->
+          <div
+            id="slot-W"
+            class="slot-point slot-west"
+            [class.filled]="board['W']"
+            (click)="interactWithSlot('W')"
+          >
+            <span class="slot-label">Ovest</span>
+
+            <div *ngIf="!board['W']" class="slot-placeholder">
+              <svg
+                class="slot-icon icon-blue"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                ></path>
+              </svg>
+            </div>
+
+            <div
+              *ngIf="board['W']"
+              class="gem-stone"
+              [ngClass]="'gem-' + board['W']"
+            >
+              <span class="gem-rune">{{ gemsData[board["W"]!].rune }}</span>
+            </div>
+          </div>
+
+          <!-- Lucchetto Centrale -->
+          <div class="lock-core" id="lock-indicator">
+            <span>{{ isSolved ? "🔓" : "🔒" }}</span>
+          </div>
+        </div>
+
+        <h4 class="palette-title">Teca dei Sigilli Elementali:</h4>
+
+        <!-- Palette Gemme -->
+        <div class="gems-palette" id="gems-palette">
+          <div
+            class="gem-selection-slot"
+            [class.active]="selectedGem === 'yellow'"
+            (click)="selectGemFromPalette('yellow', 'palette-yellow')"
+          >
+            <div class="gem-stone gem-yellow">
+              <span class="gem-rune">𐎢</span>
+            </div>
+            <span class="gem-name">Gialla</span>
+          </div>
+
+          <div
+            class="gem-selection-slot"
+            [class.active]="selectedGem === 'red'"
+            (click)="selectGemFromPalette('red', 'palette-red')"
+          >
+            <div class="gem-stone gem-red"><span class="gem-rune">𐎘</span></div>
+            <span class="gem-name">Rossa</span>
+          </div>
+
+          <div
+            class="gem-selection-slot"
+            [class.active]="selectedGem === 'green'"
+            (click)="selectGemFromPalette('green', 'palette-green')"
+          >
+            <div class="gem-stone gem-green">
+              <span class="gem-rune">𐎎</span>
+            </div>
+            <span class="gem-name">Verde</span>
+          </div>
+
+          <div
+            class="gem-selection-slot"
+            [class.active]="selectedGem === 'blue'"
+            (click)="selectGemFromPalette('blue', 'palette-blue')"
+          >
+            <div class="gem-stone gem-blue">
+              <span class="gem-rune">𐎖</span>
+            </div>
+            <span class="gem-name">Blu</span>
+          </div>
+        </div>
+
+        <div id="enigma-feedback" class="enigma-feedback">
+          {{ feedbackMessage }}
+        </div>
+      </div>
+      <div class="action-buttons">
+        <button (click)="checkEnigma()" class="btn-primary">
+          Attiva Meccanismo
+        </button>
+        <button (click)="resetEnigma()" class="btn-secondary">
+          Rimuovi Sigilli
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

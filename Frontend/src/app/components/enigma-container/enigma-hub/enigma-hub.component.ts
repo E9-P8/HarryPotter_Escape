@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Type} from '@angular/core';
+import { Component, OnInit, Input, Type, Output, EventEmitter} from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { SortingHatComponent } from '../sorting-hat/sorting-hat.component';
 import { PuzzleFrameComponent } from '../puzzle-frame/puzzle-frame.component';
@@ -12,6 +12,8 @@ import { EnigmaBroomComponent } from '../enigma-broom/enigma-broom.component';
 export class EnigmaHubComponent implements OnInit {
 
   @Input() enigmaId: string = '';
+  @Output() quizSolved = new EventEmitter<string>();
+
   constructor() { }
 
   ngOnInit(): void {
@@ -25,6 +27,9 @@ export class EnigmaHubComponent implements OnInit {
       case 'ENIGMA_SCOPA': return EnigmaBroomComponent;
       default: return null;
     }
+  }
+  onQuizSolved(nextNode: string) {
+    this.quizSolved.emit(nextNode);
   }
 
 }

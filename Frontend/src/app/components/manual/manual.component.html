@@ -3,49 +3,140 @@
     <!--<h1 style="text-align: center">
       REGOLAMENTO E CONSIGLI DELLO STUDENTE DI HOGWARTS
     </h1>-->
-    <div class="book-container">
-      <div class="page left-page">
-        <h1 class="title-part">REGOLAMENTO E CONSIGLI</h1>
+    <div *ngIf="!isPageFlipped">
+      <div class="book-container">
+        <div class="page left-page">
+          <h1 class="title-part">REGOLAMENTO E CONSIGLI</h1>
+        </div>
+        <div class="page right-page">
+          <h1 class="title-part">DELLO STUDENTE DI HOGWARTS</h1>
+        </div>
       </div>
-      <div class="page right-page">
-        <h1 class="title-part">DELLO STUDENTE DI HOGWARTS</h1>
+
+      <div class="parchment-text">
+        <h3>Lo spirito della Casa</h3>
+        <p>
+          Il valore risiede nel coraggio di affrontare l'ignoto. Tuttavia,
+          l'audacia senza giudizio è imprudenza, e il Regolamento Scolastico non
+          ammette eccezioni.
+        </p>
+
+        <h3>Gestione della Reputazione</h3>
+        <p>
+          I professori osservano costantemente il tuo comportamento. Un
+          atteggiamento rispettoso durante i dialoghi può mitigare le
+          conseguenze di passi falsi commessi altrove.
+        </p>
+        <h3>Zona Proibita</h3>
+        <p>
+          L'esplorazione di aree vietate può rivelare segreti preziosi, ma il
+          rischio di essere scoperti è elevato. Se decidi di procedere, fallo
+          con determinazione: il tempo è un fattore critico.
+        </p>
+        <h3>La via della Sincerità</h3>
+        <p>
+          La verità è spesso la via più sicura per mantenere alta la stima dei
+          docenti, ma potrebbe non essere la più vantaggiosa per scoprire la
+          verità nascosta tra le mura della scuola.
+        </p>
+        <h3>Osservazione</h3>
+        <p>
+          Non tutte le scelte hanno lo stesso peso. Le decisioni prese nelle
+          fasi iniziali dell'anno possono influenzare drasticamente le
+          opportunità che ti si presenteranno in seguito.
+        </p>
       </div>
     </div>
+    <div *ngIf="isPageFlipped">
+      <div class="book-container">
+        <div class="page left-page">
+          <h1 class="title-part">PROTEZIONI ANTICHE E</h1>
+        </div>
+        <div class="page right-page">
+          <h1 class="title-part">L'ALLEGORIA ELEMENTALE</h1>
+        </div>
+      </div>
+      <div class="parchment-text">
+        <h3>La Sicurezza delle Case:</h3>
+        <p>
+          Fin dal 990 d.C., i fondatori di Hogwarts sentirono la necessità di
+          proteggere i propri dormitori da sguardi indiscreti e pericoli
+          esterni. Invece di semplici parole d'ordine, stabilirono un meccanismo
+          esoterico basato sulla risonanza elementale primordiale di ciascuna
+          Casa.
+        </p>
+        <p>
+          <em
+            >"I dormitori furono protetti incrociando le energie degli elementi
+            originari."</em
+          >
+        </p>
+        <h3>IL CALCOLO CARDINALE</h3>
+        <p>
+          I quattro elementi naturali guidano il posizionamento dei sigilli
+          incastonati sulla bussola della porta: Ogni punto cardinale della
+          cornice corrisponde a una fessura glifica, recante il simbolo
+          originario scolpito nella roccia.
+        </p>
+        <div>
+          <p>
+            Per sintonizzare correttamente le gemme colorate estratte dalla
+            teca, fate riferimento alle corrispondenze ufficiali:
+          </p>
 
-    <div class="parchment-text">
-      <h3>Lo spirito della Casa</h3>
-      <p>
-        Il valore risiede nel coraggio di affrontare l'ignoto. Tuttavia,
-        l'audacia senza giudizio è imprudenza, e il Regolamento Scolastico non
-        ammette eccezioni.
-      </p>
-
-      <h3>Gestione della Reputazione</h3>
-      <p>
-        I professori osservano costantemente il tuo comportamento. Un
-        atteggiamento rispettoso durante i dialoghi può mitigare le conseguenze
-        di passi falsi commessi altrove.
-      </p>
-      <h3>Zona Proibita</h3>
-      <p>
-        L'esplorazione di aree vietate può rivelare segreti preziosi, ma il
-        rischio di essere scoperti è elevato. Se decidi di procedere, fallo con
-        determinazione: il tempo è un fattore critico.
-      </p>
-      <h3>La via della Sincerità</h3>
-      <p>
-        La verità è spesso la via più sicura per mantenere alta la stima dei
-        docenti, ma potrebbe non essere la più vantaggiosa per scoprire la
-        verità nascosta tra le mura della scuola.
-      </p>
-      <h3>Osservazione</h3>
-      <p>
-        Non tutte le scelte hanno lo stesso peso. Le decisioni prese nelle fasi
-        iniziali dell'anno possono influenzare drasticamente le opportunità che
-        ti si presenteranno in seguito.
-      </p>
+          <!-- TABELLA DI ASSOCIAZIONE -->
+          <table class="ancient-table">
+            <thead>
+              <tr>
+                <th>Casa</th>
+                <th>Animale</th>
+                <th>Elemento</th>
+                <th>Colore</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Grifondoro</strong></td>
+                <td>Leone</td>
+                <td>Fuoco</td>
+                <td style="color: red">Rossa</td>
+              </tr>
+              <tr>
+                <td><strong>Serpeverde</strong></td>
+                <td>Serpente</td>
+                <td>Acqua</td>
+                <td style="color: green">Verde</td>
+              </tr>
+              <tr>
+                <td><strong>Corvonero</strong></td>
+                <td>Aquila</td>
+                <td>Aria</td>
+                <td style="color: blue">Blu</td>
+              </tr>
+              <tr>
+                <td><strong>Tassorosso</strong></td>
+                <td>Tasso</td>
+                <td>Terra</td>
+                <td style="color: yellow">Gialla</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          <em>Nota del Bibliotecario:</em>
+        </p>
+        <p>
+          I guardiani non rivelano il loro allineamento in modo diretto. Ricorda
+          sempre che il cielo e le profondità dell'abisso condividono i segreti
+          della notte, mentre il calore d'oriente si contrappone al gelo delle
+          vette. <b>"I gemelli della notte si guardano le spalle..."</b>
+        </p>
+      </div>
     </div>
-
+    <button (click)="flipPageNext()" class="flipPageNext">Sfoglia →</button>
+    <button (click)="flipPageBack()" class="flipPageBack" *ngIf="isPageFlipped">
+      ← Indietro
+    </button>
     <button (click)="closeManual()" class="close-book-btn">
       Chiudi il volume
     </button>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -14,7 +14,13 @@ export class SortingHatComponent implements OnInit {
   isTransitioning: boolean = false;
   quizData: any;
   currentQuestionIndex = 0;
-  
+  isProcessingAnswer: boolean = false;
+
+  userAnswers: string[] = [];
+  showVideo: boolean = false;
+
+  @Output() quizSolved = new EventEmitter<string>();
+
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
@@ -33,17 +39,60 @@ setHatState(state: 'neutral' | 'speaking' | 'thinking') {
 
     setTimeout(() => {
       this.isTransitioning = false;
+      this.previousImageSource = '';
     }, 500);
   }
-  /*
-    if (this.hatState !== state) {
-      this.hatState = state;
-      this.hatImageSource = `assets/img/Part5/cappello_${state}.png`;
-    }*/
   }
 
   handleAnswer(option: any) {
+    if (this.isProcessingAnswer) return;
+
+    this.isProcessingAnswer = true;
     this.setHatState('speaking');
-    // Logica per passare alla prossima domanda...
+
+    this.userAnswers.push(option.casa);
+
+    setTimeout(() => {
+      if (this.quizData && this.currentQuestionIndex < this.quizData.questions.length - 1) {
+        console.log(this.userAnswers);
+        this.currentQuestionIndex++;
+        this.setHatState('neutral');
+      } else {
+        console.log("Quiz terminato!");
+        this.checkFinalResult(); 
+      }
+      
+      this.isProcessingAnswer = false;
+    }, 2000);
+  }
+
+  checkFinalResult() {
+    const total = this.userAnswers.length;
+    const griffindorCount = this.userAnswers.filter(casa => casa === 'GRIFONDORO').length;
+
+    if (griffindorCount > (total / 2)) {
+      console.log("Assegnato a Grifondoro! Avvio video...");
+      this.quizSolved.emit('banchetto'); 
+      //this.showVideo = true;
+    } else {
+      console.log("Non sei un Grifondoro... riprova!");
+      this.resetQuiz();
+    }
+    
+  }
+  onVideoEnded() {
+    this.showVideo = false;
+    this.quizSolved.emit('banchetto'); 
+  }
+
+  skip(){
+    console.log("skip")
+  this.quizSolved.emit('banchetto'); 
+  }
+  resetQuiz() {
+    this.currentQuestionIndex = 0;
+    this.userAnswers = [];
+    this.setHatState('neutral');
+    this.isProcessingAnswer = false;
   }
 }

@@ -4,7 +4,7 @@
     {
       "id": "benvenuto",
       "image_id": "HogwartsWelcome",
-      "text": "Benvenuti ad hogwarts. tra qualche minuto varcherete questa soglia e vi unirete ai vostri compagni ma prima verrete smistati nelle vostre case. Sono: GRIFONDORO, TASSOROSSO, CORVONERO e SERPEVERDE. Per il tempo che starete qui la vostra casa sarà la vostra famiglia. I trionfi che otterrete le faranno guadagnare puntie ogni violazione delle regole le farà perdere punti. A fine anno, alla casa con più punti verrà assegnata la coppa delle case. La cerimonia dello smistamento inizierà tra pochissimo!",
+      "text": "Benvenuti ad hogwarts. tra qualche minuto varcherete questa soglia e vi unirete ai vostri compagni ma prima verrete smistati nelle vostre case. Sono: GRIFONDORO, TASSOROSSO, CORVONERO e SERPEVERDE. Per il tempo che starete qui la vostra casa sarà la vostra famiglia. I trionfi che otterrete le faranno guadagnare punti e ogni violazione delle regole le farà perdere punti. A fine anno, alla casa con più punti verrà assegnata la coppa delle case. La cerimonia dello smistamento inizierà tra pochissimo!",
       "options": [
         { "text": "Consulta il Manuale dello Studente", "next_node": "manual" },
         { "text": "Procedi alla Cerimonia", "next_node": "smistamento" }
@@ -30,21 +30,21 @@
     },
     {
       "id": "dormitorio",
-      "image_id": "",
+      "image_id": "dormitorio",
       "type": "animation",
       "text": "Prefetto: 'Questa è la via per il dormitorio. Attenzione alle scale.. a loro piace cambiare",
       "next_node": "keyword"
     },
     {
       "id": "keyword",
-      "image_id": "",
+      "image_id": "fatWomen_QuizFrame",
       "type": "enigma",
       "enigma_id": "QUIZ_FRAME",
-      "success_node": "dormitorio1",
+      "success_node": "lesson",
       "fail_node": "keyword"
     },
     {
-      "id": "dormitorio1",
+      "id": "lesson",
       "image_id": "",
       "type": "animation",
       "next_node": "lateness"
@@ -54,13 +54,13 @@
       "image_id": "",
       "text": "Buongiorno, ragazzi",
       "options": [
-        { "text": "È stata maledettamente brava!", "impact": { "reputazione": 0 }, "next_node": "piton" },
-        { "text": "Siamo stati fortunati a non essere espulsi.", "impact": { "reputazione": 0 }, "next_node": "piton" }
+        { "text": "È stata maledettamente brava!", "impact": { "reputazione": 0 }, "next_node": "piton_1" },
+        { "text": "Siamo stati fortunati a non essere espulsi.", "impact": { "reputazione": 0 }, "next_node": "piton_1" }
       ]
     },
     {
       "id": "piton_1",
-      "image_id": "",
+      "image_id": "piton_1",
       "text": "Piton: 'Potter! Dimmi, cosa ottengo se verso radice di asfodelo in un infuso di artemisia?'",
       "options": [
         { "text": "Rispondi correttamente (Pozione di morte vivente)", 
@@ -74,21 +74,21 @@
       ]
     },
     {
-  "id": "piton_2",
-      "image_id": "",
-  "text": "Piton: 'Non lo sai? Bene, riproviamo. Dove guarderesti Potter se ti chiedessi di trovare un bezoar?'",
-  "options": [
-       { 
-      "text": "Nello stomaco di una capra.", 
-      "impact": { "reputazione": 10 }, 
-      "next_node": "posta" 
-       },
-       { 
-      "text": "Non lo so, professore.", 
-      "impact": { "reputazione": -20 }, 
-      "next_node": "posta" 
-       }
-     ]
+      "id": "piton_2",
+      "image_id": "piton_2",
+      "text": "Piton: 'Non lo sai? Bene, riproviamo. Dove guarderesti Potter se ti chiedessi di trovare un bezoar?'",
+        "options": [
+        { 
+        "text": "Nello stomaco di una capra.", 
+        "impact": { "reputazione": 10 }, 
+        "next_node": "posta" 
+        },
+        { 
+        "text": "Non lo so, professore.", 
+        "impact": { "reputazione": -20 }, 
+        "next_node": "posta" 
+        }
+      ]
     },
     {
       "id": "posta",
@@ -123,7 +123,7 @@
       "text": "Malfoy: Cosa c'è Potter, pensi di non arrivarci?",
       "options": [
         { "text": "Insegui Malfoy", "impact": { "audacia": 0 }, "next_node": "mcgranitt_reprimand" },
-        { "text": "Ascolta Hermione e resta a terra", "impact": { "reputazione": 0 }, "next_node": "fine" }
+        { "text": "Ascolta Hermione e resta a terra", "impact": { "reputazione": 0 }, "next_node": "Seeker" }
       ] 
     },
     {
@@ -146,12 +146,12 @@
       "text": "Chiedi di entrare in squadra", 
       "condition": "isSeeker == true", 
       "impact": { "status": "quidditch_team" },
-      "next_node": "chiusura" 
+      "next_node": "part_6" 
     },
     { 
       "text": "Rifiuta la proposta di Baston", 
       "condition": "isSeeker == true", 
-      "next_node": "chiusura" 
+      "next_node": "part_6" 
     }
   ]
     }

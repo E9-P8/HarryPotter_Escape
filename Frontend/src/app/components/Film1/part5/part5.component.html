@@ -22,17 +22,46 @@
   <div class="Part5-viewport">
     <div class="Part5-view">
       <div class="scene-visuals" *ngIf="actualPhase.type !== 'enigma'">
-        <img
-          class="Part5-img"
-          [src]="
-            actualPhase.image_id
-              ? '../../../../assets/img/Part5/' + actualPhase.image_id + '.png'
-              : 'assets/img/default.png'
-          "
-          alt="Scena"
-        />
+        <div class="image-wrapper">
+          <img
+            class="Part5-img"
+            [src]="
+              actualPhase.image_id
+                ? '../../../../assets/img/Part5/' +
+                  actualPhase.image_id +
+                  '.png'
+                : 'assets/img/default.png'
+            "
+            alt="Scena"
+          />
+          <img
+            *ngIf="actualPhase.id === 'banchetto'"
+            src="../../../../assets/img/Part5/banchetto_full.png"
+            class="cibo-overlay"
+            [class.is-visible]="showBanchetto"
+          />
+          <ng-container *ngIf="actualPhase.id === 'dormitorio'">
+            <img
+              src="../../../../assets/img/Part5/scala_1.png"
+              class="stair-layer s1"
+            />
+            <img
+              src="../../../../assets/img/Part5/scala_2.png"
+              class="stair-layer s2"
+            />
+            <img
+              src="../../../../assets/img/Part5/scala_3.png"
+              class="stair-layer s3"
+            />
+          </ng-container>
+        </div>
       </div>
-      <div class="dialogue-box" *ngIf="actualPhase.type !== 'enigma'">
+      <div
+        class="dialogue-box"
+        *ngIf="
+          actualPhase.type !== 'enigma' && actualPhase.type !== 'animation'
+        "
+      >
         <div class="dialog-text">
           <p *ngIf="actualPhase.character">{{ actualPhase.character }}</p>
           <p>{{ updateTextWithWizardName(actualPhase.text) }}</p>
@@ -50,8 +79,12 @@
           </button>
         </div>
       </div>
+
       <div class="enigma-area" *ngIf="actualPhase?.type === 'enigma'">
-        <app-enigma-hub [enigmaId]="actualPhase.enigma_id"></app-enigma-hub>
+        <app-enigma-hub
+          [enigmaId]="actualPhase.enigma_id"
+          (quizSolved)="manageChoice({ next_node: $event })"
+        ></app-enigma-hub>
         <!--<p>Enigma in corso: {{ actualPhase.enigma_id }}...</p>
         <button (click)="ManageEnigmaResult(true)">Simula Successo</button>-->
       </div>

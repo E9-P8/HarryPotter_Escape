@@ -644,7 +644,7 @@
     border-radius: 8px;
     color: #fff2b9;
     font-family: 'Georgia', serif;
-    font-size:0.8em;;
+    font-size:0.8em;
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), inset 0 0 5px rgb(57 69 57);
@@ -679,14 +679,12 @@
     50% {
         transform: translate(-50%, -50%) scale(1.5);
         opacity: 1;
-        /* Mantiene la luce solida mentre avviene lo scambio immagini */
         filter: brightness(2);
     }
 
     100% {
         transform: translate(-50%, -50%) scale(2.5);
         opacity: 0;
-        /* Svanisce dolcemente */
     }
 }
 @keyframes sparklePulse {
@@ -870,8 +868,8 @@
         bottom: 6px;
         left: 50%;
         transform: translateX(-50%);
-        width: 80%;
-        height: 20vh;
+        width: 90%;
+        height: 23vh;
         min-height: 50px;
         padding: 4px 12px;
         box-sizing: border-box;
@@ -894,4 +892,34 @@
         width: 55px;
         height: 28px;
     }
+   .GoToLighthouse {
+       padding: 0;
+       font-size: 0.4em;
+   }
+   .fireplace-inventory {
+       position: absolute;
+       bottom: 7px;
+   }
+
+   .inventory-hint {
+       font-size: 0.7rem;
+   }
+   .umbrella-game-container {
+       bottom: 5%;
+       padding: 10px;
+   }
+   .precision-bar {
+       height: 20px;
+   }
+   .shoot-btn {
+       padding: 0;
+       font-size: 0.7rem;
+   }
+   .followHagrid {
+       position: absolute;
+       bottom: 50%;
+       right: 3%;
+       padding: 5px 5px;
+       font-size: 0.5em;
+   }
 }
