@@ -45,13 +45,13 @@
     },
     {
       "id": "lesson",
-      "image_id": "",
+      "image_id": "lesson",
       "type": "animation",
       "next_node": "lateness"
     },
     {
       "id": "lateness",
-      "image_id": "",
+      "image_id": "lateness",
       "text": "Buongiorno, ragazzi",
       "options": [
         { "text": "È stata maledettamente brava!", "impact": { "reputazione": 0 }, "next_node": "piton_1" },
@@ -92,14 +92,20 @@
     },
     {
       "id": "posta",
-      "image_id": "",
+      "type": "animation",
+      "image_id": "posta",
       "text": "Harry: Posta in arrivo! La Gringott è stata scassinata! La camera 713... è lì che siamo andati con Hagrid!",
       "next_node": "lezione_volo"
     },
     {
       "id": "lezione_volo",
-      "image_id": "",
+      "image_id": "lezione_volo",
       "text": "Madama bom: mettetevi alla sinistra della vostra scopa, stendete la mano destra sulla scopa e dite 'SU!' Una volta afferrata la scopa voglio che ci montiate. E aggrappatevi bene. Quando soffio col fischietto con i piedi vi darete una spinta. Tenete la scopa ben salda. Inclinatevi leggermente in avanti e tornate per terra. Al mio fischio ..",
+      "next_node": "volo_enigma"
+    },
+    {
+      "id": "volo_enigma",
+      "image_id": "volo_enigma",
       "type": "enigma",
       "enigma_id": "ENIGMA_SCOPA",
       "success_node": "malfoy_volo",

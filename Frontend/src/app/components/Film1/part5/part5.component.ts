@@ -15,7 +15,13 @@ export class Part5Component implements OnInit {
   Data: any;     
   actualPhase: any;    
   wizardName: string = "Esempio"; 
+
   showBanchetto: boolean = false;
+  showFlash: boolean = false;
+
+  showOwls: boolean = false;
+  flyingOwls: any[] = [];
+  private owlInterval: any;
 
   constructor(private http: HttpClient,
     public gameService: GameDataService, 
@@ -67,7 +73,7 @@ if (nextNode) {
             this.handleAnimation(this.actualPhase.id);
         }
         else {
-           console.error("Nodo non trovato:", nextNodeId);
+           console.log("Nodo di testo caricato:", this.actualPhase.id);
         }
     }
   }
@@ -88,7 +94,12 @@ if (nextNode) {
     case 'dormitorio':
       this.startScaleAnimation();
       break;
-
+    case 'lesson':
+      this.startTransformAnimation();
+      break;
+    case 'posta': 
+        this.startOwlsAnimation();
+      break;
     default:
       setTimeout(() => {
         this.manageChoice({ next_node: this.actualPhase.next_node });
@@ -103,9 +114,8 @@ if (nextNode) {
       this.showBanchetto = true; 
       
       setTimeout(() => {
-        this.showBanchetto = false; 
         this.manageChoice({ next_node: this.actualPhase.next_node });
-      }, 4000);
+      }, 3000);
     }, 1000);
   }
   startScaleAnimation() {
@@ -113,7 +123,85 @@ if (nextNode) {
       this.manageChoice({ next_node: this.actualPhase.next_node });
     }, 7000);
   }
+  startTransformAnimation() {
+    console.log("Inizio trasformazione magica dal centro");
 
+    setTimeout(() => {
+      this.showFlash = true; 
+    setTimeout(() => {
+        const nextNode = this.Data.nodes.find((n: any) => n.id === this.actualPhase.next_node);
+        if (nextNode) {
+          this.actualPhase = nextNode;
+        }
+        setTimeout(() => {
+          this.showFlash = false;
+        }, 400); 
+
+      }, 400); 
+
+    }, 2000);
+  }
+  startOwlsAnimation() {
+    console.log("Inizio volo rapido e continuo delle civette");
+
+    this.flyingOwls = [];
+    
+    // Funzione di supporto per creare o rigenerare una singola civetta
+    const createOwl = (id: number) => {
+      const startFromLeft = Math.random() < 0.5;
+      // Aumentata la velocità base (da ~0.3 a ~0.8-1.4) per farle volare molto più rapide
+      const speed = Math.random() * 0.6 + 0.8;
+
+      return {
+        id: id,
+        x: startFromLeft ? -20 : 105,
+        y: Math.random() * 30 - 10,
+        speedX: startFromLeft ? speed : -speed,
+        speedY: (Math.random() * 0.4 - 0.2),
+        img: `owl_${Math.floor(Math.random() * 5) + 1}.png` // Variazione casuale dell'immagine
+      };
+    };
+
+    // Ne creiamo subito 8 invece di 5 per un effetto iniziale più ricco
+    for (let i = 1; i <= 8; i++) {
+      this.flyingOwls.push(createOwl(i));
+    }
+
+    this.showOwls = true;
+
+    this.owlInterval = setInterval(() => {
+      this.flyingOwls.forEach((owl, index) => {
+        owl.x += owl.speedX;
+        owl.y += owl.speedY;
+
+        // Appena una civetta esce COMPLETAMENTE dallo schermo, la rigeneriamo
+        // Questo crea l'effetto di uno sciame continuo di tantissime civette
+        if ((owl.speedX > 0 && owl.x > 110) || (owl.speedX < 0 && owl.x < -20)) {
+          this.flyingOwls[index] = createOwl(owl.id);
+        }
+
+        // Leggera correzione per la traiettoria verticale
+        if (owl.y < -15 || owl.y > 35) {
+          owl.speedY = -owl.speedY;
+        }
+      });
+    }, 20); 
+
+    setTimeout(() => {
+      clearInterval(this.owlInterval);
+      this.showOwls = false;
+
+      const nextNode = this.Data.nodes.find((n: any) => n.id === this.actualPhase.next_node);
+      if (nextNode) {
+        this.actualPhase = nextNode;
+      }
+    }, 7000);
+  }
+  whistles(){ 
+    setTimeout(() => {
+      this.manageChoice(this.actualPhase.next_node);
+    }, 800);
+  }
   updateTextWithWizardName(text: string): string {
     if (!text) return "";
     return text.replace('*wizardName*', this.wizardName);
