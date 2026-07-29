@@ -1,22 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AudioService } from '../../../services/audio.service';
+import { GameDataService } from '../../../services/game-data.service'
 
-interface QuidditchGameDialogue{
-  character : string;
-  image: string;
-  text : string;
- }
- interface FuffiDialogue{
-  character : string;
-  image: string;
-  text : string;
- }
- interface RestrictedSectionDialogue{
-  character : string;
-  image: string;
-  text : string;
- }
 
 @Component({
   selector: 'app-part6',
@@ -25,127 +12,99 @@ interface QuidditchGameDialogue{
 })
 export class Part6Component implements OnInit {
 
-  constructor(private router: Router, public audioService : AudioService) { }
+  constructor(private http: HttpClient,
+      public gameService: GameDataService, 
+      public audioService : AudioService,
+    private router: Router) { }
 
-  currentLineQuidditchGame = 0;
-  isQuidditchGameDialogueEnd: boolean = false;
-
-  currentLineFuffi = 0;
-  isFuffiDialogueEnd: boolean = false;
-
-  currentLineRestrictedSection = 0;
-  isRestrictedSectionDialogueEnd: boolean = false;
-
+  Data: any;     
+  actualPhase: any;    
+  wizardName: string = this.gameService.wizardName;  //  questa la prende dal GameDataService
+  isSeeker: boolean = this.gameService.getFlag("isSeeker");  //  questa la prende dal GameDataService
 
   toggleAudio(): void {
-  this.audioService.toggleGlobalMute(0.2);
+    this.audioService.toggleGlobalMute(0.2);
   }
+ /* startIntroSequence() {
+    this.audioService.startGlobalBackground('LetTheMysteryUnfold', 0.3); 
+  }*/
 
   ngOnInit(): void {
-    this.startIntroSequence();
-    this.startFuffiDialogue();
+    this.wizardName = this.gameService.wizardName;
+    this.loadPart();
   }
-    startIntroSequence() {
-    this.audioService.startGlobalBackground('LetTheMysteryUnfold', 0.3); 
-  }
-
-   actualFase: 'QuidditchGame' | 'Fuffi' | 'RestrictedSection'  = 'QuidditchGame';
-
-/***************** QuidditchGame ************************ */
-
-    script0 : QuidditchGameDialogue[] = [
-      { 
-        character : 'Harry',
-        image: "assets/img/Part2/", 
-        text : "Hagrid, cosa sono esattamente questi cosi?"
-      },
-      { 
-        character : 'Folletto',
-        image: "assets/img/Part2/",
-        text : "Il signor harry potter ha la sua chiave?"
-      },
-      { 
-        character : 'Folletto',
-        image: "assets/img/Part2/",
-        text : "La chiave prego!" //dare chiave
-      }
-    ]
-    startQuidditchGameDialogue(){
-        if(this.currentLineQuidditchGame >= this.script0.length){
-          this.isQuidditchGameDialogueEnd = true;
-          return;
-       }
-        setTimeout(() => {
-          this.currentLineQuidditchGame++;
-          this.startQuidditchGameDialogue();
-            }, 3000);
-    }
-  goToFuffi(){
-    this.actualFase= 'Fuffi';
-    this.audioService.startGlobalBackground('rainAndThunder', 0.3);
-
-    this.currentLineFuffi = 0;
-    this.startFuffiDialogue();
+  loadPart() {
+    this.http.get('assets/data/part_6.json').subscribe(data => {
+      this.Data = data;
+      this.actualPhase = this.Data.nodes[0];
+    });
   }
 
-   /***************** Fuffi ************************ */
+  updateTextWithWizardName(text: string): string {
+    if (!text) return "";
+    return text.replace('*wizardName*', this.wizardName);
+  }
 
-    script1 : FuffiDialogue[] = [
-      { 
-        character : 'Hagrid',
-        image: "assets/img/Part2/", 
-        text : "Qui troverai le penne d'oca e l'inchiostro.. e di la tutte le cianfrusaglie per fare le stregonerie"
-      },
-      { 
-        character : 'Ragazzi in sottofondo',
-        image: "assets/img/Part2/",
-        text : "Una scopa da corsa bellissima! Guardate che roba, la  nuova Ninbus 2000!" 
-      }
-    ]
-    startFuffiDialogue(){
-        if(this.currentLineFuffi >= this.script1.length){
-          this.isFuffiDialogueEnd = true;
-          return;
-       }
-        setTimeout(() => {
-          this.currentLineFuffi++;
-          this.startFuffiDialogue();
-            }, 3000);
-    }
-    goToRestrictedSection(){
-      this.actualFase= 'RestrictedSection';
-      this.audioService.startGlobalBackground('rainAndThunder', 0.3);
 
-      this.currentLineRestrictedSection = 0;
-      this.startRestrictedSectionDialogue();
-    }
-  
-  /***************** RestrictedSection ************************ */
+  manageChoice(option: any) {
+    const nextNodeId = (typeof option === 'string') ? option : option.next_node;
+    const nextNode = this.Data.nodes.find((n: any) => n.id === nextNodeId);
 
-    script2 : RestrictedSectionDialogue[] = [
-      { 
-        character : 'Harry',
-        image: "assets/img/Part2/", 
-        text : "C'è nessuno?"
-      },
-      { 
-        character : 'Hagrid',
-        image: "assets/img/Part2/", //hagrid che bussa con una civetta
-        text : "Harry! Buon compleanno!"
-      }
-    ]
-    startRestrictedSectionDialogue(){
-        if(this.currentLineRestrictedSection >= this.script2.length){
-          this.isRestrictedSectionDialogueEnd = true;
-          return;
-       }
-        setTimeout(() => {
-          this.currentLineRestrictedSection++;
-          this.startRestrictedSectionDialogue();
-            }, 3000); 
+   
+    if (option.impact) {
+      this.gameService.updateStats(option.impact);
     }
-    GoToMagicPlant(){
-      this.router.navigate(['/part7']);
+   
+
+    if (nextNode) {
+            this.actualPhase = nextNode; 
+
+            if (this.actualPhase.type === 'enigma') {
+                console.log("Nodo enigma caricato:", this.actualPhase.enigma_id);
+            }
+            if (this.actualPhase.type === 'animation') {
+                this.handleAnimation(this.actualPhase.id);
+            }
+            else {
+              console.log("Nodo di testo caricato:", this.actualPhase.id);
+
+            if (this.actualPhase.next_node && (!this.actualPhase.options || this.actualPhase.options.length === 0)) {
+                setTimeout(() => {
+                    this.manageChoice({ next_node: this.actualPhase.next_node });
+                }, 3000); 
+            }
+            }
+        }
     }
- 
+      
+  openManual(){ 
+    this.gameService.isManualOpen= true;
+    this.gameService.openManual();
+  }
+  closeManual() {
+    this.gameService.closeManual();
+  }
+
+  handleAnimation(animationId: string) {
+  switch (animationId) {
+    case 'banchetto':
+    
+      break;
+    
+    case 'dormitorio':
+    
+      break;
+    case 'lesson':
+      
+      break;
+    case 'posta': 
+       
+      break;
+    default:
+      setTimeout(() => {
+        this.manageChoice({ next_node: this.actualPhase.next_node });
+      }, 2000);
+      break;
+  }
+  }
 }

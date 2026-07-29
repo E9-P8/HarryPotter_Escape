@@ -239,7 +239,7 @@ position: fixed;
 }
 .flying-owl-item {
     position: absolute;
-    width: 270px;
+    width: 230px;
     height: auto;
     pointer-events: none;
     z-index: 10;
@@ -266,6 +266,12 @@ position: fixed;
 .whistle-container:hover .whistle-btn {
     transform: scale(1.1);
 }
+
+
+
+
+
+
 @media screen and (max-width: 932px) and (orientation: landscape) {
 
     .dialogue-box {

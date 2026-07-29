@@ -70,7 +70,10 @@
       <div
         class="dialogue-box"
         *ngIf="
-          actualPhase.type !== 'enigma' && actualPhase.type !== 'animation'
+          actualPhase.type !== 'enigma' &&
+          actualPhase.type !== 'animation' &&
+          actualPhase.type !== 'minigame' &&
+          !(actualPhase.id === 'QuidditchTrophy' && gameService.isSeeker)
         "
       >
         <div class="dialog-text">
@@ -101,6 +104,7 @@
           class="whistle-btn"
         />
       </div>
+
       <div class="enigma-area" *ngIf="actualPhase?.type === 'enigma'">
         <app-enigma-hub
           [enigmaId]="actualPhase.enigma_id"
@@ -109,20 +113,11 @@
         <!--<p>Enigma in corso: {{ actualPhase.enigma_id }}...</p>
         <button (click)="ManageEnigmaResult(true)">Simula Successo</button>-->
       </div>
-
-      <div class="special-choice-area" *ngIf="actualPhase.id === 'Seeker'">
-        <p>
-          Baston ti guarda intensamente: "Allora, che mi dici? Entri in
-          squadra?"
-        </p>
-
-        <button (click)="confirmTeam(true)" *ngIf="isAlreadySeeker()">
-          Accetto! Entro in squadra.
-        </button>
-
-        <button (click)="confirmTeam(false)">
-          No, preferisco concentrarmi sullo studio.
-        </button>
+      <div class="minigame-area" *ngIf="actualPhase?.type === 'minigame'">
+        <app-minigame-hub
+          [minigameId]="actualPhase.minigame_id"
+          (minigameSolved)="manageChoice({ next_node: $event })"
+        ></app-minigame-hub>
       </div>
     </div>
   </div>

@@ -11,71 +11,60 @@
     />
   </svg>
 </button>
-<div class="QuidditchGame-container" *ngIf="actualFase === 'QuidditchGame'">
-  <div class="QuidditchGame-viewport">
-    <div class="QuidditchGame-view"></div>
-    <img
-      [src]="script0[currentLineQuidditchGame].image"
-      class="QuidditchGame-img"
-      alt="QuidditchGame"
-    />
-    <div class="dialogue-box" *ngIf="">
-      <div class="dialog-text">
-        <p *ngIf="script0[currentLineQuidditchGame].character">
-          {{ script0[currentLineQuidditchGame].character }}
-        </p>
-        <p>{{ script0[currentLineQuidditchGame].text }}</p>
+<button
+  class="manual"
+  title="Apri il manuale"
+  (click)="openManual()"
+  alt="Open the manual"
+  *ngIf="!gameService.isManualOpen"
+></button>
+<div class="Part6-container" *ngIf="actualPhase">
+  <div class="Part6-viewport">
+    <div class="Part6-view">
+      <div class="scene-visuals" *ngIf="actualPhase.type !== 'enigma'">
+        <div class="image-wrapper">
+          <img
+            class="Part6-img"
+            [src]="
+              actualPhase.image_id
+                ? '../../../../assets/img/Part5/' +
+                  actualPhase.image_id +
+                  '.png'
+                : 'assets/img/default.png'
+            "
+            alt="Scena"
+          />
+        </div>
       </div>
-    </div>
-    <button class="goToFuffi" (click)="goToFuffi()"></button>
-  </div>
-</div>
-<div class="Fuffi-container" *ngIf="actualFase === 'Fuffi'">
-  <div class="Fuffi-viewport">
-    <div class="Fuffi-view">
-      <img
-        [src]="script1[currentLineFuffi].image"
-        class="Fuffi-img"
-        alt="Fuffi"
-      />
-
-      <div class="Fuffi-dialogue-box">
+      <div
+        class="dialogue-box"
+        *ngIf="
+          actualPhase.type !== 'enigma' && actualPhase.type !== 'animation'
+        "
+      >
         <div class="dialog-text">
-          <p *ngIf="script1[currentLineFuffi].character">
-            {{ script1[currentLineFuffi].character }}
-          </p>
-          <p>{{ script1[currentLineFuffi].text }}</p>
+          <p *ngIf="actualPhase.character">{{ actualPhase.character }}</p>
+          <p>{{ updateTextWithWizardName(actualPhase.text) }}</p>
+        </div>
+
+        <div
+          class="options-area"
+          *ngIf="!actualPhase.type && actualPhase.options"
+        >
+          <button
+            *ngFor="let opt of actualPhase.options"
+            (click)="manageChoice(opt)"
+          >
+            {{ opt.text }}
+          </button>
         </div>
       </div>
 
-      <button
-        class="goToRestrictedSection"
-        (click)="goToRestrictedSection()"
-      ></button>
-    </div>
-  </div>
-</div>
-<div
-  class="RestrictedSection-container"
-  *ngIf="actualFase === 'RestrictedSection'"
->
-  <div class="RestrictedSection-viewport">
-    <div class="RestrictedSection-view">
-      <img
-        *ngIf=""
-        [src]="script2[currentLineRestrictedSection].image"
-        class="RestrictedSection-img"
-        alt="RestrictedSectionScene"
-      />
-
-      <div class="dialogue-box">
-        <div class="dialog-text">
-          <p *ngIf="script2[currentLineRestrictedSection].character">
-            {{ script2[currentLineRestrictedSection].character }}
-          </p>
-          <p>{{ script2[currentLineRestrictedSection].text }}</p>
-        </div>
-        <button class="GoToMagicPlant" (click)="GoToMagicPlant()"></button>
+      <div class="enigma-area" *ngIf="actualPhase?.type === 'enigma'">
+        <app-enigma-hub
+          [enigmaId]="actualPhase.enigma_id"
+          (quizSolved)="manageChoice({ next_node: $event })"
+        ></app-enigma-hub>
       </div>
     </div>
   </div>

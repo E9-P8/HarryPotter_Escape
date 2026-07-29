@@ -6,4 +6,7 @@
   *ngIf="enigmaId === 'QUIZ_FRAME'"
   (quizSolved)="onQuizSolved($event)"
 ></app-puzzle-frame>
-<app-enigma-broom *ngIf="enigmaId === 'ENIGMA_SCOPA'"></app-enigma-broom>
+<app-enigma-broom
+  *ngIf="enigmaId === 'ENIGMA_SCOPA'"
+  (quizSolved)="onQuizSolved($event)"
+></app-enigma-broom>

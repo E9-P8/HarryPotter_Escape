@@ -1,0 +1,80 @@
+{
+  "part_id": 6,
+  "nodes": [
+    {
+      "id": "stairs",
+      "image_id": "stairs",
+      "text": "Hermione: alle scale piace cambiare... ricordate?",
+      "type": "animation",
+      "next_node": "3floor"
+    },
+    {
+      "id": "3floor",
+      "image_id": "3floor",
+      "text": "Ron: *wizardName*, presto! Nascondiamoci dietro quella porta!",
+      "options": [
+        { "text": "Torna nel dormitorio, questa è zona proibita", "impact": { "reputazione": 0 }, "next_node": "" },
+        { "text": "Segui Ron ed entra nella porta", "impact": { "reputazione": 0 }, "next_node": "alohomora" }
+      ]
+    },
+    {
+      "id": "alohomora",
+      "image_id": "alohomora", 
+      "type": "enigma",
+      "enigma_id": "DOOR_QUIZ",
+      "success_node": "banchetto",
+      "fail_node": "smistamento"
+    },
+    {
+      "id": "3HeadsDog",
+      "image_id": "3HeadsDog",
+      "text": "Ahhhhhhhhhhhhh!",
+      "type": "animation",
+      "next_node": "3HeadsDog2"
+    },
+    {
+      "id": "3HeadsDog2",
+      "image_id": "",
+      "text": "Ron: Non so se hai notato ma aveva 3 teste!",
+      "next_node": "3HeadsDog3"
+    },
+    {
+      "id": "3HeadsDog3",
+      "image_id": "",
+      "text": "Hermione: Stava sopra una botola, il che signica che sta facendo la guardia a qualcosa. Ora se non vi dispiace me ne vado a letto.",
+      "next_node": "Quiddich"
+    },
+    {
+      "id": "Quiddich",
+      "image_id": "",
+      "text": "Bastion: il quiddich è facile da capire. Ogni squadra ha 7 giocatori, 3 cacciatori, 2 battitori, 1 portiere e un cercatore, che saresti tu.",
+      "next_node": "Quiddich_balls"
+    },
+    {
+      "id": "Quiddich_balls",
+      "image_id": "",
+      "next_node": "feather_lessons"
+    },
+    {
+      "id": "feather_lessons",
+      "image_id": "",
+      "text": "Professore: Una delle abilità piu rudimentali di un mago è la levitazione. Avete tutti le vostre piume. Non dimenticate il bel movimento di polso che abbiamo provato, agitare e colpire.",
+      "next_node": "feather_quiz"
+    },
+    {
+      "id": "feather_quiz",
+      "image_id": "feather_quiz", 
+      "type": "enigma",
+      "enigma_id": "FEATHER_QUIZ",
+      "success_node": "banchetto",
+      "fail_node": "teasing"
+    },
+    {
+      "id": "teasing",
+      "image_id": "",
+      "text": "Ron: E' leviOsa, non leviosAA",
+      "next_node": "feather_quiz"
+    }
+    
+  ]
+}

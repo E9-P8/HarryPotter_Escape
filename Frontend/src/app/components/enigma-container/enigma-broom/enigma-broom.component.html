@@ -1,1 +1,43 @@
-<p>enigma-broom works!</p>
+<div class="enigma-broom-container">
+  <div class="broom-view">
+    <img
+      src="/assets/img/Part5/volo_enigma.png"
+      alt="Enigma volo"
+      class="enigmaBroom-img"
+      *ngIf="!showNewBackground"
+    />
+    <img
+      src="/assets/img/Part5/solvedBroom.png"
+      alt="Enigma volo"
+      class="enigmaBroom-img"
+      *ngIf="showNewBackground"
+    />
+    <div
+      class="broom-object"
+      [class.shake-fall]="isError"
+      [class.fly-up]="isSolved"
+    >
+      <img [src]="currentBroomImage" alt="Scopa" class="broom-img-inner" />
+      <div class="broom-gameplay" *ngIf="!isAnimating">
+        <div
+          class="broom-zone tail-zone"
+          (click)="handleBroomPart('tail')"
+          title="Coda"
+        ></div>
+        <div
+          class="broom-zone center-zone"
+          (click)="handleBroomPart('center')"
+          title="Centro"
+        ></div>
+        <div
+          class="broom-zone tip-zone"
+          (click)="handleBroomPart('tip')"
+          title="Punta"
+        ></div>
+      </div>
+    </div>
+    <div class="broom-feedback" [class.error]="isError">
+      {{ feedbackMessage }}
+    </div>
+  </div>
+</div>

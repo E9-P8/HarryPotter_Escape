@@ -14,6 +14,7 @@ export class GameDataService {
   
   private readonly STORAGE_KEY = 'hp_game_save';
   isManualOpen: boolean = false;
+  isSeeker: boolean = false;
 
   private readonly initialState: GameState = {
     parte: 1,

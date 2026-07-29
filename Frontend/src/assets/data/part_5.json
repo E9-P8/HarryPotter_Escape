@@ -60,8 +60,8 @@
     },
     {
       "id": "piton_1",
-      "image_id": "piton_1",
-      "text": "Piton: 'Potter! Dimmi, cosa ottengo se verso radice di asfodelo in un infuso di artemisia?'",
+      "image_id": "piton_1",  
+      "text": "Piton: *wizardName*! Dimmi, cosa ottengo se verso radice di asfodelo in un infuso di artemisia?'",
       "options": [
         { "text": "Rispondi correttamente (Pozione di morte vivente)", 
         "impact": { "reputazione": 20 }, 
@@ -113,50 +113,67 @@
     },
     {
       "id": "malfoy",
-      "image_id": "",
+      "image_id": "malfoy",
       "text": "Malfoy: Che ne dici se la metto in un posto difficile da arrivarci?",
       "next_node": "hermione_advise"
     },
     {
       "id": "hermione_advise",
-      "image_id": "",
+      "image_id": "hermione_advise",
       "text": "Hermione: *wizardName* non se ne parla, Madama Bom l'ha vietato e per di più non sai nemmeno volare.",
       "next_node": "malfoy_volo"
     },
     {
       "id": "malfoy_volo",
-      "image_id": "",
-      "text": "Malfoy: Cosa c'è Potter, pensi di non arrivarci?",
+      "image_id": "malfoy_volo",
+      "text": "Malfoy: Cosa c'è *wizardName*, pensi di non arrivarci?",
       "options": [
-        { "text": "Insegui Malfoy", "impact": { "audacia": 0 }, "next_node": "mcgranitt_reprimand" },
+        { "text": "Insegui Malfoy", "impact": { "audacia": 0 }, "next_node": "catch_sphere" },
         { "text": "Ascolta Hermione e resta a terra", "impact": { "reputazione": 0 }, "next_node": "Seeker" }
       ] 
     },
     {
+      "id": "catch_sphere",
+      "image_id": "catch_sphere", 
+      "type": "minigame",
+      "minigame_id": "SPHERE_MINIGAME",
+      "set_flag": { "isSeeker": true },
+      "success_node": "mcgranitt_reprimand",
+      "fail_node": "malfoy_vince"
+    },
+    {
       "id": "mcgranitt_reprimand",
-      "image_id": "",
+      "image_id": "mcgranitt_reprimand",
       "text": "McGranitt:'Potter, seguimi!'",
       "next_node": "mcgranitt_baston"
     },
     {
       "id": "mcgranitt_baston",
-      "image_id": "",
+      "image_id": "mcgranitt_baston",
       "text": "McGranitt: Potter, lui è Oliver Baston. Baston, ti ho trovato un cercatore!",
       "next_node": "Seeker"
     },
     {
       "id": "Seeker",
+      "image_id": "Seeker",
       "text": "Ron: 'Harry, non sapevo che tuo padre fosse un cercatore!'",
+      "next_node": "QuidditchTrophy"
+    },
+    {
+      "id": "QuidditchTrophy",
+      "image_id": "QuidditchTrophy",
       "options": [
     { 
       "text": "Chiedi di entrare in squadra", 
-      "condition": "isSeeker == true", 
+      "condition": "isSeeker == false",
+      "set_flag": { "isSeeker": true },
       "impact": { "status": "quidditch_team" },
       "next_node": "part_6" 
     },
     { 
-      "text": "Rifiuta la proposta di Baston", 
-      "condition": "isSeeker == true", 
+      "text": "Rifiuta, preferisci concentrarti sullo studio", 
+      "condition": "isSeeker == false",
+      "set_flag": { "isSeeker": false },
       "next_node": "part_6" 
     }
   ]

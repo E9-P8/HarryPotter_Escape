@@ -22,6 +22,8 @@ import { EnigmaHubComponent } from './components/enigma-container/enigma-hub/eni
 import { SortingHatComponent } from './components/enigma-container/sorting-hat/sorting-hat.component';
 import { PuzzleFrameComponent } from './components/enigma-container/puzzle-frame/puzzle-frame.component';
 import { EnigmaBroomComponent } from './components/enigma-container/enigma-broom/enigma-broom.component';
+import { MinigameHubComponent } from './components/minigame-container/minigame-hub/minigame-hub.component';
+import { SphereMinigameComponent } from './components/minigame-container/sphere-minigame/sphere-minigame.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { EnigmaBroomComponent } from './components/enigma-container/enigma-broom
     EnigmaHubComponent,
     SortingHatComponent,
     PuzzleFrameComponent,
-    EnigmaBroomComponent
+    EnigmaBroomComponent,
+    MinigameHubComponent,
+    SphereMinigameComponent
   ],
   imports: [
     BrowserModule,

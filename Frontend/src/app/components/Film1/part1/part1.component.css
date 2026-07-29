@@ -516,7 +516,7 @@ position: fixed;
     justify-content: center;
     align-items: center;
 
-    background: radial-gradient(circle, rgb(192 190 190 / 24%) 0%, rgba(255, 255, 255, 0) 80%);
+    background: radial-gradient(circle, rgb(192 190 190 / 24%) 2 0%, rgba(255, 255, 255, 0) 60%);
     background-position: center;
     background-repeat: no-repeat;
 
@@ -531,19 +531,19 @@ position: fixed;
 
 @keyframes pulseCenterHint {
     0% {
-        opacity: 0.1;
+        opacity: 0.5;
         background-size: 20% 20%;
         transform: translate(-50%, -50%) scale(0.95);
     }
 
     50% {
-        opacity: 0.8;
+        opacity: 0.9;
         background-size: 60% 60%;
-        transform: translate(-50%, -50%) scale(1.05);
+        transform: translate(-50%, -50%) scale(1.10);
     }
 
     100% {
-        opacity: 0.1;
+        opacity: 0.5;
         background-size: 20% 20%;
         transform: translate(-50%, -50%) scale(0.95);
     }

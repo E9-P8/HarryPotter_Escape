@@ -14,7 +14,7 @@ export class Part5Component implements OnInit {
 
   Data: any;     
   actualPhase: any;    
-  wizardName: string = "Esempio"; 
+  wizardName: string = this.gameService.wizardName; 
 
   showBanchetto: boolean = false;
   showFlash: boolean = false;
@@ -32,6 +32,9 @@ export class Part5Component implements OnInit {
   toggleAudio(): void {
   this.audioService.toggleGlobalMute(0.2);
   }
+  /*startIntroSequence() {
+    this.audioService.startGlobalBackground('LetTheMysteryUnfold', 0.3); 
+  }*/
 
   ngOnInit(): void {
     this.wizardName = this.gameService.wizardName;
@@ -44,39 +47,68 @@ export class Part5Component implements OnInit {
       this.actualPhase = this.Data.nodes[0];
     });
   }
+  updateTextWithWizardName(text: string): string {
+    if (!text) return "";
+    return text.replace('*wizardName*', this.wizardName);
+  }
 
-  manageChoice(option: any) {
-    // 1. Applica impatto se esiste (reputazione, audacia, ecc.)
-    const nextNodeId = (typeof option === 'string') ? option : option.next_node;
-    const nextNode = this.Data.nodes.find((n: any) => n.id === nextNodeId);
+ manageChoice(option: any) {
+  const nextNodeId = (typeof option === 'string') ? option : option?.next_node;
+  const nextNode = this.Data.nodes.find((n: any) => n.id === nextNodeId);
 
-   
-    if (option.impact) {
-      this.gameService.updateStats(option.impact);
-    }
-    if (option.next_node === 'manual') {
+  if (option && option.impact) {
+    this.gameService.updateStats(option.impact);
+  }
+
+  if (option && option.next_node === 'manual') {
     this.gameService.openManual();
     return; 
+  }
+
+  if (option && option.set_flag && option.set_flag.isSeeker !== undefined) {
+    this.gameService.isSeeker = option.set_flag.isSeeker;
+  }
+
+  if (nextNodeId === 'part_6' || nextNodeId === '/part6') {
+    console.log(this.gameService.isSeeker);
+    this.router.navigate(['/part6']);
+    return;
+  }
+
+  if (nextNode) {
+    this.actualPhase = nextNode; 
+
+    if (this.actualPhase.text) {
+      this.actualPhase.text = this.actualPhase.text.replace('*wizardName*', this.gameService.wizardName);
     }
-    if (option.next_node === "mcgranitt_reprimand") {
-      this.gameService.setFlag("isSeeker", true);
+
+    if (this.actualPhase.id === 'mcgranitt_baston') {
+      this.gameService.isSeeker = true;
     }
 
+    if (this.actualPhase.id === 'QuidditchTrophy' && this.gameService.isSeeker) {
+      this.actualPhase.options = [];
+      setTimeout(() => {
+        this.manageChoice({ next_node: 'part_6' });
+      }, 3000);
+      return;
+    }
 
-if (nextNode) {
-        this.actualPhase = nextNode; 
+    if (this.actualPhase.type === 'animation') {
+      this.handleAnimation(this.actualPhase.id);
+      return;
+    }
 
-        if (this.actualPhase.type === 'enigma') {
-            console.log("Nodo enigma caricato:", this.actualPhase.enigma_id);
-        }
-        if (this.actualPhase.type === 'animation') {
-            this.handleAnimation(this.actualPhase.id);
-        }
-        else {
-           console.log("Nodo di testo caricato:", this.actualPhase.id);
-        }
+    const isQuidditchAutoAdvance = (this.actualPhase.id === 'QuidditchTrophy' && this.gameService.isSeeker);
+    const hasNoOptions = !this.actualPhase.options || this.actualPhase.options.length === 0;
+
+    if ((hasNoOptions || isQuidditchAutoAdvance) && this.actualPhase.next_node) {
+      setTimeout(() => {
+        this.manageChoice({ next_node: this.actualPhase.next_node });
+      }, 3000); 
     }
   }
+}
   openManual(){ 
     this.gameService.isManualOpen= true;
     this.gameService.openManual();
@@ -146,23 +178,19 @@ if (nextNode) {
 
     this.flyingOwls = [];
     
-    // Funzione di supporto per creare o rigenerare una singola civetta
     const createOwl = (id: number) => {
       const startFromLeft = Math.random() < 0.5;
-      // Aumentata la velocità base (da ~0.3 a ~0.8-1.4) per farle volare molto più rapide
       const speed = Math.random() * 0.6 + 0.8;
 
       return {
         id: id,
         x: startFromLeft ? -20 : 105,
-        y: Math.random() * 30 - 10,
+        y: Math.random() * 25 - 25,
         speedX: startFromLeft ? speed : -speed,
-        speedY: (Math.random() * 0.4 - 0.2),
+        speedY: (Math.random() * 0.3 - 0.15),
         img: `owl_${Math.floor(Math.random() * 5) + 1}.png` // Variazione casuale dell'immagine
       };
     };
-
-    // Ne creiamo subito 8 invece di 5 per un effetto iniziale più ricco
     for (let i = 1; i <= 8; i++) {
       this.flyingOwls.push(createOwl(i));
     }
@@ -174,13 +202,9 @@ if (nextNode) {
         owl.x += owl.speedX;
         owl.y += owl.speedY;
 
-        // Appena una civetta esce COMPLETAMENTE dallo schermo, la rigeneriamo
-        // Questo crea l'effetto di uno sciame continuo di tantissime civette
         if ((owl.speedX > 0 && owl.x > 110) || (owl.speedX < 0 && owl.x < -20)) {
           this.flyingOwls[index] = createOwl(owl.id);
         }
-
-        // Leggera correzione per la traiettoria verticale
         if (owl.y < -15 || owl.y > 35) {
           owl.speedY = -owl.speedY;
         }
@@ -195,31 +219,18 @@ if (nextNode) {
       if (nextNode) {
         this.actualPhase = nextNode;
       }
-    }, 7000);
+    }, 5000);
   }
   whistles(){ 
     setTimeout(() => {
       this.manageChoice(this.actualPhase.next_node);
     }, 800);
   }
-  updateTextWithWizardName(text: string): string {
-    if (!text) return "";
-    return text.replace('*wizardName*', this.wizardName);
-  }
 
-  
 
 
   isAlreadySeeker(): boolean {
   return this.gameService.getFlag("isSeeker");
 }
-
-  confirmTeam(choice: boolean) {
-    this.gameService.setFlag("isSeeker", choice);
-    /*Opzionale: salva il completamento della parte 5 prima di uscire
-  this.gameService.navigateTo("part6_start", 6);*/
-
-    this.router.navigate(['/part6']);
-  }
 
 } 

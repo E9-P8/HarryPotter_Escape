@@ -1,0 +1,24 @@
+<div class="minigame-container">
+  <img
+    class="minigame-bg"
+    src="../../../../assets/img/Part6/sphere_minigame.png"
+    alt="Visuale in volo"
+  />
+
+  <div class="minigame-instructions">
+    <p>Afferra la Ricordopoli prima che cada!</p>
+    <p class="timer-display">
+      Tempo: <strong>{{ catchTimer }}s</strong>
+    </p>
+  </div>
+
+  <div
+    *ngIf="showSphere"
+    class="interactive-sphere"
+    [style.top.%]="spherePosY"
+    [style.left.%]="spherePosX"
+    (click)="catchSphereSuccess()"
+  >
+    <img src="../../../../assets/img/Part6/remembrall.png" alt="Ricordopoli" />
+  </div>
+</div>
