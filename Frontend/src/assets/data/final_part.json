@@ -1,0 +1,125 @@
+{
+  "part_id": 8,
+  "nodes":
+    [
+    {
+        "id": "final_part_start",
+        "image_id": "devils_snare",
+        "type": "enigma",
+        "enigma_id": "DEVILS_SNARE_LIGHT",
+        "success_node": "final_flying_keys_room",
+        "fail_node": "final_devils_snare_escape"
+    },
+    {
+        "id": "final_devils_snare_escape",
+        "image_id": "devils_snare_choke",
+        "type": "text",
+        "text": "Hermione urla: 'Lumos Solem!'. La luce solare scaccia le radici velenose facendovi cadere sani e salvi sul pavimento sottostante.",
+        "next_node": "final_flying_keys_room"
+    },
+    {
+        "id": "final_flying_keys_room",
+        "image_id": "flying_keys",
+        "type": "minigame",
+        "minigame_id": "CATCH_BENT_WING_KEY",
+        "success_node": "final_chess_room",
+        "fail_node": "final_keys_door_forced"
+    },
+    {
+        "id": "final_keys_door_forced",
+        "image_id": "keys_attacking",
+        "type": "text",
+        "text": "Tra una pioggia di chiavi incantate affilate come rasoi, riuscite ad aprire la porta pesante e a chiuderla alle vostre spalle!",
+        "next_node": "final_chess_room"
+    },
+    {
+        "id": "final_chess_room",
+        "image_id": "wizard_chess_board",
+        "type": "enigma",
+        "enigma_id": "CHESS_TACTICAL_SACRIFICE",
+        "success_node": "final_chess_victory",
+        "fail_node": "final_chess_victory"
+    },
+    {
+        "id": "final_chess_victory",
+        "image_id": "ron_knocked_out",
+        "type": "animation",
+        "text": "Ron si sacrifica con un'azione magistrale per darvi lo Scacco Matto! La regina bianca distrugge il cavallo di Ron che cade svenuto. Harry vi guarda: 'Restate qui con Ron. Devo proseguire da solo.'",
+        "next_node": "final_quirrell_revelation"
+    },
+    {
+        "id": "final_quirrell_revelation",
+        "image_id": "mirror_room_quirrell",
+        "type": "text",
+        "text": "In fondo alle scale non c'è Piton, ma il balbettante Professor Raptor davanti allo Specchio delle Brame! Raptor sorride malvagio: 'Chi sospetterebbe mai del povero e balbettante Raptor? Sono stato io a far entrare il troll e a tentare di ucciderti al Quidditch!'",
+        "next_node": "final_voldemort_reveal"
+    },
+    {
+        "id": "final_voldemort_reveal",
+        "image_id": "voldemort_back_head",
+        "type": "animation",
+        "text": "Raptor si toglie il turbante: sulla nuca calva c'è il volto orribile di Voldemort! Voldemort: 'Vedi cosa sono diventato? Un parassita! Ma la pietra che hai in tasca può ridarmi un corpo!'",
+        "next_node": "final_voldemort_temptation"
+    },
+    {
+        "id": "final_voldemort_temptation",
+        "image_id": "voldemort_fire_ring",
+        "text": "La stanza si circonda di fiamme magiche. Voldemort sussurra: 'Unisciti a me! Possiamo far tornare i tuoi genitori... Non esiste il bene o il male, esiste solo il potere!'",
+        "options": [
+        {
+            "text": "Rifiuta con fermezza: 'MAI!'",
+            "impact": { "audacia": 50, "reputazione": 30 },
+            "next_node": "final_boss_enigma"
+        },
+        {
+            "text": "Tentenna e fingi di cedere per guadagnare tempo",
+            "impact": { "audacia": 10 },
+            "next_node": "final_boss_enigma"
+        }
+        ]
+    },
+    {
+        "id": "final_boss_enigma",
+        "image_id": "voldemort_attack",
+        "type": "enigma",
+        "enigma_id": "TOUCH_OF_LOVE_FINAL",
+        "success_node": "final_quirrell_destroyed",
+        "fail_node": "final_quirrell_destroyed"
+    },
+    {
+        "id": "final_quirrell_destroyed",
+        "image_id": "quirrell_ashes",
+        "type": "animation",
+        "text": "Tocchi il viso di Raptor: la tua pelle brucia e sgretola il suo corpo trasformandolo in cenere! Lo spirito oscuro di Voldemort trapassa il petto di Harry prima di fuggire via. Harry sviene a terra.",
+        "next_node": "final_hospital_wing"
+    },
+    {
+        "id": "final_hospital_wing",
+        "image_id": "hospital_wing_dumbledore",
+        "type": "text",
+        "text": "Ti risvegli nell'infermeria sommerso da dolciumi. Silente sorride: 'La pietra è stata distrutta. Tua madre si è sacrificata per te, lasciandoti addosso un segno indelebile: l'Amore, Harry.'",
+        "next_node": "final_house_cup_ceremony"
+    },
+    {
+        "id": "final_house_cup_ceremony",
+        "image_id": "great_hall_banners",
+        "type": "text",
+        "text": "Nella Sala Grande addobbata con i vessilli di Serpeverde, Silente fa battere il cucchiaio sul calice: 'Un altro anno è passato! Tuttavia, alcuni recenti avvenimenti vanno presi in considerazione...'",
+        "next_node": "final_points_distribution"
+    },
+    {
+        "id": "final_points_distribution",
+        "image_id": "dumbledore_awards",
+        "type": "text",
+        "text": "Silente: 'A Hermione, 50 punti per il lucido intelletto! A Ron, 50 punti per la miglior partita a scacchi! Ad Harry, 60 punti per il puro coraggio!'",
+        "next_node": "final_house_cup_winner"
+    },
+    {
+        "id": "final_house_cup_winner",
+        "image_id": "gryffindor_wins_cup",
+        "type": "animation",
+        "text": "Silente sorride: 'I miei calcoli mostrano che un cambio di decorazioni è opportuno! Grifondoro vince la Coppa delle Case!'. Tutta la sala esplode in festa lanciando i cappelli in aria!",
+        "next_node": "game_end"
+    }
+    ]
+  }

@@ -1,0 +1,114 @@
+{
+  "part_id": 8,
+  "nodes": [
+    {
+      "id": "greatHall",
+      "image_id": "greatHall",
+      "type": "text",
+      "text": "Hermione: 'Come ho potuto essere così stupida! Nicolas Flamel è l'unico creatore della Pietra Filosofale! Trasforma il metallo in oro e produce l'Elisir di Lunga Vita!'",
+      "next_node": "greatHall_Hermione"
+    },
+    {
+      "id": "greatHall_Hermione",
+      "image_id": "greatHall_Hermione",
+      "type": "text",
+      "text": "Hermione: 'Ecco cosa sorveglia Fuffy al terzo piano sotto la botola: la Pietra Filosofale!'",
+      "next_node": "hagrid_dragon"
+    },
+    {
+      "id": "hagrid_dragon",
+      "image_id": "hagrid_dragon",
+      "type": "animation",
+      "text": "Ron: È un Dorso Rugoso di Norvegia! **Il cucciolo Norberto sputa una fiammata bruciando la barba a Hagrid**",
+      "next_node": "malfoy_window"
+    },
+    {
+      "id": "malfoy_window",
+      "image_id": "malfoy_window",
+      "type": "text",
+      "text": "Fuori dalla finestra vedete la sagoma di Draco Malfoy che vi ha spiati e corre via a riferire tutto alla McGranitt!",
+      "next_node": "detention_assignment"
+    },
+    {
+      "id": "detention_assignment",
+      "image_id": "detention_assignment",
+      "type": "text",
+      "text": "La McGranitt: 'Toglierò 50 punti a testa a Grifondoro e andrete in castigo! Anche tu eri fuori orario, Malfoy. Ti unirai a loro.",
+      "next_node": "forbiddenForest"
+    },
+    {
+      "id": "forbiddenForest",
+      "image_id": "forbiddenForest",
+      "type": "text",
+      "text": "Gazza vi porta da Hagrid all'ingresso della Foresta Proibita. Hagrid mostra una sostanza argentata al suolo: 'Sangue di unicorno... Qualcuno ha ferito una creatura pura. Dobbiamo trovarla. Harry, tu andrai con Malfoy.'",
+      "next_node": "p8_forest_voldemort_encounter"
+    },
+    {
+      "id": "p8_forest_voldemort_encounter",
+      "image_id": "voldemort_unicorn",
+      "type": "animation",
+      "text": "Nella radura buia, trovate una figura incappucciata intenta a bere il sangue di un unicorno morto. Malfoy urla e scappa! La figura si alza e striscia verso Harry, che cade a terra colto da un dolore atroce alla cicatrice!",
+      "next_node": "p8_firenze_rescue"
+    },
+    {
+      "id": "p8_firenze_rescue",
+      "image_id": "centaur_firenze",
+      "type": "text",
+      "text": "Il centauro Fiorenzo irrompe spaventando la figura oscurata! Fiorenzo: 'Bere sangue di unicorno ti tiene in vita anche se sei a un passo dalla morte, ma al prezzo di vivere una vita dannata... Colui che era lì era Voldemort!'",
+      "next_node": "p8_common_room_deduction"
+    },
+    {
+      "id": "p8_common_room_deduction",
+      "image_id": "gryffindor_fireplace",
+      "type": "text",
+      "text": "Tornati nella sala comune, capite il piano finale: l'uomo che ha dato l'uovo di drago ad Hagrid era un sicario che voleva scoprire come addormentare Fuffy. Voldemort vuole la pietra stasera!",
+      "next_node": "p8_trapdoor_plan_choice"
+    },
+    {
+      "id": "p8_trapdoor_plan_choice",
+      "image_id": "corridor_night",
+      "text": "Silente è stato attirato a Londra con un falso messaggio. Piton ha la strada spianata per la botola. Cosa si fa?",
+      "options": [
+        {
+          "text": "Scendi nella botola stanotte per fermare il furto!",
+          "impact": { "audacia": 20, "reputazione": 10 },
+          "next_node": "p8_neville_confrontation"
+        },
+        {
+          "text": "Rimani nel dormitorio e avvisa un altro professore",
+          "impact": { "audacia": -10 },
+          "next_node": "p8_neville_confrontation"
+        }
+      ]
+    },
+    {
+      "id": "p8_neville_confrontation",
+      "image_id": "neville_blocking",
+      "type": "text",
+      "text": "Neville vi sbarra la strada nella sala comune: 'Non vi permetterò di far togliere altri punti a Grifondoro! Lotterò contro di voi!'. Hermione sospira: 'Petrificus Totalus!'. Neville si pietrifica e cade dritto a terra.",
+      "next_node": "p8_fluffy_room_enigma"
+    },
+    {
+      "id": "p8_fluffy_room_enigma",
+      "image_id": "fluffy_harp",
+      "type": "enigma",
+      "enigma_id": "SLEEP_FLUFFY_HARP",
+      "success_node": "p8_enter_trapdoor",
+      "fail_node": "p8_fluffy_attack_fail"
+    },
+    {
+      "id": "p8_fluffy_attack_fail",
+      "image_id": "fluffy_awake",
+      "type": "text",
+      "text": "L'arpa smette di suonare! Fuffy si sveglia e ruggisce ferocemente, costringendovi a un salto disperato nel buio della botola!",
+      "next_node": "final_part_start"
+    },
+    {
+      "id": "p8_enter_trapdoor",
+      "image_id": "open_trapdoor",
+      "type": "animation",
+      "text": "Spostate le zampe del cane addormentato, aprite la botola e vi lanciate uno ad uno nell'oscurità sottostante...",
+      "next_node": "final_part_start"
+    }
+  ]
+}

@@ -13,36 +13,61 @@
       "image_id": "3floor",
       "text": "Ron: *wizardName*, presto! Nascondiamoci dietro quella porta!",
       "options": [
-        { "text": "Torna nel dormitorio, questa è zona proibita", "impact": { "reputazione": 0 }, "next_node": "" },
+        { "text": "Torna nel dormitorio, questa è zona proibita", "impact": { "reputazione": 0 }, "next_node": "dormitory_avoid_dog" },
         { "text": "Segui Ron ed entra nella porta", "impact": { "reputazione": 0 }, "next_node": "alohomora" }
       ]
+    },
+    {
+      "id": "dormitory_avoid_dog",
+      "image_id": "gryffindor_dormitory",
+      "type": "text",
+      "set_flag": { "visited3HeadsDog": false },
+      "text": "",
+      "next_node": "quidditch_role_check"
     },
     {
       "id": "alohomora",
       "image_id": "alohomora", 
       "type": "enigma",
       "enigma_id": "DOOR_QUIZ",
-      "success_node": "banchetto",
-      "fail_node": "smistamento"
+      "set_flag": { "visited3HeadsDog": true },
+      "success_node": "3HeadsDog"
     },
     {
       "id": "3HeadsDog",
       "image_id": "3HeadsDog",
-      "text": "Ahhhhhhhhhhhhh!",
-      "type": "animation",
+      "type": "minigame",
+      "minigame_id": "DOOR_MINIGAME",
       "next_node": "3HeadsDog2"
     },
     {
       "id": "3HeadsDog2",
-      "image_id": "",
+      "image_id": "3HeadsDog2",
       "text": "Ron: Non so se hai notato ma aveva 3 teste!",
       "next_node": "3HeadsDog3"
     },
     {
       "id": "3HeadsDog3",
-      "image_id": "",
+      "image_id": "3HeadsDog3",
       "text": "Hermione: Stava sopra una botola, il che signica che sta facendo la guardia a qualcosa. Ora se non vi dispiace me ne vado a letto.",
       "next_node": "Quiddich"
+    },
+    {
+      "id": "quidditch_role_check",
+      "image_id": "quidditch_pitch",
+      "type": "choice",
+      "options": [
+        {
+          "text": "Vai al campo di Quidditch per l'addestramento",
+          "condition": "isSeeker == true",
+          "next_node": "Quiddich"
+        },
+        {
+          "text": "Vai direttamente alla lezione di Incantesimi",
+          "condition": "isSeeker == false",
+          "next_node": "feather_lessons"
+        }
+      ]
     },
     {
       "id": "Quiddich",
@@ -66,8 +91,7 @@
       "image_id": "feather_quiz", 
       "type": "enigma",
       "enigma_id": "FEATHER_QUIZ",
-      "success_node": "banchetto",
-      "fail_node": "teasing"
+      "success_node": "teasing"
     },
     {
       "id": "teasing",
