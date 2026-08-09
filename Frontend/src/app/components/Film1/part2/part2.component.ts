@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AudioService } from '../../../services/audio.service';
+import { GameDataService } from '../../../services/game-data.service';
 
 export interface StormLetter {
   id: number;              
@@ -38,7 +39,7 @@ interface lightHouseDialogue{
 })
 export class Part2Component implements OnInit { 
 
-  constructor(private router: Router, public audioService : AudioService) { }
+  constructor(private router: Router, public audioService : AudioService, private gameData: GameDataService) { }
 
   actualFase: 'firePlace' | 'lightHouse' | 'diagonAlley' | 'letter' = 'letter';
   letterIsOpen: boolean = false;
@@ -90,6 +91,56 @@ export class Part2Component implements OnInit {
 
   ngOnInit(): void {
     this.startIntroSequence();
+
+    const savedState = this.gameData.getCurrentState();
+
+    switch (savedState.node) {
+      case 'firePlace_completed':
+        this.actualFase = 'firePlace';
+        this.letterIsOpen = false;
+        this.currentfirePlace = 0;
+        this.startfirePlaceDialogue();
+        break;
+
+      case 'lighthouse_fire':
+      this.actualFase = 'lightHouse';
+      this.showlightHouseVideo = false;
+      this.isFirePlaceSolved = true; 
+      this.audioService.startGlobalBackground('rainAndThunder', 0.3);
+      this.currentLinelightHouse = 7; 
+      this.startlightHousePubDialogue();
+      break;
+
+      case 'lighthouse_umbrella':
+        this.actualFase = 'lightHouse';
+        this.showlightHouseVideo = false;
+        this.isFirePlaceSolved = true; 
+        this.isUmbrellaSolved = true;  
+        this.audioService.startGlobalBackground('rainAndThunder', 0.3);
+        this.currentLinelightHouse = 16; 
+        this.startlightHousePubDialogue();
+      break;
+
+      case 'lighthouse_completed':
+        this.actualFase = 'lightHouse';
+        this.showlightHouseVideo = false;
+        this.currentLinelightHouse = 0;
+        this.audioService.startGlobalBackground('rainAndThunder', 0.3);
+        this.startlightHousePubDialogue();
+        break;
+
+      case 'BrickWall_completed':
+        this.actualFase = 'diagonAlley';
+        this.currentLinePub = 0;
+        this.audioService.startGlobalBackground('QueenGhosts', 0.3);
+        this.startPubDialogue();
+        break;
+
+      default:
+        this.actualFase = 'letter';
+        this.gameData.setCurrentNode('part2_letter', 2);
+        break;
+    }
   }
   startIntroSequence() {
     this.audioService.startGlobalBackground('LetTheMysteryUnfold', 0.3); 
@@ -236,76 +287,79 @@ export class Part2Component implements OnInit {
         this.startGameLoop();
       }
 
-      startGameLoop() {
-        if (this.gameInterval) clearInterval(this.gameInterval);
+    startGameLoop() {
+      if (this.gameInterval) clearInterval(this.gameInterval);
 
-        this.gameInterval = setInterval(() => {
-          const haFocus = this.isConcentrazioneActive && this.concentrazioneHarry > 0;
-          const speedModifier = haFocus ? 0.25 : 1.0; 
+      this.gameInterval = setInterval(() => {
+        const haFocus = this.isConcentrazioneActive && this.concentrazioneHarry > 0;
+        const speedModifier = haFocus ? 0.25 : 1.0; 
 
-          if (haFocus) {
-            this.concentrazioneHarry = Math.max(0, this.concentrazioneHarry - 0.6);
-          } else {
-            this.concentrazioneHarry = Math.min(100, this.concentrazioneHarry + 0.3);
-            this.stressVernon = Math.min(100, this.stressVernon + 0.08); 
-          }
-
-          if (this.stressVernon >= 100) {
-            this.endFireplaceGame(false);
-            return;
-          }
-          this.flyingLetters.forEach(letter => {
-            letter.positionX += letter.speedX * speedModifier;
-            letter.positionY += letter.speedY * speedModifier;
-
-            if (letter.positionX <= 0 || letter.positionX >= 92) {
-              letter.speedX = -letter.speedX;
-              letter.positionX = letter.positionX <= 0 ? 0.1 : 91.9;
-            }
-
-            if (letter.positionY <= 0 || letter.positionY >= 90) {
-              letter.speedY = -letter.speedY;
-              letter.positionY = letter.positionY <= 0 ? 0.1 : 89.9;
-            }
-          });
-
-        }, 16);
-      }
-      clickLetter(letter: any) {
-          if (letter.tipo === 'hogwarts') {
-            if (this.gameInterval) clearInterval(this.gameInterval);
-            this.isConcentrazioneActive = false;
-            
-            this.isCatchLetterSolved = true;
-            this.isfirePlaceEnigmaSolved = true;
-            this.flyingLetters = []; 
-
-            setTimeout(() => {
-              this.currentfirePlace =8;
-              this.startfirePlaceDialogue();
-            }, 3000);
-            
-          } else {
-            this.stressVernon = Math.min(100, this.stressVernon + 15);
-          }
+        if (haFocus) {
+          this.concentrazioneHarry = Math.max(0, this.concentrazioneHarry - 0.6);
+        } else {
+          this.concentrazioneHarry = Math.min(100, this.concentrazioneHarry + 0.3);
+          this.stressVernon = Math.min(100, this.stressVernon + 0.08); 
         }
-      
-        toggleLetterFlip() {
-          this.audioService.playSound(''); // Riproduce il suono del flip se necessario
-          this.letterIsFlipped = !this.letterIsFlipped;
+
+        if (this.stressVernon >= 100) {
+          this.endFireplaceGame(false);
+          return;
+        }
+        this.flyingLetters.forEach(letter => {
+          letter.positionX += letter.speedX * speedModifier;
+          letter.positionY += letter.speedY * speedModifier;
+
+          if (letter.positionX <= 0 || letter.positionX >= 92) {
+            letter.speedX = -letter.speedX;
+            letter.positionX = letter.positionX <= 0 ? 0.1 : 91.9;
+          }
+
+          if (letter.positionY <= 0 || letter.positionY >= 90) {
+            letter.speedY = -letter.speedY;
+            letter.positionY = letter.positionY <= 0 ? 0.1 : 89.9;
+          }
+        });
+
+      }, 16);
+    }
+    clickLetter(letter: any) {
+        if (letter.tipo === 'hogwarts') {
+          if (this.gameInterval) clearInterval(this.gameInterval);
+          this.isConcentrazioneActive = false;
+
+          this.gameData.setCurrentNode('firePlace_completed', 2);
+          
+          this.isCatchLetterSolved = true;
+          this.isfirePlaceEnigmaSolved = true;
+          this.flyingLetters = []; 
 
           setTimeout(() => {
-            this.letterIsOpen = false;
-            this.actualFase = 'firePlace';
+            this.currentfirePlace =8;
             this.startfirePlaceDialogue();
-          }, 1000);
-          }
+          }, 3000);
+          
+        } else {
+          this.stressVernon = Math.min(100, this.stressVernon + 15);
+        }
+    }
+      
+    toggleLetterFlip() {
+      this.audioService.playSound(''); // Riproduce il suono del flip se necessario
+      this.letterIsFlipped = !this.letterIsFlipped;
+
+      setTimeout(() => {
+        this.letterIsOpen = false;
+        this.actualFase = 'firePlace';
+        this.startfirePlaceDialogue();
+      }, 1000);
+      }
 
       endFireplaceGame(isVictory: boolean) {
           if (this.gameInterval) clearInterval(this.gameInterval);
           this.isConcentrazioneActive = false;
 
           if (isVictory) {
+            this.gameData.setCurrentNode('firePlace_completed', 2);
             this.isCatchLetterSolved = true;
             this.isfirePlaceEnigmaSolved = true; 
             this.flyingLetters = [];
@@ -422,7 +476,7 @@ export class Part2Component implements OnInit {
       },
       { 
         character : '',
-        image: "assets/img/Part2/DudleyNotTrasformed.png.png", 
+        image: "assets/img/Part2/DudleyNotTrasformed.png", 
         text : "" 
       },
       { 
@@ -468,108 +522,112 @@ export class Part2Component implements OnInit {
             }, 3000);
     }
 
-      onDoorClick() {
-        if (this.currentLinelightHouse === 1 && this.doorClicks < 6) {
-          this.doorClicks++;
-          this.audioService.playSound('PunchingDoor');
+    onDoorClick() {
+      if (this.currentLinelightHouse === 1 && this.doorClicks < 6) {
+        this.doorClicks++;
+        this.audioService.playSound('PunchingDoor');
 
-          this.isDoorVibrating = true;
-
-          setTimeout(() => {
-                this.isDoorVibrating = false;
-              }, 150); 
-
-          if (this.doorClicks === 6) { 
-            this.audioService.playSound('');
-            this.currentLinelightHouse++;
-            this.startlightHousePubDialogue();
-          }
-        }
-      }
-      useFireplaceItem(item: 'wood' | 'oil' | 'match' | 'wetNews') {
-          if (this.isFirePlaceSolved) return;
-          this.userFireplaceSequence.push(item);
-          
-          this.audioService.playSound('switchOnOff'); 
-
-          if (this.userFireplaceSequence.length === 2) {
-            
-            const isSequenceCorrect = this.userFireplaceSequence[0] === this.correctFireplaceSequence[0] &&
-                                      this.userFireplaceSequence[1] === this.correctFireplaceSequence[1];
-
-            if (isSequenceCorrect) {
-              this.isFirePlaceSolved = true;
-              this.audioService.playSound('fireOn'); 
-              this.userFireplaceSequence = []; 
-              
-              this.currentLinelightHouse = 7;
-              this.startlightHousePubDialogue();
-            } else {
-              this.audioService.playSound('fireFailed'); 
-              this.showSmoke = true;
-              this.userFireplaceSequence = []; 
-
-              setTimeout(() => {
-                this.showSmoke = false;
-              }, 2500);
-            }
-          }
-        }
-      startUmbrellaGame() {
-          this.isUmbrellaGameActive = true;
-          this.cursorPosition = 0;
-          this.cursorDirection = 1;
-
-          this.umbrellaInterval = setInterval(() => {
-            this.cursorPosition += 3 * this.cursorDirection; 
-
-            if (this.cursorPosition >= 100) {
-              this.cursorPosition = 100;
-              this.cursorDirection = -1; 
-            } else if (this.cursorPosition <= 0) {
-              this.cursorPosition = 0;
-              this.cursorDirection = 1; 
-            }
-          }, 10);
-        }
-      onUmbrellaShoot() {
-        if (!this.isUmbrellaGameActive || this.isUmbrellaSolved) return;
-
-        const minWinZone = 40;
-        const maxWinZone = 60;
-
-        if (this.cursorPosition >= minWinZone && this.cursorPosition <= maxWinZone) {
-          clearInterval(this.umbrellaInterval);
-          this.isUmbrellaGameActive = false;
-          this.isUmbrellaSolved = true;
-          
-          this.isDudleyTransformed = true;
-          this.audioService.playSound('magic_shoot'); 
-          console.log(this.isDudleyTransformed);
-          this.currentLinelightHouse = 15;
-
-          setTimeout(() => {
-            this.currentLinelightHouse = 16; 
-            this.audioService.playSound('pig_squeak'); 
-          }, 1000);
+        this.isDoorVibrating = true;
 
         setTimeout(() => {
-            this.isDudleyTransformed = false; 
-            this.currentLinelightHouse = 17; 
-          }, 1500);
-      } else {
-      this.audioService.playSound('spark_fail'); 
+              this.isDoorVibrating = false;
+            }, 150); 
+
+        if (this.doorClicks === 6) { 
+          this.audioService.playSound('');
+          this.currentLinelightHouse++;
+          this.startlightHousePubDialogue();
+        }
+      }
     }
+    useFireplaceItem(item: 'wood' | 'oil' | 'match' | 'wetNews') {
+        if (this.isFirePlaceSolved) return;
+        this.userFireplaceSequence.push(item);
+        
+        this.audioService.playSound('switchOnOff'); 
+
+        if (this.userFireplaceSequence.length === 2) {
+          
+          const isSequenceCorrect = this.userFireplaceSequence[0] === this.correctFireplaceSequence[0] &&
+                                    this.userFireplaceSequence[1] === this.correctFireplaceSequence[1];
+
+          if (isSequenceCorrect) {
+            this.gameData.setCurrentNode('lighthouse_fire', 2);
+
+            this.isFirePlaceSolved = true;
+            this.audioService.playSound('fireOn'); 
+            this.userFireplaceSequence = []; 
+            
+            this.currentLinelightHouse = 7;
+            this.startlightHousePubDialogue();
+          } else {
+            this.audioService.playSound('fireFailed'); 
+            this.showSmoke = true;
+            this.userFireplaceSequence = []; 
+
+            setTimeout(() => {
+              this.showSmoke = false;
+            }, 2500);
+          }
+        }
+    }
+    startUmbrellaGame() {
+      this.isUmbrellaGameActive = true;
+      this.cursorPosition = 0;
+      this.cursorDirection = 1;
+
+      this.umbrellaInterval = setInterval(() => {
+        this.cursorPosition += 3 * this.cursorDirection; 
+
+        if (this.cursorPosition >= 100) {
+          this.cursorPosition = 100;
+          this.cursorDirection = -1; 
+        } else if (this.cursorPosition <= 0) {
+          this.cursorPosition = 0;
+          this.cursorDirection = 1; 
+        }
+      }, 10);
+    }
+    onUmbrellaShoot() {
+      if (!this.isUmbrellaGameActive || this.isUmbrellaSolved) return;
+
+      const minWinZone = 40;
+      const maxWinZone = 60;
+
+      if (this.cursorPosition >= minWinZone && this.cursorPosition <= maxWinZone) {
+        clearInterval(this.umbrellaInterval);
+        this.isUmbrellaGameActive = false;
+        this.isUmbrellaSolved = true;
+        
+        this.isDudleyTransformed = true;
+        this.audioService.playSound('magic_shoot'); 
+        console.log(this.isDudleyTransformed);
+        this.currentLinelightHouse = 15;
+
+        setTimeout(() => {
+          this.gameData.setCurrentNode('lighthouse_umbrella', 2);
+          this.currentLinelightHouse = 16; 
+          this.audioService.playSound('pig_squeak'); 
+        }, 1000);
+
+      setTimeout(() => {
+          this.isDudleyTransformed = false; 
+          this.currentLinelightHouse = 17; 
+        }, 1500);
+    } else {
+    this.audioService.playSound('spark_fail'); 
+  }
     }
 
-      followHagrid(){
-        this.actualFase= 'diagonAlley';
-        this.audioService.startGlobalBackground('QueenGhosts', 0.3);
-        setTimeout(()=>{
-          this.startPubDialogue();
-        },1000)
-        
-        }
+  followHagrid(){
+    this.gameData.setCurrentNode('lighthouse_completed', 2);
+    this.actualFase= 'diagonAlley';
+    this.audioService.startGlobalBackground('QueenGhosts', 0.3);
+    setTimeout(()=>{
+      this.startPubDialogue();
+    },1000)
+    
+    }
  
   /***************** DIAGON ALLEY ************************ */
   script2 : pubDialogue[] = [
@@ -643,6 +701,7 @@ export class Part2Component implements OnInit {
     }
 
   onVideoEnded(): void {
+    this.gameData.setCurrentNode('BrickWall_completed', 2);
     this.router.navigate(['/part3']); 
   }
 

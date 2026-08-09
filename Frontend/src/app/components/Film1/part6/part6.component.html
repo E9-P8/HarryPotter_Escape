@@ -25,15 +25,33 @@
         <div class="image-wrapper">
           <img
             class="Part6-img"
+            [ngClass]="bgAnimationClass"
             [src]="
               actualPhase.image_id
-                ? '../../../../assets/img/Part5/' +
+                ? '../../../../assets/img/Part6/' +
                   actualPhase.image_id +
                   '.png'
                 : 'assets/img/default.png'
             "
             alt="Scena"
           />
+
+          <!-- Scale -->
+          <img
+            *ngIf="
+              actualPhase.id === 'Griffindor_3floor' ||
+              actualPhase.id === 'Forbidden_3floor'
+            "
+            src="../../../../assets/img/Part6/stairs.png"
+            class="stairs"
+            [ngClass]="stairAnimationClass"
+          />
+          <svg style="display: none">
+            <filter id="horizontal-motion-blur">
+              <!-- stdDeviation="30,0" significa: 30px di sfocatura orizzontale (X), 0px verticale (Y) -->
+              <feGaussianBlur stdDeviation="35, 0" />
+            </filter>
+          </svg>
         </div>
       </div>
       <div
@@ -51,12 +69,14 @@
           class="options-area"
           *ngIf="!actualPhase.type && actualPhase.options"
         >
-          <button
-            *ngFor="let opt of actualPhase.options"
-            (click)="manageChoice(opt)"
-          >
-            {{ opt.text }}
-          </button>
+          <ng-container *ngFor="let opt of actualPhase.options">
+            <button
+              *ngIf="checkCondition(opt.condition)"
+              (click)="manageChoice(opt)"
+            >
+              {{ opt.text }}
+            </button>
+          </ng-container>
         </div>
       </div>
 

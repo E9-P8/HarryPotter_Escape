@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { AudioService } from '../../../services/audio.service';
+import { GameDataService } from '../../../services/game-data.service';
 
 interface GringottDialogue{
   character : string;
@@ -25,7 +26,7 @@ interface GringottDialogue{
 })
 export class Part3Component implements OnInit {
 
-  constructor(private router: Router, public audioService : AudioService) { }
+  constructor(private router: Router, private gameData: GameDataService, public audioService : AudioService) { }
 
   currentLinebroom = 0;
   isbroomDialogueEnd: boolean = false;
@@ -72,6 +73,40 @@ export class Part3Component implements OnInit {
   ngOnInit(): void {
     this.startIntroSequence();
     this.startbroomDialogue();
+
+    const savedState = this.gameData.getCurrentState();
+
+    if (savedState.parte === 3) {
+      switch (savedState.node) {
+
+        case 'ollivander_completed':
+        case 'gringott_completed':
+          // L'utente ha superato Gringott (o completato Ollivander): parte da Ollivander
+          this.actualFase = 'Ollivander';
+          this.audioService.startGlobalBackground('rainAndThunder', 0.3);
+          this.currentLineOllivander = 0;
+          this.startOllivanderDialogue();
+          break;
+
+        case 'broom_completed':
+          // L'utente ha superato Diagon Alley/Broom: parte da Gringott
+          this.actualFase = 'Gringott';
+          this.audioService.startGlobalBackground('rainAndThunder', 0.3);
+          this.currentLineGringott = 0;
+          this.startGringottDialogue();
+          break;
+
+        default:
+          // Inizio Parte 3: Broom / Diagon Alley
+          this.actualFase = 'broom';
+          this.startbroomDialogue();
+          break;
+      }
+    } else {
+      // Default se la parte non coincide
+      this.actualFase = 'broom';
+      this.startbroomDialogue();
+    }
   }
   startIntroSequence() {
     this.audioService.startGlobalBackground('LetTheMysteryUnfold', 0.3); 
@@ -115,6 +150,7 @@ export class Part3Component implements OnInit {
             }, 3000);
     }
     EnterGringott(){
+      this.gameData.setCurrentNode('broom_completed', 3);
       this.actualFase= 'Gringott';
       this.audioService.startGlobalBackground('rainAndThunder', 0.3);
 
@@ -396,6 +432,7 @@ export class Part3Component implements OnInit {
       this.startGringottDialogue();
     }
     EnterOllivander(){
+    this.gameData.setCurrentNode('gringott_completed', 3);
     this.actualFase= 'Ollivander';
     this.audioService.startGlobalBackground('rainAndThunder', 0.3);
 
@@ -481,6 +518,7 @@ export class Part3Component implements OnInit {
        this.isBox3Clicked = false;
     }
     clickBox4(){
+      this.gameData.setCurrentNode('ollivander_completed', 3);
       this.isEnigmaBoxSolved = true;
       this.currentLineOllivander = 4; 
       this.startOllivanderDialogue();

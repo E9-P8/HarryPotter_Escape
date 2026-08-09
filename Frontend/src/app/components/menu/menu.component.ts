@@ -127,12 +127,14 @@ ngOnInit(): void {
   startGame(){
    
   if (this.wizardName && this.wizardName.trim() !== '') {
-    this.gameData.wizardName = this.wizardName;
+    this.gameData.setWizardName(this.wizardName);
     this.gameData.currentWelcomeStep = 1; 
     this.router.navigate(['/welcome']);   
   } else {
     alert("Devi inserire il tuo nome per iniziare l'avventura!");
   }
    }
+  
+   
 
 }

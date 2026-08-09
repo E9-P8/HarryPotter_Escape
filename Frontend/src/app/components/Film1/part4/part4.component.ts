@@ -147,7 +147,39 @@ private winWindowTimer: number = 0;
 
     const name = this.gameData.wizardName;
     this.script1[3].text += name;
+    const savedState = this.gameData.getCurrentState();
     
+    if (savedState.parte === 4) {
+    switch (savedState.node) {
+      
+      case 'wagon_completed':
+        // L'utente ha superato la stazione e il vagone: parte dal Lago (dialoghi compresi)
+        this.actualFase = 'Lake';
+        this.audioService.startGlobalBackground('rainAndThunder', 0.3);
+        this.currentLineLake = 0;
+        this.startLakeDialogue();
+        break;
+
+      case 'station_completed':
+        // L'utente ha superato la stazione: parte dal Vagone (dialoghi compresi)
+        this.actualFase = 'Wagon';
+        this.audioService.startGlobalBackground('rainAndThunder', 0.3);
+        this.currentLineWagon = 0;
+        this.startWagonDialogue();
+        break;
+
+      default:
+        // Nessun enigma superato o prima volta nella Parte 4: parte dall'inizio
+        this.actualFase = 'Station';
+        this.currentLineStation = 0;
+        this.startStationDialogue();
+        break;
+    }
+  } else {
+    this.actualFase = 'Station';
+    this.currentLineStation = 0;
+    this.startStationDialogue();
+  }
   }
   ngOnDestroy() {
   if (this.animationFrameId) {
@@ -306,6 +338,7 @@ onWallClick(){
     this.isHarryAdvancing = true;
 
     this.isFlashActive = true; 
+    this.gameData.setCurrentNode('station_completed', 4);
 
       setTimeout(()=> {
         this.isFlashActive = false;
@@ -521,6 +554,7 @@ for (let i = 0; i < dropZones.length; i++) {
   this.isOrderCorrect = this.placedItems.every((item, index) => item === this.correctOrder[index]);
   
   if (this.isOrderCorrect) {
+    this.gameData.setCurrentNode('wagon_completed', 4);
     this.currentLineWagon++; 
      this.startWagonDialogue(); 
   } else {
@@ -732,8 +766,9 @@ gameLoop = (timestamp: number) => {
   stopMoving() { this.movingDir = null; }
 
   onCastleVideoEnded(): void {
-      this.showCastleVideo = true;   
-      this.router.navigate(['/part5']); 
+    this.gameData.setCurrentNode('part4_completed', 4);
+    this.showCastleVideo = true;   
+    this.router.navigate(['/part5']); 
     }
   
 } 

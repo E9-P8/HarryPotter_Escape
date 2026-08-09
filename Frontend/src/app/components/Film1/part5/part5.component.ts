@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AudioService } from '../../../services/audio.service';
-import { GameDataService } from '../../../services/game-data.service'
+import { GameDataService } from '../../../services/game-data.service';
 import { Router } from '@angular/router';
 
 
@@ -44,7 +44,25 @@ export class Part5Component implements OnInit {
   loadPart() {
     this.http.get('assets/data/part_5.json').subscribe(data => {
       this.Data = data;
-      this.actualPhase = this.Data.nodes[0];
+     // this.actualPhase = this.Data.nodes[0];
+        
+      if (this.Data && this.Data.nodes && this.Data.nodes.length > 0) {
+
+        const savedNodeId = this.gameService.getCurrentNodeId();
+        const savedNode = this.Data.nodes.find((n: any) => n.id === savedNodeId);
+
+        if (savedNode) {
+        // Riparte dal nodo salvato
+        this.actualPhase = JSON.parse(JSON.stringify(savedNode));
+        } else {
+          // Se non c'è un nodo salvato valido, parte dal primo
+          this.actualPhase = JSON.parse(JSON.stringify(this.Data.nodes[0]));
+        }
+        if (this.actualPhase.type === 'animation') {
+        this.handleAnimation(this.actualPhase.id);
+        }
+
+      }
     });
   }
   updateTextWithWizardName(text: string): string {
@@ -66,27 +84,30 @@ export class Part5Component implements OnInit {
   }
 
   if (option && option.set_flag && option.set_flag.isSeeker !== undefined) {
-    this.gameService.isSeeker = option.set_flag.isSeeker;
+    this.gameService.setFlag('isSeeker', option.set_flag.isSeeker);
   }
 
   if (nextNodeId === 'part_6' || nextNodeId === '/part6') {
-    console.log(this.gameService.isSeeker);
+   // console.log(this.gameService.isSeeker);
     this.router.navigate(['/part6']);
     return;
   }
 
   if (nextNode) {
-    this.actualPhase = nextNode; 
+    //this.actualPhase = nextNode; 
+    this.actualPhase = JSON.parse(JSON.stringify(nextNode));
+    this.gameService.setCurrentNode(this.actualPhase.id, 5);
 
     if (this.actualPhase.text) {
       this.actualPhase.text = this.actualPhase.text.replace('*wizardName*', this.gameService.wizardName);
     }
 
     if (this.actualPhase.id === 'mcgranitt_baston') {
-      this.gameService.isSeeker = true;
+      this.gameService.setFlag('isSeeker', true);
     }
+    const isSeeker = this.gameService.getFlag('isSeeker');
 
-    if (this.actualPhase.id === 'QuidditchTrophy' && this.gameService.isSeeker) {
+    if (this.actualPhase.id === 'QuidditchTrophy' && isSeeker) {
       this.actualPhase.options = [];
       setTimeout(() => {
         this.manageChoice({ next_node: 'part_6' });
@@ -99,7 +120,7 @@ export class Part5Component implements OnInit {
       return;
     }
 
-    const isQuidditchAutoAdvance = (this.actualPhase.id === 'QuidditchTrophy' && this.gameService.isSeeker);
+    const isQuidditchAutoAdvance = (this.actualPhase.id === 'QuidditchTrophy' && this.gameService.getFlag('isSeeker'));
     const hasNoOptions = !this.actualPhase.options || this.actualPhase.options.length === 0;
 
     if ((hasNoOptions || isQuidditchAutoAdvance) && this.actualPhase.next_node) {
@@ -229,7 +250,7 @@ export class Part5Component implements OnInit {
 
 
 
-  isAlreadySeeker(): boolean {
+isAlreadySeeker(): boolean {
   return this.gameService.getFlag("isSeeker");
 }
 

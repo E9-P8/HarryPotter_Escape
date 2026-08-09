@@ -3,6 +3,7 @@ export interface GameStats {
   reputazione: number;
   sospetto: number;
   sincerita: number;
+  amicizia: number;
 }
 
 export interface GameState {

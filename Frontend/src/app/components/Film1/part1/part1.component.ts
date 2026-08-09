@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AudioService } from '../../../services/audio.service';
+import { GameDataService } from '../../../services/game-data.service';
 
 interface kitchenDialogue{
   character : string;
@@ -22,7 +23,7 @@ interface kitchenDialogue{
 export class Part1Component implements OnInit {
 
 
-  constructor(private router: Router, public audioService : AudioService) { }
+  constructor(private router: Router, public audioService : AudioService, private gameData: GameDataService) { }
 
   @ViewChild('roomViewport') roomViewport!: ElementRef;
 
@@ -60,6 +61,54 @@ export class Part1Component implements OnInit {
 
   ngOnInit(): void {
     this.startIntroSequence();
+
+    const savedState = this.gameData.getCurrentState();
+
+    switch (savedState.node) {
+      case 'room_completed':
+        this.actualFase = 'kitchen';
+        this.audioService.startGlobalBackground('wizard', 0.1);
+        this.currentLineKitchen = 0;
+        this.startDialogue();
+        break;
+
+      case 'timer_completed':
+        this.actualFase = 'reptiles';
+        this.isEnigmaSolved = true;
+        this.audioService.startGlobalBackground('forest', 0.3);
+        this.currentLineReptiles = 0;
+        this.startReptilesDialogue();
+        break;
+
+      case 'snakeTalk_solved':
+        this.actualFase = 'reptiles';
+        this.isEnigmaSolved = true;
+        this.isReptilesEnigmaSolved = true;
+        this.currentLineReptiles = 5; // Riprende dopo la risposta del serpente
+        this.audioService.startGlobalBackground('forest', 0.3);
+        this.startReptilesDialogue();
+        break;
+
+      case 'glassBroken_completed':
+        this.actualFase = 'reptiles';
+        this.isEnigmaSolved = true;
+        this.isReptilesEnigmaSolved = true;
+        this.glassClicks = 10;
+        this.currentLineReptiles = 7; // Riprende dopo la rottura del vetro
+        this.audioService.startGlobalBackground('forest', 0.3);
+        this.startReptilesDialogue();
+        break;
+
+      case 'part1_completed':
+        this.router.navigate(['/part2']);
+        break;
+
+      default:
+        this.actualFase = 'understairs';
+        this.gameData.setCurrentNode('part1_understairs', 1);
+        this.startIntroSequence();
+        break;
+    }
   } 
 
   startIntroSequence() {
@@ -117,6 +166,7 @@ export class Part1Component implements OnInit {
     this.isRoomIlluminated = true;
   }
   openDoor(){
+    this.gameData.setCurrentNode('room_completed', 1);
     if(this.isRoomIlluminated === true ){
       this.audioService.playSound('doorOpening'); 
         setTimeout(() => {
@@ -208,6 +258,7 @@ export class Part1Component implements OnInit {
    }
   checkCode(){ 
     if (this.digit1 == 3 && this.digit2 == 7 && this.digit3 == 2 && this.digit4 == 8) {
+      this.gameData.setCurrentNode('timer_completed', 1);
       this.isEnigmaSolved = true;
       this.audioService.stopSound('kitchenTimer1');
       this.audioService.playSound('kitchenTimer2');
@@ -293,7 +344,7 @@ export class Part1Component implements OnInit {
   startReptilesDialogue(){
     if(this.currentLineReptiles >= this.script2.length){
       this.isReptilesDialogueEnd = true;
-
+      this.gameData.setCurrentNode('part1_completed', 1);
        setTimeout(()=>{ 
             this.router.navigate(['/part2']);
           }, 3000)
@@ -334,6 +385,7 @@ export class Part1Component implements OnInit {
     } 
 
     solveReptilesEnigma() {
+      this.gameData.setCurrentNode('snakeTalk_solved', 1);
       this.isReptilesEnigmaSolved = true;
       console.log("Enigma risolto! Il dialogo del rettilario riprende.");
       
@@ -348,6 +400,7 @@ export class Part1Component implements OnInit {
         if (this.glassClicks === 10) { 
           this.audioService.playSound('breaking_glass');
           this.currentLineReptiles++;
+          this.gameData.setCurrentNode('glassBroken_completed', 1);
           this.startReptilesDialogue();
         }
       }

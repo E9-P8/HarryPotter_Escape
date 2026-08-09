@@ -2,27 +2,27 @@
   "part_id": 6,
   "nodes": [
     {
-      "id": "stairs",
-      "image_id": "stairs",
+      "id": "Griffindor_3floor",
+      "image_id": "Griffindor_3floor",
       "text": "Hermione: alle scale piace cambiare... ricordate?",
       "type": "animation",
-      "next_node": "3floor"
+      "next_node": "Forbidden_3floor"
     },
     {
-      "id": "3floor",
-      "image_id": "3floor",
+      "id": "Forbidden_3floor",
+      "image_id": "Forbidden_3floor",
       "text": "Ron: *wizardName*, presto! Nascondiamoci dietro quella porta!",
       "options": [
         { "text": "Torna nel dormitorio, questa è zona proibita", "impact": { "reputazione": 0 }, "next_node": "dormitory_avoid_dog" },
         { "text": "Segui Ron ed entra nella porta", "impact": { "reputazione": 0 }, "next_node": "alohomora" }
       ]
-    },
+    }, 
     {
       "id": "dormitory_avoid_dog",
       "image_id": "gryffindor_dormitory",
       "type": "text",
       "set_flag": { "visited3HeadsDog": false },
-      "text": "",
+      "text": "Per fortuna non ci hanno scoperto! Chissa' cosa c'è dietro quella porta ...",
       "next_node": "quidditch_role_check"
     },
     {
@@ -31,11 +31,23 @@
       "type": "enigma",
       "enigma_id": "DOOR_QUIZ",
       "set_flag": { "visited3HeadsDog": true },
-      "success_node": "3HeadsDog"
+      "success_node": "Gazza"
+    },
+    {
+      "id": "Gazza",
+      "image_id": "Gazza",
+      "type": "text",
+      "next_node": "3HeadsDog"
     },
     {
       "id": "3HeadsDog",
       "image_id": "3HeadsDog",
+      "type": "text",
+      "next_node": "3HeadsDog2"
+    },
+    {
+      "id": "3HeadsDog_minigame",
+      "image_id": "3HeadsDog_minigame",
       "type": "minigame",
       "minigame_id": "DOOR_MINIGAME",
       "next_node": "3HeadsDog2"
@@ -50,12 +62,12 @@
       "id": "3HeadsDog3",
       "image_id": "3HeadsDog3",
       "text": "Hermione: Stava sopra una botola, il che signica che sta facendo la guardia a qualcosa. Ora se non vi dispiace me ne vado a letto.",
-      "next_node": "Quiddich"
+      "next_node": "quidditch_role_check"
     },
     {
       "id": "quidditch_role_check",
-      "image_id": "quidditch_pitch",
-      "type": "choice",
+      "image_id": "quidditch_role_check",
+      "text":"Andiamo, altrimenti faremo tardi",
       "options": [
         {
           "text": "Vai al campo di Quidditch per l'addestramento",
@@ -66,23 +78,23 @@
           "text": "Vai direttamente alla lezione di Incantesimi",
           "condition": "isSeeker == false",
           "next_node": "feather_lessons"
-        }
+        } 
       ]
     },
     {
       "id": "Quiddich",
-      "image_id": "",
+      "image_id": "Quiddich",
       "text": "Bastion: il quiddich è facile da capire. Ogni squadra ha 7 giocatori, 3 cacciatori, 2 battitori, 1 portiere e un cercatore, che saresti tu.",
       "next_node": "Quiddich_balls"
     },
     {
       "id": "Quiddich_balls",
-      "image_id": "",
+      "image_id": "Quiddich_balls",
       "next_node": "feather_lessons"
     },
     {
       "id": "feather_lessons",
-      "image_id": "",
+      "image_id": "feather_lessons",
       "text": "Professore: Una delle abilità piu rudimentali di un mago è la levitazione. Avete tutti le vostre piume. Non dimenticate il bel movimento di polso che abbiamo provato, agitare e colpire.",
       "next_node": "feather_quiz"
     },

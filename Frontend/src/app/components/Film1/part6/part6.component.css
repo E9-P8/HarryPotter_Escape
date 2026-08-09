@@ -32,7 +32,6 @@
 .audio-toggle-btn.muted {
     opacity: 0.25;
 }
-
 .Part6-container {
     position: relative;
     width: 100vw;
@@ -40,7 +39,6 @@
     overflow: hidden;
     background-color: #000;
 }
-
 .Part6-viewport,
 .Part6-view {
     width: 100%;
@@ -49,27 +47,27 @@
     top: 0;
     left: 0;
 }
-
 .image-wrapper {
     position: relative;
     width: 100%;
     height: 100%;
 }
-
 .Part6-img {
     width: 100%;
     height: 100%;
     object-fit: fill;
     display: block;
     z-index: 1;
-}
 
+    will-change: transform, filter;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+}
 .dialogue-box,
 .options-area {
     margin: 0;
     box-sizing: border-box;
 }
-
 .dialogue-box {
     position: absolute;
     bottom: 10px;
@@ -92,13 +90,11 @@
     flex-direction: column;
     justify-content: flex-start;
 }
-
 .dialog-text {
     flex: 1;
     color: #fff2b9;
     text-align: center;
 }
-
 .options-area {
     bottom: 100px;
     left: 50%;
@@ -107,7 +103,6 @@
     justify-content: center;
     gap: 30px;
 }
-
 .options-area button {
     background-color: #29251645;
     color: #fffcf4;
@@ -120,19 +115,16 @@
     transition: all 0.3s ease;
     text-transform: uppercase;
 }
-
 .options-area button:hover {
     background-color: #33312645;
     color: #ffffff;
     box-shadow: 0 0 10px rgba(216, 186, 87, 0.5);
     transform: translateY(-2px);
 }
-
 .options-area button:active {
     transform: translateY(0);
     background-color: #1a1209;
 }
-
 .manual {
     position: fixed;
     top: 35px;
@@ -155,7 +147,106 @@
     transition: transform 0.3s ease, opacity 0.3s ease;
     opacity: 1;
 }
-
 .manual:hover {
     transform: scale(1.10);
+}
+
+.Part6-img.bg-glitch-out {
+    animation: bgWhipPanOut 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    z-index: 1;
+}
+
+.Part6-img.bg-glitch-in {
+    animation: bgWhipPanIn 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    z-index: 2;
+}
+
+
+@keyframes bgWhipPanOut {
+    0% {
+        filter: none;
+        opacity: 1;
+    }
+
+    50% {
+        filter: url('#horizontal-motion-blur');
+        opacity: 1;
+    }
+
+    100% {
+        filter: url('#horizontal-motion-blur');
+        opacity: 1;
+        /* RESTA VISIBILE AL 100%: elimina lo schermo nero */
+    }
+}
+
+@keyframes bgWhipPanIn {
+    0% {
+        filter: url('#horizontal-motion-blur');
+        opacity: 0;
+        /* Parte trasparente sopra l'immagine 1 */
+    }
+
+    50% {
+        filter: url('#horizontal-motion-blur');
+        opacity: 0.6;
+        /* Inizia a mostrare l'immagine 2 mentre è ancora a righe */
+    }
+
+    100% {
+        filter: none;
+        opacity: 1;
+        /* Diventa totalmente opaca e nitida */
+    }
+}
+.stairs {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 2s ease-in-out;
+    z-index: 2;
+    width: 110%;
+}
+.stairs.slide-out-right {
+    transform: translate(200%, -50%);
+}
+.stairs.slide-in-left {
+    animation: slideInFromLeft 1.5s ease-in-out forwards;
+}
+@keyframes slideInFromLeft {
+    0% {
+        transform: translate(-250%, -50%);
+    }
+
+    100% {
+        transform: translate(-50%, -50%);
+    }
+}
+
+
+
+
+
+@media screen and (max-width: 932px) and (orientation: landscape) {
+
+    .dialogue-box {
+        width: 80%;
+    }
+
+    .dialog-text {
+        font-size: 0.7rem;
+        line-height: 1;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .options-area button {
+        font-size: 0.6rem;
+        padding: 3px 10px;
+    }
 }
