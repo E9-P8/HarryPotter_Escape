@@ -24,6 +24,7 @@ import { PuzzleFrameComponent } from './components/enigma-container/puzzle-frame
 import { EnigmaBroomComponent } from './components/enigma-container/enigma-broom/enigma-broom.component';
 import { MinigameHubComponent } from './components/minigame-container/minigame-hub/minigame-hub.component';
 import { SphereMinigameComponent } from './components/minigame-container/sphere-minigame/sphere-minigame.component';
+import { EnigmaDoorComponent } from './components/enigma-container/enigma-door/enigma-door.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { SphereMinigameComponent } from './components/minigame-container/sphere-
     PuzzleFrameComponent,
     EnigmaBroomComponent,
     MinigameHubComponent,
-    SphereMinigameComponent
+    SphereMinigameComponent,
+    EnigmaDoorComponent
   ],
   imports: [
     BrowserModule,

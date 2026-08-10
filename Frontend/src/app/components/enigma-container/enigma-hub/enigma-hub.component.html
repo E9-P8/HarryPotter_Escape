@@ -10,3 +10,6 @@
   *ngIf="enigmaId === 'ENIGMA_SCOPA'"
   (quizSolved)="onQuizSolved($event)"
 ></app-enigma-broom>
+<app-enigma-door>
+  *ngIf="enigmaId === 'DOOR_QUIZ'" (quizSolved)="onQuizSolved($event)"
+</app-enigma-door>

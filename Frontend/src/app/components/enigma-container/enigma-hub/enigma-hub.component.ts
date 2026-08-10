@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SortingHatComponent } from '../sorting-hat/sorting-hat.component';
 import { PuzzleFrameComponent } from '../puzzle-frame/puzzle-frame.component';
 import { EnigmaBroomComponent } from '../enigma-broom/enigma-broom.component';
+import { EnigmaDoorComponent } from '../enigma-door/enigma-door.component';
 
 @Component({
   selector: 'app-enigma-hub',
@@ -25,6 +26,7 @@ export class EnigmaHubComponent implements OnInit {
       case 'QUIZ_CASA': return SortingHatComponent;
       case 'QUIZ_FRAME': return PuzzleFrameComponent;
       case 'ENIGMA_SCOPA': return EnigmaBroomComponent;
+      case 'DOOR_QUIZ': return EnigmaDoorComponent;
       default: return null;
     }
   }

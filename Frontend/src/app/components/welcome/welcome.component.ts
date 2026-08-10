@@ -36,6 +36,10 @@ export class WelcomeComponent implements OnInit {
     this.isLensOpen = false;
     this.isLensTransited= true;
     this.audioService.playSound('timeMachine');
+
+    this.gameData.wizardName = this.wizardPlayerName;
+    this.gameData.setCurrentNode('intro_started', 1);
+
     setTimeout(()=>{
       this.audioService.stopSound('timeMachine');
       this.router.navigate(['/intro']);

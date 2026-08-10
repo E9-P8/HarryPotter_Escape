@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AudioService } from '../../services/audio.service';
+import { GameDataService } from '../../services/game-data.service';
 
 interface introDialogue{
   character : string;
@@ -93,12 +94,30 @@ export class IntroComponent implements OnInit {
     }
   ]
 
-  constructor(private router: Router, public audioService: AudioService) { }
+  constructor(private router: Router, private gameData: GameDataService, public audioService: AudioService) { }
 
   toggleAudio(): void {
   this.audioService.toggleGlobalMute(0.2);
 }
   ngOnInit(): void {
+  const savedState = this.gameData.getCurrentState();
+
+  // 1. Se ha già COMPLETATO l'intro o si trova nelle parti successive va avanti
+  if (savedState && (savedState.parte > 1 || savedState.node === 'intro_completed')) {
+    const targetPart = savedState.parte || 1;
+    this.router.navigate([`/part${targetPart}`]);
+    return;
+  }
+
+  // 2. Se non ha mai salvato nulla, Welcome
+  if (!savedState) {
+    this.router.navigate(['/welcome']);
+    return;
+  }
+
+  // 3. Se si trova qui significa che ha fatto il Welcome (o ha refreshato a metà Intro).
+  this.gameData.setCurrentNode('intro_started', 1);
+
   this.audioService.startGlobalBackground('mistery', 0.2);
 
   setTimeout(() => { 
@@ -126,17 +145,19 @@ turnOffLight(id: number) {
       }, 5000); 
     }
   }
-    nextLine() {
-        if (this.currentLine >= this.script.length - 1) {
-          this.isDialogueEnd = true;
-          this.router.navigate(['/part1']);
-          //this.audioService.muteIntro('intro');
-          return;
-        }
 
-        if (this.currentLine === 0 && !this.isMinigameActive) {
-          
-          }
+nextLine() {
+  if (this.currentLine >= this.script.length - 1) {
+    this.isDialogueEnd = true;
+    this.gameData.setCurrentNode('intro_completed', 1);
+    this.router.navigate(['/part1']);
+    //this.audioService.muteIntro('intro');
+    return;
+  }
+
+  if (this.currentLine === 0 && !this.isMinigameActive) {
+    
+    }
 
  if (this.currentLine === 2) {
   this.isTransforming = true;
