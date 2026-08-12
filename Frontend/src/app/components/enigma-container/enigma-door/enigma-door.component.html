@@ -1,9 +1,139 @@
 <div class="enigma-door-container">
   <div class="door-view">
+    <!--sfondo -->
     <img
-      src="/assets/img/Part6/alohomora.png"
-      alt="Alohomora"
-      class="enigmaDoor-img"
+      src="/assets/img/Part6/room-background.png"
+      alt="Sfondo Stanza"
+      class="room-bg-img"
     />
+
+    <!-- Porta -->
+    <img
+      src="/assets/img/Part6/AlohomoraDoor.png"
+      alt="Porta Alohomora"
+      class="door-img"
+      [class.open]="doorOpening"
+    />
+
+    <!-- Bottone iniziale sulla porta (Scompare quando il gioco inizia) -->
+    <button
+      *ngIf="!gameStarted"
+      class="btn-inspect-door"
+      (click)="startEnigma()"
+    ></button>
+  </div>
+
+  <!-- Modal Iniziale Narrativa -->
+  <div class="intro-modal" *ngIf="gameStarted && showIntroModal">
+    <div class="modal-content">
+      <h2>Meccanismo Magico Inattivo</h2>
+      <p>La serratura è protetta da un antico meccanismo magico.</p>
+      <p>
+        L'energia che alimenta l'incantesimo di apertura è stata interrotta.
+      </p>
+      <p class="highlight">
+        Ripristina il flusso della magia e attraversa tutti i cristalli per
+        usare Alohomora.
+      </p>
+      <button class="btn-magic" (click)="closeIntro()">
+        Sblocca la Serratura
+      </button>
+    </div>
+  </div>
+
+  <!-- Puzzle  -->
+  <div
+    class="puzzle-overlay"
+    *ngIf="gameStarted && !showIntroModal && !showSpellText"
+  >
+    <div class="puzzle-header">
+      <h3>Il Flusso Magico di Alohomora</h3>
+      <p *ngIf="!puzzleSolved">
+        Ruota i condotti per collegare la Sorgente ✨ alla Serratura 🔒 passando
+        dai Cristalli 💎
+      </p>
+      <p *ngIf="puzzleSolved" class="success-text">
+        Il flusso magico è stato ripristinato!
+      </p>
+    </div>
+
+    <!-- Griglia 5x5 -->
+    <div class="grid-container" [class.solved]="puzzleSolved">
+      <div *ngFor="let row of grid; let r = index" class="grid-row">
+        <div
+          *ngFor="let tile of row; let c = index"
+          class="tile"
+          [class.powered]="tile.powered"
+          (click)="rotateTile(r, c)"
+        >
+          <div
+            class="pipe-wrapper"
+            [style.transform]="'rotate(' + tile.rotation + 'deg)'"
+          >
+            <svg viewBox="0 0 100 100" class="pipe-svg">
+              <ng-container *ngIf="tile.type === 'straight'">
+                <line x1="50" y1="0" x2="50" y2="100" class="pipe-bg" />
+                <line x1="50" y1="0" x2="50" y2="100" class="pipe-flow" />
+              </ng-container>
+
+              <ng-container *ngIf="tile.type === 'corner'">
+                <path
+                  d="M 50 0 A 50 50 0 0 1 100 50"
+                  class="pipe-bg"
+                  fill="none"
+                />
+                <path
+                  d="M 50 0 A 50 50 0 0 1 100 50"
+                  class="pipe-flow"
+                  fill="none"
+                />
+              </ng-container>
+
+              <ng-container *ngIf="tile.type === 'source'">
+                <line x1="50" y1="50" x2="100" y2="50" class="pipe-bg" />
+                <line x1="50" y1="50" x2="50" y2="100" class="pipe-bg" />
+                <line x1="50" y1="50" x2="100" y2="50" class="pipe-flow" />
+                <line x1="50" y1="50" x2="50" y2="100" class="pipe-flow" />
+              </ng-container>
+
+              <ng-container *ngIf="tile.type === 'lock'">
+                <line x1="50" y1="0" x2="50" y2="50" class="pipe-bg" />
+                <line x1="0" y1="50" x2="50" y2="50" class="pipe-bg" />
+                <line x1="50" y1="0" x2="50" y2="50" class="pipe-flow" />
+                <line x1="0" y1="50" x2="50" y2="50" class="pipe-flow" />
+              </ng-container>
+            </svg>
+          </div>
+
+          <span
+            *ngIf="tile.type === 'source'"
+            class="icon-indicator source-icon"
+            >✨</span
+          >
+          <span
+            *ngIf="tile.type === 'lock'"
+            class="icon-indicator lock-icon"
+            [class.unlocked]="puzzleSolved"
+            >🔒</span
+          >
+          <span
+            *ngIf="tile.isCrystal"
+            class="icon-indicator crystal-icon"
+            [class.active]="tile.powered"
+            >💎</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="action-container" *ngIf="puzzleSolved">
+      <button class="btn-alohomora" (click)="castAlohomora()">
+        Lancia Alohomora
+      </button>
+    </div>
+  </div>
+
+  <div class="spell-effect" *ngIf="showSpellText">
+    <h1 class="spell-text">Alohomora!</h1>
   </div>
 </div>

@@ -1,0 +1,68 @@
+<div class="minigame-container">
+  <div class="status-header">
+    <div class="bar-group">
+      <label>Stabilità della Porta</label>
+      <div class="bar-outer stability">
+        <div
+          class="bar-inner"
+          [style.width.%]="doorStability"
+          [class.critical]="doorStability < 30"
+        ></div>
+      </div>
+    </div>
+
+    <div class="bar-group">
+      <label>Progresso Fuga</label>
+      <div class="bar-outer escape">
+        <div class="bar-inner" [style.width.%]="escapeProgress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Area di Gioco: La Porta -->
+  <div class="door-frame">
+    <div class="door-bg"></div>
+
+    <!-- Render delle Minacce Attive sulla Porta -->
+    <div
+      *ngFor="let threat of activeThreats"
+      class="threat-point {{ threat.type }}"
+      [style.left.%]="threat.x"
+      [style.top.%]="threat.y"
+      (mousedown)="startHolding(threat)"
+      (touchstart)="startHolding(threat)"
+    >
+      <!-- Indicatore Visivo del Tipo di Attacco -->
+      <div class="threat-icon"></div>
+
+      <!-- Anello o Barra di Stabilizzazione del Punto -->
+      <div class="progress-ring" *ngIf="threat.progress > 0">
+        <div class="progress-fill" [style.width.%]="threat.progress"></div>
+        <span class="progress-text"
+          >{{ threat.progress | number: "1.0-0" }}%</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal di Sconfitta -->
+  <div class="overlay defeat" *ngIf="isGameOver">
+    <div class="modal-content">
+      <h2>LA PORTA È STATA SFONDATA!</h2>
+      <p>Fuffi è riuscito a irrompere prima che poteste completare la fuga.</p>
+      <button (click)="retryMinigame()">Riprova</button>
+    </div>
+  </div>
+
+  <!-- Modal di Vittoria -->
+  <div class="overlay victory" *ngIf="isVictory">
+    <div class="modal-content">
+      <h2>FUGA RIUSCITA!</h2>
+      <p>
+        Siete riusciti a richiudere la porta e ad allontanarvi prima che Fuffi
+        riuscisse a sfondarla.
+      </p>
+      <button (click)="completeMinigame()">Prosegui</button>
+    </div>
+  </div>
+</div>

@@ -43,14 +43,15 @@
       "id": "3HeadsDog",
       "image_id": "3HeadsDog",
       "type": "text",
-      "next_node": "3HeadsDog2"
+      "next_node": "3HeadsDog_minigame"
     },
     {
       "id": "3HeadsDog_minigame",
       "image_id": "3HeadsDog_minigame",
       "type": "minigame",
-      "minigame_id": "DOOR_MINIGAME",
-      "next_node": "3HeadsDog2"
+      "minigame_id": "HEADSDOG_MINIGAME",
+      "success_node": "3HeadsDog2",
+      "fail_node": "hospital"
     },
     {
       "id": "3HeadsDog2",

@@ -57,7 +57,9 @@
       <div
         class="dialogue-box"
         *ngIf="
-          actualPhase.type !== 'enigma' && actualPhase.type !== 'animation'
+          actualPhase.type !== 'enigma' &&
+          actualPhase.type !== 'animation' &&
+          actualPhase.type !== 'minigame'
         "
       >
         <div class="dialog-text">
@@ -85,6 +87,15 @@
           [enigmaId]="actualPhase.enigma_id"
           (quizSolved)="manageChoice({ next_node: $event })"
         ></app-enigma-hub>
+      </div>
+      <div class="minigame-area" *ngIf="actualPhase?.type === 'minigame'">
+        <app-minigame-hub
+          [minigameId]="actualPhase.minigame_id"
+          (minigameSolved)="manageChoice({ next_node: $event })"
+          (minigameFailed)="manageChoice({ next_node: $event })"
+        >
+          ></app-minigame-hub
+        >
       </div>
     </div>
   </div>
