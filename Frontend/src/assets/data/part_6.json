@@ -37,6 +37,7 @@
       "id": "Gazza",
       "image_id": "Gazza",
       "type": "text",
+      "text":"C’è qualcuno qui, tesoro mio?",
       "next_node": "3HeadsDog"
     },
     {

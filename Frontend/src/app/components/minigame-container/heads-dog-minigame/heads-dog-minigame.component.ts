@@ -4,7 +4,7 @@ interface ThreatPoint {
   id: number;
   x: number; // Percentuale posizione X sulla porta
   y: number; // Percentuale posizione Y sulla porta
-  type: 'claws' | 'eyes' | 'crack' | 'teeth' | 'bulge';
+  type: 'claws' | 'face' | 'crack' | 'teeth' | 'bulge';
   progress: number; // 0 a 100
   timer: any;
 }
@@ -39,8 +39,8 @@ export class HeadsDogMinigameComponent implements OnInit {
   private currentPhase: 1 | 2 | 3 = 1;
 
   // Tipi di indicatori visivi
-  readonly threatTypes: ('claws' | 'eyes' | 'crack' | 'teeth' | 'bulge')[] = [
-    'claws', 'eyes', 'crack', 'teeth', 'bulge'
+  readonly threatTypes: ('claws' | 'face' | 'crack' | 'teeth' | 'bulge')[] = [
+    'claws', 'face', 'crack', 'teeth', 'bulge'
   ];
 
   ngOnInit(): void {
@@ -87,11 +87,11 @@ export class HeadsDogMinigameComponent implements OnInit {
     // 2. Calcolo Danno alla Porta
     if (this.activeThreats.length > 0) {
       // Ogni minaccia attiva infligge danno costante
-      const damage = this.activeThreats.length * 0.35 * this.currentPhase;
+      const damage = this.activeThreats.length * 0.15 * this.currentPhase;
       this.doorStability = Math.max(0, this.doorStability - damage);
     } else {
       // Recupero lento se non ci sono attacchi in corso
-      this.doorStability = Math.min(100, this.doorStability + 0.15);
+      this.doorStability = Math.min(100, this.doorStability + 0.10);
     }
 
     // Controllo Sconfitta
@@ -104,15 +104,15 @@ export class HeadsDogMinigameComponent implements OnInit {
     if (this.isGameOver || this.isVictory) return;
 
     // Tempo di attesa casuale tra un attacco e l'altro basato sulla fase
-    let minDelay = 2500;
-    let maxDelay = 4000;
+    let minDelay = 1800;
+    let maxDelay = 2500;
 
     if (this.currentPhase === 2) {
-      minDelay = 1800;
-      maxDelay = 3000;
-    } else if (this.currentPhase === 3) {
       minDelay = 1000;
-      maxDelay = 2000;
+      maxDelay = 1800;
+    } else if (this.currentPhase === 3) {
+      minDelay = 500;
+      maxDelay = 1200;
     }
 
     const delay = Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
@@ -124,6 +124,10 @@ export class HeadsDogMinigameComponent implements OnInit {
   }
 
   private spawnThreat(): void {
+    if (this.holdingThreat) {
+      return;
+    }
+
     // Limita il numero di minacce contemporanee in base alla fase
     const maxConcurrent = this.currentPhase === 3 ? 2 : 1;
     if (this.activeThreats.length >= maxConcurrent) return;
@@ -154,7 +158,7 @@ startHolding(threat: ThreatPoint): void {
     // Pressione ogni 50ms -> completa la stabilizzazione in circa 1.5 secondi
     this.holdInterval = setInterval(() => {
       if (this.holdingThreat) {
-        this.holdingThreat.progress += 3.5;
+        this.holdingThreat.progress += 6;
 
         if (this.holdingThreat.progress >= 100) {
           this.resolveThreat(this.holdingThreat);
@@ -197,7 +201,11 @@ startHolding(threat: ThreatPoint): void {
     this.isGameOver = true;
   }
 
-  completeMinigame(success: boolean) {
+  completeMinigame() {
+    this.endMinigame(true); 
+  }
+
+  endMinigame(success: boolean) {
     const targetNode = success ? '3HeadsDog2' : 'hospital';
     this.minigameSolved.emit(targetNode);
   }

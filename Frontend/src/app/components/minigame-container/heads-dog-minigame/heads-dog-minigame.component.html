@@ -19,22 +19,25 @@
     </div>
   </div>
 
+  <div class="game-instructions">
+    La creatura sta cercando di uscire! Usa tutta la tua forza per resistere agli assalti e mantenre la porta chiusa finché la fuga non sarà completata.
+  </div>
+
   <!-- Area di Gioco: La Porta -->
   <div class="door-frame">
-    <div class="door-bg"></div>
 
     <!-- Render delle Minacce Attive sulla Porta -->
     <div
       *ngFor="let threat of activeThreats"
       class="threat-point {{ threat.type }}"
-      [style.left.%]="threat.x"
-      [style.top.%]="threat.y"
-      (mousedown)="startHolding(threat)"
-      (touchstart)="startHolding(threat)"
     >
       <!-- Indicatore Visivo del Tipo di Attacco -->
       <div class="threat-icon"></div>
 
+      <div 
+          class="click-zone"
+          (mousedown)="startHolding(threat)"
+          (touchstart)="startHolding(threat)"></div>
       <!-- Anello o Barra di Stabilizzazione del Punto -->
       <div class="progress-ring" *ngIf="threat.progress > 0">
         <div class="progress-fill" [style.width.%]="threat.progress"></div>
