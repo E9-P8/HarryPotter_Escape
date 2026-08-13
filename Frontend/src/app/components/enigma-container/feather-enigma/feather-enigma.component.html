@@ -1,0 +1,135 @@
+<div class="enigma-container">
+  <!-- FASE 1: ESPLORAZIONE AULA -->
+  <div *ngIf="currentStage === 'EXPLORATION'" class="classroom-scene">
+    <div class="scene-header">
+      <h2>Lezione di Incantesimi: Aula di Vitious</h2>
+      <p>
+        Esplora l'aula per scoprire il gesto corretto di Wingardium Leviosa.
+      </p>
+    </div>
+
+    <!-- Punti Interattivi -->
+    <div class="interactive-map">
+      <!-- Vitious -->
+      <button
+        class="hotspot visible"
+        style="top: 25%; left: 48%"
+        (click)="openClue('flitwick')"
+      >
+        <span class="label">Prof. Vitious</span>
+      </button>
+
+      <!-- Appunti Hermione -->
+      <button
+        class="hotspot visible"
+        style="top: 60%; left: 20%"
+        (click)="openClue('hermione')"
+      >
+        <span class="label">Appunti di Hermione</span>
+      </button>
+
+      <!-- Libri Professore -->
+      <button
+        class="hotspot visible"
+        style="top: 35%; left: 75%"
+        (click)="openClue('books')"
+      >
+        <span class="label">Libri Antichi</span>
+      </button>
+
+      <!-- Banco Ron -->
+      <button
+        class="hotspot visible"
+        style="top: 65%; left: 65%"
+        (click)="openClue('ron')"
+      >
+        <span class="label">Banco di Ron</span>
+      </button>
+
+      <!-- Lavagna (Nascosta: SENZA stilizzazione hotspot visibile) -->
+      <div
+        class="hotspot-hidden"
+        style="top: 15%; left: 15%; width: 25%; height: 20%"
+        (click)="openClue('blackboard')"
+      ></div>
+
+      <!-- Banco Giocatore (Avanzamento) -->
+      <button
+        class="hotspot desk-target"
+        style="top: 80%; left: 40%"
+        (click)="goToDesk()"
+      >
+        <span class="label">Vai al tuo Banco</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- FASE 2: BANCO E TRACCIAMENTO -->
+  <div *ngIf="currentStage === 'DESK'" class="desk-scene">
+    <button class="btn-back" (click)="returnToExploration()">
+      ← Torna all'Aula
+    </button>
+
+    <div class="desk-workspace">
+      <!-- Area Magica / Piuma -->
+      <div class="feather-stage">
+        <div class="feather" [class.floating]="isSpellSuccess">🪶</div>
+        <div class="wand">🪄</div>
+      </div>
+
+      <!-- Area Disegno Canvas -->
+      <div class="canvas-wrapper">
+        <canvas
+          #gestureCanvas
+          width="400"
+          height="300"
+          (mousedown)="startDrawing($event)"
+          (mousemove)="draw($event)"
+          (mouseup)="stopDrawing()"
+          (mouseleave)="stopDrawing()"
+          (touchstart)="startDrawing($event)"
+          (touchmove)="draw($event)"
+          (touchend)="stopDrawing()"
+        >
+        </canvas>
+        <span class="canvas-hint"
+          >Traccia qui il movimento della bacchetta</span
+        >
+      </div>
+
+      <!-- Azioni e Feedback -->
+      <div class="controls">
+        <button class="btn-cast" (click)="castSpell()">
+          Lancia Wingardium Leviosa
+        </button>
+        <button class="btn-clear" (click)="clearCanvas()">Ricomincia</button>
+      </div>
+
+      <div
+        class="feedback-box"
+        *ngIf="feedbackMessage"
+        [class.success]="isSpellSuccess"
+      >
+        <p>{{ feedbackMessage }}</p>
+        <div *ngIf="isSpellSuccess" class="teacher-praise">
+          <hr />
+          <p>
+            <strong>Professor Vitious:</strong> "Eccellente! Hai compreso che la
+            precisione del gesto è importante quanto l'incantesimo stesso."
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALE INDIZI -->
+  <div class="modal-overlay" *ngIf="activeClue" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h3>{{ activeClue.title }}</h3>
+      <div class="clue-body">
+        <p *ngFor="let paragraph of activeClue.text">{{ paragraph }}</p>
+      </div>
+      <button class="btn-close" (click)="closeModal()">Chiudi</button>
+    </div>
+  </div>
+</div>

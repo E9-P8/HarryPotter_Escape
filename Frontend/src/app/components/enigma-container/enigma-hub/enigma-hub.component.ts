@@ -4,6 +4,7 @@ import { SortingHatComponent } from '../sorting-hat/sorting-hat.component';
 import { PuzzleFrameComponent } from '../puzzle-frame/puzzle-frame.component';
 import { EnigmaBroomComponent } from '../enigma-broom/enigma-broom.component';
 import { EnigmaDoorComponent } from '../enigma-door/enigma-door.component';
+import { FeatherEnigmaComponent } from '../feather-enigma/feather-enigma.component';
 
 @Component({
   selector: 'app-enigma-hub',
@@ -27,6 +28,7 @@ export class EnigmaHubComponent implements OnInit {
       case 'QUIZ_FRAME': return PuzzleFrameComponent;
       case 'ENIGMA_SCOPA': return EnigmaBroomComponent;
       case 'DOOR_QUIZ': return EnigmaDoorComponent;
+      case 'FEATHER_QUIZ': return FeatherEnigmaComponent;
       default: return null;
     }
   }
