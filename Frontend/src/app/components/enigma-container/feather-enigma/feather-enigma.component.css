@@ -62,7 +62,7 @@
     position: relative;
     width: 100vw;
     height: 100vh;
-    background: #0b0910 url('../../../../assets/img/Part6/feather_lessons.png') no-repeat center center / cover;
+    background: #0b0910 url('../../../../assets/img/Part6/feather_quiz.png') no-repeat center center / cover;
 }
 
 /* HOTSPOT / BOTTONI MAGICI PERCETTIBILI MA ELEGANTI */
@@ -85,9 +85,9 @@
     content: '';
     width: 12px;
     height: 12px;
-    background-color: #ffd700;
+    background-color:  rgb(240 228 162 / 70%);
     border-radius: 50%;
-    box-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
+    box-shadow: 0 0 10px #efde79, 0 0 20px #ffd700;
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -97,7 +97,7 @@
     position: absolute;
     width: 32px;
     height: 32px;
-    border: 1.5px solid rgba(255, 215, 0, 0.7);
+    border: 1.5px solid rgb(240 228 162 / 70%);
     border-radius: 50%;
     animation: magicPulse 2.2s infinite ease-out;
 }
@@ -135,12 +135,12 @@
 
 /* Target Banco Giocatore */
 .hotspot.desk-target::before {
-    background-color: #2ecc71;
-    box-shadow: 0 0 10px #2ecc71, 0 0 20px #2ecc71;
+    background-color: #9af6a9;
+    box-shadow: 0 0 10px #69e19b, 0 0 20px #51dd8b;
 }
 
 .hotspot.desk-target::after {
-    border-color: rgba(46, 204, 113, 0.7);
+    border-color: rgba(79, 200, 129, 0.7);
 }
 
 .hotspot.desk-target .label {
@@ -206,7 +206,6 @@
     z-index: 10;
 }
 
-/* Stage Piuma PNG */
 .feather-stage {
     height: 140px;
     display: flex;
@@ -217,7 +216,7 @@
 
 .feather-stage img.feather,
 .feather {
-    max-height: 100px;
+    max-height: 800px;
     width: auto;
     object-fit: contain;
     filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.8));
@@ -280,7 +279,7 @@
 }
 
 .btn-cast {
-    background: linear-gradient(135deg, #d4af37 0%, #99730f 100%);
+    background: linear-gradient(135deg, #e6c65d 0%, #99730f 100%);
     color: #0b0910;
     border: none;
     box-shadow: 0 4px 18px rgba(212, 175, 55, 0.35);
@@ -288,7 +287,7 @@
 
 .btn-cast:hover {
     transform: translateY(-2px);
-    background: linear-gradient(135deg, #f1c40f 0%, #b88b13 100%);
+    background: linear-gradient(135deg, #fbde6c 0%, #cda947 100%);
     box-shadow: 0 6px 25px rgba(212, 175, 55, 0.5);
 }
 
@@ -445,5 +444,97 @@
 
     100% {
         transform: translate(1px, 2px) rotate(1deg);
+    }
+}
+
+
+@media screen and (max-height: 500px) and (orientation: landscape) {
+
+    .scene-header {
+        top: 5px;
+        width: 85%;
+        padding: 4px 12px;
+        border-radius: 12px;
+    }
+
+    .scene-header h2 {
+        font-size: 0.6rem;
+        letter-spacing: 1px;
+        line-height: 1;
+    }
+
+    .scene-header p {
+        margin-top: 2px;
+        font-size: 0.55rem;
+        line-height: 1.1;
+    }
+
+    .modal-content {
+        width: 50%;
+    }
+
+    .modal-content{
+        font-size: 1rem;
+    }
+    .clue-body {
+        font-size: 0.6rem;
+    }
+    .btn-close {
+        font-size: 0.6rem;
+    }
+
+    .btn-back {
+        top: 8px;
+        left: 10px;
+        padding: 6px 12px;
+        font-size: 0.6rem;
+    }
+    .desk-workspace {
+        max-width: 100%;
+        transform: scale(0.9);
+    }
+    .feather-stage {
+        height: 70px;
+        margin-bottom: 5px;
+    }
+
+    .feather {
+        max-height: 55px;
+    }
+    .feather-stage img.feather, .feather {
+        max-height: 280px;
+    }
+
+    .canvas-wrapper {
+        width: 320px;
+    }
+
+    .canvas-wrapper canvas {
+        width: 320px;
+        height: 180px;
+    }
+
+    .canvas-hint {
+        font-size: 0.55rem;
+        right: 8px;
+        bottom: 4px;
+    }
+    .controls {
+        margin-top: 8px;
+        gap: 8px;
+    }
+    .controls button {
+        padding: 8px 14px;
+        font-size: 0.65rem;
+        letter-spacing: 0.5px;
+    }
+    .feedback-box {
+        margin-top: 8px;
+        padding: 8px 12px;
+        font-size: 0.7rem;
+        max-width: 350px;
+    }
+    .teacher-praise {
+        font-size: 0.65rem;
     }
 }

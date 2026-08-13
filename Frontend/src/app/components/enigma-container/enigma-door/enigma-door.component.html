@@ -17,7 +17,7 @@
 
     <!-- Bottone iniziale sulla porta (Scompare quando il gioco inizia) -->
     <button
-      *ngIf="!gameStarted"
+      *ngIf="!gameStarted && !puzzleSolved"
       class="btn-inspect-door"
       (click)="startEnigma()"
     ></button>

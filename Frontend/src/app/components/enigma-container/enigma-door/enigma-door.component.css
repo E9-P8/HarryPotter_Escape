@@ -262,3 +262,77 @@
         transform: scale(1);
     }
 }
+
+
+
+
+@media screen and (max-height: 500px) and (orientation: landscape) {
+
+    .btn-inspect-door {
+        left: 64%;
+        padding: 8px 28px;
+        font-size: 0.85rem;
+    }
+
+    .intro-modal {
+        max-width: 70vw;
+        padding: 15px 20px;
+    }
+
+    .intro-modal h2 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .intro-modal p {
+        font-size: 0.9rem;
+        line-height: 1.3;
+    }
+
+    .puzzle-overlay {
+        padding: 12px 15px;
+        transform: scale(0.7);
+    }
+
+    .puzzle-header {
+        margin-bottom: 8px;
+    }
+
+    .puzzle-header h2 {
+        font-size: 1rem;
+    }
+
+    .puzzle-header p {
+        font-size: 0.85rem;
+    }
+
+    .grid-container {
+        gap: 4px;
+        padding: 6px;
+    }
+
+    .grid-row {
+        gap: 4px;
+    }
+
+    .tile {
+        width: 42px;
+        height: 42px;
+        border-radius: 6px;
+    }
+
+    .icon-indicator {
+        font-size: 1rem;
+    }
+
+    .btn-magic,
+    .btn-alohomora {
+        margin-top: 10px;
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+
+    .spell-text {
+        font-size: 1.8rem;
+    }
+}

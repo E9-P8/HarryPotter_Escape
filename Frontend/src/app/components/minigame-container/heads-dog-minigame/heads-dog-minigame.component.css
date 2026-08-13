@@ -100,8 +100,8 @@
 }
 .click-zone {
     position: absolute;
-    width: 180px;
-    height: 180px;
+    width: 200px;
+    height: 200px;
     transform: translate(-50%, -50%);
     z-index: 20;
     cursor: pointer;
@@ -253,5 +253,63 @@
 
     to {
         opacity: 0.5;
+    }
+}
+
+
+@media screen and (max-height: 500px) and (orientation: landscape) {
+
+    .status-header {
+        padding: 6px 10px;
+    }
+
+    .bar-group label {
+       font-size: 0.5rem;
+       letter-spacing: 0.5px;
+    }
+
+    .bar-outer {
+        height: 6px;
+    }
+
+    .game-instructions {
+        font-size: 0.7rem;
+        padding: 5px;
+    }
+
+    .door-frame {
+        background-size: contain;
+    }
+
+    .click-zone {
+        width: 110px;
+        height: 110px;
+    }
+
+    .progress-ring {
+        height: 5px;
+    }
+
+    .progress-text {
+        font-size: 0.55rem;
+        top: -12px;
+    }
+
+    .modal-content {
+        max-width: 75vw;
+        padding: 18px;
+    }
+
+    .modal-content h2 {
+        font-size: 1.1rem;
+    }
+
+    .modal-content p {
+        font-size: 0.85rem;
+    }
+
+    .modal-content button {
+        padding: 8px 18px;
+        font-size: 0.85rem;
     }
 }

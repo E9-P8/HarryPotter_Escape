@@ -55,8 +55,8 @@ export class EnigmaDoorComponent implements OnInit {
     // Posizione dei 3 Cristalli Magici (Variante 1)
     const crystals = [
       { r: 0, c: 2 },
-      { r: 2, c: 2 },
-      { r: 4, c: 2 }
+      { r: 1, c: 1 },
+      { r: 3, c: 2 }
     ];
 
     this.grid = [];

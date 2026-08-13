@@ -26,6 +26,7 @@ import { MinigameHubComponent } from './components/minigame-container/minigame-h
 import { SphereMinigameComponent } from './components/minigame-container/sphere-minigame/sphere-minigame.component';
 import { EnigmaDoorComponent } from './components/enigma-container/enigma-door/enigma-door.component';
 import { HeadsDogMinigameComponent } from './components/minigame-container/heads-dog-minigame/heads-dog-minigame.component';
+import { FeatherEnigmaComponent } from './components/enigma-container/feather-enigma/feather-enigma.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { HeadsDogMinigameComponent } from './components/minigame-container/heads
     MinigameHubComponent,
     SphereMinigameComponent,
     EnigmaDoorComponent,
-    HeadsDogMinigameComponent
+    HeadsDogMinigameComponent,
+    FeatherEnigmaComponent
   ],
   imports: [
     BrowserModule,

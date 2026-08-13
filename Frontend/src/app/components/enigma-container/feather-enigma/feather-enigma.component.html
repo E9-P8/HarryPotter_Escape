@@ -13,7 +13,7 @@
       <!-- Vitious -->
       <button
         class="hotspot visible"
-        style="top: 25%; left: 48%"
+        style="top: 25%; left: 64%"
         (click)="openClue('flitwick')"
       >
         <span class="label">Prof. Vitious</span>
@@ -22,7 +22,7 @@
       <!-- Appunti Hermione -->
       <button
         class="hotspot visible"
-        style="top: 60%; left: 20%"
+        style="top: 68%; left: 26%"
         (click)="openClue('hermione')"
       >
         <span class="label">Appunti di Hermione</span>
@@ -31,7 +31,7 @@
       <!-- Libri Professore -->
       <button
         class="hotspot visible"
-        style="top: 35%; left: 75%"
+        style="top: 32%; left: 78%"
         (click)="openClue('books')"
       >
         <span class="label">Libri Antichi</span>
@@ -40,7 +40,7 @@
       <!-- Banco Ron -->
       <button
         class="hotspot visible"
-        style="top: 65%; left: 65%"
+        style="top: 74%; left: 65%"
         (click)="openClue('ron')"
       >
         <span class="label">Banco di Ron</span>
@@ -48,15 +48,15 @@
 
       <!-- Lavagna (Nascosta: SENZA stilizzazione hotspot visibile) -->
       <div
-        class="hotspot-hidden"
-        style="top: 15%; left: 15%; width: 25%; height: 20%"
+        class="hotspot visible"
+        style="top: 35%; left: 51%; width: 12%; height: 16%"
         (click)="openClue('blackboard')"
       ></div>
 
       <!-- Banco Giocatore (Avanzamento) -->
       <button
         class="hotspot desk-target"
-        style="top: 80%; left: 40%"
+        style="top: 95%; left: 48%"
         (click)="goToDesk()"
       >
         <span class="label">Vai al tuo Banco</span>
@@ -73,8 +73,7 @@
     <div class="desk-workspace">
       <!-- Area Magica / Piuma -->
       <div class="feather-stage">
-        <div class="feather" [class.floating]="isSpellSuccess">🪶</div>
-        <div class="wand">🪄</div>
+        <img src="assets/img/Part6/feather.png" alt="Piuma"class="feather" [class.floating]="isSpellSuccess">
       </div>
 
       <!-- Area Disegno Canvas -->
