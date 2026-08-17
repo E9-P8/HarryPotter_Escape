@@ -133,6 +133,11 @@ export class FeatherEnigmaComponent implements AfterViewInit {
   }
 
   startDrawing(event: MouseEvent | TouchEvent): void {
+
+    if (event.cancelable) {
+      event.preventDefault();
+    }
+
     this.isDrawing = true;
     this.drawnPoints = [];
     this.feedbackMessage = SpellFeedback.IDLE;
@@ -153,15 +158,44 @@ export class FeatherEnigmaComponent implements AfterViewInit {
   private addPoint(event: MouseEvent | TouchEvent): void {
     const canvas = this.canvasRef.nativeElement;
     const rect = canvas.getBoundingClientRect();
-    const clientX = 'touches' in event ? event.touches[0].clientX : event.clientX;
-    const clientY = 'touches' in event ? event.touches[0].clientY : event.clientY;
+    /*const clientX = 'touches' in event ? event.touches[0].clientX : event.clientX;
+    const clientY = 'touches' in event ? event.touches[0].clientY : event.clientY;*/
 
+    let clientX = 0;
+    let clientY = 0;
+
+    if ('touches' in event && event.touches.length > 0) {
+        clientX = event.touches[0].clientX;
+        clientY = event.touches[0].clientY;
+      } else if ('changedTouches' in event && event.changedTouches.length > 0) {
+        clientX = event.changedTouches[0].clientX;
+        clientY = event.changedTouches[0].clientY;
+      } else if (event instanceof MouseEvent) {
+        clientX = event.clientX;
+        clientY = event.clientY;
+    }
+
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    // Coordinate reali all'interno della griglia 400x300 del canvas
+    const x = (clientX - rect.left) * scaleX;
+    const y = (clientY - rect.top) * scaleY;
+
+    this.drawnPoints.push({
+      x,
+      y,
+      time: Date.now()
+    });
+
+    /*
     this.drawnPoints.push({
       x: clientX - rect.left,
       y: clientY - rect.top,
       time: Date.now()
-    });
+    });*/
   }
+
 
   private renderStroke(): void {
     const canvas = this.canvasRef.nativeElement;
@@ -170,12 +204,12 @@ export class FeatherEnigmaComponent implements AfterViewInit {
     if (this.drawnPoints.length < 2) return;
 
     this.ctx.beginPath();
-    this.ctx.strokeStyle = '#f1c40f';
+    this.ctx.strokeStyle = '#f5d142';
     this.ctx.lineWidth = 4;
     this.ctx.lineCap = 'round';
     this.ctx.lineJoin = 'round';
     this.ctx.shadowBlur = 10;
-    this.ctx.shadowColor = '#f39c12';
+    this.ctx.shadowColor = '#e2a749';
 
     this.ctx.moveTo(this.drawnPoints[0].x, this.drawnPoints[0].y);
     for (let i = 1; i < this.drawnPoints.length; i++) {
@@ -183,8 +217,6 @@ export class FeatherEnigmaComponent implements AfterViewInit {
     }
     this.ctx.stroke();
   }
-
-  // --- ANALISI DEL GESTO E VERIFICA INCANTESIMO ---
 
   castSpell(): void {
     if (this.drawnPoints.length < 15) {
@@ -196,68 +228,115 @@ export class FeatherEnigmaComponent implements AfterViewInit {
     this.evaluateSequence(sequence);
   }
 
-  private analyzeGesture(points: { x: number; y: number }[]) {
-    // Semplificazione del percorso in segmenti di direzione
-    const segments: string[] = [];
-    let hasCircle = false;
+private analyzeGesture(points: { x: number; y: number }[]) {
+  const len = points.length;
+  const start = points[0];
 
-    // Rilevamento cerchio/loop (intersezione del percorso)
-    for (let i = 5; i < points.length - 5; i++) {
-      for (let j = i + 10; j < points.length - 5; j++) {
-        const dist = Math.hypot(points[i].x - points[j].x, points[i].y - points[j].y);
-        if (dist < 12) {
-          hasCircle = true;
-          break;
-        }
+  // 1. SALITA INIZIALE
+  let initialRiseIdx = 0;
+  let minYInFirstHalf = start.y;
+
+  for (let i = 1; i < Math.floor(len * 0.45); i++) {
+    if (points[i].y < minYInFirstHalf) {
+      minYInFirstHalf = points[i].y;
+      initialRiseIdx = i;
+    }
+  }
+
+  const dyInitial = start.y - minYInFirstHalf;
+  const dxBeforeRise = Math.abs(points[initialRiseIdx].x - start.x);
+  const initialRise = dyInitial >= 20 && dyInitial > (dxBeforeRise * 0.5);
+
+
+  // 2. CURVA A DESTRA
+  let maxXAfterRise = points[initialRiseIdx].x;
+  for (let i = initialRiseIdx; i < Math.floor(len * 0.8); i++) {
+    if (points[i].x > maxXAfterRise) {
+      maxXAfterRise = points[i].x;
+    }
+  }
+
+  const rightCurve = (maxXAfterRise - start.x >= 25) && (maxXAfterRise - points[initialRiseIdx].x >= 12);
+
+
+  // 3. ROTAZIONE / CAPPIOLO
+  let hasCircle = false;
+  let loopStartIndex = -1;
+
+  for (let i = Math.max(2, initialRiseIdx); i < len - 4; i++) {
+    for (let j = i + 5; j < len - 2; j++) {
+      const dist = Math.hypot(points[i].x - points[j].x, points[i].y - points[j].y);
+      if (dist < 15) { // Tolleranza leggermente più morbida per il touch
+        hasCircle = true;
+        loopStartIndex = i;
+        break;
+      }
+    }
+    if (hasCircle) break;
+  }
+
+
+  // 4. ELEVAZIONE FINALE (Verso l'alto, non trascinato a destra)
+  let finalRise = false;
+
+  if (hasCircle && loopStartIndex > 0) {
+    // Cerchiamo la "pancia" della curva: il punto più basso (Y max) raggiunto da quando inizia la rotazione in poi
+    let lowestY = points[loopStartIndex].y;
+    let lowestYIndex = loopStartIndex;
+
+    for (let i = loopStartIndex; i < len; i++) {
+      if (points[i].y >= lowestY) {
+        lowestY = points[i].y;
+        lowestYIndex = i;
       }
     }
 
-    // Rilevamento direzioni temporali principali
-    const start = points[0];
-    const quarter = points[Math.floor(points.length * 0.25)];
-    const half = points[Math.floor(points.length * 0.5)];
-    const threeQuarters = points[Math.floor(points.length * 0.75)];
-    const end = points[points.length - 1];
+    const endPoint = points[len - 1];
+    const lowestPoint = points[lowestYIndex];
 
-    const initialRise = quarter.y < start.y - 30; // Salita iniziale
-    const rightCurve = half.x > quarter.x + 20;   // Curva a destra
-    const rightSwipe = threeQuarters.x > half.x + 10; // Proseguimento a destra
-    const finalRise = end.y < threeQuarters.y - 15;  // Breve salita finale
+    const dyFinal = lowestPoint.y - endPoint.y; // Quanto si è saliti dal punto più basso
+    const dxFinal = endPoint.x - lowestPoint.x; // Spostamento a destra dal punto più basso
 
-    return {
-      initialRise,
-      rightCurve,
-      hasCircle,
-      rightSwipe,
-      finalRise
-    };
+    // Condizioni:
+    // 1. Deve essere risalito di almeno 12px dal punto più basso
+    // 2. La componente verticale verso l'alto (dyFinal) deve essere MAGGIORE dello spostamento a destra (dxFinal)
+    //    (se va verso sinistra dxFinal sarà negativo/piccolo, il che va benissimo per una salita)
+    finalRise = (dyFinal >= 12) && (dyFinal > dxFinal);
   }
-  private evaluateSequence(seq: any): void {
-    if (!seq.initialRise) {
-      this.feedbackMessage = SpellFeedback.NO_INITIAL_RISE;
-      return;
-    }
-    if (!seq.rightCurve) {
-      this.feedbackMessage = SpellFeedback.MISSING_CURVE;
-      return;
-    }
-    if (!seq.hasCircle) {
-      this.feedbackMessage = SpellFeedback.MISSING_CIRCLE;
-      return;
-    }
-    if (!seq.rightSwipe) {
-      this.feedbackMessage = SpellFeedback.MISSING_RIGHT_SWIPE;
-      return;
-    }
-    if (!seq.finalRise) {
-      this.feedbackMessage = SpellFeedback.MISSING_FINAL_RISE;
-      return;
-    }
 
-    // Se tutti i controlli sono superati:
-    this.feedbackMessage = SpellFeedback.SUCCESS;
-    this.isSpellSuccess = true;
+  return {
+    initialRise,
+    rightCurve,
+    hasCircle,
+    finalRise
+  };
+}
+
+private evaluateSequence(seq: any): void {
+  if (!seq.initialRise) {
+    this.feedbackMessage = SpellFeedback.NO_INITIAL_RISE;
+    return;
   }
+  if (!seq.rightCurve) {
+    this.feedbackMessage = SpellFeedback.MISSING_CURVE;
+    return;
+  }
+  if (!seq.hasCircle) {
+    this.feedbackMessage = SpellFeedback.MISSING_CIRCLE;
+    return;
+  }
+  if (!seq.finalRise) {
+    this.feedbackMessage = SpellFeedback.MISSING_FINAL_RISE;
+    return;
+  }
+
+  this.feedbackMessage = SpellFeedback.SUCCESS;
+  this.isSpellSuccess = true;
+
+  setTimeout(() => {
+    this.quizSolved.emit('teasing');
+  }, 5000);
+}
 
 
 

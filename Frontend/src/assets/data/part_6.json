@@ -74,7 +74,7 @@
         {
           "text": "Vai al campo di Quidditch per l'addestramento",
           "condition": "isSeeker == true",
-          "next_node": "Quiddich"
+          "next_node": "Quidditch"
         },
         {
           "text": "Vai direttamente alla lezione di Incantesimi",
@@ -84,14 +84,42 @@
       ]
     },
     {
-      "id": "Quiddich",
+      "id": "Quidditch",
       "image_id": "Quiddich",
       "text": "Bastion: il quiddich è facile da capire. Ogni squadra ha 7 giocatori, 3 cacciatori, 2 battitori, 1 portiere e un cercatore, che saresti tu.",
-      "next_node": "Quiddich_balls"
+      "next_node": "Quidditch_balls"
     },
     {
-      "id": "Quiddich_balls",
+      "id": "Quidditch_balls",
       "image_id": "Quiddich_balls",
+      "hideDialogue": true,
+      "hotspots": [
+        {
+          "id": "pluffa",
+          "label": "Pluffa",
+          "x": 50,
+          "y": 50,
+          "title": "La Pluffa",
+          "description": "Usata dai 3 Cacciatori per segnare nei tre anelli avversari. Il portiere cerca di difendere quei cerchi."
+        },
+        {
+          "id": "bolidi",
+          "label": "Bolidi",
+          "x": 72,
+          "y": 62,
+          "title": "I Bolidi",
+          "description": "Due palle stregate di ferro che volano per disarcionare i giocatori. I 2 Battitori usano le mazze per proteggere la squadra e indirizzarle contro gli avversari."
+        },
+        {
+          "id": "stemma",
+          "label": "Stemma del Boccino",
+          "x": 50.5,
+          "y": 23,
+          "title": "Il Boccino d'Oro",
+          "description": "L'unica cosa di cui ti devi preoccupare è questa, il boccino d'oro. Vedrai, è velocissima e difficilissima da vedere. Acchiappalo e la partita sarà finita e noi vinciamo!",
+          "opened_image": "assets/img/Part6/stemma_aperto.png"
+        }
+      ],
       "next_node": "feather_lessons"
     },
     {
@@ -109,9 +137,9 @@
     },
     {
       "id": "teasing",
-      "image_id": "",
+      "image_id": "teasing",
       "text": "Ron: E' leviOsa, non leviosAA",
-      "next_node": "feather_quiz"
+      "next_node": "part_7"
     }
     
   ]

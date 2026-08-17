@@ -73,7 +73,12 @@
     <div class="desk-workspace">
       <!-- Area Magica / Piuma -->
       <div class="feather-stage">
-        <img src="assets/img/Part6/feather.png" alt="Piuma"class="feather" [class.floating]="isSpellSuccess">
+        <img
+          src="assets/img/Part6/feather.png"
+          alt="Piuma"
+          class="feather"
+          [class.floating]="isSpellSuccess"
+        />
       </div>
 
       <!-- Area Disegno Canvas -->
@@ -97,7 +102,7 @@
       </div>
 
       <!-- Azioni e Feedback -->
-      <div class="controls">
+      <div class="controls" *ngIf="!isSpellSuccess">
         <button class="btn-cast" (click)="castSpell()">
           Lancia Wingardium Leviosa
         </button>

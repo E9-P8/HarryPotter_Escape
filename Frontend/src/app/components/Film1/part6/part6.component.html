@@ -21,7 +21,10 @@
 <div class="Part6-container" *ngIf="actualPhase">
   <div class="Part6-viewport">
     <div class="Part6-view">
-      <div class="scene-visuals" *ngIf="actualPhase.type !== 'enigma' && actualPhase.type !== 'minigame'">
+      <div
+        class="scene-visuals"
+        *ngIf="actualPhase.type !== 'enigma' && actualPhase.type !== 'minigame'"
+      >
         <div class="image-wrapper">
           <img
             class="Part6-img"
@@ -36,6 +39,16 @@
             alt="Scena"
           />
 
+          <!-- Stemma aperto -->
+          <ng-container *ngFor="let spot of actualPhase.hotspots">
+            <img
+              *ngIf="spot.opened_image && isHotspotOpened(spot.id)"
+              [src]="spot.opened_image"
+              class="opened-hotspot-overlay"
+              alt="Hotspot aperto"
+            />
+          </ng-container>
+
           <!-- Scale -->
           <img
             *ngIf="
@@ -46,6 +59,25 @@
             class="stairs"
             [ngClass]="stairAnimationClass"
           />
+
+          <ng-container
+            *ngIf="actualPhase.hotspots && actualPhase.hotspots.length > 0"
+          >
+            <button
+              *ngFor="let spot of actualPhase.hotspots"
+              class="hotspot-btn"
+              [class.opened]="isHotspotOpened(spot.id)"
+              [style.left.%]="spot.x"
+              [style.top.%]="spot.y"
+              (click)="openHotspot(spot)"
+            >
+              <span class="pulse-ring" *ngIf="!isHotspotOpened(spot.id)"></span>
+              <span class="icon">{{
+                isHotspotOpened(spot.id) ? "✓" : ""
+              }}</span>
+            </button>
+          </ng-container>
+
           <svg style="display: none">
             <filter id="horizontal-motion-blur">
               <!-- stdDeviation="30,0" significa: 30px di sfocatura orizzontale (X), 0px verticale (Y) -->
@@ -59,7 +91,8 @@
         *ngIf="
           actualPhase.type !== 'enigma' &&
           actualPhase.type !== 'animation' &&
-          actualPhase.type !== 'minigame'
+          actualPhase.type !== 'minigame' &&
+          !actualPhase.hideDialogue
         "
       >
         <div class="dialog-text">
@@ -81,13 +114,14 @@
           </ng-container>
         </div>
       </div>
-
+      <!-- AREA ENIGMA -->
       <div class="enigma-area" *ngIf="actualPhase?.type === 'enigma'">
         <app-enigma-hub
           [enigmaId]="actualPhase.enigma_id"
           (quizSolved)="manageChoice({ next_node: $event })"
         ></app-enigma-hub>
       </div>
+      <!-- AREA MINIGAME -->
       <div class="minigame-area" *ngIf="actualPhase?.type === 'minigame'">
         <app-minigame-hub
           [minigameId]="actualPhase.minigame_id"
@@ -96,6 +130,21 @@
         >
           ></app-minigame-hub
         >
+      </div>
+      <!-- AREA HOTSPOT -->
+      <div
+        class="modal-overlay"
+        *ngIf="activeHotspot"
+        (click)="closeHotspotModal()"
+      >
+        <div class="modal-card" (click)="$event.stopPropagation()">
+          <h3>{{ activeHotspot.title }}</h3>
+          <p class="modal-desc">{{ activeHotspot.description }}</p>
+
+          <button class="btn-close" (click)="closeHotspotModal()">
+            Chiudi
+          </button>
+        </div>
       </div>
     </div>
   </div>
