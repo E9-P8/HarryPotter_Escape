@@ -5,13 +5,12 @@ import { AudioService } from '../../../services/audio.service';
 import { GameDataService } from '../../../services/game-data.service';
 import { Subscription } from 'rxjs';
 
-
 @Component({
-  selector: 'app-part7',
-  templateUrl: './part7.component.html',
-  styleUrls: ['./part7.component.css']
+  selector: 'app-final-part',
+  templateUrl: './final-part.component.html',
+  styleUrls: ['./final-part.component.css']
 })
-export class Part7Component implements OnInit, OnDestroy {
+export class FinalPartComponent implements OnInit, OnDestroy {
 
   constructor(private http: HttpClient,
       public gameService: GameDataService, 
@@ -46,7 +45,7 @@ export class Part7Component implements OnInit, OnDestroy {
 
   loadPart() {
 
-    this.http.get('assets/data/part_7.json').subscribe(data => {
+    this.http.get('assets/data/final_part.json').subscribe(data => {
 
       this.Data = data;
 
@@ -154,4 +153,5 @@ export class Part7Component implements OnInit, OnDestroy {
         break;
     }
   }
+
 }

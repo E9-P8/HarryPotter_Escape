@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AudioService } from '../../../services/audio.service';
-import { GameDataService } from '../../../services/game-data.service'
+import { GameDataService } from '../../../services/game-data.service';
 import { Subscription } from 'rxjs';
 
 export interface Hotspot {
@@ -94,6 +94,7 @@ export class Part6Component implements OnInit, OnDestroy {
     if (!text) return "";
     return text.replace('*wizardName*', this.wizardName);
   }
+
   checkCondition(condition?: string): boolean {
     if (!condition) return true;
     const isSeeker = this.gameService.getFlag('isSeeker');
@@ -164,7 +165,7 @@ export class Part6Component implements OnInit, OnDestroy {
         }
         }
       }
-    }
+  }
       
   openManual(){ 
     this.gameService.isManualOpen= true;
@@ -214,7 +215,7 @@ export class Part6Component implements OnInit, OnDestroy {
   }
 
   movingStairs(){
-this.stairAnimationClass = '';
+    this.stairAnimationClass = '';
 
   setTimeout(() => {
     this.bgAnimationClass = 'bg-glitch-out';

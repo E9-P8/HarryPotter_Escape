@@ -18,20 +18,20 @@
   alt="Open the manual"
   *ngIf="!gameService.isManualOpen"
 ></button>
-<div class="Part7-container" *ngIf="actualPhase">
-  <div class="Part7-viewport">
-    <div class="Part7-view">
+<div class="Part8-container" *ngIf="actualPhase">
+  <div class="Part8-viewport">
+    <div class="Part8-view">
       <div
         class="scene-visuals"
         *ngIf="actualPhase.type !== 'enigma' && actualPhase.type !== 'minigame'"
       >
         <div class="image-wrapper">
           <img
-            class="Part7-img"
+            class="Part8-img"
             [ngClass]="bgAnimationClass"
             [src]="
               actualPhase.image_id
-                ? '../../../../assets/img/Part7/' +
+                ? '../../../../assets/img/Part8/' +
                   actualPhase.image_id +
                   '.png'
                 : 'assets/img/default.png'

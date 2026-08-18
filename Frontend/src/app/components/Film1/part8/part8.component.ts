@@ -7,11 +7,11 @@ import { Subscription } from 'rxjs';
 
 
 @Component({
-  selector: 'app-part7',
-  templateUrl: './part7.component.html',
-  styleUrls: ['./part7.component.css']
+  selector: 'app-part8',
+  templateUrl: './part8.component.html',
+  styleUrls: ['./part8.component.css']
 })
-export class Part7Component implements OnInit, OnDestroy {
+export class Part8Component implements OnInit, OnDestroy {
 
   constructor(private http: HttpClient,
       public gameService: GameDataService, 
@@ -46,7 +46,7 @@ export class Part7Component implements OnInit, OnDestroy {
 
   loadPart() {
 
-    this.http.get('assets/data/part_7.json').subscribe(data => {
+    this.http.get('assets/data/part_8.json').subscribe(data => {
 
       this.Data = data;
 
@@ -63,7 +63,7 @@ export class Part7Component implements OnInit, OnDestroy {
           // Se non c'è un nodo salvato valido, parte dal primo
           this.actualPhase = JSON.parse(JSON.stringify(this.Data.nodes[0]));
         }
-        this.manageChoice({ next_node: 'great_hall_dinner1' });
+        this.manageChoice({ next_node: 'greatHall_Hermione' });
       }
     });
   }
@@ -98,8 +98,8 @@ export class Part7Component implements OnInit, OnDestroy {
         this.gameService.setFlag(key, option.set_flag[key]);
       });
       }
-    if (nextNodeId === 'part_8' || nextNodeId === '/part8') {
-      this.router.navigate(['/part8']);
+    if (nextNodeId === 'final_part' || nextNodeId === '/final_part') {
+      this.router.navigate(['/final_part']);
       return;
     }
     if (nextNode) {
@@ -144,7 +144,7 @@ export class Part7Component implements OnInit, OnDestroy {
 
   handleAnimation(animationId: string) {
     switch (animationId) {
-      case 'troll_Girlsbathroom':
+      case 'hagrid_dragon':
       break;
 
       default:
@@ -154,4 +154,5 @@ export class Part7Component implements OnInit, OnDestroy {
         break;
     }
   }
+
 }

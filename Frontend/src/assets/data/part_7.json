@@ -35,12 +35,12 @@
     "text": "Harry: '*WizardName*, Hermione! Lei non sa niente del troll!'",
     "options": [
       {
-        "text": "Rischia la punizione e va' a salvare Hermione con Harry e Ron",
+        "text": "Rischia la punizione e vai a salvare Hermione con Harry e Ron",
         "impact": { "audacia": 10, "reputazione": 5 },
         "next_node": "troll_Girlsbathroom"
       },
       {
-        "text": "Segui il prefetto al dormitorio (Azione Prudente)",
+        "text": "Segui il prefetto al dormitorio",
         "impact": { "audacia": -10, "reputazione": 10 },
         "next_node": "abandon_hermione"
       }
@@ -79,8 +79,8 @@
   },
   {
     "id": "teachers_confrontation",
-    "image_id": "",
-    "text": "La McGranitt, Piton e Raptor irrompono nel bagno. La McGranitt pretende spiegazioni su cosa ci facciate qui.",
+    "image_id": "teachers_confrontation",
+    "text": "McGranitt: pretendo delle spiegazioni! Cosa ci fate qui?!",
     "options": [
       {
         "text": "Lascia che Hermione si prenda la colpa per proteggervi",
@@ -96,14 +96,14 @@
   },
   {
     "id": "snape_injury_notice",
-    "image_id": "",
+    "image_id": "snape_injury_notice",
     "type": "text",
-    "text": "Mentre la McGranitt vi congeda, noti che Piton ha un brutto taglio insanguinato sulla coscia e tenta nervosamente di coprirlo. Ha decisamente qualcosa da nascondere...",
+    "text": "Noti che Piton ha un brutto taglio insanguinato sulla coscia e tenta nervosamente di coprirlo. Ha decisamente qualcosa da nascondere...",
     "next_node": "post_troll_breakfast"
   },
   {
     "id": "post_troll_breakfast",
-    "image_id": "",
+    "image_id": "post_troll_breakfast",
     "type": "text",
     "text": "Piton: 'Dopo aver sconfitto un troll, una partita di Quidditch deve essere un giochetto... anche se contro Serpeverde.'",
     "next_node": "nimbus2000_mail"
