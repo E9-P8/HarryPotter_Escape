@@ -116,4 +116,41 @@ export class GameDataService {
 
   openManual(): void { this.isManualOpen = true; }
   closeManual(): void { this.isManualOpen = false; }
+
+  getFlags(): Record<string, boolean> {
+   return this._gameState$.getValue().flags;
+  }
+
+  getPlayerProfile() {
+
+  const flags = this.getFlags();
+
+  return {
+
+    friendship:
+      Number(flags.hermioneRescued) +
+      Number(flags.friendshipChoice) +
+      Number(flags.protectFriends),
+
+    curiosity:
+      Number(flags.studentManualRead) +
+      Number(flags.visited3HeadsDog) +
+      Number(flags.followedCuriosity),
+
+    courage:
+      Number(flags.riskTaker) +
+      Number(flags.hermioneRescued) +
+      Number(flags.enteredRestrictedSection),
+
+    ambition:
+      Number(flags.isSeeker) +
+      Number(flags.wantsRecognition),
+
+    knowledge:
+      Number(flags.knowledgeInterest) +
+      Number(flags.examinedAllQuidditchObjects)
+
+  };
+
+}
 }

@@ -14,7 +14,10 @@
       "text": "Ron: *wizardName*, presto! Nascondiamoci dietro quella porta!",
       "options": [
         { "text": "Torna nel dormitorio, questa è zona proibita", "impact": { "reputazione": 0 }, "next_node": "dormitory_avoid_dog" },
-        { "text": "Segui Ron ed entra nella porta", "impact": { "reputazione": 0 }, "next_node": "alohomora" }
+        { "text": "Segui Ron ed entra nella porta", 
+          "impact": { "reputazione": 0 }, 
+          "set_flag": {"followedFriends": true},
+          "next_node": "alohomora" }
       ]
     }, 
     {
@@ -120,6 +123,7 @@
           "opened_image": "assets/img/Part6/stemma_aperto.png"
         }
       ],
+      "set_flag": {"examinedAllQuidditchObjects": true},
       "next_node": "feather_lessons"
     },
     {

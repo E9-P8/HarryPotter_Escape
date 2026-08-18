@@ -37,6 +37,7 @@
       {
         "text": "Rischia la punizione e vai a salvare Hermione con Harry e Ron",
         "impact": { "audacia": 10, "reputazione": 5 },
+        "set_flag": {"friendshipChoice": true},
         "next_node": "troll_Girlsbathroom"
       },
       {
@@ -90,6 +91,7 @@
       {
         "text": "Prendi la parola e difendi l'operato del gruppo",
         "impact": { "audacia": 10, "reputazione": -5 },
+        "set_flag": {"protectFriends": true},
         "next_node": "snape_injury_notice"
       }
     ]
@@ -214,8 +216,9 @@
     "text": "Harry indossa il mantello per andare nella Sezione Proibita della biblioteca a cercare Flamel. Vuoi accompagnarlo sotto il mantello?",
     "options": [
       {
-        "text": "Accompagna Harry nella Sezione Proibita (Azione Proibita)",
+        "text": "Accompagna Harry nella Sezione Proibita",
         "impact": { "audacia": 10 },
+        "set_flag": {"enteredRestrictedSection": true},
         "next_node": "library_stealth"
       },
       {
@@ -256,6 +259,7 @@
       {
         "text": "Scegliete di entrare nella porta",
         "impact": { "audacia": 10 },
+        "set_flag": { "mirrorRevealed": true},
         "next_node": "mirror_erised_room"
       },
       {
@@ -273,6 +277,7 @@
       {
         "text": "La curiosità è troppa. Sveglia Ron e chiedigli di venire con te",
         "impact": { },
+        "set_flag": { "mirrorRevealed": true},
         "next_node": "mirror_erised_room"
       },
       {

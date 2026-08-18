@@ -6,7 +6,7 @@
       "image_id": "HogwartsWelcome",
       "text": "Benvenuti ad hogwarts. tra qualche minuto varcherete questa soglia e vi unirete ai vostri compagni ma prima verrete smistati nelle vostre case. Sono: GRIFONDORO, TASSOROSSO, CORVONERO e SERPEVERDE. Per il tempo che starete qui la vostra casa sarà la vostra famiglia. I trionfi che otterrete le faranno guadagnare punti e ogni violazione delle regole le farà perdere punti. A fine anno, alla casa con più punti verrà assegnata la coppa delle case. La cerimonia dello smistamento inizierà tra pochissimo!",
       "options": [
-        { "text": "Consulta il Manuale dello Studente", "next_node": "manual" },
+        { "text": "Consulta il Manuale dello Studente", "set_flag": { "studentManualRead": true }, "next_node": "manual" },
         { "text": "Procedi alla Cerimonia", "next_node": "smistamento" }
       ]
     },
@@ -64,7 +64,8 @@
       "text": "Piton: *wizardName*! Dimmi, cosa ottengo se verso radice di asfodelo in un infuso di artemisia?'",
       "options": [
         { "text": "Rispondi correttamente (Pozione di morte vivente)", 
-        "impact": { "reputazione": 20 }, 
+         "impact": { "reputazione": 20 }, 
+         "set_flag": {"knowledgeInterest": true},
          "next_node": "posta" 
         },
         { "text": "Non lo so, professore.", 
@@ -81,6 +82,7 @@
         { 
         "text": "Nello stomaco di una capra.", 
         "impact": { "reputazione": 10 }, 
+        "set_flag": {"knowledgeInterest": true},
         "next_node": "posta" 
         },
         { 
@@ -128,7 +130,7 @@
       "image_id": "malfoy_volo",
       "text": "Malfoy: Cosa c'è *wizardName*, pensi di non arrivarci?",
       "options": [
-        { "text": "Insegui Malfoy", "impact": { "audacia": 0 }, "next_node": "catch_sphere" },
+        { "text": "Insegui Malfoy", "impact": { "audacia": 0 }, "set_flag": {"riskTaker": true}, "next_node": "catch_sphere" },
         { "text": "Ascolta Hermione e resta a terra", "impact": { "reputazione": 0 }, "next_node": "Seeker" }
       ] 
     },
@@ -166,7 +168,7 @@
     { 
       "text": "Chiedi di entrare in squadra", 
       "condition": "isSeeker == false",
-      "set_flag": { "isSeeker": true },
+      "set_flag": { "isSeeker": true, "wantsRecognition": true },
       "impact": { "status": "quidditch_team" },
       "next_node": "part_6" 
     },
