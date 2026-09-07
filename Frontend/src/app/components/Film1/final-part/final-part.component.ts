@@ -43,6 +43,8 @@ export class FinalPartComponent implements OnInit, OnDestroy {
   wizardName: string = this.gameService.wizardName;  //  questa la prende dal GameDataService
   isSeeker: boolean = this.gameService.getFlag("isSeeker");  //  questa la prende dal GameDataService
 
+  bgAnimationClass: string = ''; 
+
   loadPart() {
 
     this.http.get('assets/data/final_part.json').subscribe(data => {

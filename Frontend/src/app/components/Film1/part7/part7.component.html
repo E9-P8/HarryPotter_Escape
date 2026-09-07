@@ -40,6 +40,44 @@
           />
         </div>
       </div>
+      <!--TROLL ANIMATION-->
+      <div
+        class="troll-animation-overlay"
+        *ngIf="
+          actualPhase?.type === 'animation' &&
+          actualPhase?.id === 'troll_Girlsbathroom'
+        "
+        [ngClass]="trollAnimClass"
+      >
+        <div class="troll-wrapper">
+          <img
+            src="../../../assets/img/Part7/troll.png"
+            alt="Troll"
+            class="troll-sprite"
+          />
+        </div>
+
+        <!-- LAYER POLVERE E MACERIE DENSE -->
+        <div class="dust-overlay"></div>
+        <div class="debris-container">
+          <!-- Macerie e Rocce grandi -->
+          <div class="rock rock-1"></div>
+          <div class="rock rock-2"></div>
+          <div class="rock rock-3"></div>
+          <div class="rock rock-4"></div>
+          <div class="rock rock-5"></div>
+          <div class="rock rock-6"></div>
+          <div class="rock rock-7"></div>
+          <div class="rock rock-8"></div>
+          <!-- Frammenti di piastrelle / specchio rotto -->
+          <div class="shard shard-1"></div>
+          <div class="shard shard-2"></div>
+          <div class="shard shard-3"></div>
+          <div class="shard shard-4"></div>
+          <div class="shard shard-5"></div>
+          <div class="shard shard-6"></div>
+        </div>
+      </div>
       <div
         class="dialogue-box"
         *ngIf="
@@ -84,6 +122,16 @@
           ></app-minigame-hub
         >
       </div>
+      <ng-container *ngIf="showOwls">
+        <img
+          *ngFor="let owl of flyingOwls"
+          [src]="'../../../../assets/img/Part5/' + owl.img"
+          class="flying-owl-item"
+          [style.left.%]="owl.x"
+          [style.top.%]="owl.y"
+          [style.transform]="owl.speedX < 0 ? 'scaleX(-1)' : 'scaleX(1)'"
+        />
+      </ng-container>
     </div>
   </div>
 </div>

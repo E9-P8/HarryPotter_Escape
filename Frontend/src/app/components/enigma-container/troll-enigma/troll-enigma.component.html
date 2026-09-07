@@ -1,1 +1,160 @@
-<p>troll-enigma works!</p>
+<div class="troll-fullscreen-wrapper">
+  <!--  OVERLAY DI TEST: GRIGLIA COORDINATE (Disattivabile finiti i test) 
+  <ng-container *ngIf="currentPhase === 2">
+    <div *ngFor="let row of gridToPixelMap; let rIndex = index">
+      <div
+        *ngFor="let cell of row; let cIndex = index"
+        class="debug-grid-cell"
+        [style.left.%]="cell.x"
+        [style.top.%]="cell.y"
+        [class.target-cell]="rIndex === targetPos.r && cIndex === targetPos.c"
+      >
+        <span class="debug-coord">R{{ rIndex }},C{{ cIndex }}</span>
+      </div>
+    </div>
+  </ng-container>
+-->
+
+  <div class="magical-timer" [class.critical]="timeLeft <= 10">
+    <div class="timer-display">
+      <span class="timer-label">Tempo Rimasto</span>
+      <span class="timer-value">{{ formattedTime }}</span>
+    </div>
+  </div>
+
+  <!-- SFONDO DEL BAGNO A TUTTO SCHERMO -->
+  <div class="bathroom-background" [class.phase2-bg]="currentPhase === 2">
+    <!-- CONTENITORE PRINCIPALE DEL TROLL -->
+    <div
+      class="troll-composite-container"
+      [style.left.%]="getTrollPixelPos().x"
+      [style.top.%]="getTrollPixelPos().y"
+      [style.transform]="'translate(-50%, -50%) scale(' + getTrollScale() + ')'"
+    >
+      <!-- FASE 1: Troll con Mazza -->
+      <img
+        *ngIf="currentPhase === 1 && !clubFloating"
+        src="assets/img/Part7/troll.png"
+        alt="Troll con Mazza"
+        class="troll-single-img"
+      />
+
+      <!-- FASE 1: Troll Senza Mazza -->
+      <img
+        *ngIf="currentPhase === 1 && clubFloating"
+        src="assets/img/Part7/troll_body.png"
+        alt="Troll Senza Mazza"
+        class="troll-single-img"
+      />
+
+      <!-- FASE 2: -->
+      <img
+        *ngIf="currentPhase === 2 && !trollDefeated"
+        [src]="getTrollDirectionImage()"
+        alt="Troll Direzionale"
+        class="troll-single-img"
+      />
+      <img
+        *ngIf="trollDefeated"
+        src="assets/img/Part7/troll_ko.png"
+        alt="Troll Sconfitto"
+        class="troll-single-img knocked-out"
+      />
+    </div>
+
+    <div
+      *ngIf="clubFloating"
+      class="club-entity"
+      [class.floating-up]="isClubRising"
+      [class.moving-to-target]="isClubMovingToTarget || currentPhase === 2"
+      [class.interactive-glowing]="isTrollUnderClub && !trollHit"
+      [class.smashing]="trollHit"
+      [style.left.%]="
+        isClubMovingToTarget || currentPhase === 2
+          ? getTargetPixelPos().x
+          : getTrollPixelPos().x
+      "
+      [style.top.%]="
+        isClubMovingToTarget || currentPhase === 2
+          ? getTargetPixelPos().y
+          : getTrollPixelPos().y
+      "
+      (click)="smashTroll()"
+    >
+      <img src="assets/img/Part7/troll_club.png" alt="Mazza Troll" />
+    </div>
+
+    <div
+      class="club-shadow-area"
+      *ngIf="currentPhase === 2 && !trollDefeated"
+      [style.left.%]="getTargetPixelPos().x"
+      [style.top.%]="getTargetPixelPos().y"
+    ></div>
+
+    <!-- FASE 1: TRACCIATO WINGARDIUM LEVIOSA -->
+    <ng-container *ngIf="currentPhase === 1">
+      <svg class="magic-svg">
+        <polyline
+          *ngIf="selectedColor && currentPathPoints.length > 1"
+          [attr.points]="getPolylinePoints()"
+          [attr.stroke]="getColorHex(selectedColor)"
+          class="magic-line"
+        />
+      </svg>
+
+      <!-- Particelle Magiche Fluttuanti -->
+      <div
+        *ngFor="let p of nodes"
+        class="magic-particle"
+        [style.left.%]="p.x"
+        [style.top.%]="p.y"
+        [class.active]="isNodeSelected(p)"
+        (click)="selectNode(p)"
+      >
+        <span
+          class="particle-core"
+          [style.background-color]="getColorHex(p.color)"
+        ></span>
+        <span
+          class="particle-glow"
+          [style.box-shadow]="'0 0 10px ' + getColorHex(p.color)"
+        ></span>
+      </div>
+    </ng-container>
+
+    <!-- FASE 2: BARRA LANCI OGGETTI -->
+    <div class="throw-item-bar" *ngIf="currentPhase === 2 && !trollHit">
+      <p class="throw-hint">
+        Distrai il troll lanciando oggetti nell'ambiente:
+      </p>
+      <div class="item-buttons">
+        <button
+          (click)="throwItem('rock')"
+          [disabled]="isMoving"
+          class="btn-throw"
+        >
+          <img src="assets/img/Part7/rock.png" alt="Sasso" />
+          <span>Sasso</span>
+        </button>
+
+        <button
+          (click)="throwItem('wood')"
+          [disabled]="isMoving"
+          class="btn-throw"
+        >
+          <img src="assets/img/Part7/wood_piece.png" alt="Legno" />
+          <span>Legno</span>
+        </button>
+
+        <button
+          (click)="throwItem('bucket')"
+          [disabled]="isMoving"
+          class="btn-throw"
+        >
+          <img src="assets/img/Part7/bucket.png" alt="Secchio" />
+          <span>Secchio</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

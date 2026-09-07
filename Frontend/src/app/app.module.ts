@@ -27,6 +27,10 @@ import { SphereMinigameComponent } from './components/minigame-container/sphere-
 import { EnigmaDoorComponent } from './components/enigma-container/enigma-door/enigma-door.component';
 import { HeadsDogMinigameComponent } from './components/minigame-container/heads-dog-minigame/heads-dog-minigame.component';
 import { FeatherEnigmaComponent } from './components/enigma-container/feather-enigma/feather-enigma.component';
+import { TrollEnigmaComponent } from './components/enigma-container/troll-enigma/troll-enigma.component';
+import { QuidditchEnigmaComponent } from './components/enigma-container/quidditch-enigma/quidditch-enigma.component';
+import { FireMinigameComponent } from './components/minigame-container/fire-minigame/fire-minigame.component';
+import { LibraryEnigmaComponent } from './components/enigma-container/library-enigma/library-enigma.component';
 import { Part8Component } from './components/Film1/part8/part8.component';
 import { FinalPartComponent } from './components/Film1/final-part/final-part.component';
 
@@ -53,6 +57,10 @@ import { FinalPartComponent } from './components/Film1/final-part/final-part.com
     EnigmaDoorComponent,
     HeadsDogMinigameComponent,
     FeatherEnigmaComponent,
+    TrollEnigmaComponent,
+    QuidditchEnigmaComponent,
+    LibraryEnigmaComponent,
+    FireMinigameComponent,
     Part8Component,
     FinalPartComponent
   ],

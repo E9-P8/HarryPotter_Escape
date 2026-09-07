@@ -32,7 +32,7 @@ export class Part6Component implements OnInit, OnDestroy {
   wizardName: string = this.gameService.wizardName;  //  questa la prende dal GameDataService
   isSeeker: boolean = this.gameService.getFlag("isSeeker");  //  questa la prende dal GameDataService
 
-  bgAnimationClass: string = '';
+  bgAnimationClass: string = ''; 
   stairAnimationClass: string = '';
   currentBgImage: string = '';
 

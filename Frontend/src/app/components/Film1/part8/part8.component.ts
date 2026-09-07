@@ -43,6 +43,7 @@ export class Part8Component implements OnInit, OnDestroy {
 
   wizardName: string = this.gameService.wizardName;  //  questa la prende dal GameDataService
   isSeeker: boolean = this.gameService.getFlag("isSeeker");  //  questa la prende dal GameDataService
+  bgAnimationClass: string = ''; 
 
   loadPart() {
 

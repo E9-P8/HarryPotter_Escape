@@ -1,1 +1,93 @@
-<p>quidditch-enigma works!</p>
+<div class="quidditch-container">
+  <div class="hud-panel">
+    <div class="attempts-box">
+      <span class="hud-label">Tentativi Rimasti:</span>
+      <span class="hud-value">{{ attemptsLeft }} / {{ maxAttempts }}</span>
+    </div>
+    <div class="message-box">
+      <p>{{ messageText }}</p>
+    </div>
+  </div>
+
+  <div class="pitch-viewport">
+    <img
+      src="assets/img/Part7/quidditch_check.png"
+      alt="Stadio Quidditch"
+      class="pitch-bg"
+    />
+
+    <svg class="svg-trail-layer">
+      <g *ngFor="let trail of snitchTrails" [style.opacity]="trail.opacity">
+        <!-- Strato 1: Polvere dorata soffusa -->
+        <line
+          [attr.x1]="trail.fromX + '%'"
+          [attr.y1]="trail.fromY + '%'"
+          [attr.x2]="trail.toX + '%'"
+          [attr.y2]="trail.toY + '%'"
+          class="stardust-layer1"
+        />
+
+        <!-- Strato 2: Micro-scintille bianche semitrasparenti -->
+        <line
+          [attr.x1]="trail.fromX + '%'"
+          [attr.y1]="trail.fromY + '%'"
+          [attr.x2]="trail.toX + '%'"
+          [attr.y2]="trail.toY + '%'"
+          class="stardust-layer2"
+        />
+      </g>
+    </svg>
+
+    <ng-container *ngIf="gameState === 'selection'">
+      <div
+        *ngFor="let zone of zones"
+        class="interactive-zone-target"
+        [style.left.%]="zone.x"
+        [style.top.%]="zone.y"
+        (click)="selectZone(zone)"
+      >
+        <div class="target-ping"></div>
+        <span class="zone-label">{{ zone.name }}</span>
+      </div>
+    </ng-container>
+
+    <!-- BOCCINO D'ORO -->
+    <div
+      *ngIf="snitchVisible && snitchPos"
+      class="snitch-entity"
+      [style.left.%]="snitchPos.x"
+      [style.top.%]="snitchPos.y"
+    >
+      <img src="assets/img/Part7/snitch.png" alt="Boccino d'Oro" />
+    </div>
+
+    <!-- HARRY POTTER -->
+    <div
+      class="harry-entity"
+      [class.flying]="harryState === 'flying'"
+      [class.waiting]="harryState === 'waiting'"
+      [class.success]="harryState === 'success'"
+      [class.fail]="harryState === 'fail'"
+      [style.left.%]="harryPos.x"
+      [style.top.%]="harryPos.y"
+    >
+      <img
+        *ngIf="harryState === 'flying' || harryState === 'waiting'"
+        src="assets/img/Part7/harry_flying.png"
+        alt="Harry in Volo"
+      />
+
+      <img
+        *ngIf="harryState === 'success'"
+        src="assets/img/Part7/harry_snitch_caught.png"
+        alt="Harry Cattura Boccino"
+      />
+
+      <img
+        *ngIf="harryState === 'fail'"
+        src="assets/img/Part7/harry_disappointed.png"
+        alt="Harry Deluso"
+      />
+    </div>
+  </div>
+</div>

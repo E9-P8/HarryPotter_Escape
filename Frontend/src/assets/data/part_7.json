@@ -49,22 +49,30 @@
   },
   {
     "id": "abandon_hermione",
-    "image_id": "",
+    "image_id": "abandon_hermione",
     "type": "text",
     "set_flag": { "hermioneRescued": false },
-    "text": "Decidi di non andare. Più tardi scoprite che gli insegnanti hanno salvato Hermione, ma lei è rimasta gravemente ferita e delusa dal vostro distacco.",
+    "text": "Ron: Pensi che Hermione sia a salvo? Chissa' se e' ha trovato il troll... E se non è riuscita a sconfiggerlo?",
+    "next_node": "abandon_hermione_2"
+  },
+  {
+    "id": "abandon_hermione_2",
+    "image_id": "abandon_hermione_2",
+    "type": "text",
+    "set_flag": { "hermioneRescued": false },
+    "text": "Hermione: non me lo sarei mai aspettata da voi!",
     "next_node": "post_troll_breakfast"
   },
   {
     "id": "troll_Girlsbathroom",
-    "image_id": "",
+    "image_id": "bathroom_intact",
     "type": "animation",
     "text": "mettere distruzione bagni animation",
     "next_node": "troll_enigma"
   },
   {
     "id": "troll_enigma",
-    "image_id": "",
+    "image_id": "troll_enigma",
     "type": "enigma",
     "set_flag": { "hermioneRescued": true },
     "enigma_id": "TROLL_ENIGMA",  
@@ -73,9 +81,17 @@
   },
   {
     "id": "troll_fail_harry_dangling",
-    "image_id": "",
+    "image_id": "troll_fail_harry_dangling",
     "type": "text",
-    "text": "Sbagli l'incantesimo! Il troll afferra Harry per le caviglie tenendolo a testa in giù mentre agita il bastone. Fortunatamente giungono i professori a sconfiggere la fiera!",
+    "set_flag": { "savedHermione": false },
+    "text": "Aaaargh! Aiuto!!",
+    "next_node": "teachers_help"
+  },
+  {
+    "id": "teachers_help",
+    "image_id": "teachers_help",
+    "type": "text",
+    "text": "Wingardium Leviosa!",
     "next_node": "teachers_confrontation"
   },
   {
@@ -100,7 +116,6 @@
     "id": "snape_injury_notice",
     "image_id": "snape_injury_notice",
     "type": "text",
-    "text": "Noti che Piton ha un brutto taglio insanguinato sulla coscia e tenta nervosamente di coprirlo. Ha decisamente qualcosa da nascondere...",
     "next_node": "post_troll_breakfast"
   },
   {
@@ -110,16 +125,63 @@
     "text": "Piton: 'Dopo aver sconfitto un troll, una partita di Quidditch deve essere un giochetto... anche se contro Serpeverde.'",
     "next_node": "nimbus2000_mail"
   },
-  {
+    {
     "id": "nimbus2000_mail",
-    "image_id": "",
+    "image_id": "nimbus2000_mail",
     "type": "animation",
-    "text": "Harry: è la famosissima Nimbus 2000! Harry collega le cose: 'Piton zoppicava perché ha usato il troll come diversivo per superare il cane a tre teste di cui parlava Hagrid!'",
+    "next_node": "nimbus2000"
+  },
+  {
+    "id": "nimbus2000",
+    "image_id": "nimbus2000_mail",
+    "options": [
+      {
+         "text": "Harry: 'Wow! È una Nimbus 2000! La userò nella prossima partita!'",
+          "condition": "isSeeker == true",
+          "next_node": "snape_theory_check"
+        },
+        {
+         "text": "Harry: 'Wow! È una Nimbus 2000! Ma a cosa potrà mai servirmi?'",
+         "condition": "isSeeker == false",
+         "next_node": "snape_theory_check"
+      }
+    ]
+  },
+  {
+    "id": "snape_theory_check",
+    "image_id": "snape_theory_check",
+    "options": [
+      {
+        "text": "C'e' qualcosa che non mi torna...",
+        "condition": "visited3HeadsDog == true",
+        "next_node": "snape_theory_1"
+      },
+      {
+        "text": "C'e' qualcosa che non mi torna...",
+        "condition": "visited3HeadsDog == false",
+        "next_node": "snape_theory_alt"
+      }
+    ]
+  },
+  {
+    "id": "snape_theory_alt",
+    "image_id": "snape_theory_alt",
+    "set_flag": {"suspectsSnape": true},
+    "type": "text",
+    "text": "Harry: 'Piton continua a comportarsi in modo molto strano. Sono sicuro che stia nascondendo qualcosa.'",
+    "next_node": "quidditch_check"
+  },
+  {
+    "id": "snape_theory_1",
+    "image_id": "snape_theory_1",
+    "set_flag": {"suspectsSnape": true},
+    "type": "text",
+    "text": "Harry: 'Aspetta un momento...Piton zoppicava proprio dopo la notte del troll. Secondo me ha usato il troll come diversivo per cercare di superare il cane a tre teste di cui parlava Hagrid.''",
     "next_node": "quidditch_check"
   },
   {
     "id": "quidditch_check",
-    "image_id": "",
+    "image_id": "quidditch_check",
     "options": [
       {
         "text": "Entra in campo per la partita di Quidditch!",
@@ -127,7 +189,7 @@
         "next_node": "quidditch_enigma"
       },
       {
-        "text": "Siediti sugli spalti a tifare (Non sei il Cercatore)",
+        "text": "Siediti sugli spalti a tifare",
         "condition": "isSeeker == false",
         "next_node": "quidditch_spectator"
       }
@@ -137,39 +199,44 @@
     "id": "quidditch_enigma",
     "image_id": "",
     "type": "enigma",
-    "minigame_id": "QUIDDITCH_ENIGMA", 
+    "enigma_id": "QUIDDITCH_ENIGMA",
     "success_node": "quidditch_victory",
     "fail_node": "quidditch_loss"
   },
   {
     "id": "quidditch_spectator",
     "image_id": "",
+    "type": "animation",
+    "next_node": "quidditch_spectator2"
+  },
+  {
+    "id": "quidditch_spectator2",
+    "image_id": "",
     "type": "text",
-    "text": "Dagli spalti noti che la scopa di Harry si muove all'impazzata! Hermione punta il cannocchiale: 'È Piton! Sta fissando la scopa borbottando un incantesimo!'",
+    "text": "Hermione: 'È Piton! Sta fissando la scopa borbottando un incantesimo!'",
     "next_node": "hermione_fire_spell"
   },
   {
     "id": "quidditch_victory",
-    "image_id": "",
+    "image_id": "quidditch_victory",
     "type": "text",
     "impact": { "gryffindor_points": 150 },
     "text": "Afferri il Boccino d'Oro! 150 punti a Grifondoro e vittoria schiacciante!",
-    "next_node": "hagrid_hut_flamel_hint"
+    "next_node": "hagrid_visit_check"
   },
   {
     "id": "quidditch_loss",
-    "image_id": "",
+    "image_id": "quidditch_loss",
     "type": "text",
-    "impact": { "gryffindor_points": -150 },
+    "impact": { "gryffindor_points": 0 },
     "text": "Non riesci a prendere il Boccino in tempo. La partita si prolunga nel caos.",
-    "next_node": "hagrid_hut_flamel_hint"
+    "next_node": "hagrid_visit_check"
   },
   {
     "id": "hermione_fire_spell",
     "image_id": "",
     "type": "minigame",
     "minigame_id": "FIRE_MINIGAME",
-    "text": "Hermione corre sotto la tribuna dei professori e lancia un incantesimo infuocato sul mantello di Piton, interrompendo il suo contatto visivo con la scopa di Harry!",
     "next_node": "hagrid_visit_check"
   },
   {
@@ -185,7 +252,7 @@
       {
         "text": "Rientra nel dormitorio per festeggiare la giornata",
         "condition": "visited3HeadsDog == false",
-        "next_node": "christmas_gift_cloak"
+        "next_node": "christmas_gift"
       }
     ]
   },
@@ -193,27 +260,42 @@
     "id": "hagrid_flamel",
     "image_id": "",
     "type": "text",
-    "text": "A casa di Hagrid, raccontate dell'attacco al cane Fuffy e del sospetto su Piton. Hagrid scappa: 'Fuffy non deve preoccuparvi! E quello che c'è sotto è tra Silente e Nicolas Flamel!'",
+    "text": "Harry: 'Hagrid, quel cane era ENORME! E aveva tre teste! C'era una botola sotto di lui: protegge qualcosa, vero?'",
     "next_node": "hagrid_flamel2"
   },
   {
     "id": "hagrid_flamel2",
     "image_id": "",
     "type": "text",
-    "text": "Hagrid si blocca: 'Non dovevo dirlo.'",
-    "next_node": "christmas_gift_cloak"
+    "text": "Hagrid : 'Fuffy non deve preoccuparvi! E quello che c'è sotto è tra Silente e Nicolas Flamel!'",
+    "next_node": "hagrid_flamel3"
   },
   {
-    "id": "christmas_gift_cloak",
+    "id": "hagrid_flamel3",
     "image_id": "",
-    "type": "animation",
-    "text": "È Natale. Ron sveglia Harry sfoggiando il suo maglione di lana burgundy con la 'R'. Tra i regali c'è un pacco anonimo con un biglietto: 'Tuo padre me lo affidò prima di morire. Fanne buon uso.' È il Mantello dell'Invisibilità!",
+    "set_flag": { "knowsFlamel": true},
+    "type": "text",
+    "text": "Hagrid: 'Non dovevo dirlo.'",
+    "next_node": "christmas_gift"
+  },
+  {
+    "id": "christmas_gift",
+    "image_id": "",
+    "type": "Text",
+    "text": "foto di Ron che sfoggia il suo maglione di lana burgundy con la 'R'.",
+    "next_node": "christmas_gift_harry"
+  },
+  {
+    "id": "christmas_gift_harry",
+    "image_id": "",
+    "type": "Text",
+    "text": "Tra i regali c'è un pacco anonimo con un biglietto: 'Tuo padre me lo affidò prima di morire. Fanne buon uso.' È il Mantello dell'Invisibilità!",
     "next_node": "restricted_section_choice"
   },
   {
     "id": "restricted_section_choice",
     "image_id": "",
-    "text": "Harry indossa il mantello per andare nella Sezione Proibita della biblioteca a cercare Flamel. Vuoi accompagnarlo sotto il mantello?",
+    "text": "Harry indossa il mantello per andare nella Sezione Proibita della biblioteca a cercare Flamel. *WizardName* mi accompagni?",
     "options": [
       {
         "text": "Accompagna Harry nella Sezione Proibita",
@@ -240,9 +322,9 @@
     "id": "filch_catch_warning",
     "image_id": "",
     "type": "text",
-    "text": "Gazza: 'So che sei qui! La lampada è ancora calda!'",
+    "text": "Gazza: 'So che sei qui! La lampada è ancora calda! Torna immediatamente al dormitorio!'",
      "impact": { "reputazione": -25 },
-    "next_node": "snape_quirrell_argument"
+    "next_node": "dormitory"
   },
   {
     "id": "snape_quirrell_argument",
@@ -297,8 +379,9 @@
   {
     "id": "mirror_parents_revealed",
     "image_id": "",
-    "type": "text",
-    "text": "Riconosci lo Specchio delle Brame. Harry si avvicina commosso: vede i suoi genitori accanto a lui sorridenti.",
+    "type": "animation",
+    "set_flag": { "mirrorKnowledge": true},
+    "text": "*mettere un'animazione senza testo*",
     "next_node": "dumbledore_mirror_speech"
   },
   {

@@ -18,3 +18,16 @@
   *ngIf="enigmaId === 'FEATHER_QUIZ'"
   (quizSolved)="onQuizSolved($event)"
 ></app-feather-enigma>
+<app-troll-enigma
+  *ngIf="enigmaId === 'TROLL_ENIGMA'"
+  (quizSolved)="onQuizSolved($event)"
+>
+</app-troll-enigma>
+<app-quidditch-enigma
+  *ngIf="enigmaId === 'QUIDDITCH_ENIGMA'"
+  (quizSolved)="onQuizSolved($event)"
+></app-quidditch-enigma>
+<app-library-enigma
+  *ngIf="enigmaId === 'STEALTH_FILCH_ENIGMA'"
+  (quizSolved)="onQuizSolved($event)"
+></app-library-enigma>
