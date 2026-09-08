@@ -1,1 +1,198 @@
-<p>fire-minigame works!</p>
+<div class="quidditch-eye-container">
+  <div
+    class="hud-resistance"
+    *ngIf="currentPhase !== 'victory' && currentPhase !== 'loss'"
+  >
+    <div class="resistance-label">
+      Resistenza di Harry: {{ harryResistance }}%
+    </div>
+    <div class="resistance-bar-track">
+      <div
+        class="resistance-bar-fill"
+        [style.width.%]="harryResistance"
+        [class.critical]="harryResistance < 30"
+      ></div>
+    </div>
+  </div>
+
+  <!-- FASE 1 -->
+  <div
+    class="phase-stage phase-observation"
+    *ngIf="currentPhase === 'observation'"
+  >
+    <div class="background-pitch"></div>
+    <div class="harry-shaking-entity">
+      <img src="assets/img/Part7/harry_broom.png" alt="Harry sulla scopa" />
+    </div>
+
+    <div class="action-footer">
+      <button class="btn-binoculars" (click)="openBinoculars()"></button>
+    </div>
+  </div>
+
+  <!-- FASE 2: VISTA BINOCOLO -->
+  <div
+    class="phase-stage phase-binoculars"
+    *ngIf="currentPhase === 'binoculars'"
+  >
+    <div class="binocular-overlay"></div>
+
+    <!-- Scena 1: Zoom Harry -->
+    <div class="binocular-viewport" *ngIf="binocularScene === 1">
+      <img
+        src="/assets/img/Part7/quidditch_zoom.png"
+        class="zoom-background"
+        alt="Pitch Background"
+      />
+
+      <div class="harry-zoom-wrapper">
+        <img
+          src="/assets/img/Part7/harry_zoom.png"
+          class="zoom-harry"
+          alt="Harry Potter"
+        />
+      </div>
+
+      <div class="binocular-mask"></div>
+
+      <button class="nav-btn next-scene" (click)="switchBinocularScene(2)">
+        Visione Spalti ➔
+      </button>
+    </div>
+
+    <!-- Scena 2: Spalti Piton -->
+    <div class="binocular-viewport" *ngIf="binocularScene === 2">
+      <img
+        src="assets/img/Part7/spalti_piton.png"
+        class="full-screen-spalti"
+        alt="Spalti Piton"
+      />
+
+      <!-- Pulsante Pulsante su Piton -->
+      <button
+        class="snape-target-btn"
+        (click)="selectSnape()"
+        title="Individua Piton"
+      ></button>
+
+      <button class="nav-btn prev-scene" (click)="switchBinocularScene(1)">
+        ⬅️ Torna ad Harry
+      </button>
+    </div>
+  </div>
+
+  <!-- FASE 3: TRAIETTORIA SPARK -->
+  <div
+    class="phase-stage phase-trajectory"
+    *ngIf="currentPhase === 'trajectory'"
+  >
+    <div class="spalti-side-view" [class.snape-burning]="isSnapeOnFire">
+      <div class="hermione-origin">Hermione</div>
+
+      <!-- Animazione Scintilla Magica -->
+      <div class="spark-particle" *ngIf="isSpellCasting">✨</div>
+
+      <!-- Bersaglio Piton -->
+      <div class="snape-target" [class.on-fire]="isSnapeOnFire">
+        <img
+          [src]="
+            isSnapeOnFire
+              ? 'assets/images/quidditch/snape_fire.png'
+              : 'assets/images/quidditch/snape_normal.png'
+          "
+          alt="Piton"
+        />
+      </div>
+    </div>
+
+    <!-- Sezione Griglia Oggetti & Sequenza -->
+    <div class="trajectory-controls">
+      <!-- Griglia Oggetti -->
+      <div class="objects-grid">
+        <div
+          *ngFor="let obj of availableObjects"
+          class="object-card"
+          (click)="selectObject(obj)"
+        >
+          <span class="icon">{{ obj.icon }}</span>
+          <span class="name">{{ obj.name }}</span>
+        </div>
+      </div>
+
+      <!-- Indizio Dinamico -->
+      <div class="hint-box" *ngIf="activeHint">
+        💬 <em>"{{ activeHint }}"</em>
+      </div>
+
+      <!-- Costruttore Sequenza -->
+      <div class="sequence-builder">
+        <div class="sequence-list">
+          <div
+            *ngFor="let step of selectedSequence; let i = index"
+            class="sequence-step"
+          >
+            <span>{{ step.name }}</span>
+            <button class="btn-remove" (click)="removeSequenceItem(i)">
+              ✕
+            </button>
+            <span class="arrow" *ngIf="i < selectedSequence.length - 1">↓</span>
+          </div>
+          <div
+            class="sequence-step target-step"
+            *ngIf="selectedSequence.length > 0"
+          >
+            <span>↓ Mantello di Piton</span>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button
+            class="btn-secondary"
+            (click)="clearSequence()"
+            [disabled]="isSpellCasting"
+          >
+            Svuota
+          </button>
+          <button
+            class="btn-magic"
+            (click)="castSpell()"
+            [disabled]="selectedSequence.length === 0 || isSpellCasting"
+          >
+            Lancia Incantesimo
+          </button>
+        </div>
+      </div>
+
+      <div class="error-msg" *ngIf="errorMessage">{{ errorMessage }}</div>
+    </div>
+  </div>
+
+  <!-- FASE VITTORIA -->
+  <div
+    class="phase-stage phase-result victory"
+    *ngIf="currentPhase === 'victory'"
+  >
+    <div class="victory-bg"></div>
+    <div class="victory-card">
+      <h2>Piton interrompe l'incantesimo!</h2>
+      <p>
+        Harry recupera il controllo della scopa e aggranffa il Boccino d'Oro!
+      </p>
+      <img
+        src="assets/images/quidditch/harry_snitch_victory.png"
+        alt="Harry con il Boccino"
+      />
+    </div>
+  </div>
+
+  <!-- FASE SCONFITTA -->
+  <div class="phase-stage phase-result loss" *ngIf="currentPhase === 'loss'">
+    <div class="loss-card">
+      <h2>Harry è precipitato!</h2>
+      <p>
+        La resistenza si è azzerata prima che tu riuscissi ad arrestare la
+        fattura.
+      </p>
+    </div>
+  </div>
+</div>

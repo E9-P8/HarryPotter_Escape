@@ -21,11 +21,12 @@ interface Particle {
 })
 export class MenuComponent implements OnInit {
 
-
   showOverlay: boolean = true;       
   hideOverlayDOM: boolean = false;   
+  isVideoStarted: boolean = false;
+  isVideoFinished: boolean = false;
+ 
   isParchmentOpen: boolean = false;  
-
   fullStoryText: string = '';
   displayedText: string = '';
   private typewriterTimeout: any;
@@ -40,7 +41,7 @@ export class MenuComponent implements OnInit {
   constructor(private router: Router, private gameData: GameDataService, public audioService: AudioService) { }
 
 ngOnInit(): void {
-    this.audioService.startGlobalBackground('intro', 0.1);
+   // this.audioService.startGlobalBackground('intro', 0.1);
 
     this.particleInterval = setInterval(() => {
       this.createParticle();
@@ -80,6 +81,35 @@ ngOnInit(): void {
     }
   }
 
+  playIntroVideo(videoElement: HTMLVideoElement): void {
+    this.isVideoStarted = true;
+    this.audioService.isMuted = false;
+
+    // Avvio del video
+    videoElement.play().catch(err => {
+      console.error("Errore durante la riproduzione del video:", err);
+    });
+  }
+
+  onVideoEnded(): void {
+    this.showOverlay = false;
+
+    setTimeout(() => {
+      this.hideOverlayDOM = true;
+      this.isVideoFinished = true;
+      this.audioService.startGlobalBackground('intro', 0.1);
+      this.startParchmentSequence();
+    }, 500); 
+  }
+
+  startParchmentSequence(): void {
+    this.isParchmentOpen = true;
+    this.audioService.playSound('writingPen', 0.8);
+
+    setTimeout(() => {
+      this.typeWriter(0);
+    }, 800);
+  }
   prepareIntroText() {
     this.fullStoryText = 
       "Sette anni di oscuri misteri, trappole e incantesimi ti attendono.\n\n" +

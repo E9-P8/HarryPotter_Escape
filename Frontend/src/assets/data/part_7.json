@@ -237,7 +237,7 @@
     "image_id": "",
     "type": "minigame",
     "minigame_id": "FIRE_MINIGAME",
-    "next_node": "hagrid_visit_check"
+    "success_node": "hagrid_visit_check"
   },
   {
     "id": "hagrid_visit_check",

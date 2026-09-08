@@ -1,0 +1,402 @@
+.quidditch-eye-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: #0c0f1d;
+    color: #ffffff;
+    overflow: hidden;
+    font-family: 'Cinzel', serif, sans-serif;
+
+    .hud-resistance {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 50;
+        width: 320px;
+        background: rgb(30 19 10 / 85%);
+        padding: 10px 16px;
+        border-radius: 25px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+
+        .resistance-label {
+            font-size: 0.9rem;
+            color: #ecde8d;
+            text-align: center;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        .resistance-bar-track {
+            width: 100%;
+            height: 10px;
+            background: #2a2a2a;
+            border-radius: 5px;
+            overflow: hidden;
+
+            .resistance-bar-fill {
+                height: 100%;
+                background: linear-gradient(90deg, #4b8a4d, #7ba848);
+                transition: width 0.4s ease, background 0.4s ease;
+
+                &.critical {
+                    background: linear-gradient(90deg, #b44a49, #d86947);
+                }
+            }
+        }
+    }
+
+    .phase-stage {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    /* --- FASE 1 --- */
+    .phase-observation {
+        .background-pitch {
+            width: 100%;
+            height: 100%;
+            background: url('/assets/img/Part7/quidditchGame.png') center/cover no-repeat;
+        }
+
+        .harry-shaking-entity {
+            position: absolute;
+            top: 51%;
+            left: 60%;
+            width: 130px;
+            animation: broomShake 0.15s infinite alternate ease-in-out;
+
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .action-footer {
+            position: absolute;
+            bottom: 40px;
+            left: 85%;
+            transform: translateX(-50%);
+        }
+    }
+
+/* --- FASE 2 --- */
+.binocular-viewport {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #000;
+
+    .zoom-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+    }
+
+    .harry-zoom-wrapper {
+        position: absolute;
+        top: 50%;
+        left: 65%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        height: 50%;
+        pointer-events: none;
+
+        .zoom-harry {
+            width: auto;
+            height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.6));
+            animation: broomShake 0.15s infinite alternate ease-in-out;
+        }
+    }
+
+    .binocular-mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 3;
+        pointer-events: none;
+        background: radial-gradient(circle at center,
+                transparent 45%,
+                rgba(0, 0, 0, 0.75) 65%,
+                rgba(0, 0, 0, 0.98) 85%);
+    }
+
+    .nav-btn.next-scene {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        z-index: 4;
+        background: rgba(15, 12, 18, 0.8);
+        backdrop-filter: blur(6px);
+        border: 1px solid rgba(75, 65, 35, 0.5);
+        color: #e0d8c3;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: serif;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: rgba(30, 25, 35, 0.95);
+            border-color: rgba(75, 65, 33, 0.9);
+            color: #fff;
+        }
+    }
+}
+
+/* --- SCENA 2: Spalti --- */
+.full-screen-spalti {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+   .snape-target-btn {
+       position: absolute;
+       z-index: 5;
+       top: 58%;
+       left: 52%;
+
+       transform: translate(-50%, -50%);
+       cursor: pointer;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       background: transparent;
+       border: none;
+       padding: 0;
+       outline: none;
+       width: 60px;
+       height: 60px;
+
+       &::before {
+           content: '';
+           width: 12px;
+           height: 12px;
+           background-color: rgba(240, 228, 162, 0.7);
+           border-radius: 50%;
+           box-shadow: 0 0 10px #f5e68f, 0 0 20px #dfcd6a;
+           transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+       }
+
+       &::after {
+           content: '';
+           position: absolute;
+           width: 32px;
+           height: 32px;
+           border: 1.5px solid rgba(230, 217, 149, 0.7);
+           border-radius: 50%;
+           animation: magicPulse 2.2s infinite ease-out;
+           pointer-events: none;
+       }
+
+       &:hover::before {
+           transform: scale(1.2);
+           background-color: #fff;
+           box-shadow: 0 0 15px #efde79, 0 0 25px #e9d043;
+       }
+   }
+
+
+    /* --- FASE 3 --- */
+    .phase-trajectory {
+        display: flex;
+        flex-direction: column;
+
+        .spalti-side-view {
+            position: relative;
+            height: 55%;
+            background: url('/assets/images/quidditch/spalti_side.jpg') center/cover no-repeat;
+
+            .hermione-origin {
+                position: absolute;
+                bottom: 20px;
+                left: 40px;
+                background: #740001;
+                padding: 6px 12px;
+                border-radius: 4px;
+                border: 1px solid #d4af37;
+            }
+
+            .snape-target {
+                position: absolute;
+                bottom: 20px;
+                right: 60px;
+                width: 120px;
+
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+        }
+
+        .trajectory-controls {
+            height: 45%;
+            background: #101424;
+            border-top: 2px solid #d4af37;
+            padding: 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+
+            .objects-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+
+                .object-card {
+                    background: #1a2238;
+                    border: 1px solid #2e3a59;
+                    border-radius: 6px;
+                    padding: 8px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    cursor: pointer;
+                    transition: border-color 0.2s ease, transform 0.2s ease;
+
+                    &:hover {
+                        border-color: #ffd700;
+                        transform: translateY(-2px);
+                    }
+
+                    .icon {
+                        font-size: 1.5rem;
+                    }
+
+                    .name {
+                        font-size: 0.75rem;
+                        text-align: center;
+                        margin-top: 4px;
+                    }
+                }
+            }
+
+            .sequence-builder {
+                background: #090c17;
+                border: 1px dashed #3a4a75;
+                border-radius: 6px;
+                padding: 12px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                .sequence-list {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 8px;
+                    align-items: center;
+
+                    .sequence-step {
+                        background: #24304d;
+                        padding: 4px 8px;
+                        border-radius: 4px;
+                        font-size: 0.8rem;
+                        display: flex;
+                        align-items: center;
+                        gap: 6px;
+
+                        .btn-remove {
+                            background: none;
+                            border: none;
+                            color: #ff5252;
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+
+            .hint-box {
+                grid-column: span 2;
+                font-size: 0.85rem;
+                color: #d4af37;
+            }
+
+            .error-msg {
+                grid-column: span 2;
+                color: #ff5252;
+                font-size: 0.85rem;
+            }
+        }
+    }
+
+.btn-binoculars {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    cursor: pointer;
+
+    width: 90px;
+    height: 90px;
+
+    background-image: url('/assets/img/Part7/binoculars.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+
+    transition: transform 0.2s ease, filter 0.2s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+
+    &:hover:not(:disabled) {
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.6));
+    }
+
+    &:active:not(:disabled) {
+        transform: scale(0.95);
+    }
+
+    &:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+        filter: grayscale(100%);
+    }
+}
+}
+
+
+
+@keyframes broomShake {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    100% {
+        transform: translateY(-8px) rotate(3deg);
+    }
+}
+@keyframes pulseTarget {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+}

@@ -20,9 +20,30 @@
     *ngIf="!hideOverlayDOM"
     [ngClass]="{ 'fade-out-overlay': !showOverlay }"
   >
-    <div class="glow-effect">
-      <button class="magic-circle-btn" (click)="startIntroSequence()"></button>
+    <div *ngIf="!isVideoStarted" class="key-layer">
+      <div class="key-flight-x">
+        <button
+          class="key-flight-y flying-key-btn"
+          (click)="playIntroVideo(introVideo)"
+          title="Cattura la chiave!"
+        >
+          <img
+            src="assets/img/flying-key.png"
+            alt="Chiave alata"
+            class="flying-key-img"
+          />
+        </button>
+      </div>
     </div>
+
+    <video
+      #introVideo
+      class="intro-video"
+      [ngClass]="{ visible: isVideoStarted }"
+      src="assets/video/videoIntro.mp4"
+      (ended)="onVideoEnded()"
+      playsinline
+    ></video>
   </div>
   <div class="menu-header">
     <h1>Harry Potter Escape Room</h1>
