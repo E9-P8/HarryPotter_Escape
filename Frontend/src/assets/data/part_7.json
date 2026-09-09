@@ -160,6 +160,11 @@
         "text": "C'e' qualcosa che non mi torna...",
         "condition": "visited3HeadsDog == false",
         "next_node": "snape_theory_alt"
+      },
+      {
+        "text": "Ecco perche il sangue...",
+        "condition": "visited3HeadsDog == true && hermioneRescued == true",
+        "next_node": "snape_theory_1"
       }
     ]
   },
@@ -176,7 +181,14 @@
     "image_id": "snape_theory_1",
     "set_flag": {"suspectsSnape": true},
     "type": "text",
-    "text": "Harry: 'Aspetta un momento...Piton zoppicava proprio dopo la notte del troll. Secondo me ha usato il troll come diversivo per cercare di superare il cane a tre teste di cui parlava Hagrid.''",
+    "text": "Harry: 'Aspetta un momento...Piton zoppicava proprio dopo la notte del troll. Secondo me ha usato il troll come diversivo per cercare di superare il cane a tre teste. Per questo zoppica.''",
+    "next_node": "snape_theory_2"
+  },
+  {
+    "id": "snape_theory_2",
+    "image_id": "snape_theory_1",
+    "type": "text",
+    "text": "Il giorno che sono andato alla gringott Hagrid ha prelevato una cosa. Ha detto che riguardava Hogwarts, era un segreto. E' la cosa che il cane sorveglia, è la cosa che vuole Piton.",
     "next_node": "quidditch_check"
   },
   {
@@ -260,18 +272,46 @@
     "id": "hagrid_flamel",
     "image_id": "",
     "type": "text",
-    "text": "Harry: 'Hagrid, quel cane era ENORME! E aveva tre teste! C'era una botola sotto di lui: protegge qualcosa, vero?'",
+    "text": "Sciocchezze, perche piton avrebbe fatto il malocchio alla scopa?",
     "next_node": "hagrid_flamel2"
   },
   {
     "id": "hagrid_flamel2",
     "image_id": "",
     "type": "text",
-    "text": "Hagrid : 'Fuffy non deve preoccuparvi! E quello che c'è sotto è tra Silente e Nicolas Flamel!'",
+    "text": "Harry: Chi lo sa? Perchè cercava di superare il cane a 3 teste ad halloween?",
     "next_node": "hagrid_flamel3"
   },
   {
     "id": "hagrid_flamel3",
+    "image_id": "",
+    "type": "text",
+    "text": "hagrid: chi vi ha parlato di fuffy? E' mio, l'ho prestato a silente cosi sorvegliava.. basta non farmi piu domande!",
+    "next_node": "hagrid_flamel4"
+  },
+  {
+    "id": "hagrid_flamel4",
+    "image_id": "",
+    "type": "text",
+    "text": "Ma hagrid, quello che fuffy sorveglia, piton sta cercando di rubarlo!",
+    "next_node": "hagrid_flamel5"
+  },
+  {
+    "id": "hagrid_flamel5",
+    "image_id": "",
+    "type": "text",
+    "text": "Ma hagrid, quello che fuffy sorveglia, piton sta cercando di rubarlo!",
+    "next_node": "hagrid_flamel6"
+  },
+  {
+    "id": "hagrid_flamel6",
+    "image_id": "",
+    "type": "text",
+    "text": "Hagrid : 'Statemi a sentire, vi state immischiando in cose che non vi riguardano, è pericoloso. Quello che il cane sorveglia è una faccenda tra Albus Silente e Nicolas Flamel..'",
+    "next_node": "hagrid_flamel7"
+  },
+  {
+    "id": "hagrid_flamel7",
     "image_id": "",
     "set_flag": { "knowsFlamel": true},
     "type": "text",
@@ -282,20 +322,34 @@
     "id": "christmas_gift",
     "image_id": "",
     "type": "Text",
-    "text": "foto di Ron che sfoggia il suo maglione di lana burgundy con la 'R'.",
+    "text": "Buon Natale Harry! Buona natale *WizardName*",
     "next_node": "christmas_gift_harry"
   },
   {
     "id": "christmas_gift_harry",
     "image_id": "",
     "type": "Text",
-    "text": "Tra i regali c'è un pacco anonimo con un biglietto: 'Tuo padre me lo affidò prima di morire. Fanne buon uso.' È il Mantello dell'Invisibilità!",
+    "text": "Non ho mai ricevuto dei regali!",
+    "next_node": "harry_gift"
+  },
+  {
+    "id": "harry_gift",
+    "image_id": "",
+    "type": "Text",
+    "text": "'Tuo padre me lo affidò prima di morire. E' ora che ti sia restituito. È il Mantello dell'Invisibilità!",
+    "next_node": "harry_gift2"
+  },
+  {
+    "id": "harry_gift2",
+    "image_id": "",
+    "type": "Text",
+    "text": "'È il Mantello dell'Invisibilità!",
     "next_node": "restricted_section_choice"
   },
   {
     "id": "restricted_section_choice",
     "image_id": "",
-    "text": "Harry indossa il mantello per andare nella Sezione Proibita della biblioteca a cercare Flamel. *WizardName* mi accompagni?",
+    "text": "Voglio usarlo per andare nella Sezione Proibita. *WizardName* mi accompagni?",
     "options": [
       {
         "text": "Accompagna Harry nella Sezione Proibita",
