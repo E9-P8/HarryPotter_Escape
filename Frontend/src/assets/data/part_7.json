@@ -123,29 +123,7 @@
     "image_id": "post_troll_breakfast",
     "type": "text",
     "text": "Piton: 'Dopo aver sconfitto un troll, una partita di Quidditch deve essere un giochetto... anche se contro Serpeverde.'",
-    "next_node": "nimbus2000_mail"
-  },
-    {
-    "id": "nimbus2000_mail",
-    "image_id": "nimbus2000_mail",
-    "type": "animation",
-    "next_node": "nimbus2000"
-  },
-  {
-    "id": "nimbus2000",
-    "image_id": "nimbus2000_mail",
-    "options": [
-      {
-         "text": "Harry: 'Wow! È una Nimbus 2000! La userò nella prossima partita!'",
-          "condition": "isSeeker == true",
-          "next_node": "snape_theory_check"
-        },
-        {
-         "text": "Harry: 'Wow! È una Nimbus 2000! Ma a cosa potrà mai servirmi?'",
-         "condition": "isSeeker == false",
-         "next_node": "snape_theory_check"
-      }
-    ]
+    "next_node": "snape_theory_check"
   },
   {
     "id": "snape_theory_check",
@@ -189,7 +167,29 @@
     "image_id": "snape_theory_1",
     "type": "text",
     "text": "Il giorno che sono andato alla gringott Hagrid ha prelevato una cosa. Ha detto che riguardava Hogwarts, era un segreto. E' la cosa che il cane sorveglia, è la cosa che vuole Piton.",
-    "next_node": "quidditch_check"
+    "next_node": "nimbus2000_mail"
+  },
+    {
+    "id": "nimbus2000_mail",
+    "image_id": "nimbus2000_mail",
+    "type": "animation",
+    "next_node": "nimbus2000"
+  },
+  {
+    "id": "nimbus2000",
+    "image_id": "nimbus2000_mail",
+    "options": [
+      {
+         "text": "Harry: 'Wow! È una Nimbus 2000! La userò nella prossima partita!'",
+          "condition": "isSeeker == true",
+          "next_node": "quidditch_check"
+        },
+        {
+         "text": "Harry: 'Wow! È una Nimbus 2000! Ma a cosa potrà mai servirmi?'",
+         "condition": "isSeeker == false",
+         "next_node": "quidditch_check"
+      }
+    ]
   },
   {
     "id": "quidditch_check",
