@@ -156,7 +156,7 @@
   },
   {
     "id": "snape_theory_1",
-    "image_id": "snape_theory_1",
+    "image_id": "snape_theory_alt",
     "set_flag": {"suspectsSnape": true},
     "type": "text",
     "text": "Harry: 'Aspetta un momento...Piton zoppicava proprio dopo la notte del troll. Secondo me ha usato il troll come diversivo per cercare di superare il cane a tre teste. Per questo zoppica.''",
@@ -164,7 +164,7 @@
   },
   {
     "id": "snape_theory_2",
-    "image_id": "snape_theory_1",
+    "image_id": "snape_theory_check",
     "type": "text",
     "text": "Il giorno che sono andato alla gringott Hagrid ha prelevato una cosa. Ha detto che riguardava Hogwarts, era un segreto. E' la cosa che il cane sorveglia, è la cosa che vuole Piton.",
     "next_node": "nimbus2000_mail"
@@ -217,15 +217,8 @@
   },
   {
     "id": "quidditch_spectator",
-    "image_id": "",
+    "image_id": "quidditchGame",
     "type": "animation",
-    "next_node": "quidditch_spectator2"
-  },
-  {
-    "id": "quidditch_spectator2",
-    "image_id": "",
-    "type": "text",
-    "text": "Hermione: 'È Piton! Sta fissando la scopa borbottando un incantesimo!'",
     "next_node": "hermione_fire_spell"
   },
   {
@@ -233,7 +226,7 @@
     "image_id": "quidditch_victory",
     "type": "text",
     "impact": { "gryffindor_points": 150 },
-    "text": "Afferri il Boccino d'Oro! 150 punti a Grifondoro e vittoria schiacciante!",
+    "text": "Harry afferra il Boccino d'Oro! 150 punti a Grifondoro e vittoria schiacciante!",
     "next_node": "hagrid_visit_check"
   },
   {
@@ -241,7 +234,7 @@
     "image_id": "quidditch_loss",
     "type": "text",
     "impact": { "gryffindor_points": 0 },
-    "text": "Non riesci a prendere il Boccino in tempo. La partita si prolunga nel caos.",
+    "text": "Harry non riesce a prendere il Boccino in tempo. La partita si prolunga nel caos.",
     "next_node": "hagrid_visit_check"
   },
   {

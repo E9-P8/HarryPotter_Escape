@@ -17,6 +17,10 @@ export class Part7Component implements OnInit, OnDestroy {
   flyingOwls: any[] = [];
   private owlInterval: any;
 
+  showHarryBroom: boolean = false;
+  harryBroomClass: string = '';
+  harryBroomImg: string = 'assets/img/Part7/harry_broom.png';
+
   constructor(private http: HttpClient,
       public gameService: GameDataService, 
       public audioService : AudioService,
@@ -172,7 +176,7 @@ export class Part7Component implements OnInit, OnDestroy {
         this.startOwlsAnimation();
       break;
       case 'quidditch_spectator': 
-        this.startOwlsAnimation();
+        this.startHarryAnimation();
       break;
 
       default:
@@ -249,5 +253,18 @@ export class Part7Component implements OnInit, OnDestroy {
         this.manageChoice({ next_node: this.actualPhase.next_node })
       }
     }, 5000);
+  }
+  startHarryAnimation(): void {
+    console.log("Inizio animazione Harry sulla scopa");
+    this.showHarryBroom = true;
+    this.harryBroomClass = 'harry-fly-across';
+
+    const tHarryEnd = setTimeout(() => {
+      this.showHarryBroom = false;
+      this.harryBroomClass = '';
+      this.manageChoice({ next_node: this.actualPhase.next_node });
+    }, 4000);
+
+    this.timeouts.push(tHarryEnd);
   }
 }

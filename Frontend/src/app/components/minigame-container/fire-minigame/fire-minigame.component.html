@@ -4,13 +4,13 @@
     *ngIf="currentPhase !== 'victory' && currentPhase !== 'loss'"
   >
     <div class="resistance-label">
-      Resistenza di Harry: {{ harryResistance }}%
+      Resistenza di Harry: {{ displayResistance }}%
     </div>
     <div class="resistance-bar-track">
       <div
         class="resistance-bar-fill"
-        [style.width.%]="harryResistance"
-        [class.critical]="harryResistance < 30"
+        [style.width.%]="displayResistance"
+        [class.critical]="displayResistance < 30"
       ></div>
     </div>
   </div>
@@ -60,7 +60,7 @@
       </button>
     </div>
 
-    <!-- Scena 2: Spalti Piton -->
+    <!-- Scena 2: Spalti -->
     <div class="binocular-viewport" *ngIf="binocularScene === 2">
       <img
         src="assets/img/Part7/spalti_piton.png"
@@ -75,84 +75,131 @@
         title="Individua Piton"
       ></button>
 
+      <div class="snape-dialog-box">
+        <span
+          >Hermione: È Piton! Sta fissando la scopa borbottando un
+          incantesimo!</span
+        >
+      </div>
+
       <button class="nav-btn prev-scene" (click)="switchBinocularScene(1)">
-        ⬅️ Torna ad Harry
+        ⬅ Torna ad Harry
       </button>
     </div>
   </div>
 
-  <!-- FASE 3: TRAIETTORIA SPARK -->
+  <!-- FASE 3:-->
   <div
     class="phase-stage phase-trajectory"
     *ngIf="currentPhase === 'trajectory'"
   >
-    <div class="spalti-side-view" [class.snape-burning]="isSnapeOnFire">
-      <div class="hermione-origin">Hermione</div>
+    <div class="interactive-arena" #arenaContainer>
+      <img
+        src="assets/img/Part7/spalti_quidditch.png"
+        class="arena-bg-phase3"
+        alt="Spalti Quidditch"
+      />
 
-      <!-- Animazione Scintilla Magica -->
-      <div class="spark-particle" *ngIf="isSpellCasting">✨</div>
+      <svg class="magic-canvas">
+        <defs>
+          <linearGradient
+            id="magicSparkGradient"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="100%"
+          >
+            <stop offset="0%" stop-color="#ffea00" />
+            <stop offset="50%" stop-color="#ff0055" />
+            <stop offset="100%" stop-color="#9d00ff" />
+          </linearGradient>
+        </defs>
 
-      <!-- Bersaglio Piton -->
-      <div class="snape-target" [class.on-fire]="isSnapeOnFire">
-        <img
-          [src]="
-            isSnapeOnFire
-              ? 'assets/images/quidditch/snape_fire.png'
-              : 'assets/images/quidditch/snape_normal.png'
-          "
-          alt="Piton"
+        <path
+          *ngIf="magicTrailPath"
+          [attr.d]="magicTrailPath"
+          class="magic-trail-line"
         />
+      </svg>
+
+      <!-- EFFETTO FUMO PER LO STENDARDO -->
+      <div
+        class="smoke-particle"
+        *ngIf="isBannerSmoking"
+        [style.left]="smokePosition.left"
+        [style.top]="smokePosition.top"
+      ></div>
+
+      <!-- BOTTONI-->
+      <button
+        *ngFor="let obj of availableObjects"
+        class="scene-object-btn"
+        [style.top]="obj.position.top"
+        [style.left]="obj.position.left"
+        [style.width]="obj.position.width || 'auto'"
+        [disabled]="isSpellCasting"
+        (click)="testObjectMagic(obj, $event)"
+      >
+        <img [src]="obj.imagePath" [alt]="obj.name" class="object-sprite-png" />
+        <span class="object-tooltip-tag">{{ obj.name }}</span>
+      </button>
+
+      <div *ngIf="isSnapeOnFire" class="snape-fire-overlay">
+        <div class="entity-snape" [class.on-fire]="isSnapeOnFire">
+          <img src="assets/img/Part7/snape_fire.png" alt="Piton in fiamme" />
+        </div>
       </div>
     </div>
 
-    <!-- Sezione Griglia Oggetti & Sequenza -->
     <div class="trajectory-controls">
-      <!-- Griglia Oggetti -->
-      <div class="objects-grid">
-        <div
-          *ngFor="let obj of availableObjects"
-          class="object-card"
-          (click)="selectObject(obj)"
-        >
-          <span class="icon">{{ obj.icon }}</span>
-          <span class="name">{{ obj.name }}</span>
-        </div>
-      </div>
-
-      <!-- Indizio Dinamico -->
-      <div class="hint-box" *ngIf="activeHint">
-        💬 <em>"{{ activeHint }}"</em>
-      </div>
-
-      <!-- Costruttore Sequenza -->
       <div class="sequence-builder">
+        <!-- LISTA DEGLI STEP SCELTI DALL'UTENTE -->
         <div class="sequence-list">
           <div
             *ngFor="let step of selectedSequence; let i = index"
             class="sequence-step"
           >
+            <span class="step-num">{{ i + 1 }}.</span>
             <span>{{ step.name }}</span>
-            <button class="btn-remove" (click)="removeSequenceItem(i)">
+            <button
+              class="btn-remove"
+              (click)="removeSequenceItem(i)"
+              [disabled]="isSpellCasting"
+            >
               ✕
             </button>
-            <span class="arrow" *ngIf="i < selectedSequence.length - 1">↓</span>
           </div>
+
           <div
             class="sequence-step target-step"
             *ngIf="selectedSequence.length > 0"
           >
-            <span>↓ Mantello di Piton</span>
+            <span>➔ Mantello di Piton</span>
           </div>
         </div>
 
+        <!-- BOTTONI DI AZIONE -->
         <div class="action-buttons">
+          <!-- 1. Bottone per attivare la modalità inserimento -->
+          <button
+            class="btn-secondary"
+            [class.active]="isPlanningMode"
+            (click)="togglePlanningMode()"
+            [disabled]="isSpellCasting"
+          >
+            {{ isPlanningMode ? "✏️ Inserimento Attivo" : "Pianifica Magia" }}
+          </button>
+
+          <!-- 2. Svuota sequenza -->
           <button
             class="btn-secondary"
             (click)="clearSequence()"
-            [disabled]="isSpellCasting"
+            [disabled]="isSpellCasting || selectedSequence.length === 0"
           >
             Svuota
           </button>
+
+          <!-- 3. Esegui la catena pianificata -->
           <button
             class="btn-magic"
             (click)="castSpell()"
@@ -164,35 +211,6 @@
       </div>
 
       <div class="error-msg" *ngIf="errorMessage">{{ errorMessage }}</div>
-    </div>
-  </div>
-
-  <!-- FASE VITTORIA -->
-  <div
-    class="phase-stage phase-result victory"
-    *ngIf="currentPhase === 'victory'"
-  >
-    <div class="victory-bg"></div>
-    <div class="victory-card">
-      <h2>Piton interrompe l'incantesimo!</h2>
-      <p>
-        Harry recupera il controllo della scopa e aggranffa il Boccino d'Oro!
-      </p>
-      <img
-        src="assets/images/quidditch/harry_snitch_victory.png"
-        alt="Harry con il Boccino"
-      />
-    </div>
-  </div>
-
-  <!-- FASE SCONFITTA -->
-  <div class="phase-stage phase-result loss" *ngIf="currentPhase === 'loss'">
-    <div class="loss-card">
-      <h2>Harry è precipitato!</h2>
-      <p>
-        La resistenza si è azzerata prima che tu riuscissi ad arrestare la
-        fattura.
-      </p>
     </div>
   </div>
 </div>

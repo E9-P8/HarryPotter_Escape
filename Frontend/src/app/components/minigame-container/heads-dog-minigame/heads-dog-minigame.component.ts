@@ -17,7 +17,6 @@ interface ThreatPoint {
 export class HeadsDogMinigameComponent implements OnInit {
 
   @Output() minigameSolved = new EventEmitter<string>();
-  @Output() minigameFailed = new EventEmitter<void>();
 
   constructor() { }
 

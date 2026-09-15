@@ -132,6 +132,14 @@
           [style.transform]="owl.speedX < 0 ? 'scaleX(-1)' : 'scaleX(1)'"
         />
       </ng-container>
+      <!-- Animazione Harry sulla Scopa -->
+      <div
+        *ngIf="showHarryBroom"
+        class="harry-broom-container"
+        [ngClass]="harryBroomClass"
+      >
+        <img [src]="harryBroomImg" alt="Harry" class="harry-broom-img" />
+      </div>
     </div>
   </div>
 </div>
