@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IntroComponent } from './components/intro/intro.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { DemoComponent } from './components/demo/demo.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { Part1Component } from './components/Film1/part1/part1.component';
 import { Part2Component } from './components/Film1/part2/part2.component';
@@ -17,6 +18,8 @@ const routes: Routes = [
   { path: '', component: MenuComponent },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'intro', component: IntroComponent },
+  { path: 'demo', component: DemoComponent },
+  { path: 'demo/part7', component: Part7Component },
   { path: 'part1',  component: Part1Component },
   { path: 'part2',  component: Part2Component },
   { path: 'part3',  component: Part3Component },

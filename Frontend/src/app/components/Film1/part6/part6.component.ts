@@ -92,7 +92,7 @@ export class Part6Component implements OnInit, OnDestroy {
 
   updateTextWithWizardName(text: string): string {
     if (!text) return "";
-    return text.replace('*wizardName*', this.wizardName);
+    return text.replace('*WizardName*', this.wizardName);
   }
 
   checkCondition(condition?: string): boolean {
@@ -136,7 +136,7 @@ export class Part6Component implements OnInit, OnDestroy {
         this.openedHotspots.clear();
 
         if (this.actualPhase.text) {
-          this.actualPhase.text = this.actualPhase.text.replace('*wizardName*', this.gameService.wizardName);
+          this.actualPhase.text = this.actualPhase.text.replace('*WizardName*', this.gameService.wizardName);
         }
         if (this.actualPhase.set_flag) {
           Object.keys(this.actualPhase.set_flag).forEach(key => {

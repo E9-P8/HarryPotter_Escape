@@ -235,7 +235,7 @@
     "type": "text",
     "impact": { "gryffindor_points": 0 },
     "text": "Harry non riesce a prendere il Boccino in tempo. La partita si prolunga nel caos.",
-    "next_node": "hagrid_visit_check"
+    "next_node": "hagrid_visit_check2"
   },
   {
     "id": "hermione_fire_spell",
@@ -246,8 +246,23 @@
   },
   {
     "id": "hagrid_visit_check",
-    "image_id": "",
-    "type": "choice",
+    "image_id": "hagrid_visit_check",
+    "options": [
+      {
+        "text": "Vai da Hagrid a chiedere del cane a tre teste",
+        "condition": "visited3HeadsDog == true",
+        "next_node": "hagrid_flamel"
+      },
+      {
+        "text": "Rientra nel dormitorio per festeggiare la giornata",
+        "condition": "visited3HeadsDog == false",
+        "next_node": "christmas_gift"
+      }
+    ]
+  },
+  {
+    "id": "hagrid_visit_check2",
+    "image_id": "hagrid_visit_check2",
     "options": [
       {
         "text": "Vai da Hagrid a chiedere del cane a tre teste",
@@ -263,49 +278,42 @@
   },
   {
     "id": "hagrid_flamel",
-    "image_id": "",
+    "image_id": "hagrid_flamel",
     "type": "text",
     "text": "Sciocchezze, perche piton avrebbe fatto il malocchio alla scopa?",
     "next_node": "hagrid_flamel2"
   },
   {
     "id": "hagrid_flamel2",
-    "image_id": "",
+    "image_id": "hagrid_flamel2",
     "type": "text",
     "text": "Harry: Chi lo sa? Perchè cercava di superare il cane a 3 teste ad halloween?",
     "next_node": "hagrid_flamel3"
   },
   {
     "id": "hagrid_flamel3",
-    "image_id": "",
+    "image_id": "hagrid_flamel3",
     "type": "text",
     "text": "hagrid: chi vi ha parlato di fuffy? E' mio, l'ho prestato a silente cosi sorvegliava.. basta non farmi piu domande!",
     "next_node": "hagrid_flamel4"
   },
   {
     "id": "hagrid_flamel4",
-    "image_id": "",
+    "image_id": "hagrid_flamel4",
     "type": "text",
     "text": "Ma hagrid, quello che fuffy sorveglia, piton sta cercando di rubarlo!",
     "next_node": "hagrid_flamel5"
   },
   {
     "id": "hagrid_flamel5",
-    "image_id": "",
+    "image_id": "hagrid_flamel4",
     "type": "text",
-    "text": "Ma hagrid, quello che fuffy sorveglia, piton sta cercando di rubarlo!",
+    "text": "Hagrid : 'Statemi a sentire, vi state immischiando in cose che non vi riguardano, è pericoloso. Quello che il cane sorveglia è una faccenda tra Albus Silente e Nicolas Flamel..'",
     "next_node": "hagrid_flamel6"
   },
   {
     "id": "hagrid_flamel6",
-    "image_id": "",
-    "type": "text",
-    "text": "Hagrid : 'Statemi a sentire, vi state immischiando in cose che non vi riguardano, è pericoloso. Quello che il cane sorveglia è una faccenda tra Albus Silente e Nicolas Flamel..'",
-    "next_node": "hagrid_flamel7"
-  },
-  {
-    "id": "hagrid_flamel7",
-    "image_id": "",
+    "image_id": "hagrid_flamel6",
     "set_flag": { "knowsFlamel": true},
     "type": "text",
     "text": "Hagrid: 'Non dovevo dirlo.'",
@@ -313,35 +321,35 @@
   },
   {
     "id": "christmas_gift",
-    "image_id": "",
-    "type": "Text",
+    "image_id": "christmas_gift",
+    "type": "text",
     "text": "Buon Natale Harry! Buona natale *WizardName*",
     "next_node": "christmas_gift_harry"
   },
   {
     "id": "christmas_gift_harry",
     "image_id": "",
-    "type": "Text",
+    "type": "text",
     "text": "Non ho mai ricevuto dei regali!",
     "next_node": "harry_gift"
   },
   {
     "id": "harry_gift",
-    "image_id": "",
-    "type": "Text",
-    "text": "'Tuo padre me lo affidò prima di morire. E' ora che ti sia restituito. È il Mantello dell'Invisibilità!",
+    "image_id": "harry_gift",
+    "type": "text",
+    "text": "'Tuo padre me lo affidò prima di morire. E' ora che ti sia restituito.",
     "next_node": "harry_gift2"
   },
   {
     "id": "harry_gift2",
-    "image_id": "",
-    "type": "Text",
+    "image_id": "harry_gift2",
+    "type": "text",
     "text": "'È il Mantello dell'Invisibilità!",
     "next_node": "restricted_section_choice"
   },
   {
     "id": "restricted_section_choice",
-    "image_id": "",
+    "image_id": "restricted_section_choice",
     "text": "Voglio usarlo per andare nella Sezione Proibita. *WizardName* mi accompagni?",
     "options": [
       {

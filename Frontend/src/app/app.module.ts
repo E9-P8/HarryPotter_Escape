@@ -33,6 +33,7 @@ import { FireMinigameComponent } from './components/minigame-container/fire-mini
 import { LibraryEnigmaComponent } from './components/enigma-container/library-enigma/library-enigma.component';
 import { Part8Component } from './components/Film1/part8/part8.component';
 import { FinalPartComponent } from './components/Film1/final-part/final-part.component';
+import { DemoComponent } from './components/demo/demo.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { FinalPartComponent } from './components/Film1/final-part/final-part.com
     LibraryEnigmaComponent,
     FireMinigameComponent,
     Part8Component,
-    FinalPartComponent
+    FinalPartComponent,
+    DemoComponent
   ],
   imports: [
     BrowserModule,

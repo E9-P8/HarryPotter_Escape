@@ -12,12 +12,17 @@ import { GameState, GameStats } from '../models/game.models';
 export class GameDataService {
   
   private readonly STORAGE_KEY = 'hp_game_save';
+  private readonly STORAGE_KEY_DEMO = 'hp_demo_save';
   private readonly EXTRA_STORAGE_KEY = 'hp_extra_data';
+
+  private _gameState$ = new BehaviorSubject<GameState>(this.loadGame());
 
   isManualOpen: boolean = false;
   wizardName: string = '';
  // isSeeker: boolean = false;
   currentWelcomeStep: number = 1;
+
+  isDemoMode: boolean = false;
 
   private readonly initialState: GameState = {
     parte: 1,
@@ -28,16 +33,43 @@ export class GameDataService {
     choicesHistory: []
   };
 
-  private _gameState$ = new BehaviorSubject<GameState>(this.loadGame());
+  
 
  
   constructor() {
    this.loadExtraData();
   }
 
+  private get currentStorageKey(): string {
+    return this.isDemoMode ? this.STORAGE_KEY_DEMO : this.STORAGE_KEY;
+  }
+
   get gameState$(): Observable<GameState> {
     return this._gameState$.asObservable();
   }
+  initDemoSession(demoFlags: Record<string, boolean>): void {
+    this.isDemoMode = true;
+
+    // Nuovo stato pulito per la demo
+    const demoState: GameState = {
+      parte: 7,
+      node: 'great_hall_dinner', 
+      stats: { audacia: 0, reputazione: 0, sospetto: 0, sincerita: 0, amicizia: 0 },
+      flags: { ...demoFlags },
+      score: 0,
+      choicesHistory: []
+    };
+
+    this._gameState$.next(demoState);
+    localStorage.setItem(this.STORAGE_KEY_DEMO, JSON.stringify(demoState));
+  }
+
+  // --- METODO PER USCIRE DALLA DEMO ---
+  exitDemoSession(): void {
+    this.isDemoMode = false;
+    this._gameState$.next(this.loadGame());
+  }
+
   setWizardName(name: string): void {
       this.wizardName = name;
       this.saveExtraData();
@@ -61,16 +93,26 @@ export class GameDataService {
   }
 
   getFlag(flagName: string): boolean {
-    return !!this._gameState$.getValue().flags[flagName];
+    if (typeof window !== 'undefined' && window.location.pathname.includes('demo')) {
+      this.isDemoMode = true;
+    }
+
+    const flags = this._gameState$.getValue().flags;
+    return !!(flags && flags[flagName]);
   }
 
-  // METODI DI SALVATAGGIO INTERNI
   private saveGame(): void {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this._gameState$.getValue()));
+    localStorage.setItem(this.currentStorageKey, JSON.stringify(this._gameState$.getValue()));
   }
 
   private loadGame(): GameState {
-    const saved = localStorage.getItem(this.STORAGE_KEY);
+    const isDemoUrl = window.location.pathname.includes('/demo');
+    if (isDemoUrl) {
+      this.isDemoMode = true;
+    }
+
+    //const saved = localStorage.getItem(this.STORAGE_KEY);
+    const saved = localStorage.getItem(this.currentStorageKey);
     return saved ? JSON.parse(saved) : this.initialState;
   }
 

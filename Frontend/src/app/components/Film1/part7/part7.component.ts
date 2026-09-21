@@ -13,6 +13,8 @@ import { Subscription } from 'rxjs';
 }) 
 export class Part7Component implements OnInit, OnDestroy {
 
+  showDemoOverlay: boolean = false;
+
   showOwls: boolean = false;
   flyingOwls: any[] = [];
   private owlInterval: any;
@@ -31,12 +33,27 @@ export class Part7Component implements OnInit, OnDestroy {
   this.audioService.toggleGlobalMute(0.2);
   }
   ngOnInit(): void {
+    if (this.router.url.includes('demo') || this.gameService.isDemoMode) {
+      this.gameService.isDemoMode = true;
+    }
+
     (window as any).gameService = this.gameService;
 
     this.wizardName = this.gameService.getWizardName() || this.gameService.wizardName;
     this.isSeeker = this.gameService.getFlag('isSeeker');
+
+    console.log('--- DEBUG PART7 ---');
+    console.log('isDemoMode:', this.gameService.isDemoMode);
+    console.log('Tutti i flag:', this.gameService.getFlags());
+    console.log('visited3HeadsDog:', this.gameService.getFlag('visited3HeadsDog'));
+    console.log('isSeeker:', this.gameService.getFlag('isSeeker'));
+    console.log(this.gameService.getWizardName());
     this.loadPart();
   }
+
+
+
+  
   ngOnDestroy(): void {
   this.timeouts.forEach(t => clearTimeout(t));
     if (this.owlInterval) {
@@ -91,11 +108,15 @@ export class Part7Component implements OnInit, OnDestroy {
   }
   updateTextWithWizardName(text: string): string {
     if (!text) return "";
-    return text.replace('*wizardName*', this.wizardName);
+    return text.replace('*WizardName*', this.wizardName);
   }
   checkCondition(condition?: string): boolean {
     if (!condition) return true;
 
+    if (condition.includes('&&')) {
+      const subConditions = condition.split('&&').map(s => s.trim());
+      return subConditions.every(subCond => this.checkCondition(subCond));
+    }
     if (condition.includes('==')) {
       const parts = condition.split('==').map(s => s.trim());
       const flagName = parts[0];
@@ -133,7 +154,7 @@ export class Part7Component implements OnInit, OnDestroy {
         this.gameService.setCurrentNode(this.actualPhase.id, 7);
 
         if (this.actualPhase.text) {
-          this.actualPhase.text = this.actualPhase.text.replace('*wizardName*', this.gameService.wizardName);
+          this.actualPhase.text = this.actualPhase.text.replace('*WizardName*', this.gameService.wizardName);
         }
         if (this.actualPhase.set_flag) {
           Object.keys(this.actualPhase.set_flag).forEach(key => {

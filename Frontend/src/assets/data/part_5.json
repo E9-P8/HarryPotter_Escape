@@ -61,7 +61,7 @@
     {
       "id": "piton_1",
       "image_id": "piton_1",  
-      "text": "Piton: *wizardName*! Dimmi, cosa ottengo se verso radice di asfodelo in un infuso di artemisia?'",
+      "text": "Piton: *WizardName*! Dimmi, cosa ottengo se verso radice di asfodelo in un infuso di artemisia?'",
       "options": [
         { "text": "Rispondi correttamente (Pozione di morte vivente)", 
          "impact": { "reputazione": 20 }, 
@@ -122,13 +122,13 @@
     {
       "id": "hermione_advise",
       "image_id": "hermione_advise",
-      "text": "Hermione: *wizardName* non se ne parla, Madama Bom l'ha vietato e per di più non sai nemmeno volare.",
+      "text": "Hermione: *WizardName* non se ne parla, Madama Bom l'ha vietato e per di più non sai nemmeno volare.",
       "next_node": "malfoy_volo"
     },
     {
       "id": "malfoy_volo",
       "image_id": "malfoy_volo",
-      "text": "Malfoy: Cosa c'è *wizardName*, pensi di non arrivarci?",
+      "text": "Malfoy: Cosa c'è *WizardName*, pensi di non arrivarci?",
       "options": [
         { "text": "Insegui Malfoy", "impact": { "audacia": 0 }, "set_flag": {"riskTaker": true}, "next_node": "catch_sphere" },
         { "text": "Ascolta Hermione e resta a terra", "impact": { "reputazione": 0 }, "next_node": "Seeker" }

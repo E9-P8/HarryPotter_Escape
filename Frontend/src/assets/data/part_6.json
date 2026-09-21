@@ -11,7 +11,7 @@
     {
       "id": "Forbidden_3floor",
       "image_id": "Forbidden_3floor",
-      "text": "Ron: *wizardName*, presto! Nascondiamoci dietro quella porta!",
+      "text": "Ron: *WizardName*, presto! Nascondiamoci dietro quella porta!",
       "options": [
         { "text": "Torna nel dormitorio, questa è zona proibita", "impact": { "reputazione": 0 }, "next_node": "dormitory_avoid_dog" },
         { "text": "Segui Ron ed entra nella porta", 

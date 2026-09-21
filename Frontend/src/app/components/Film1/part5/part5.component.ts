@@ -67,7 +67,7 @@ export class Part5Component implements OnInit {
   }
   updateTextWithWizardName(text: string): string {
     if (!text) return "";
-    return text.replace('*wizardName*', this.wizardName);
+    return text.replace('*WizardName*', this.wizardName);
   }
 
  manageChoice(option: any) {
@@ -99,7 +99,7 @@ export class Part5Component implements OnInit {
     this.gameService.setCurrentNode(this.actualPhase.id, 5);
 
     if (this.actualPhase.text) {
-      this.actualPhase.text = this.actualPhase.text.replace('*wizardName*', this.gameService.wizardName);
+      this.actualPhase.text = this.actualPhase.text.replace('*WizardName*', this.gameService.wizardName);
     }
 
     if (this.actualPhase.id === 'mcgranitt_baston') {
