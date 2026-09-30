@@ -1,0 +1,240 @@
+<div class="mirror-game">
+
+<!-- ======================================================
+FASE 1 - ENTRATA NELLA STANZA
+====================================================== -->
+
+<section
+*ngIf="phase === 'entrance'"
+class="scene entrance">
+ 
+<div class="dark-overlay"></div>
+ 
+<div class="scene-content">
+ 
+<div class="dialogue">
+Harry: "Cos'è questo posto?"
+</div>
+ 
+<button
+class="magic-button"
+(click)="approachMirror()">
+Avvicinati allo Specchio
+</button>
+ 
+</div>
+ 
+</section>
+ 
+ 
+<!-- ======================================================
+FASE 2 - SPECCHIO COPERTO
+====================================================== -->
+ 
+<section
+*ngIf="phase === 'covered'"
+class="scene covered">
+ 
+<div class="dark-overlay"></div>
+ 
+<div class="mirror-container">
+ 
+assets/images/mirror/mirror-covered.jpg
+ 
+<!-- Telo cliccabile -->
+ 
+<div
+class="curtain"
+[class.curtain-open]="curtainOpen"
+(click)="removeCurtain()">
+ 
+<div class="curtain-text" *ngIf="!curtainOpen">
+Tocca il telo
+</div>
+ 
+</div>
+ 
+</div>
+ 
+</section>
+ 
+ 
+<!-- ======================================================
+FASE 2B - SPECCHIO RIVELATO
+====================================================== -->
+ 
+<section
+*ngIf="phase === 'revealing'"
+class="scene revealing">
+ 
+<div class="dark-overlay"></div>
+ 
+<div
+class="mirror-container"
+[class.glowing]="mirrorGlow">
+ 
+assets/images/mirror/mirror-empty.jpg
+ 
+<div class="blurred-reflection"></div>
+ 
+</div>
+ 
+<button
+class="magic-button observe-button"
+(click)="observeMirror()">
+ 
+Osserva
+ 
+</button>
+ 
+</section>
+ 
+ 
+<!-- ======================================================
+FASE 3/4 - MEMORIE
+====================================================== -->
+ 
+<section
+*ngIf="phase === 'memories'"
+class="scene memory-scene">
+ 
+<div class="dark-overlay"></div>
+ 
+<div class="mirror-container magical">
+ 
+assets/images/mirror/mirror-empty.jpg
+ 
+<div class="memory-window">
+ 
+<img
+*ngIf="currentMemory"
+[src]="currentMemory.image"
+class="memory-image"
+alt="Ricordo">
+ 
+</div>
+ 
+<div class="magical-particles"></div>
+ 
+</div>
+ 
+<div class="mirror-message">
+Lo Specchio osserva i tuoi ricordi...
+</div>
+ 
+</section>
+ 
+ 
+<!-- ======================================================
+VISIONE FINALE
+====================================================== -->
+ 
+<section
+*ngIf="phase === 'vision' && finalVision"
+class="scene final-vision"
+[class.visible]="visionReady">
+ 
+<img
+class="vision-background"
+[src]="finalVision.image"
+alt="Visione dello Specchio">
+ 
+<div class="vision-darkening"></div>
+ 
+ 
+<!-- ================================================
+EASTER EGGS
+================================================ -->
+ 
+<!-- isSeeker -> Boccino -->
+ 
+<div
+*ngIf="hasEasterEgg('isSeeker')"
+class="easter-egg golden-snitch">
+✦
+</div>
+ 
+ 
+<!-- visited3HeadsDog nella conoscenza -->
+ 
+<div
+*ngIf="
+finalVision.type === 'knowledge' &&
+hasEasterEgg('visited3HeadsDog')
+"
+class="easter-egg trapdoor">
+</div>
+ 
+ 
+<!-- enteredRestrictedSection nella conoscenza -->
+ 
+<div
+*ngIf="
+finalVision.type === 'knowledge' &&
+hasEasterEgg('enteredRestrictedSection')
+"
+class="easter-egg forbidden-books">
+▥
+</div>
+ 
+ 
+<!-- Hermione -->
+ 
+<div
+*ngIf="
+finalVision.type === 'friendship' &&
+hasEasterEgg('hermioneRescued')
+"
+class="easter-egg hermione-memory">
+</div>
+ 
+ 
+<!-- Ron -->
+ 
+<div
+*ngIf="
+finalVision.type === 'friendship' &&
+hasEasterEgg('followedFriends')
+"
+class="easter-egg ron-memory">
+</div>
+ 
+ 
+<!-- ================================================
+TESTO DELLA VISIONE
+================================================ -->
+ 
+<div class="vision-content">
+ 
+<div class="vision-small-title">
+LO SPECCHIO DELLE BRAME
+</div>
+ 
+<h1>
+{{ finalVision.title }}
+</h1>
+ 
+<div class="divider"></div>
+ 
+<div class="vision-text">
+ 
+<p
+*ngFor="let line of finalVision.text">
+{{ line }}
+</p>
+ 
+</div>
+ 
+<button
+class="magic-button leave-button"
+(click)="leaveMirror()">
+ 
+Allontanati dallo Specchio
+ 
+</button>
+ 
+</div>
+ 
+</section>
+ 
+</div>

@@ -1,0 +1,705 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.mirror-game {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #020205;
+  color: #ffffff;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   ENTRATA
+   ========================================================= */
+
+.entrance {
+  background:
+    url('/assets/images/mirror/mirror-room.jpg')
+    center center / cover no-repeat;
+}
+
+.dark-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(0, 0, 0, 0.1),
+      rgba(0, 0, 0, 0.72)
+    );
+}
+
+.scene-content {
+  position: absolute;
+
+  left: 50%;
+  bottom: 8%;
+
+  transform: translateX(-50%);
+
+  width: 90%;
+  max-width: 800px;
+
+  text-align: center;
+}
+
+.dialogue {
+  margin-bottom: 30px;
+
+  font-size: 25px;
+  line-height: 1.5;
+
+  color: #f2ead5;
+
+  text-shadow:
+    0 2px 4px #000,
+    0 0 15px rgba(255, 227, 164, 0.4);
+}
+
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.magic-button {
+  position: relative;
+  z-index: 20;
+
+  min-width: 260px;
+
+  padding: 16px 30px;
+
+  border: 1px solid #b99655;
+  border-radius: 4px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(45, 36, 25, 0.96),
+      rgba(15, 13, 12, 0.96)
+    );
+
+  color: #f5dfad;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  letter-spacing: 1px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 0 20px rgba(188, 146, 74, 0.25),
+    inset 0 0 15px rgba(255, 217, 140, 0.06);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.magic-button:hover {
+  transform: scale(1.04);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(73, 54, 31, 0.98),
+      rgba(23, 18, 13, 0.98)
+    );
+
+  box-shadow:
+    0 0 30px rgba(222, 177, 90, 0.45);
+}
+
+
+/* =========================================================
+   SPECCHIO
+   ========================================================= */
+
+.covered,
+.revealing,
+.memory-scene {
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background:
+    url('/assets/images/mirror/mirror-room-close.jpg')
+    center center / cover no-repeat;
+}
+
+.mirror-container {
+  position: relative;
+
+  height: 88vh;
+  max-height: 900px;
+
+  z-index: 5;
+
+  aspect-ratio: 0.62;
+}
+
+.mirror-frame,
+.mirror-background {
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(0 0 25px rgba(0, 0, 0, 0.9));
+}
+
+
+/* =========================================================
+   TELO
+   ========================================================= */
+
+.curtain {
+  position: absolute;
+
+  top: 4%;
+  left: 8%;
+
+  width: 84%;
+  height: 91%;
+
+  z-index: 10;
+
+  cursor: pointer;
+
+  background:
+    linear-gradient(
+      90deg,
+      #19171c,
+      #343139 35%,
+      #18161c 70%,
+      #302c33
+    );
+
+  border-radius: 45% 45% 8% 8% / 10% 10% 5% 5%;
+
+  box-shadow:
+    inset 15px 0 30px rgba(255,255,255,0.04),
+    inset -20px 0 30px rgba(0,0,0,0.5);
+
+  transform-origin: top center;
+
+  transition:
+    transform 1.5s ease-in,
+    opacity 1.2s ease;
+}
+
+.curtain:hover {
+  filter: brightness(1.15);
+}
+
+.curtain-open {
+  transform:
+    translateY(-110%)
+    scaleY(0.4);
+
+  opacity: 0;
+}
+
+.curtain-text {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 15%;
+
+  text-align: center;
+
+  color: rgba(255,255,255,0.7);
+
+  font-size: 16px;
+  letter-spacing: 2px;
+
+  animation: pulseText 2s infinite;
+}
+
+
+/* =========================================================
+   SPECCHIO SFOCATO
+   ========================================================= */
+
+.blurred-reflection {
+
+  position: absolute;
+
+  top: 9%;
+  left: 17%;
+
+  width: 66%;
+  height: 78%;
+
+  border-radius: 48% 48% 40% 40%;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(190, 209, 215, 0.45),
+      rgba(75, 92, 103, 0.22) 50%,
+      rgba(11, 16, 23, 0.7)
+    );
+
+  filter: blur(8px);
+
+  animation: mirrorBreathing 4s ease-in-out infinite;
+}
+
+.glowing {
+
+  filter:
+    drop-shadow(0 0 18px rgba(185, 215, 228, 0.3))
+    drop-shadow(0 0 50px rgba(207, 177, 110, 0.15));
+}
+
+.observe-button {
+
+  position: absolute;
+
+  bottom: 5%;
+  left: 50%;
+
+  transform: translateX(-50%);
+}
+
+.observe-button:hover {
+  transform:
+    translateX(-50%)
+    scale(1.04);
+}
+
+
+/* =========================================================
+   RICORDI
+   ========================================================= */
+
+.memory-window {
+
+  position: absolute;
+
+  top: 10%;
+  left: 18%;
+
+  width: 64%;
+  height: 77%;
+
+  overflow: hidden;
+
+  border-radius:
+    48% 48% 42% 42% /
+    12% 12% 8% 8%;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      #18252c,
+      #05070a
+    );
+}
+
+.memory-image {
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  animation:
+    memoryAppear 2s ease forwards;
+
+  filter:
+    saturate(0.72)
+    contrast(1.12);
+}
+
+.mirror-message {
+
+  position: absolute;
+
+  bottom: 4%;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  z-index: 20;
+
+  color: rgba(235, 228, 210, 0.75);
+
+  letter-spacing: 3px;
+
+  font-size: 14px;
+
+  animation: pulseText 2s infinite;
+}
+
+
+/* =========================================================
+   VISIONE FINALE
+   ========================================================= */
+
+.final-vision {
+
+  opacity: 0;
+
+  transition: opacity 2.5s ease;
+
+  background: #000;
+}
+
+.final-vision.visible {
+  opacity: 1;
+}
+
+.vision-background {
+
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  animation:
+    visionZoom 20s ease-out forwards;
+}
+
+.vision-darkening {
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,0.75),
+      rgba(0,0,0,0.15) 60%,
+      rgba(0,0,0,0.35)
+    );
+}
+
+.vision-content {
+
+  position: absolute;
+
+  z-index: 20;
+
+  top: 50%;
+  left: 8%;
+
+  transform: translateY(-50%);
+
+  max-width: 620px;
+
+  text-shadow:
+    0 2px 5px #000,
+    0 0 20px rgba(0,0,0,0.8);
+}
+
+.vision-small-title {
+
+  font-size: 13px;
+
+  letter-spacing: 5px;
+
+  color: #c5aa72;
+
+  margin-bottom: 10px;
+}
+
+.vision-content h1 {
+
+  margin:
+    0
+    0
+    15px
+    0;
+
+  color: #f2dfae;
+
+  font-size: 52px;
+
+  letter-spacing: 5px;
+
+  font-weight: normal;
+}
+
+.divider {
+
+  width: 100px;
+  height: 1px;
+
+  margin: 22px 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      #c8a55f,
+      transparent
+    );
+}
+
+.vision-text {
+
+  margin-bottom: 35px;
+
+  font-size: 21px;
+  line-height: 1.4;
+
+  color: #f0ede6;
+}
+
+.vision-text p {
+
+  margin:
+    4px
+    0;
+}
+
+
+/* =========================================================
+   EASTER EGGS
+   ========================================================= */
+
+.easter-egg {
+  position: absolute;
+  z-index: 15;
+}
+
+
+/* Boccino */
+
+.golden-snitch {
+
+  top: 25%;
+  left: -10%;
+
+  color: #ffe490;
+
+  font-size: 28px;
+
+  text-shadow:
+    0 0 5px #fff,
+    0 0 12px #ffd85b,
+    0 0 25px #ffc400;
+
+  animation:
+    snitchFlight 7s ease-in-out 3s forwards;
+}
+
+
+/* Botola */
+
+.trapdoor {
+
+  right: 20%;
+  bottom: 12%;
+
+  width: 100px;
+  height: 45px;
+
+  opacity: 0.65;
+
+  border: 2px solid #4d3821;
+
+  background: #24170d;
+
+  transform: perspective(200px) rotateX(55deg);
+}
+
+
+/* Libri proibiti */
+
+.forbidden-books {
+
+  top: 20%;
+  right: 8%;
+
+  color: #9b7550;
+
+  font-size: 60px;
+
+  opacity: 0.5;
+}
+
+
+/* =========================================================
+   ANIMAZIONI
+   ========================================================= */
+
+@keyframes memoryAppear {
+
+  0% {
+    opacity: 0;
+    transform: scale(1.08);
+    filter:
+      blur(15px)
+      saturate(0);
+  }
+
+  30% {
+    opacity: 1;
+    filter:
+      blur(1px)
+      saturate(0.55);
+  }
+
+  75% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1);
+    filter:
+      blur(10px)
+      saturate(0);
+  }
+}
+
+
+@keyframes mirrorBreathing {
+
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
+}
+
+
+@keyframes pulseText {
+
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+
+@keyframes visionZoom {
+
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.06);
+  }
+}
+
+
+@keyframes snitchFlight {
+
+  0% {
+
+    left: -10%;
+    top: 25%;
+
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  40% {
+
+    left: 35%;
+    top: 18%;
+  }
+
+  65% {
+
+    left: 65%;
+    top: 32%;
+  }
+
+  90% {
+
+    opacity: 1;
+  }
+
+  100% {
+
+    left: 110%;
+    top: 20%;
+
+    opacity: 0;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .vision-content {
+
+    left: 6%;
+    right: 6%;
+
+    top: auto;
+    bottom: 7%;
+
+    transform: none;
+  }
+
+  .vision-content h1 {
+
+    font-size: 34px;
+  }
+
+  .vision-text {
+
+    font-size: 17px;
+  }
+
+  .magic-button {
+
+    min-width: 220px;
+
+    padding: 13px 20px;
+
+    font-size: 15px;
+  }
+
+  .mirror-container {
+
+    height: 75vh;
+  }
+}

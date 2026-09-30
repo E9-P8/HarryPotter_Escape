@@ -34,6 +34,7 @@ import { LibraryEnigmaComponent } from './components/enigma-container/library-en
 import { Part8Component } from './components/Film1/part8/part8.component';
 import { FinalPartComponent } from './components/Film1/final-part/final-part.component';
 import { DemoComponent } from './components/demo/demo.component';
+import { MirrorRevealComponent } from './components/enigma-container/mirror-reveal/mirror-reveal.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { DemoComponent } from './components/demo/demo.component';
     FireMinigameComponent,
     Part8Component,
     FinalPartComponent,
-    DemoComponent
+    DemoComponent,
+    MirrorRevealComponent
   ],
   imports: [
     BrowserModule,

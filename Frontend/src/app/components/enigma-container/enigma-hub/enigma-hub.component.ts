@@ -8,6 +8,7 @@ import { FeatherEnigmaComponent } from '../feather-enigma/feather-enigma.compone
 import { TrollEnigmaComponent } from '../troll-enigma/troll-enigma.component';
 import { QuidditchEnigmaComponent } from '../quidditch-enigma/quidditch-enigma.component';
 import { LibraryEnigmaComponent } from '../library-enigma/library-enigma.component';
+import { MirrorRevealComponent } from '../mirror-reveal/mirror-reveal.component';
 
 @Component({
   selector: 'app-enigma-hub',
@@ -35,6 +36,7 @@ export class EnigmaHubComponent implements OnInit {
       case 'TROLL_ENIGMA': return TrollEnigmaComponent;
       case 'QUIDDITCH_ENIGMA': return QuidditchEnigmaComponent;
       case 'STEALTH_FILCH_ENIGMA': return LibraryEnigmaComponent;
+      case 'MIRROR_ENIGMA': return MirrorRevealComponent;
       default: return null;
     }
   }

@@ -384,7 +384,7 @@
   {
     "id": "snape_quirrell_argument",
     "image_id": "snape_quirrell_argument",
-    "type": "animation",
+    "type": "text",
     "text": "Piton: 'Non ti conviene avermi come nemico, Raptor...'",
     "next_node": "mirror_erised"
   },
@@ -429,15 +429,7 @@
     "image_id": "",
     "type": "enigma",
     "enigma_id": "MIRROR_ENIGMA",
-    "success_node": "mirror_parents_revealed"
-  },
-  {
-    "id": "mirror_parents_revealed",
-    "image_id": "",
-    "type": "animation",
-    "set_flag": { "mirrorKnowledge": true},
-    "text": "*mettere un'animazione senza testo*",
-    "next_node": "dumbledore_mirror_speech"
+    "success_node": "dumbledore_mirror_speech"
   },
   {
     "id": "dumbledore_mirror_speech",
