@@ -1,1 +1,142 @@
-<p>library-enigma works!</p>
+<div class="game-container" [class.fade]="isFading">
+  <!-- NODO 1: INGRESSO BIBLIOTECA -->
+  <ng-container *ngIf="currentNode === 'entrance'">
+    <div class="screen entrance-bg">
+      <div
+        class="hotspot left"
+        (click)="onEntranceChoice('left')"
+        (mouseenter)="
+          showTooltip(
+            'Il corridoio di sinistra sembra illuminato dalle fievoli candele incantate.'
+          )
+        "
+        (mouseleave)="hideTooltip()"
+      ></div>
+      <div
+        class="hotspot right"
+        (click)="onEntranceChoice('right')"
+        (mouseenter)="showTooltip('Senti un forte spiffero di vento freddo...')"
+        (mouseleave)="hideTooltip()"
+      ></div>
+    </div>
+  </ng-container>
+
+  <!-- NODO 2: SEZIONE RISERVATA -->
+  <ng-container *ngIf="currentNode === 'restricted_section'">
+    <div class="screen restricted-bg">
+      <!-- Contenitore o Hotspot per il Libro Statico -->
+      <div
+        *ngIf="!showDraggableBook"
+        class="hotspot book-hotspot"
+        (click)="revealBook()"
+        (mouseenter)="
+          showTooltip('Un tomo antico e misterioso giace sul leggio...')
+        "
+        (mouseleave)="hideTooltip()"
+      >
+        <img
+          src="assets/img/Part7/book-closed.png"
+          alt="Libro sul leggio"
+          class="book-img"
+        />
+      </div>
+
+      <!-- Libro Trascinabile (Usa i px SOLO mentre si trascina, altrimenti mantiene le % CSS) -->
+      <div
+        *ngIf="showDraggableBook && !isBookZoomed"
+        class="draggable-book hotspot-positioned"
+        [style.left]="isDragging ? bookPosition.x + 'px' : null"
+        [style.top]="isDragging ? bookPosition.y + 'px' : null"
+        (mousedown)="startDrag($event)"
+        (touchstart)="startDrag($event)"
+      >
+        <img
+          [src]="
+            isBookOpened
+              ? 'assets/img/Part7/book-open.png'
+              : 'assets/img/Part7/book-closed.png'
+          "
+          alt="Libro Proibito"
+          class="book-img"
+        />
+      </div>
+
+      <!-- Drop Zone al centro -->
+      <div *ngIf="showDraggableBook && !isBookZoomed" class="drop-zone">
+        <span>Prendi il libro dallo scaffale</span>
+      </div>
+
+      <!-- Effetto Zoom Finale Libro -->
+      <div *ngIf="isBookZoomed" class="book-zoom-overlay">
+        <img
+          src="assets/img/Part7/book-open.png"
+          class="zoomed-book"
+          alt="Libro Aperto"
+        />
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- FASE 2: NODI DI FUGA (ESCAPE 1 - 4) -->
+  <ng-container *ngIf="isEscapeNode()">
+    <div class="screen" [ngClass]="getEscapeBgClass()">
+      <div
+        class="hotspot left"
+        (click)="onEscapeChoice('left')"
+        (mouseenter)="showTooltip(getCurrentNodeClue('left'))"
+        (mouseleave)="hideTooltip()"
+      ></div>
+      <div
+        class="hotspot right"
+        (click)="onEscapeChoice('right')"
+        (mouseenter)="showTooltip(getCurrentNodeClue('right'))"
+        (mouseleave)="hideTooltip()"
+      ></div>
+    </div>
+  </ng-container>
+
+  <!-- NODO USCITA -->
+  <ng-container *ngIf="currentNode === 'exit_door'">
+    <div class="screen exit-bg">
+      <div class="exit-action-container">
+        <h2>Sei arrivato alla Porta della Biblioteca</h2>
+        <button class="btn-exit" (click)="exitLibrary()">
+          Esci dalla Biblioteca
+        </button>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- SCHERMATA FALLIMENTO: MRS PURR -->
+  <ng-container *ngIf="currentNode === 'fail_purr'">
+    <div class="screen fail-purr-bg">
+      <div class="failure-overlay">
+        <h2>Mrs Purr ti ha avvistato!</h2>
+        <p>I suoi occhi rossi balenano nell'ombra...</p>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- SCHERMATA FALLIMENTO: GAZZA -->
+  <ng-container *ngIf="currentNode === 'fail_gazza'">
+    <div class="screen fail-gazza-bg">
+      <div class="gazza-lantern-beam"></div>
+      <div class="failure-dialog">
+        <p>
+          "E tu cosa ci fai qui?? È proibito stare fuori dal dormitorio a
+          quest'ora! Torna immediatamente!"
+        </p>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- TOOLTIP INVISIBILE DINAMICO -->
+  <div
+    class="custom-tooltip"
+    *ngIf="tooltipText"
+    [style.left.px]="mousePos.x"
+    [style.top.px]="mousePos.y"
+  >
+    {{ tooltipText }}
+  </div>
+</div>

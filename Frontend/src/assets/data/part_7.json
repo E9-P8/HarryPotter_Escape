@@ -375,15 +375,15 @@
   },
   {
     "id": "filch_catch_warning",
-    "image_id": "",
+    "image_id": "filch_catch_warning",
     "type": "text",
-    "text": "Gazza: 'So che sei qui! La lampada è ancora calda! Torna immediatamente al dormitorio!'",
+    "text": "Gaza: ho trovato *WizardName* nella zona proibita!",
      "impact": { "reputazione": -25 },
     "next_node": "dormitory"
   },
   {
     "id": "snape_quirrell_argument",
-    "image_id": "",
+    "image_id": "snape_quirrell_argument",
     "type": "animation",
     "text": "Piton: 'Non ti conviene avermi come nemico, Raptor...'",
     "next_node": "mirror_erised"
