@@ -328,7 +328,7 @@
   },
   {
     "id": "christmas_gift_harry",
-    "image_id": "",
+    "image_id": "christmas_gift_harry",
     "type": "text",
     "text": "Non ho mai ricevuto dei regali!",
     "next_node": "harry_gift"
@@ -390,12 +390,12 @@
   },
   {
     "id": "mirror_erised",
-    "image_id": "",
+    "image_id": "mirror_erised",
     "text": "",
     "options": [
       {
         "text": "Scegliete di entrare nella porta",
-        "impact": { "audacia": 10 },
+        "impact": { "audacia": 10 }, 
         "set_flag": { "mirrorRevealed": true},
         "next_node": "mirror_erised_room"
       },
@@ -408,7 +408,7 @@
   },
   {
     "id": "dormitory",
-    "image_id": "",
+    "image_id": "gryffindor_dormitory",
     "type": "text",
     "options": [
       {
@@ -433,7 +433,7 @@
   },
   {
     "id": "dumbledore_mirror_speech",
-    "image_id": "",
+    "image_id": "dumbledore_mirror_speech",
     "type": "text",
     "text": "Silente: 'L'uomo più felice della Terra vedrebbe solo se stesso... Questo specchio ci mostra solo i più profondi e tormentati desideri del nostro cuore. Domani sarà trasferito in una nuova dimora. Non serve a niente rifugiarsi nei sogni e dimenticarsi di vivere.'",
     "next_node": "part_8"

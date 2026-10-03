@@ -21,193 +21,98 @@
   overflow: hidden;
 }
 
-
-/* =========================================================
-   ENTRATA
-   ========================================================= */
-
+/* FASE ENTRATA */
 .entrance {
-  background:
-    url('/assets/images/mirror/mirror-room.jpg')
-    center center / cover no-repeat;
+  background: url('/assets/img/Part7/mirror-room.png') center center / cover no-repeat;
 }
 
 .dark-overlay {
   position: absolute;
   inset: 0;
-
-  background:
-    radial-gradient(
-      circle at center,
+  background: radial-gradient(circle at center,
       rgba(0, 0, 0, 0.1),
-      rgba(0, 0, 0, 0.72)
-    );
+      rgba(0, 0, 0, 0.72));
 }
 
 .scene-content {
   position: absolute;
-
   left: 50%;
-  bottom: 8%;
-
+  bottom: 3%;
+  padding: 15px;
   transform: translateX(-50%);
-
-  width: 90%;
+  width: 80%;
   max-width: 800px;
-
   text-align: center;
+  background-color: #000000ad;
+  border-radius: 4%;
 }
 
 .dialogue {
-  margin-bottom: 30px;
-
-  font-size: 25px;
+  font-size: 1.2rem;
   line-height: 1.5;
-
   color: #f2ead5;
-
   text-shadow:
     0 2px 4px #000,
     0 0 15px rgba(255, 227, 164, 0.4);
+  margin-bottom: 10px;
 }
-
-
-/* =========================================================
-   BUTTON
-   ========================================================= */
 
 .magic-button {
   position: relative;
   z-index: 20;
-
   min-width: 260px;
-
-  padding: 16px 30px;
-
-  border: 1px solid #b99655;
+  padding: 10px 20px;
+  border: 1px solid #201d19;
   border-radius: 4px;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(45, 36, 25, 0.96),
-      rgba(15, 13, 12, 0.96)
-    );
-
-  color: #f5dfad;
-
+  background: linear-gradient(180deg, rgb(36 31 25 / 96%), rgba(15, 13, 12, 0.96));
+  color: #cbbfa6;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 17px;
   letter-spacing: 1px;
-
   cursor: pointer;
-
-  box-shadow:
-    0 0 20px rgba(188, 146, 74, 0.25),
-    inset 0 0 15px rgba(255, 217, 140, 0.06);
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease;
+  box-shadow: 0 0 20px rgb(154 124 71 / 25%), inset 0 0 15px rgba(255, 217, 140, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .magic-button:hover {
   transform: scale(1.04);
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(73, 54, 31, 0.98),
-      rgba(23, 18, 13, 0.98)
-    );
-
-  box-shadow:
-    0 0 30px rgba(222, 177, 90, 0.45);
+  background: linear-gradient(180deg,
+      rgba(61, 46, 27, 0.98),
+      rgba(23, 18, 13, 0.98));
+  box-shadow: 0 0 30px rgba(165, 131, 63, 0.45);
 }
 
-
-/* =========================================================
-   SPECCHIO
-   ========================================================= */
-
+/* FASE TELO & SPECCHIO RAVVINATO */
 .covered,
 .revealing,
 .memory-scene {
-
   display: flex;
-
   align-items: center;
   justify-content: center;
-
-  background:
-    url('/assets/images/mirror/mirror-room-close.jpg')
-    center center / cover no-repeat;
+  background: url('/assets/img/Part7/mirror-room-close.png') center center / cover no-repeat;
 }
 
 .mirror-container {
   position: relative;
-
-  height: 88vh;
-  max-height: 900px;
-
+  height: 100vh;
+  width: 100vw;
   z-index: 5;
-
-  aspect-ratio: 0.62;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-.mirror-frame,
-.mirror-background {
-
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: contain;
-
-  filter:
-    drop-shadow(0 0 25px rgba(0, 0, 0, 0.9));
-}
-
-
-/* =========================================================
-   TELO
-   ========================================================= */
 
 .curtain {
   position: absolute;
-
-  top: 4%;
-  left: 8%;
-
-  width: 84%;
-  height: 91%;
-
+  inset: 0;
   z-index: 10;
-
   cursor: pointer;
-
-  background:
-    linear-gradient(
-      90deg,
-      #19171c,
-      #343139 35%,
-      #18161c 70%,
-      #302c33
-    );
-
-  border-radius: 45% 45% 8% 8% / 10% 10% 5% 5%;
-
-  box-shadow:
-    inset 15px 0 30px rgba(255,255,255,0.04),
-    inset -20px 0 30px rgba(0,0,0,0.5);
-
+  background-image: url('/assets/img/Part7/telo.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
   transform-origin: top center;
-
-  transition:
-    transform 1.5s ease-in,
-    opacity 1.2s ease;
+  transition: transform 1.5s ease-in, opacity 1.2s ease;
 }
 
 .curtain:hover {
@@ -215,373 +120,266 @@
 }
 
 .curtain-open {
-  transform:
-    translateY(-110%)
-    scaleY(0.4);
-
+  transform: translateY(-110%) scaleY(0.4);
   opacity: 0;
 }
 
 .curtain-text {
   position: absolute;
-
-  left: 0;
-  right: 0;
-  bottom: 15%;
-
-  text-align: center;
-
-  color: rgba(255,255,255,0.7);
-
-  font-size: 16px;
-  letter-spacing: 2px;
-
-  animation: pulseText 2s infinite;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #5f5a55;
+  font-weight: bold;
+  font-size: 0.8rem;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+  white-space: nowrap;
 }
 
-
-/* =========================================================
-   SPECCHIO SFOCATO
-   ========================================================= */
+/* OVALE DENTRO LO SPECCHIO */
+.blurred-reflection,
+.memory-window {
+  position: absolute;
+  top: 10%;
+  left: 39%;
+  width: 23%;
+  height: 72%;
+  border-radius: 48% 48% 40% 40%;
+}
 
 .blurred-reflection {
-
-  position: absolute;
-
-  top: 9%;
-  left: 17%;
-
-  width: 66%;
-  height: 78%;
-
-  border-radius: 48% 48% 40% 40%;
-
-  background:
-    radial-gradient(
-      ellipse at center,
+  background: radial-gradient(ellipse at center,
       rgba(190, 209, 215, 0.45),
       rgba(75, 92, 103, 0.22) 50%,
-      rgba(11, 16, 23, 0.7)
-    );
-
+      rgba(11, 16, 23, 0.7));
   filter: blur(8px);
-
   animation: mirrorBreathing 4s ease-in-out infinite;
 }
 
-.glowing {
+.memory-window {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-mask-image: radial-gradient(ellipse at center,
+      black 40%,
+      transparent 85%);
+  mask-image: radial-gradient(ellipse at center,
+      black 40%,
+      transparent 85%);
+}
 
-  filter:
-    drop-shadow(0 0 18px rgba(185, 215, 228, 0.3))
-    drop-shadow(0 0 50px rgba(207, 177, 110, 0.15));
+/* BOCCINO D'ORO */
+.snitch-trail-png {
+  position: absolute;
+  z-index: 10;
+  width: 40px;
+  height: auto;
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(-6px 4px 10px rgba(255, 215, 0, 0.85)) brightness(1.2);
+}
+
+.snitch-trail-png.snitch-flying {
+  animation: flyAcrossMirror 3.5s ease-in-out forwards;
+}
+
+.memory-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(2px) saturate(0.85) contrast(1.1);
+  animation: memoryAppear 3.5s ease forwards;
+}
+
+.glowing {
+  filter: drop-shadow(0 0 18px rgba(185, 215, 228, 0.3)) drop-shadow(0 0 50px rgba(207, 177, 110, 0.15));
 }
 
 .observe-button {
-
   position: absolute;
-
   bottom: 5%;
   left: 50%;
-
   transform: translateX(-50%);
 }
 
 .observe-button:hover {
-  transform:
-    translateX(-50%)
-    scale(1.04);
-}
-
-
-/* =========================================================
-   RICORDI
-   ========================================================= */
-
-.memory-window {
-
-  position: absolute;
-
-  top: 10%;
-  left: 18%;
-
-  width: 64%;
-  height: 77%;
-
-  overflow: hidden;
-
-  border-radius:
-    48% 48% 42% 42% /
-    12% 12% 8% 8%;
-
-  background:
-    radial-gradient(
-      ellipse at center,
-      #18252c,
-      #05070a
-    );
-}
-
-.memory-image {
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-
-  animation:
-    memoryAppear 2s ease forwards;
-
-  filter:
-    saturate(0.72)
-    contrast(1.12);
+  transform: translateX(-50%) scale(1.04);
 }
 
 .mirror-message {
-
   position: absolute;
-
   bottom: 4%;
   left: 50%;
-
   transform: translateX(-50%);
-
   z-index: 20;
-
   color: rgba(235, 228, 210, 0.75);
-
   letter-spacing: 3px;
-
   font-size: 14px;
-
   animation: pulseText 2s infinite;
 }
 
-
 /* =========================================================
-   VISIONE FINALE
+   FASE 4 - VISIONE FINALE (INTEGRATA NELL'OVALE DELLO SPECCHIO)
    ========================================================= */
 
-.final-vision {
-
+.memory-window .vision-background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   opacity: 0;
-
-  transition: opacity 2.5s ease;
-
-  background: #000;
+  filter: brightness(0.45) blur(1px);
+  transition: opacity 2s ease-in-out;
+  animation: visionZoom 20s ease-out forwards;
+  z-index: 1;
 }
 
-.final-vision.visible {
+.memory-window .vision-background.visible {
   opacity: 1;
 }
 
-.vision-background {
-
-  position: absolute;
-
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-
-  animation:
-    visionZoom 20s ease-out forwards;
-}
-
-.vision-darkening {
-
+.memory-window .vision-darkening {
   position: absolute;
   inset: 0;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(0,0,0,0.75),
-      rgba(0,0,0,0.15) 60%,
-      rgba(0,0,0,0.35)
-    );
+  background: radial-gradient(circle at center,
+      rgba(0, 0, 0, 0.3),
+      rgba(0, 0, 0, 0.85));
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  z-index: 2;
 }
 
-.vision-content {
+.memory-window .vision-darkening.visible {
+  opacity: 1;
+}
 
-  position: absolute;
+.memory-window .vision-content {
+  position: relative;
+  z-index: 5;
+  padding: 1.2rem;
+  text-align: center;
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+  max-width: 90%;
+  text-shadow: 0 2px 6px #000, 0 0 15px rgba(0, 0, 0, 0.9);
+}
 
-  z-index: 20;
-
-  top: 50%;
-  left: 8%;
-
-  transform: translateY(-50%);
-
-  max-width: 620px;
-
-  text-shadow:
-    0 2px 5px #000,
-    0 0 20px rgba(0,0,0,0.8);
+.memory-window .vision-content.visible {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .vision-small-title {
-
-  font-size: 13px;
-
-  letter-spacing: 5px;
-
+  font-size: 10px;
+  letter-spacing: 3px;
   color: #c5aa72;
-
-  margin-bottom: 10px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
 }
 
-.vision-content h1 {
-
-  margin:
-    0
-    0
-    15px
-    0;
-
+.memory-window .vision-content h1 {
+  margin: 0 0 10px 0;
   color: #f2dfae;
-
-  font-size: 52px;
-
-  letter-spacing: 5px;
-
+  font-size: 26px;
+  letter-spacing: 2px;
   font-weight: normal;
 }
 
 .divider {
-
-  width: 100px;
+  width: 60px;
   height: 1px;
-
-  margin: 22px 0;
-
-  background:
-    linear-gradient(
-      90deg,
-      #c8a55f,
-      transparent
-    );
+  margin: 10px auto;
+  background: linear-gradient(90deg, transparent, #c8a55f, transparent);
 }
 
 .vision-text {
-
-  margin-bottom: 35px;
-
-  font-size: 21px;
-  line-height: 1.4;
-
+  margin-bottom: 10px;
+  font-size: 13px;
+  line-height: 1.35;
   color: #f0ede6;
 }
 
 .vision-text p {
-
-  margin:
-    4px
-    0;
+  margin: 4px 0;
 }
 
-
-/* =========================================================
-   EASTER EGGS
-   ========================================================= */
-
-.easter-egg {
+/* FOOTER FINALE (Pulsante e Messaggi sotto lo specchio) */
+.mirror-footer {
   position: absolute;
-  z-index: 15;
+  bottom: 3%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  text-align: center;
+  width: 100%;
+}
+
+.leave-button {
+  min-width: 200px;
+  padding: 10px 24px;
+  font-size: 15px;
 }
 
 
-/* Boccino */
-
-.golden-snitch {
-
-  top: 25%;
-  left: -10%;
-
-  color: #ffe490;
-
-  font-size: 28px;
-
-  text-shadow:
-    0 0 5px #fff,
-    0 0 12px #ffd85b,
-    0 0 25px #ffc400;
-
-  animation:
-    snitchFlight 7s ease-in-out 3s forwards;
-}
-
-
-/* Botola */
-
-.trapdoor {
-
-  right: 20%;
-  bottom: 12%;
-
-  width: 100px;
-  height: 45px;
-
-  opacity: 0.65;
-
-  border: 2px solid #4d3821;
-
-  background: #24170d;
-
-  transform: perspective(200px) rotateX(55deg);
-}
-
-
-/* Libri proibiti */
-
-.forbidden-books {
-
-  top: 20%;
-  right: 8%;
-
-  color: #9b7550;
-
-  font-size: 60px;
-
-  opacity: 0.5;
-}
-
-
-/* =========================================================
-   ANIMAZIONI
-   ========================================================= */
-
-@keyframes memoryAppear {
-
+@keyframes flyAcrossMirror {
   0% {
     opacity: 0;
-    transform: scale(1.08);
-    filter:
-      blur(15px)
-      saturate(0);
+    top: 75%;
+    left: -20%;
+    transform: scale(0.6) rotate(-15deg);
   }
 
-  30% {
+  20% {
     opacity: 1;
-    filter:
-      blur(1px)
-      saturate(0.55);
+    filter: drop-shadow(-8px 6px 14px rgba(255, 223, 0, 0.95)) brightness(1.3);
   }
 
-  75% {
+  50% {
+    top: 30%;
+    left: 45%;
+    transform: scale(1.1) rotate(12deg);
+  }
+
+  80% {
     opacity: 1;
   }
 
   100% {
     opacity: 0;
-    transform: scale(1);
-    filter:
-      blur(10px)
-      saturate(0);
+    top: 10%;
+    left: 115%;
+    transform: scale(0.5) rotate(5deg);
   }
 }
 
+@keyframes memoryAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+    filter: blur(15px) saturate(0);
+  }
+
+  30% {
+    opacity: 1;
+    filter: blur(1px) saturate(0.65);
+  }
+
+  75% {
+    opacity: 1;
+    transform: scale(0.95);
+    filter: blur(1px) saturate(0.85);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1);
+    filter: blur(10px) saturate(0);
+  }
+}
 
 @keyframes mirrorBreathing {
 
@@ -595,7 +393,6 @@
   }
 }
 
-
 @keyframes pulseText {
 
   0%,
@@ -608,98 +405,45 @@
   }
 }
 
-
 @keyframes visionZoom {
-
   from {
     transform: scale(1);
   }
 
   to {
-    transform: scale(1.06);
+    transform: scale(1.08);
   }
 }
-
-
-@keyframes snitchFlight {
-
-  0% {
-
-    left: -10%;
-    top: 25%;
-
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 1;
-  }
-
-  40% {
-
-    left: 35%;
-    top: 18%;
-  }
-
-  65% {
-
-    left: 65%;
-    top: 32%;
-  }
-
-  90% {
-
-    opacity: 1;
-  }
-
-  100% {
-
-    left: 110%;
-    top: 20%;
-
-    opacity: 0;
-  }
-}
-
 
 /* =========================================================
-   MOBILE
+   ADATTAMENTO MOBILE
    ========================================================= */
 
 @media (max-width: 768px) {
 
-  .vision-content {
-
-    left: 6%;
-    right: 6%;
-
-    top: auto;
-    bottom: 7%;
-
-    transform: none;
+  .blurred-reflection,
+  .memory-window {
+    top: 15%;
+    left: 20%;
+    width: 60%;
+    height: 65%;
   }
 
-  .vision-content h1 {
-
-    font-size: 34px;
+  .memory-window .vision-content h1 {
+    font-size: 20px;
   }
 
   .vision-text {
-
-    font-size: 17px;
+    font-size: 11px;
   }
 
   .magic-button {
-
-    min-width: 220px;
-
-    padding: 13px 20px;
-
-    font-size: 15px;
+    min-width: 200px;
+    padding: 10px 16px;
+    font-size: 14px;
   }
 
   .mirror-container {
-
-    height: 75vh;
+    height: 85vh;
   }
 }
