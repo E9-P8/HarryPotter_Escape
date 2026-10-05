@@ -48,6 +48,10 @@ export class DemoComponent implements OnInit, OnDestroy {
   isFullGameReady: boolean = false; 
   mirrorProfileImage: string = '';
 
+  showBookTitle: boolean = false;
+  isZooming: boolean = false;
+
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -55,34 +59,43 @@ export class DemoComponent implements OnInit, OnDestroy {
     public audioService: AudioService
   ) {}
 
-ngOnInit(): void {
-  if (this.router.url.includes('demo/End') || this.route.snapshot.queryParams['ended'] === 'true') {
-    this.isDemoEnded = true;
+  ngOnInit(): void {
+    this.setDemoManifest();
 
-    // Recupera l'immagine salvata
-    const queryImg = this.route.snapshot.queryParams['profileImg'];
-    if (queryImg) {
-      this.mirrorProfileImage = queryImg;
-      this.gameData.setMirrorProfileImage(queryImg);
-    } else {
-      this.mirrorProfileImage = this.gameData.getMirrorProfileImage();
+    if (this.router.url.includes('demo/End') || this.route.snapshot.queryParams['ended'] === 'true') {
+      this.isDemoEnded = true;
+
+      // Recupera l'immagine salvata
+      const queryImg = this.route.snapshot.queryParams['profileImg'];
+      if (queryImg) {
+        this.mirrorProfileImage = queryImg;
+        this.gameData.setMirrorProfileImage(queryImg);
+      } else {
+        this.mirrorProfileImage = this.gameData.getMirrorProfileImage();
+      }
+
+      // Recupera il nome del mago
+      this.wizardName = this.gameData.getWizardName() || this.gameData.wizardName || '';
+
+      localStorage.removeItem('hp_demo_save');
     }
 
-    // Recupera il nome del mago
-    this.wizardName = this.gameData.getWizardName() || this.gameData.wizardName || '';
+    // Avvia le particelle e il testo di intro solo se la demo NON è finita
+    this.particleInterval = setInterval(() => {
+      this.createParticle();
+    }, 500);
 
-    localStorage.removeItem('hp_demo_save');
+    if (!this.isDemoEnded) {
+      this.prepareIntroText();
+    }
   }
 
-  // Avvia le particelle e il testo di intro solo se la demo NON è finita
-  this.particleInterval = setInterval(() => {
-    this.createParticle();
-  }, 500);
-
-  if (!this.isDemoEnded) {
-    this.prepareIntroText();
+  private setDemoManifest(): void {
+    let manifestLink = document.querySelector('link[rel="manifest"]') as HTMLLinkElement;
+    if (manifestLink) {
+      manifestLink.setAttribute('href', 'assets/manifest-demo.webmanifest');
+    }
   }
-}
 
   ngOnDestroy(): void {
     if (this.particleInterval) {
@@ -162,8 +175,27 @@ ngOnInit(): void {
     });
   }
 
+
+  onVideoTimeUpdate(videoElement: HTMLVideoElement): void {
+    if (!videoElement.duration) return;
+
+    const timeRemaining = videoElement.duration - videoElement.currentTime;
+
+    // 1. Mostra il titolo quando mancano meno di 4 secondi
+    if (timeRemaining <= 5 && timeRemaining > 0.3 && !this.showBookTitle) {
+      this.showBookTitle = true;
+    }
+
+    // 2. Attiva lo zoom/dissolvenza in concomitanza con lo zoom del libro negli ultimi 1.8 secondi
+    if (timeRemaining <= 3.8 && !this.isZooming) {
+      this.isZooming = true;
+    }
+  }
+
   onVideoEnded(): void {
     this.showOverlay = false;
+    this.showBookTitle = false;
+    this.isZooming = false;
 
     setTimeout(() => {
       this.hideOverlayDOM = true;

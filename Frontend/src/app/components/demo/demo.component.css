@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Sancreek&display=swap');
+
 .audio-toggle-btn {
     position: fixed;
     top: 35px;
@@ -581,36 +583,59 @@ h2 {
     transform: scale(1.03);
 }
 
-/* --- MEDIA QUERY MOBILE LANDSCAPE --- */
-@media screen and (max-height: 500px) and (orientation: landscape) {
-    .demo-end-card {
-        max-width: 480px;
-        min-height: auto;
-        padding: 1.8rem 2.2rem;
-    }
 
-    .demo-end-card h2 {
-        font-size: 1.3rem;
-        margin-bottom: 0.4rem;
-    }
 
-    .demo-text {
-        font-size: 0.85rem;
-        line-height: 1.3;
-        margin-bottom: 0.4rem;
-    }
 
-    .demo-subtext {
-        font-size: 0.75rem;
-        margin-bottom: 0.6rem;
-    }
-
-    .btn-full-game,
-    .btn-restart-demo {
-        padding: 0.4rem 1rem;
-        font-size: 0.85rem;
-    }
+.book-title-overlay {
+  position: absolute;
+  top: 7%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  text-align: center;
+  color: #f7d8ab;
+  pointer-events: none;
+  z-index: 25; 
+  
+  animation: fadeInTitle 1s ease-out forwards;
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease-in-out;
 }
+
+.book-title-overlay.zoom-sync {
+  transform: translate(-50%, -50%) scale(2.2);
+  opacity: 0;
+}
+
+.book-main-title {
+  font-family: 'Sancreek', serif;
+  font-size: 2.3rem;
+  margin: 0;
+  color: #fff3db;
+  text-shadow: 0 0 15px rgba(0, 0, 0, 0.95), 0 0 8px rgba(197, 160, 89, 0.6);
+}
+
+.volume-tag {
+  display: inline-block;
+  margin-top: 0.6rem;
+  font-family: 'Sancreek', serif;
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  color: #c2b695;
+  padding: 0.2rem 1.2rem;
+}
+
+@keyframes fadeInTitle {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+
+
 
 
 
@@ -740,4 +765,16 @@ h2 {
         font-size: 0.8rem;
     }
 
+    .book-title-overlay {
+        top: 10%;
+    }
+
+    .book-main-title {
+        font-size: 1.1rem;
+    }
+
+    .volume-tag {
+        font-size: 0.65rem;
+        padding: 0.1rem 0.8rem;
+    }
 }

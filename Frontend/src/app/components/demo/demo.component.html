@@ -49,9 +49,18 @@
         class="intro-video"
         [ngClass]="{ visible: isVideoStarted }"
         src="assets/video/videoIntro.mp4"
+        (timeupdate)="onVideoTimeUpdate(introVideo)"
         (ended)="onVideoEnded()"
         playsinline
       ></video>
+      <div
+        class="book-title-overlay"
+        *ngIf="showBookTitle"
+        [ngClass]="{ 'zoom-sync': isZooming }"
+      >
+        <h1 class="book-main-title">I Misteri e i Pericoli di Hogwarts</h1>
+        <span class="volume-tag">E.P.</span>
+      </div>
     </div>
 
     <div class="menu-header">
