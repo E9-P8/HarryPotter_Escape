@@ -23,6 +23,7 @@ export class Part7Component implements OnInit, OnDestroy {
   harryBroomClass: string = '';
   harryBroomImg: string = 'assets/img/Part7/harry_broom.png';
 
+  
   constructor(private http: HttpClient,
       public gameService: GameDataService, 
       public audioService : AudioService,
@@ -31,8 +32,18 @@ export class Part7Component implements OnInit, OnDestroy {
 
   toggleAudio(): void {
   this.audioService.toggleGlobalMute(0.2);
+  this.startIntroSequence();
   }
+  startIntroSequence() {
+    this.audioService.startGlobalBackground('schoolOfMagic', 0.3); 
+  }
+
   ngOnInit(): void {
+    if (this.audioService) {
+      this.audioService.stopAllSounds(); 
+      this.startIntroSequence();
+    }
+
     if (this.router.url.includes('demo') || this.gameService.isDemoMode) {
       this.gameService.isDemoMode = true;
     }
@@ -144,10 +155,20 @@ export class Part7Component implements OnInit, OnDestroy {
         this.gameService.setFlag(key, option.set_flag[key]);
       });
       }
+
     if (nextNodeId === 'part_8' || nextNodeId === '/part8') {
-      this.router.navigate(['/part8']);
-      return;
+
+      const profileImage = this.gameService.getMirrorProfileImage() 
+                    || 'assets/img/Part7/memories/vision-knowledge.png';
+
+      if (this.gameService.isDemoMode) {
+        this.router.navigate(['/demo/End']);
+        } else {
+          this.router.navigate(['/part8']);
+        }
+        return;
     }
+
     if (nextNode) {
         //this.actualPhase = nextNode; 
         this.actualPhase = JSON.parse(JSON.stringify(nextNode));

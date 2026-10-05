@@ -768,7 +768,7 @@ gameLoop = (timestamp: number) => {
   onCastleVideoEnded(): void {
     this.gameData.setCurrentNode('part4_completed', 4);
     this.showCastleVideo = true;   
-    this.router.navigate(['/part5']); 
+    this.router.navigate(['/Benvenuti-ad-Hogwarts']); 
     }
   
 } 

@@ -147,7 +147,6 @@
   height: 72%;
   border-radius: 48% 48% 40% 40%;
 }
-
 .blurred-reflection {
   background: radial-gradient(ellipse at center,
       rgba(190, 209, 215, 0.45),
@@ -156,7 +155,6 @@
   filter: blur(8px);
   animation: mirrorBreathing 4s ease-in-out infinite;
 }
-
 .memory-window {
   overflow: hidden;
   display: flex;
@@ -169,8 +167,6 @@
       black 40%,
       transparent 85%);
 }
-
-/* BOCCINO D'ORO */
 .snitch-trail-png {
   position: absolute;
   z-index: 10;
@@ -180,11 +176,9 @@
   pointer-events: none;
   filter: drop-shadow(-6px 4px 10px rgba(255, 215, 0, 0.85)) brightness(1.2);
 }
-
 .snitch-trail-png.snitch-flying {
   animation: flyAcrossMirror 3.5s ease-in-out forwards;
 }
-
 .memory-image {
   width: 100%;
   height: 100%;
@@ -220,9 +214,7 @@
   animation: pulseText 2s infinite;
 }
 
-/* =========================================================
-   FASE 4 - VISIONE FINALE (INTEGRATA NELL'OVALE DELLO SPECCHIO)
-   ========================================================= */
+/* FASE 4 - VISIONE FINALE  */
 
 .memory-window .vision-background {
   position: absolute;
@@ -323,8 +315,6 @@
   padding: 10px 24px;
   font-size: 15px;
 }
-
-
 @keyframes flyAcrossMirror {
   0% {
     opacity: 0;
@@ -415,35 +405,82 @@
   }
 }
 
-/* =========================================================
-   ADATTAMENTO MOBILE
-   ========================================================= */
 
-@media (max-width: 768px) {
 
-  .blurred-reflection,
-  .memory-window {
-    top: 15%;
-    left: 20%;
-    width: 60%;
-    height: 65%;
+
+
+
+@media screen and (max-height: 500px) and (orientation: landscape) {
+
+  .scene-content {
+    bottom: 2%;
+    padding: 8px 12px;
+    width: 85%;
   }
 
-  .memory-window .vision-content h1 {
-    font-size: 20px;
-  }
-
-  .vision-text {
-    font-size: 11px;
+  .dialogue {
+    font-size: 0.8rem;
+    line-height: 1.25;
+    margin-bottom: 6px;
   }
 
   .magic-button {
-    min-width: 200px;
-    padding: 10px 16px;
-    font-size: 14px;
+    min-width: 180px;
+    padding: 6px 14px;
+    font-size: 0.8rem;
+  }
+  .blurred-reflection,
+  .memory-window {
+    top: 11%;
+    left: 39%;
+    width: 23%;
+    height: 70%;
   }
 
-  .mirror-container {
-    height: 85vh;
+  .curtain-text {
+    font-size: 0.65rem;
+  }
+  .memory-window .vision-content {
+    padding: 0.4rem;
+  }
+
+  .vision-small-title {
+    font-size: 8px;
+    margin-bottom: 2px;
+    letter-spacing: 1.5px;
+  }
+
+  .memory-window .vision-content h1 {
+    font-size: 14px;
+    margin: 0 0 4px 0;
+    letter-spacing: 1px;
+  }
+
+  .divider {
+    width: 35px;
+    margin: 4px auto;
+  }
+  .vision-text {
+    font-size: 9px;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .vision-text p {
+    margin: 2px 0;
+  }
+  .mirror-message {
+    bottom: 2%;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+  }
+
+  .mirror-footer {
+    bottom: 2%;
+  }
+
+  .leave-button {
+    min-width: 150px;
+    padding: 6px 16px;
+    font-size: 0.75rem;
   }
 }

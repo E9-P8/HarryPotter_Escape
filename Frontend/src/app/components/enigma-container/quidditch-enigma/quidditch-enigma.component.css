@@ -273,3 +273,54 @@ div.harry-entity.flying {
         transform: translateY(-12px);
     }
 }
+
+
+
+
+
+
+@media screen and (max-height: 500px) and (orientation: landscape) {
+
+    .hud-panel {
+        top: 8px;
+        gap: 4px;
+        width: 95%;
+    }
+
+    .attempts-box {
+        padding: 3px 12px;
+        font-size: 0.7rem;
+        border-width: 1px;
+    }
+
+    .message-box {
+        padding: 4px 12px;
+        border-radius: 6px;
+    }
+
+    .message-box p {
+        font-size: 0.65rem;
+        line-height: 1.2;
+    }
+    .snitch-entity img {
+        width: 55px;
+    }
+
+    .harry-entity {
+        width: 150px;
+    }
+
+    .harry-entity.waiting {
+        width: 120px;
+    }
+    .target-ping {
+        width: 24px;
+        height: 24px;
+    }
+
+    .zone-label {
+        margin-top: 3px;
+        font-size: 0.6rem;
+        padding: 1px 5px;
+    }
+}

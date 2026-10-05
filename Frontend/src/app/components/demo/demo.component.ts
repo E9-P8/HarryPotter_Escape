@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { GameDataService } from '../../services/game-data.service';
 import { AudioService } from '../../services/audio.service';
 
@@ -44,18 +44,45 @@ export class DemoComponent implements OnInit, OnDestroy {
   private particleInterval: any;
   private idCounter = 0;
 
+  isDemoEnded: boolean = false;
+  isFullGameReady: boolean = false; 
+  mirrorProfileImage: string = '';
+
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private gameData: GameDataService,
     public audioService: AudioService
   ) {}
 
-  ngOnInit(): void {
-    this.particleInterval = setInterval(() => {
-      this.createParticle();
-    }, 500);
+ngOnInit(): void {
+  if (this.router.url.includes('demo/End') || this.route.snapshot.queryParams['ended'] === 'true') {
+    this.isDemoEnded = true;
+
+    // Recupera l'immagine salvata
+    const queryImg = this.route.snapshot.queryParams['profileImg'];
+    if (queryImg) {
+      this.mirrorProfileImage = queryImg;
+      this.gameData.setMirrorProfileImage(queryImg);
+    } else {
+      this.mirrorProfileImage = this.gameData.getMirrorProfileImage();
+    }
+
+    // Recupera il nome del mago
+    this.wizardName = this.gameData.getWizardName() || this.gameData.wizardName || '';
+
+    localStorage.removeItem('hp_demo_save');
+  }
+
+  // Avvia le particelle e il testo di intro solo se la demo NON è finita
+  this.particleInterval = setInterval(() => {
+    this.createParticle();
+  }, 500);
+
+  if (!this.isDemoEnded) {
     this.prepareIntroText();
   }
+}
 
   ngOnDestroy(): void {
     if (this.particleInterval) {
@@ -64,6 +91,24 @@ export class DemoComponent implements OnInit, OnDestroy {
     if (this.typewriterTimeout) {
       clearTimeout(this.typewriterTimeout);
     }
+    this.lensTimeouts.forEach(t => clearTimeout(t));
+  }
+
+  get containerStyle(): Record<string, string> {
+    let imagePath = this.mirrorProfileImage || this.gameData.getMirrorProfileImage();
+
+    if (!imagePath) {
+      imagePath = 'assets/img/Part7/memories/vision-knowledge.png';
+    }
+
+    let formattedPath = imagePath;
+    if (!formattedPath.startsWith('/') && !formattedPath.startsWith('http')) {
+      formattedPath = '/' + formattedPath;
+    }
+
+    return {
+      'background-image': `linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.85)), url(${formattedPath})`
+    };
   }
 
   private enableDemoState(): void {
@@ -166,14 +211,12 @@ export class DemoComponent implements OnInit, OnDestroy {
     this.audioService.playSound('parchment', 0.6);
   }
 
-startGame(): void {
+  startGame(): void {
     if (this.wizardName && this.wizardName.trim() !== '') {
       this.gameData.setWizardName(this.wizardName.trim());
 
-      // Attiva la vista della Lente (Step 5)
       this.showLens = true;
 
-      // Attiva l'animazione di comparsa della lente
       const tOpen = setTimeout(() => {
         this.isLensOpen = true;
       }, 100);
@@ -204,18 +247,41 @@ startGame(): void {
 
     this.gameData.initDemoSession(demoFlags);
 
+    this.isLensOpen = false; 
     this.isLensTransited = true;
     if (this.audioService) {
       this.audioService.playSound('timeMachine');
     }
     const tNav = setTimeout(() => {
-        if (this.audioService) {
-          this.audioService.stopSound('timeMachine');
-        }
-        this.router.navigate(['/demo/part7']);
-        this.isPart7Active = true;
-      }, 1500);
+      if (this.audioService) {
+        this.audioService.stopSound('timeMachine');
+      }
+      this.router.navigate(['demo/Misteri-e-pericoli-di-Hogwarts']);
+      this.isPart7Active = true;
+    }, 1500);
 
-      this.lensTimeouts.push(tNav);
-    }
+    this.lensTimeouts.push(tNav);
+  }
+
+
+  startFullGame(): void {
+    localStorage.removeItem('hp_demo_save');
+    localStorage.removeItem('hp_game_save');
+    this.gameData.isDemoMode = false;
+
+    this.router.navigate(['/welcome']).then(() => {
+      location.reload();
+    });
+  }
+
+
+  quitDemoToMenu(): void {
+    localStorage.removeItem('hp_demo_save');
+    localStorage.removeItem('hp_demo_mirror_img');
+    this.gameData.setWizardName('');
+    
+    this.router.navigate(['/']).then(() => {
+      location.reload();
+    });
+  }
 }

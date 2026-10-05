@@ -408,6 +408,11 @@ export class MirrorRevealComponent implements OnInit, OnDestroy {
   private showFinalVision(): void {
     this.currentMemory = null;
     this.phase = 'vision';
+    
+    if (this.finalVision && this.finalVision.image) {
+      this.gameDataService.setMirrorProfileImage(this.finalVision.image);
+    }
+
     const timer = setTimeout(() => {
       this.visionReady = true;
     }, 300);

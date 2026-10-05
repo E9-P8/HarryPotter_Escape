@@ -33,7 +33,7 @@ export class WelcomeComponent implements OnInit {
 }
 
   startGame(){ 
-    this.isLensOpen = false;
+    this.isLensOpen = false; 
     this.isLensTransited= true;
     this.audioService.playSound('timeMachine');
 

@@ -5,34 +5,34 @@
     "id": "great_hall_dinner",
     "image_id": "great_hall_dinner",
     "type": "text",
-    "text": "Harry: 'Dov'è Hermione?'",
+    "text": "Harry: Dov'è Hermione?",
     "next_node": "great_hall_dinner1"
   },
   {
     "id": "great_hall_dinner1",
     "image_id": "great_hall_dinner1",
     "type": "text",
-    "text": "La sua amica dice che non è più uscita dal bagno delle ragazze... è rimasta tutto il giorno a piangere.'",
+    "text": "Neville: La sua amica dice che non è più uscita dal bagno delle ragazze... è rimasta tutto il giorno a piangere.",
     "next_node": "great_hall_troll"
   },
   {
     "id": "great_hall_troll",
     "image_id": "great_hall_troll",
     "type": "animation",
-    "text": "Professor Raptor: 'Un troll! Un troll nei sotterranei!'",
+    "text": "Professor Raptor: Un troll! Un troll nei sotterranei!",
     "next_node": "silente"
   },
   {
     "id": "silente",
     "image_id": "silente",
     "type": "text",
-    "text": "Silente: 'SILENZIO! Niente panico. I prefetti riporteranno gli studenti nei dormitori. Gli insegnanti mi seguano nei sotterranei.'",
+    "text": "Silente: SILENZIO! Niente panico. I prefetti riporteranno gli studenti nei dormitori. Gli insegnanti mi seguano nei sotterranei.",
     "next_node": "choice_troll"
   },
   {
     "id": "choice_troll",
     "image_id": "choice_troll",
-    "text": "Harry: '*WizardName*, Hermione! Lei non sa niente del troll!'",
+    "text": "Harry: *WizardName*, Hermione! Lei non sa niente del troll!",
     "options": [
       {
         "text": "Rischia la punizione e vai a salvare Hermione con Harry e Ron",
@@ -52,7 +52,7 @@
     "image_id": "abandon_hermione",
     "type": "text",
     "set_flag": { "hermioneRescued": false },
-    "text": "Ron: Pensi che Hermione sia a salvo? Chissa' se e' ha trovato il troll... E se non è riuscita a sconfiggerlo?",
+    "text": "Ron: Pensi che Hermione sia in salvo? Chissa' se e' ha trovato il troll... E se non è riuscita a sconfiggerlo?",
     "next_node": "abandon_hermione_2"
   },
   {
@@ -67,7 +67,6 @@
     "id": "troll_Girlsbathroom",
     "image_id": "bathroom_intact",
     "type": "animation",
-    "text": "mettere distruzione bagni animation",
     "next_node": "troll_enigma"
   },
   {
@@ -84,7 +83,7 @@
     "image_id": "troll_fail_harry_dangling",
     "type": "text",
     "set_flag": { "savedHermione": false },
-    "text": "Aaaargh! Aiuto!!",
+    "text": "Harry: Aaaargh! Aiuto!!",
     "next_node": "teachers_help"
   },
   {
@@ -122,7 +121,7 @@
     "id": "post_troll_breakfast",
     "image_id": "post_troll_breakfast",
     "type": "text",
-    "text": "Piton: 'Dopo aver sconfitto un troll, una partita di Quidditch deve essere un giochetto... anche se contro Serpeverde.'",
+    "text": "Piton: Dopo aver sconfitto un troll, una partita di Quidditch deve essere un giochetto... anche se contro Serpeverde.",
     "next_node": "snape_theory_check"
   },
   {
@@ -130,17 +129,17 @@
     "image_id": "snape_theory_check",
     "options": [
       {
-        "text": "C'e' qualcosa che non mi torna...",
+        "text": "Harry: C'e' qualcosa che non mi torna...",
         "condition": "visited3HeadsDog == true",
         "next_node": "snape_theory_1"
       },
       {
-        "text": "C'e' qualcosa che non mi torna...",
+        "text": "Harry: C'e' qualcosa che non mi torna...",
         "condition": "visited3HeadsDog == false",
         "next_node": "snape_theory_alt"
       },
       {
-        "text": "Ecco perche il sangue...",
+        "text": "Harry: Ecco perche il sangue...",
         "condition": "visited3HeadsDog == true && hermioneRescued == true",
         "next_node": "snape_theory_1"
       }
@@ -151,7 +150,7 @@
     "image_id": "snape_theory_alt",
     "set_flag": {"suspectsSnape": true},
     "type": "text",
-    "text": "Harry: 'Piton continua a comportarsi in modo molto strano. Sono sicuro che stia nascondendo qualcosa.'",
+    "text": "Harry: Piton continua a comportarsi in modo molto strano. Sono sicuro che stia nascondendo qualcosa.",
     "next_node": "quidditch_check"
   },
   {
@@ -159,14 +158,14 @@
     "image_id": "snape_theory_alt",
     "set_flag": {"suspectsSnape": true},
     "type": "text",
-    "text": "Harry: 'Aspetta un momento...Piton zoppicava proprio dopo la notte del troll. Secondo me ha usato il troll come diversivo per cercare di superare il cane a tre teste. Per questo zoppica.''",
+    "text": "Harry: Aspetta un momento...Piton zoppicava proprio dopo la notte del troll. Secondo me ha usato il troll come diversivo per cercare di superare il cane a tre teste. Per questo zoppica.",
     "next_node": "snape_theory_2"
   },
   {
     "id": "snape_theory_2",
     "image_id": "snape_theory_check",
     "type": "text",
-    "text": "Il giorno che sono andato alla gringott Hagrid ha prelevato una cosa. Ha detto che riguardava Hogwarts, era un segreto. E' la cosa che il cane sorveglia, è la cosa che vuole Piton.",
+    "text": "Harry: Il giorno che sono andato alla gringott Hagrid ha prelevato una cosa. Ha detto che riguardava Hogwarts, era un segreto. E' la cosa che il cane sorveglia, è la cosa che vuole Piton.",
     "next_node": "nimbus2000_mail"
   },
     {
@@ -180,12 +179,12 @@
     "image_id": "nimbus2000_mail",
     "options": [
       {
-         "text": "Harry: 'Wow! È una Nimbus 2000! La userò nella prossima partita!'",
+         "text": "Harry: Wow! È una Nimbus 2000! La userò nella prossima partita!",
           "condition": "isSeeker == true",
           "next_node": "quidditch_check"
         },
         {
-         "text": "Harry: 'Wow! È una Nimbus 2000! Ma a cosa potrà mai servirmi?'",
+         "text": "Harry: Wow! È una Nimbus 2000! Ma a cosa potrà mai servirmi?",
          "condition": "isSeeker == false",
          "next_node": "quidditch_check"
       }
@@ -280,7 +279,7 @@
     "id": "hagrid_flamel",
     "image_id": "hagrid_flamel",
     "type": "text",
-    "text": "Sciocchezze, perche piton avrebbe fatto il malocchio alla scopa?",
+    "text": "Hagrid: Sciocchezze, perche piton avrebbe fatto il malocchio alla scopa?",
     "next_node": "hagrid_flamel2"
   },
   {
@@ -294,21 +293,21 @@
     "id": "hagrid_flamel3",
     "image_id": "hagrid_flamel3",
     "type": "text",
-    "text": "hagrid: chi vi ha parlato di fuffy? E' mio, l'ho prestato a silente cosi sorvegliava.. basta non farmi piu domande!",
+    "text": "Hagrid: chi vi ha parlato di fuffy? E' mio, l'ho prestato a silente cosi sorvegliava.. basta non farmi piu domande!",
     "next_node": "hagrid_flamel4"
   },
   {
     "id": "hagrid_flamel4",
     "image_id": "hagrid_flamel4",
     "type": "text",
-    "text": "Ma hagrid, quello che fuffy sorveglia, piton sta cercando di rubarlo!",
+    "text": "Harry: Ma hagrid, quello che fuffy sorveglia, piton sta cercando di rubarlo!",
     "next_node": "hagrid_flamel5"
   },
   {
     "id": "hagrid_flamel5",
     "image_id": "hagrid_flamel4",
     "type": "text",
-    "text": "Hagrid : 'Statemi a sentire, vi state immischiando in cose che non vi riguardano, è pericoloso. Quello che il cane sorveglia è una faccenda tra Albus Silente e Nicolas Flamel..'",
+    "text": "Hagrid : Statemi a sentire, vi state immischiando in cose che non vi riguardano, è pericoloso. Quello che il cane sorveglia è una faccenda tra Albus Silente e Nicolas Flamel..",
     "next_node": "hagrid_flamel6"
   },
   {
@@ -316,21 +315,21 @@
     "image_id": "hagrid_flamel6",
     "set_flag": { "knowsFlamel": true},
     "type": "text",
-    "text": "Hagrid: 'Non dovevo dirlo.'",
+    "text": "Hagrid: Non dovevo dirlo.",
     "next_node": "christmas_gift"
   },
   {
     "id": "christmas_gift",
     "image_id": "christmas_gift",
     "type": "text",
-    "text": "Buon Natale Harry! Buona natale *WizardName*",
+    "text": "Ron: Buon Natale Harry! Buona natale *WizardName*",
     "next_node": "christmas_gift_harry"
   },
   {
     "id": "christmas_gift_harry",
     "image_id": "christmas_gift_harry",
     "type": "text",
-    "text": "Non ho mai ricevuto dei regali!",
+    "text": "Harry: Non ho mai ricevuto dei regali!",
     "next_node": "harry_gift"
   },
   {
@@ -344,13 +343,13 @@
     "id": "harry_gift2",
     "image_id": "harry_gift2",
     "type": "text",
-    "text": "'È il Mantello dell'Invisibilità!",
+    "text": "Ron: È il Mantello dell'Invisibilità!",
     "next_node": "restricted_section_choice"
   },
   {
     "id": "restricted_section_choice",
     "image_id": "restricted_section_choice",
-    "text": "Voglio usarlo per andare nella Sezione Proibita. *WizardName* mi accompagni?",
+    "text": "Harry: Voglio usarlo per andare nella Sezione Proibita. *WizardName* mi accompagni?",
     "options": [
       {
         "text": "Accompagna Harry nella Sezione Proibita",
@@ -361,7 +360,7 @@
       {
         "text": "Rimani nel letto al sicuro nel dormitorio",
         "impact": { "audacia": -5 },
-        "next_node": "part_8"
+        "next_node": "dormitory"
       }
     ]
   },
@@ -385,7 +384,7 @@
     "id": "snape_quirrell_argument",
     "image_id": "snape_quirrell_argument",
     "type": "text",
-    "text": "Piton: 'Non ti conviene avermi come nemico, Raptor...'",
+    "text": "Piton: Non ti conviene avermi come nemico, Raptor...",
     "next_node": "mirror_erised"
   },
   {
@@ -409,13 +408,12 @@
   {
     "id": "dormitory",
     "image_id": "gryffindor_dormitory",
-    "type": "text",
     "options": [
       {
-        "text": "La curiosità è troppa. Sveglia Ron e chiedigli di venire con te",
+        "text": "La curiosità è troppa. Chiedi a Ron di venire con te",
         "impact": { },
         "set_flag": { "mirrorRevealed": true},
-        "next_node": "mirror_erised_room"
+        "next_node": "mirror_erised"
       },
       {
         "text": "Vai a dormire, per oggi è stato sufficiente.",
@@ -435,7 +433,7 @@
     "id": "dumbledore_mirror_speech",
     "image_id": "dumbledore_mirror_speech",
     "type": "text",
-    "text": "Silente: 'L'uomo più felice della Terra vedrebbe solo se stesso... Questo specchio ci mostra solo i più profondi e tormentati desideri del nostro cuore. Domani sarà trasferito in una nuova dimora. Non serve a niente rifugiarsi nei sogni e dimenticarsi di vivere.'",
+    "text": "Silente: L'uomo più felice della Terra vedrebbe solo se stesso... Questo specchio ci mostra solo i più profondi e tormentati desideri del nostro cuore. Domani sarà trasferito in una nuova dimora. Non serve a niente rifugiarsi nei sogni e dimenticarsi di vivere.",
     "next_node": "part_8"
   }
 ]

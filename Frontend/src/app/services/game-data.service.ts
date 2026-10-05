@@ -23,6 +23,7 @@ export class GameDataService {
   currentWelcomeStep: number = 1;
 
   isDemoMode: boolean = false;
+  private mirrorProfileImage: string = '';
 
   private readonly initialState: GameState = {
     parte: 1,
@@ -64,11 +65,20 @@ export class GameDataService {
     localStorage.setItem(this.STORAGE_KEY_DEMO, JSON.stringify(demoState));
   }
 
-  // --- METODO PER USCIRE DALLA DEMO ---
   exitDemoSession(): void {
     this.isDemoMode = false;
     this._gameState$.next(this.loadGame());
   }
+  setMirrorProfileImage(imagePath: string): void {
+    this.mirrorProfileImage = imagePath;
+    localStorage.setItem('hp_demo_mirror_img', imagePath);
+  }
+
+  getMirrorProfileImage(): string {
+    return this.mirrorProfileImage;
+    return localStorage.getItem('hp_demo_mirror_img') || '';
+  }
+
 
   setWizardName(name: string): void {
       this.wizardName = name;

@@ -123,8 +123,8 @@ export class Part6Component implements OnInit, OnDestroy {
         this.gameService.setFlag(key, option.set_flag[key]);
       });
       }
-    if (nextNodeId === 'part_7' || nextNodeId === '/part7') {
-      this.router.navigate(['/part7']);
+    if (nextNodeId === 'part_7' || nextNodeId === '/Misteri-e-pericoli-di-Hogwarts') {
+      this.router.navigate(['/Misteri-e-pericoli-di-Hogwarts']);
       return;
     }
     if (nextNode) {

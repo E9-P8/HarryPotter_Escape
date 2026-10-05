@@ -338,7 +338,6 @@
         transform: scale(1.15) rotate(5deg);
     }
 }
-
 @keyframes warningPulse {
     0% {
         box-shadow: 0 0 5px rgba(235, 107, 97, 0.4);
@@ -346,5 +345,83 @@
 
     100% {
         box-shadow: 0 0 20px rgba(235, 107, 97, 0.9);
+    }
+}
+
+
+
+
+
+
+
+@media screen and (max-height: 500px) and (orientation: landscape) {
+
+    .troll-composite-container {
+        width: 250px;
+        height: 250px;
+    }
+
+    .club-entity {
+        width: 150px;
+        height: 150px;
+    }
+    .club-entity.moving-to-target img {
+        width: 55px;
+    }
+    .club-shadow-area {
+        width: 45px;
+        height: 20px;
+    }
+    .magical-timer {
+        top: 10px;
+        right: 80px;
+        padding: 4px 12px;
+        gap: 8px;
+        border-width: 1px;
+    }
+
+    .timer-label {
+        font-size: 0.55rem;
+        letter-spacing: 1px;
+    }
+
+    .timer-value {
+        font-size: 1.0rem;
+    }
+    .throw-item-bar {
+        bottom: 10px;
+        padding: 6px 16px;
+        border-radius: 20px;
+    }
+
+    .throw-hint {
+        font-size: 11px;
+        margin-bottom: 4px;
+    }
+
+    .item-buttons {
+        gap: 8px;
+    }
+
+    .btn-throw {
+        padding: 4px 8px;
+        border-radius: 8px;
+    }
+
+    .btn-throw img {
+        width: 26px;
+        height: 26px;
+    }
+
+    .btn-throw span {
+        font-size: 9px;
+    }
+    .debug-grid-cell {
+        width: 32px;
+        height: 32px;
+    }
+
+    .debug-coord {
+        font-size: 8px;
     }
 }

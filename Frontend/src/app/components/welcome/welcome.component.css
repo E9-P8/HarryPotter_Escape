@@ -75,7 +75,7 @@
     opacity: 0;
     transform: scale(0.8);
     transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
-}
+} 
 .temporal-lens.lens-explode {
     transform: scale(5);
     opacity: 0;

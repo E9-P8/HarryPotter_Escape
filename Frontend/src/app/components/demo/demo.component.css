@@ -359,7 +359,7 @@ h2 {
     width: 580px;
     height: 580px;
     border-radius: 50%;
-    background-image: url("../../../assets/img/PrivetDrive_lens.png");
+    background-image: url("../../../assets/img/Part5/HogwartsWelcome.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -494,36 +494,250 @@ h2 {
 
 
 
+.demo-end-container {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    box-sizing: border-box;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-image 0.6s ease-in-out;
+}
+
+.demo-end-card {
+    width: 90%;
+    max-width: 580px;
+    min-height: 400px;
+    background-image: url("/assets/img/intro_parchment.png");
+    filter: brightness(0.8);
+
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    padding: 3.5rem 3rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    color: #3d2512;
+    font-family: 'Indie Flower', cursive;
+}
+
+.demo-end-card h2 {
+    font-family: 'Indie Flower', cursive;
+    font-size: 2rem;
+    color: #3d2512;
+    margin: 0 0 0.8rem 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.demo-text {
+    font-family: 'Indie Flower', cursive;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    color: #3d2512;
+    margin: 0 0 0.8rem 0;
+}
+
+
+.demo-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+}
+
+.btn-full-game,
+.btn-restart-demo {
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
+    border: 2px solid #d8b56b;
+    background-color: #463525;
+    color: #fff;
+    border-radius: 4px;
+    text-align: center;
+    font-family: "Mystery Quest", system-ui;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.btn-full-game {
+    background-color: #2a5a3b;
+    color: #f7d8ab;
+}
+
+.btn-restart-demo:hover,
+.btn-full-game:hover {
+    background: #f7d8ab;
+    color: #1a1a2e;
+    transform: scale(1.03);
+}
+
+/* --- MEDIA QUERY MOBILE LANDSCAPE --- */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .demo-end-card {
+        max-width: 480px;
+        min-height: auto;
+        padding: 1.8rem 2.2rem;
+    }
+
+    .demo-end-card h2 {
+        font-size: 1.3rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .demo-text {
+        font-size: 0.85rem;
+        line-height: 1.3;
+        margin-bottom: 0.4rem;
+    }
+
+    .demo-subtext {
+        font-size: 0.75rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .btn-full-game,
+    .btn-restart-demo {
+        padding: 0.4rem 1rem;
+        font-size: 0.85rem;
+    }
+}
 
 
 
 
 
+@media screen and (max-height: 500px) and (orientation: landscape) {
 
-
-@media screen and (max-width: 932px) and (orientation: landscape) {
+    .audio-toggle-btn {
+        top: 12px;
+        left: 16px;
+        width: 26px;
+        height: 26px;
+    }
+    .menu-container {
+        padding: 0.8rem 0;
+        min-height: 100vh;
+    }
     h1 {
-        font-size: 2rem;
-        margin-bottom: 0.5rem;
-        letter-spacing: 2px;
+        font-size: 1.6rem;
+        margin-bottom: 0.2rem;
+        letter-spacing: 1px;
     }
 
     h2 {
-        font-size: 1.3rem;
+        font-size: 1rem;
+        margin-top: 0;
+    }
+    .flying-key-img {
+        width: 75px;
+    }
+    .glow-effect .magic-circle-btn {
+        width: 90px;
+        height: 90px;
+    }
+    .introGame {
+        width: 80%;
+        min-height: auto;
+        padding: 1.5rem 2rem;
+        margin: 0.5rem auto;
     }
 
     .typewriter-text {
-        font-size: 0.7rem;
-        line-height: 1.6;
+        font-size: 0.75rem;
+        line-height: 1.35;
+        margin-bottom: 0.8rem;
+        width: 100%;
     }
 
-    .introGame {
-        min-height: 325px;
-        width: 75%;
+    .form-title {
+        font-size: 0.95rem;
+    }
+
+    .registration-box {
+        gap: 0.5rem;
     }
 
     .registration-box input,
     .registration-box button {
+        width: 180px;
+        padding: 0.4rem;
         font-size: 0.8rem;
     }
+
+    .btn-registration {
+        margin-top: 6px;
+        font-size: 1rem;
+        padding: 5px 12px;
+    }
+
+    .temporal-limbo {
+        padding: 0.5rem 0;
+    }
+
+    .temporal-lens {
+        width: 250px;
+        height: 250px;
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+        border-width: 3px;
+    }
+
+    .lens-content {
+        gap: 0.3rem;
+    }
+
+    .lens-content p {
+        font-size: 0.6rem;
+        line-height: 1.25;
+    }
+
+    .lens-content p:first-child {
+        font-size: 0.8rem;
+    }
+
+    .button-container {
+        margin-top: -2.2rem;
+    }
+
+    .btn-time-travel {
+        width: 11rem;
+        padding-top: 30px;
+        font-size: 0.7rem;
+    }
+
+    .demo-end-container {
+        background-size: cover;
+    }
+
+    .demo-end-card {
+        padding: 1rem 1.5rem;
+    }
+    .demo-end-card h2 {
+        font-size: 1.3rem;
+        margin-bottom: 0.4rem;
+    }
+    .demo-end-card p {
+        font-size: 0.8rem;
+        margin-bottom: 0.4rem;
+    }
+    .demo-actions {
+        margin-top: 0.8rem;
+        gap: 8px;
+    }
+    .btn-full-game,
+    .btn-restart-demo {
+        padding: 6px 14px;
+        font-size: 0.8rem;
+    }
+
 }

@@ -31,10 +31,11 @@ export class Part5Component implements OnInit {
 
   toggleAudio(): void {
   this.audioService.toggleGlobalMute(0.2);
+  this.startIntroSequence();
   }
-  /*startIntroSequence() {
-    this.audioService.startGlobalBackground('LetTheMysteryUnfold', 0.3); 
-  }*/
+  startIntroSequence() {
+    this.audioService.startGlobalBackground('hogwartsExpress', 0.3); 
+  }
 
   ngOnInit(): void {
     this.wizardName = this.gameService.wizardName;

@@ -80,7 +80,7 @@ export class TrollEnigmaComponent {
 
   trollPos = { r: 5, c: 0 };
   trollDir: number = 1; // 0: N (↑), 1: E (→), 2: S (↓), 3: W (←)
-  targetPos = { r: 0, c: 2 }; // Posizione sotto l'ombra della mazza
+  targetPos = { r: 0, c: 1 }; // Posizione sotto l'ombra della mazza
 
   isMoving: boolean = false;
   isTrollUnderClub: boolean = false;
