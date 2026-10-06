@@ -60,7 +60,12 @@ export class DemoComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.setDemoManifest();
+    localStorage.setItem('hp_pwa_route', '/demo');
+
+    if (this.router.url.includes('demo/End')) {
+      localStorage.setItem('hp_pwa_route', '/demo/End');
+    }
+
 
     if (this.router.url.includes('demo/End') || this.route.snapshot.queryParams['ended'] === 'true') {
       this.isDemoEnded = true;
@@ -90,12 +95,7 @@ export class DemoComponent implements OnInit, OnDestroy {
     }
   }
 
-  private setDemoManifest(): void {
-    let manifestLink = document.querySelector('link[rel="manifest"]') as HTMLLinkElement;
-    if (manifestLink) {
-      manifestLink.setAttribute('href', 'assets/manifest-demo.webmanifest');
-    }
-  }
+
 
   ngOnDestroy(): void {
     if (this.particleInterval) {
