@@ -35,6 +35,7 @@ import { Part8Component } from './components/Film1/part8/part8.component';
 import { FinalPartComponent } from './components/Film1/final-part/final-part.component';
 import { DemoComponent } from './components/demo/demo.component';
 import { MirrorRevealComponent } from './components/enigma-container/mirror-reveal/mirror-reveal.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { MirrorRevealComponent } from './components/enigma-container/mirror-reve
     Part8Component,
     FinalPartComponent,
     DemoComponent,
-    MirrorRevealComponent
+    MirrorRevealComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

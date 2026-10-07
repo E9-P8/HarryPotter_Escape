@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { HomeComponent } from './components/home/home.component';
 import { IntroComponent } from './components/intro/intro.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { DemoComponent } from './components/demo/demo.component';
@@ -15,12 +16,12 @@ import { Part7Component } from './components/Film1/part7/part7.component';
 
 
 const routes: Routes = [
-  { path: '', component: MenuComponent },
+  { path: '', component: HomeComponent },
+  { path: 'menu', component: MenuComponent },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'intro', component: IntroComponent },
   { path: 'demo', component: DemoComponent },
   { path: 'demo/End', component: DemoComponent },
-  /*{ path: 'demo/part7', component: Part7Component },*/
   { path: 'demo/Misteri-e-pericoli-di-Hogwarts', component: Part7Component },
   { path: 'part1',  component: Part1Component },
   { path: 'part2',  component: Part2Component },
@@ -28,8 +29,7 @@ const routes: Routes = [
   { path: 'part4',  component: Part4Component },
   { path: 'Benvenuti-ad-Hogwarts',  component: Part5Component },
   { path: 'part6',  component: Part6Component },
-  { path: 'Misteri-e-pericoli-di-Hogwarts',  component: Part6Component }
-  /*{ path: 'Misteri-e-pericoli-di-Hogwarts',  component: Part7Component }*/
+  { path: 'Misteri-e-pericoli-di-Hogwarts',  component: Part7Component }
 ];
 
 @NgModule({

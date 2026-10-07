@@ -196,7 +196,7 @@ triggerFailure(type: 'purr' | 'gazza'): void {
       setTimeout(() => {
         this.transitionTo('fail_gazza', () => {
           setTimeout(() => {
-            this.quizSolved.emit('TARGET_FAIL_NODE');
+            this.quizSolved.emit(TARGET_FAIL_NODE);
           }, 2500);
         });
       }, 2500);
@@ -204,7 +204,7 @@ triggerFailure(type: 'purr' | 'gazza'): void {
     } else {
       this.transitionTo('fail_gazza', () => {
         setTimeout(() => {
-          this.quizSolved.emit('TARGET_FAIL_NODE');
+          this.quizSolved.emit(TARGET_FAIL_NODE);
         }, 2500);
       });
     }
@@ -215,7 +215,6 @@ triggerFailure(type: 'purr' | 'gazza'): void {
     this.quizSolved.emit('snape_quirrell_argument');
   }
 
-  // UTILITY TRANSIZIONI FADE
   transitionTo(newNode: GameNode, callback?: () => void): void {
     this.hideTooltip();
     this.isFading = true;
@@ -226,7 +225,6 @@ triggerFailure(type: 'purr' | 'gazza'): void {
     }, 500);
   }
 
-  // RIPRODUZIONE AUDIO SINTETIZZATO (WEB AUDIO API)
   private playMagicSound(): void {
     try {
       const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
