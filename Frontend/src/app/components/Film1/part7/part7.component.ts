@@ -189,7 +189,7 @@ export class Part7Component implements OnInit, OnDestroy {
         if (this.actualPhase.type === 'animation') {
             this.handleAnimation(this.actualPhase.id);
         }
-        else {
+        else { 
           console.log("Nodo di testo caricato:", this.actualPhase.id);
 
         if (this.actualPhase.next_node && (!this.actualPhase.options || this.actualPhase.options.length === 0)) {

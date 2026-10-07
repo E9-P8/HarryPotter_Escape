@@ -28,7 +28,7 @@
 }
 
 .entrance-bg {
-    background-image: radial-gradient(circle at center, rgba(10, 15, 30, 0.4), rgba(0, 0, 0, 0.9)), url('/assets/img/Part7/library-entrance.png');
+    background-image: radial-gradient(circle at center, rgba(10, 15, 30, 0.4), rgba(0, 0, 0, 0.6)), url('/assets/img/Part7/library-entrance.png');
 }
 
 .restricted-bg {
@@ -299,9 +299,12 @@
     }
     .failure-overlay,
     .failure-dialog {
-        bottom: 6%;
-        padding: 10px 18px;
-        max-width: 85%;
+        bottom: 4%;
+        padding: 7px 10px;
+        max-width: 75%;
+    }
+    .failure-overlay p{
+        font-size: 0.8rem;
     }
 
     .failure-dialog p {

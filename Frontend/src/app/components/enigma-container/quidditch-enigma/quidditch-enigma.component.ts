@@ -20,7 +20,7 @@ export class QuidditchEnigmaComponent implements OnInit {
     { id: 'torre_nord', name: 'Torre Nord', x: 50, y: 18 },
     { id: 'anello_est', name: 'Anelli Est', x: 86, y: 30 },
     { id: 'tribuna_ovest', name: 'Tribuna Ovest', x: 7, y: 37 },
-    { id: 'tribuna_sud', name: 'Tribuna Sud', x: 50, y: 96 },
+    { id: 'tribuna_sud', name: 'Tribuna Sud', x: 50, y: 92 },
     { id: 'centro_campo', name: 'Centro Campo', x: 50, y: 64 },
     { id: 'anello_ovest', name: 'Anelli Ovest', x: 22, y: 16},
     { id: 'tribuna_est', name: 'Tribuna Est', x: 88, y: 49 }

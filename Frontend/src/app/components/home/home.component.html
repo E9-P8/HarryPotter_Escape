@@ -10,7 +10,11 @@
         <span class="btn-text"> Gioca la Demo </span>
       </button>
 
-      <button class="hp-btn btn-full" (click)="playFullGame()">
+      <button
+        class="hp-btn btn-full"
+        (click)="playFullGame()"
+        *ngIf="isFullGameEnded"
+      >
         <span class="btn-glow"></span>
         <span class="btn-text"> Gioco Completo </span>
       </button>

@@ -740,12 +740,10 @@ h2 {
         font-size: 0.7rem;
     }
 
-    .demo-end-container {
-        background-size: cover;
-    }
 
     .demo-end-card {
-        padding: 1rem 1.5rem;
+        padding: 2.5rem;
+        min-height: 278px;
     }
     .demo-end-card h2 {
         font-size: 1.3rem;

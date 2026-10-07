@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
+  isFullGameEnded = false;
+  
   ngOnInit(): void {
   }
   constructor(private router: Router) {}

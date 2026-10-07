@@ -130,12 +130,12 @@
     "options": [
       {
         "text": "Harry: C'e' qualcosa che non mi torna...",
-        "condition": "visited3HeadsDog == true",
+        "condition": "visited3HeadsDog == true && hermioneRescued == false",
         "next_node": "snape_theory_1"
       },
       {
         "text": "Harry: C'e' qualcosa che non mi torna...",
-        "condition": "visited3HeadsDog == false",
+        "condition": "visited3HeadsDog == false ",
         "next_node": "snape_theory_alt"
       },
       {
