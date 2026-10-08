@@ -45,18 +45,31 @@ export class Part6Component implements OnInit, OnDestroy {
   toggleAudio(): void {
     this.audioService.toggleGlobalMute(0.2);
   }
- /* startIntroSequence() {
+  startIntroSequence() {
     this.audioService.startGlobalBackground('LetTheMysteryUnfold', 0.3); 
-  }*/
+  }
 
   ngOnInit(): void {
+  if (this.audioService) {
+    this.audioService.stopAllSounds(); 
+    this.startIntroSequence();
+  }
+
+  if (this.router.url.includes('demo') || this.gameService.isDemoMode) {
+    this.gameService.isDemoMode = true;
+  }
+
     (window as any).gameService = this.gameService;
 
 
     this.wizardName = this.gameService.getWizardName() || this.gameService.wizardName;
     this.isSeeker = this.gameService.getFlag('isSeeker');
+
     this.loadPart();
   }
+
+
+
   ngOnDestroy(): void {
     this.timeouts.forEach(t => clearTimeout(t));
     if (this.dataSub) {
@@ -86,6 +99,11 @@ export class Part6Component implements OnInit, OnDestroy {
         if (this.actualPhase.type === 'animation') {
         this.handleAnimation(this.actualPhase.id);
         }
+        else if (this.actualPhase.id === 'feather_lessons' && this.actualPhase.next_node) {
+        setTimeout(() => {
+          this.manageChoice({ next_node: this.actualPhase.next_node });
+        }, 4000);
+      }
       }
     });
   }
@@ -124,9 +142,12 @@ export class Part6Component implements OnInit, OnDestroy {
       });
       }
     if (nextNodeId === 'part_7' || nextNodeId === '/Misteri-e-pericoli-di-Hogwarts') {
-      this.router.navigate(['/Misteri-e-pericoli-di-Hogwarts']);
-      return;
-    }
+      if (this.gameService.isDemoMode || this.router.url.includes('demo')) {
+        this.router.navigate(['/demo/Misteri-e-pericoli-di-Hogwarts']);
+      } else {
+        this.router.navigate(['/Misteri-e-pericoli-di-Hogwarts']);
+    } 
+  return;    }
     if (nextNode) {
         //this.actualPhase = nextNode; 
         this.actualPhase = JSON.parse(JSON.stringify(nextNode));

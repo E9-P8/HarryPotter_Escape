@@ -22,13 +22,14 @@ const routes: Routes = [
   { path: 'intro', component: IntroComponent },
   { path: 'demo', component: DemoComponent },
   { path: 'demo/End', component: DemoComponent },
+  { path: 'demo/Segreti-a-3-teste', component: Part6Component },
   { path: 'demo/Misteri-e-pericoli-di-Hogwarts', component: Part7Component },
   { path: 'part1',  component: Part1Component },
   { path: 'part2',  component: Part2Component },
   { path: 'part3',  component: Part3Component },
   { path: 'part4',  component: Part4Component },
   { path: 'Benvenuti-ad-Hogwarts',  component: Part5Component },
-  { path: 'part6',  component: Part6Component },
+  { path: 'Segreti-a-3-teste',  component: Part6Component },
   { path: 'Misteri-e-pericoli-di-Hogwarts',  component: Part7Component }
 ];
 

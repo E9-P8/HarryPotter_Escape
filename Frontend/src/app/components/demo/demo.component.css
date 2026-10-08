@@ -673,7 +673,7 @@ h2 {
     .introGame {
         width: 80%;
         min-height: auto;
-        padding: 1.5rem 2rem;
+        padding: 1.5rem 3rem;
         margin: 0.5rem auto;
     }
 
@@ -737,7 +737,7 @@ h2 {
     .btn-time-travel {
         width: 11rem;
         padding-top: 30px;
-        font-size: 0.7rem;
+        font-size: 0.6rem;
     }
 
 

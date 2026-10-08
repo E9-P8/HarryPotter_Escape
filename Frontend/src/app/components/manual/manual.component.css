@@ -112,6 +112,10 @@
         border-radius: 5px;
     }
 
+
+
+
+    
 @media screen and (max-width: 932px) and (orientation: landscape) {
     .book-content {
         width: 90vw;
@@ -133,31 +137,30 @@
         font-size: 1rem;
     }
     .parchment-text {
-        -moz-column-gap: 50px;
         column-gap: 50px;
         height: 70vh;
-        width: 60vw;
-        padding-left: 32px;
+        width: 54vw;
+        padding: 10px 96px 0px;
         margin-left: 0;
         font-size: 0.58rem;
         line-height: 1.1;
     }
     .close-book-btn {
         bottom: 32px;
-        right: 58px;
+        right: 123px;
         font-size: 10px;
         padding: 0;
     }
     .flipPageNext {
         font-size: 0.55rem;
         bottom: 44px;
-        right: 57px;
+        right: 123px;
         padding: 0;
     }
     .flipPageBack {
         font-size: 0.55rem;
         bottom: 35px;
-        left: 88px;
+        left: 157px;
         padding: 0;
     }
     

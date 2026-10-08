@@ -278,9 +278,11 @@ export class DemoComponent implements OnInit, OnDestroy {
     };
 
     this.gameData.initDemoSession(demoFlags);
+    this.gameData.setCurrentNode('feather_lessons');
 
     this.isLensOpen = false; 
     this.isLensTransited = true;
+
     if (this.audioService) {
       this.audioService.playSound('timeMachine');
     }
@@ -288,7 +290,12 @@ export class DemoComponent implements OnInit, OnDestroy {
       if (this.audioService) {
         this.audioService.stopSound('timeMachine');
       }
-      this.router.navigate(['demo/Misteri-e-pericoli-di-Hogwarts']);
+    /*this.router.navigate(['demo/Misteri-e-pericoli-di-Hogwarts']);*/
+    this.router.navigate(['demo/Segreti-a-3-teste']);
+    /*this.router.navigate([demo/Segreti-a-3-teste'], { 
+      queryParams: { node: 'feather_lessons' } 
+    });*/
+     
       this.isPart7Active = true;
     }, 1500);
 
