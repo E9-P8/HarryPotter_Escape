@@ -3,7 +3,7 @@
     <!--<h1 style="text-align: center">
       REGOLAMENTO E CONSIGLI DELLO STUDENTE DI HOGWARTS
     </h1>-->
-    <div *ngIf="!isPageFlipped">
+    <div *ngIf="currentPage === 1">
       <div class="book-container">
         <div class="page left-page">
           <h1 class="title-part">REGOLAMENTO E CONSIGLI</h1>
@@ -47,7 +47,7 @@
         </p>
       </div>
     </div>
-    <div *ngIf="isPageFlipped">
+    <div *ngIf="currentPage === 2">
       <div class="book-container">
         <div class="page left-page">
           <h1 class="title-part">PROTEZIONI ANTICHE E</h1>
@@ -133,8 +133,56 @@
         </p>
       </div>
     </div>
-    <button (click)="flipPageNext()" class="flipPageNext">Sfoglia →</button>
-    <button (click)="flipPageBack()" class="flipPageBack" *ngIf="isPageFlipped">
+    <div *ngIf="currentPage === 3">
+      <div class="book-container">
+        <div class="page left-page">
+          <h1 class="title-part">STATO ATTUALE DEL</h1>
+        </div>
+        <div class="page right-page">
+          <h1 class="title-part">MAGO E DELLA CASATA</h1>
+        </div>
+      </div>
+
+      <div class="parchment-text" *ngIf="currentState">
+        <div class="house-points-tracker">
+          <h3>🏆 Punti Casata Totali</h3>
+          <div class="points-display">
+            <span class="points-number">
+              {{ currentState.housePoints > 0 ? "+" : ""
+              }}{{ currentState.housePoints || 0 }}
+            </span>
+            <span class="points-label"> Punti</span>
+          </div>
+        </div>
+
+        <div class="stats-breakdown">
+          <h3>Statistiche di Profilo</h3>
+          <div class="stats-grid">
+            <div
+              *ngFor="let stat of getStatsEntries(currentState.stats)"
+              class="stat-item"
+            >
+              <span class="stat-name">{{ stat.key | titlecase }}:</span>
+              <span class="stat-value" [class.negative]="stat.value < 0">
+                {{ stat.value > 0 ? "+" : "" }}{{ stat.value }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      (click)="flipPageNext()"
+      class="flipPageNext"
+      *ngIf="currentPage < 3"
+    >
+      Sfoglia →
+    </button>
+    <button
+      (click)="flipPageBack()"
+      class="flipPageBack"
+      *ngIf="currentPage > 1"
+    >
       ← Indietro
     </button>
     <button (click)="closeManual()" class="close-book-btn">

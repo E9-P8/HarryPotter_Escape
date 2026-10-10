@@ -170,6 +170,51 @@
     </p>
     <p class="demo-text">Spero ti sia piaciuta!</p>
 
+    <!-- SEZIONE FEEDBACK -->
+    <div class="feedback-section">
+      <div *ngIf="!feedbackSubmitted; else feedbackSuccess">
+        <!-- Stelle interattive -->
+        <div class="stars-container">
+          <span
+            *ngFor="let star of [1, 2, 3, 4, 5]"
+            class="star"
+            [class.filled]="star <= (hoverRating || selectedRating)"
+            (mouseenter)="hoverRating = star"
+            (mouseleave)="hoverRating = 0"
+            (click)="selectRating(star)"
+          >
+            ★
+          </span>
+        </div>
+
+        <!-- Textarea opzionale -->
+        <textarea
+          class="feedback-input"
+          rows="3"
+          placeholder="Un commento, suggerimento o pensiero... (opzionale)"
+          [(ngModel)]="feedbackComment"
+        >
+        </textarea>
+
+        <!-- Bottone di invio -->
+        <button
+          class="btn-send-feedback"
+          [disabled]="selectedRating === 0 || isSendingFeedback"
+          (click)="submitFeedback()"
+        >
+          <span *ngIf="!isSendingFeedback">Invia Feedback</span>
+          <span *ngIf="isSendingFeedback">Invio in corso...</span>
+        </button>
+      </div>
+
+      <!-- Messaggio di conferma invio -->
+      <ng-template #feedbackSuccess>
+        <div class="feedback-thanks">
+          <p>Grazie per il tuo feedback, {{ wizardName }}!</p>
+        </div>
+      </ng-template>
+    </div>
+
     <div class="demo-actions">
       <!-- Pulsante predisposto ma nascosto per la versione completa -->
       <button

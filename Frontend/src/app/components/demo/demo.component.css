@@ -559,6 +559,7 @@ h2 {
 
 .btn-full-game,
 .btn-restart-demo {
+    margin-top: 10px;
     padding: 0.8rem 1.5rem;
     font-size: 1.1rem;
     border: 2px solid #d8b56b;
@@ -632,6 +633,106 @@ h2 {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }
+}
+
+
+
+
+.feedback-section {
+    padding: 5px 20px;
+    background: rgb(219 167 108 / 21%);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 8px;
+}
+
+.stars-container {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.star {
+    font-size: 2rem;
+    color: rgb(154 132 105 / 43%);
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+    user-select: none;
+}
+
+.star:hover {
+    transform: scale(1.25);
+}
+
+.star.filled {
+    color: #ffbc00;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+.feedback-input {
+    width: 100%;
+    box-sizing: border-box;
+    background: rgb(67 34 6 / 28%);
+    border: 1px solid rgb(61 33 15 / 26%);
+    border-radius: 6px;
+    color: #382a1e;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 0.6rem;
+    resize: none;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.feedback-input:focus {
+    border-color: #d4af37;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+}
+
+.feedback-input::placeholder {
+    color: rgba(240, 230, 210, 0.4);
+}
+
+/* Bottone Invio Feedback */
+.btn-send-feedback {
+    padding: 8px 18px;
+    background: #382a1ebf;
+    border: 1px solid #41340b;
+    border-radius: 5px;
+    color: #f0e6d2;
+    font-weight: bold;
+    font-size: 0.6rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-send-feedback:hover:not(:disabled) {
+    background: linear-gradient(135deg, #70612f, #33250a);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+.btn-send-feedback:disabled {
+    cursor: not-allowed;
+    border-color: #666;
+}
+
+.feedback-thanks {
+    color: #d4af37;
+    font-style: italic;
+    padding: 10px 0;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 

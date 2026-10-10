@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute} from '@angular/router';
 import { GameDataService } from '../../services/game-data.service';
 import { AudioService } from '../../services/audio.service';
+import { FormsModule } from '@angular/forms';
+
 
 interface Particle {
   id: number;
@@ -51,6 +53,12 @@ export class DemoComponent implements OnInit, OnDestroy {
   showBookTitle: boolean = false;
   isZooming: boolean = false;
 
+  /* FEEDBACK */
+  selectedRating: number = 0;
+  hoverRating: number = 0;
+  feedbackComment: string = '';
+  isSendingFeedback: boolean = false;
+  feedbackSubmitted: boolean = false;
 
   constructor(
     private router: Router,
@@ -323,4 +331,28 @@ export class DemoComponent implements OnInit, OnDestroy {
       location.reload();
     });
   }
+  selectRating(rating: number): void {
+  this.selectedRating = rating;
+}
+
+async submitFeedback(): Promise<void> {
+  if (this.selectedRating === 0) return;
+
+  this.isSendingFeedback = true;
+
+  // Invio a Supabase tramite GameDataService
+  const success = await this.gameData.sendFeedback(
+    this.selectedRating, 
+    this.feedbackComment
+  );
+
+  this.isSendingFeedback = false;
+
+  if (success) {
+    this.feedbackSubmitted = true;
+  } else {
+    // In caso di errore o se l'utente è offline, mostra comunque il ringraziamento
+    this.feedbackSubmitted = true;
+  }
+}
 }

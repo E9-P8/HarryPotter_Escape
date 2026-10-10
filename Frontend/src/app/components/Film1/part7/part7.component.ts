@@ -150,6 +150,11 @@ export class Part7Component implements OnInit, OnDestroy {
     if (option.impact) {
       this.gameService.updateStats(option.impact);
     }
+    
+    if (nextNode && nextNode.impact) {
+      this.gameService.updateStats(nextNode.impact);
+    }
+
     if (option && option.set_flag) {
       Object.keys(option.set_flag).forEach(key => {
         this.gameService.setFlag(key, option.set_flag[key]);

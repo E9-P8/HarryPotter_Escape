@@ -10,6 +10,7 @@ export interface GameState {
   parte: number;
   node: string; // identificativo del nodo corrente (es. "enigma_02")
   stats: GameStats;
+  housePoints: number;
   flags: Record<string, boolean>; //ex talkedWithPiton
   score: number;
   choicesHistory: string[]; 
