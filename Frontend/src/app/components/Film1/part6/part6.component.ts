@@ -139,7 +139,7 @@ export class Part6Component implements OnInit, OnDestroy {
     if (option && option.set_flag) {
       Object.keys(option.set_flag).forEach(key => {
         this.gameService.setFlag(key, option.set_flag[key]);
-      });
+      }); 
       }
     if (nextNodeId === 'part_7' || nextNodeId === '/Misteri-e-pericoli-di-Hogwarts') {
       if (this.gameService.isDemoMode || this.router.url.includes('demo')) {

@@ -1,0 +1,147 @@
+<div class="minigame-container" [class.door-unlocked]="isCompleted">
+  <!-- Header -->
+  <header class="game-header">
+    <div class="header-titles">
+      <h1 class="game-title">Il Sigillo dei Fondatori</h1>
+      <p class="game-subtitle">
+        Comprendi l'equilibrio dei quattro valori per varcare la soglia
+      </p>
+    </div>
+
+    <div class="attempts-container">
+      <span class="attempts-label">Tentativi Rimasti</span>
+      <div class="attempts-stars">
+        <span class="star" [class.active]="attemptsLeft >= 1">✦</span>
+        <span class="star" [class.active]="attemptsLeft >= 2">✦</span>
+        <span class="star" [class.active]="attemptsLeft >= 3">✦</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Area Porta e Case -->
+  <div class="door-area">
+    <div class="center-verify-wrapper">
+      <button
+        class="btn-verify-center"
+        (click)="verifySolution()"
+        [disabled]="isCompleted || attemptsLeft <= 0"
+      >
+        VERIFICA
+      </button>
+    </div>
+
+    <div class="houses-grid">
+      <!-- Grifondoro -->
+      <div class="house-zone" (click)="placeInHouse('grifondoro')">
+        <div class="house-header-row">
+          <div class="house-crest-circle crest-grifondoro">
+            <span class="crest-emoji">🦁</span>
+          </div>
+          <div class="house-titles-group">
+            <h2 class="house-name">Grifondoro</h2>
+            <span class="house-subtitle">Coraggio & Valore</span>
+          </div>
+        </div>
+        <div class="drop-target">
+          <div
+            *ngFor="let frag of placedFragments['grifondoro']"
+            class="fragment-card"
+            [class.selected]="selectedFragment?.id === frag.id"
+            (click)="$event.stopPropagation(); selectFragment(frag)"
+          >
+            {{ frag.text }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Corvonero -->
+      <div class="house-zone" (click)="placeInHouse('corvonero')">
+        <div class="house-header-row">
+          <div class="house-crest-circle crest-corvonero">
+            <span class="crest-emoji">🦅</span>
+          </div>
+          <div class="house-titles-group">
+            <h2 class="house-name">Corvonero</h2>
+            <span class="house-subtitle">Intelligenza & Sapienza</span>
+          </div>
+        </div>
+        <div class="drop-target">
+          <div
+            *ngFor="let frag of placedFragments['corvonero']"
+            class="fragment-card"
+            [class.selected]="selectedFragment?.id === frag.id"
+            (click)="$event.stopPropagation(); selectFragment(frag)"
+          >
+            {{ frag.text }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Tassorosso -->
+      <div class="house-zone" (click)="placeInHouse('tassorosso')">
+        <div class="house-header-row">
+          <div class="house-crest-circle crest-tassorosso">
+            <span class="crest-emoji">🦡</span>
+          </div>
+          <div class="house-titles-group">
+            <h2 class="house-name">Tassorosso</h2>
+            <span class="house-subtitle">Lealtà & Dedizione</span>
+          </div>
+        </div>
+        <div class="drop-target">
+          <div
+            *ngFor="let frag of placedFragments['tassorosso']"
+            class="fragment-card"
+            [class.selected]="selectedFragment?.id === frag.id"
+            (click)="$event.stopPropagation(); selectFragment(frag)"
+          >
+            {{ frag.text }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Serpeverde -->
+      <div class="house-zone" (click)="placeInHouse('serpeverde')">
+        <div class="house-header-row">
+          <div class="house-crest-circle crest-serpeverde">
+            <span class="crest-emoji">🐍</span>
+          </div>
+          <div class="house-titles-group">
+            <h2 class="house-name">Serpeverde</h2>
+            <span class="house-subtitle">Ambizione & Astuzia</span>
+          </div>
+        </div>
+        <div class="drop-target">
+          <div
+            *ngFor="let frag of placedFragments['serpeverde']"
+            class="fragment-card"
+            [class.selected]="selectedFragment?.id === frag.id"
+            (click)="$event.stopPropagation(); selectFragment(frag)"
+          >
+            {{ frag.text }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feedback-banner">{{ feedbackMessage }}</div>
+
+  <!-- Pool dei Frammenti -->
+  <footer class="fragments-footer">
+    <div class="fragments-header">Frammenti Magici</div>
+    <div
+      class="fragments-pool"
+      (click)="selectedFragment ? returnToPool(selectedFragment) : null"
+    >
+      <div
+        *ngFor="let frag of poolFragments"
+        class="fragment-card"
+        [class.selected]="selectedFragment?.id === frag.id"
+        (click)="$event.stopPropagation(); selectFragment(frag)"
+      >
+        {{ frag.text }}
+      </div>
+    </div>
+  </footer>
+</div>

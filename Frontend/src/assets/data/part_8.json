@@ -2,113 +2,386 @@
   "part_id": 8,
   "nodes": [
     {
-      "id": "greatHall",
-      "image_id": "greatHall",
-      "type": "text",
-      "text": "Hermione: 'Come ho potuto essere così stupida! Nicolas Flamel è l'unico creatore della Pietra Filosofale! Trasforma il metallo in oro e produce l'Elisir di Lunga Vita!'",
-      "next_node": "greatHall_Hermione"
+      "id": "library",
+      "image_id": "library",
+      "options": [
+        {
+          "text": "Hermione: Come ho potuto essere così stupida! Nicolas Flamel è l'unico creatore della Pietra Filosofale! Trasforma il metallo in oro e produce l'Elisir di Lunga Vita!",
+          "condition": "knowsFlamel  == true",
+          "next_node": "library_Hermione"
+        }, 
+        {
+          "text": "Ho trovato qualcosa sulla rapina alla Gringott.",
+          "condition": "knowsFlamel  == false",
+          "next_node": "library_gringott"
+        }
+      ]
     },
     {
-      "id": "greatHall_Hermione",
-      "image_id": "greatHall_Hermione",
+      "id": "library_gringott",
+      "image_id": "library_Hermione",
       "type": "text",
-      "text": "Hermione: 'Ecco cosa sorveglia Fuffy al terzo piano sotto la botola: la Pietra Filosofale!'",
-      "next_node": "hagrid_dragon"
+      "text": "Hermione: Qualunque cosa contenesse quella camera è stata trasferita a Hogwarts poco prima della rapina.",
+      "set_flag": { "knowsPhilosophersStone": false},
+      "next_node": "hagrid_dragon1"
     },
     {
-      "id": "hagrid_dragon",
-      "image_id": "hagrid_dragon",
+      "id": "library_Hermione",
+      "image_id": "library_Hermione",
+      "type": "text",
+      "text": "Hermione: Ecco cosa sorveglia Fuffy al terzo piano sotto la botola: la Pietra Filosofale!",
+      "set_flag": { "knowsPhilosophersStone": true},
+      "next_node": "hagrid_dragon1"
+    },
+    {
+      "id": "hagrid_dragon1",
+      "image_id": "hagrid_dragon1",
+      "options": [
+        {
+          "text": "Harry: Hagrid, cosa hai prelevato dalla camera 713? Qualcuno ha provato a rubarlo.",
+          "condition": "visited3HeadsDog  == false",
+          "next_node": "hagrid_dragon3"
+        },
+        {
+          "text": "Ron & Harry: Sappiamo della pietra filosofale! Piton vuole rubarla!",
+          "condition": "visited3HeadsDog  == true",
+          "next_node": "hagrid_dragon2"
+        }
+      ]
+    },
+    {
+      "id": "hagrid_dragon2",
+      "image_id": "hagrid_dragon2",
+      "type": "text",
+      "text": "Hagrid: Piton e' uno dei professori. E' incaricato per proteggerla.",
+      "next_node": "hagrid_dragon3"
+    },
+    {
+      "id": "hagrid_dragon3",
+      "image_id": "hagrid_dragon3",
+      "type": "text",
+      "text": "Ron: È un Dorso Rugoso di Norvegia!",
+      "next_node": "dragon_fire"
+    },
+    {
+      "id": "dragon_fire",
+      "image_id": "dragon_fire",
       "type": "animation",
-      "text": "Ron: È un Dorso Rugoso di Norvegia! **Il cucciolo Norberto sputa una fiammata bruciando la barba a Hagrid**",
+      "text": "",
       "next_node": "malfoy_window"
     },
     {
       "id": "malfoy_window",
       "image_id": "malfoy_window",
       "type": "text",
-      "text": "Fuori dalla finestra vedete la sagoma di Draco Malfoy che vi ha spiati e corre via a riferire tutto alla McGranitt!",
+      "text": "",
       "next_node": "detention_assignment"
     },
     {
       "id": "detention_assignment",
       "image_id": "detention_assignment",
       "type": "text",
-      "text": "La McGranitt: 'Toglierò 50 punti a testa a Grifondoro e andrete in castigo! Anche tu eri fuori orario, Malfoy. Ti unirai a loro.",
-      "next_node": "forbiddenForest"
+      "text": "McGranitt: Nulla, da il diritto a uno studente di girovagare di notte. Per cui per punizione vi saranno tolti 50 punti a testa e per essere certi che non capiti piu tutti e 4 sarete messi in castigo. Malfoy. Ti unirai a loro.",
+      "next_node": "forbiddenForest_choice"
+    },
+    {
+      "id": "forbiddenForest_choice",
+      "image_id": "forbiddenForest_choice",
+      "text": "Malfoy: Non possiamo andarci, è vietato agli studenti!",
+      "options": [
+        {
+          "text": "Malfoy ha ragione, scappiamo via.",
+          "impact": { "audacia": 0, "reputazione":  0},
+          "set_flag": { "enteredForbiddenForest": false},
+          "next_node": "avoid_Forest"
+        },
+        {
+          "text": "Siamo in castigo, dobbiamo entrarci.",
+          "impact": { "audacia": 0 , "reputazione":  0},
+          "set_flag": { "enteredForbiddenForest": true},
+          "next_node": "forbiddenForest"
+        }
+      ]
     },
     {
       "id": "forbiddenForest",
       "image_id": "forbiddenForest",
       "type": "text",
-      "text": "Gazza vi porta da Hagrid all'ingresso della Foresta Proibita. Hagrid mostra una sostanza argentata al suolo: 'Sangue di unicorno... Qualcuno ha ferito una creatura pura. Dobbiamo trovarla. Harry, tu andrai con Malfoy.'",
-      "next_node": "p8_forest_voldemort_encounter"
+      "text": "Hagrid: Sangue di unicorno... Qualcuno ha ferito una creatura pura. Dobbiamo trovarla. Harry, tu andrai con Malfoy.",
+      "next_node": "voldemort_encounter"
     },
     {
-      "id": "p8_forest_voldemort_encounter",
-      "image_id": "voldemort_unicorn",
+      "id": "voldemort_encounter",
+      "image_id": "",
+      "type": "enigma",
+      "enigma_id": "ENIGMA-FOREST",
+      "success_node": "Voldemort_encountered",
+      "fail_node": "forest_enigma_fail"
+    },
+    {
+      "id": "forest_enigma_fail",
+      "image_id": "forest_enigma_fail",
+      "type": "text",
+      "text": "Hagrid: Da questa parte! Le tracce continuano verso la radura!",
+      "impact": {
+        "audacia": -5
+      },
+      "next_node": "Voldemort_encountered"
+    },
+    {
+      "id": "Voldemort_encountered",
+      "image_id": "Voldemort_encountered",
       "type": "animation",
-      "text": "Nella radura buia, trovate una figura incappucciata intenta a bere il sangue di un unicorno morto. Malfoy urla e scappa! La figura si alza e striscia verso Harry, che cade a terra colto da un dolore atroce alla cicatrice!",
-      "next_node": "p8_firenze_rescue"
+      "set_flag": { "knowsVoldemortAlive": true},
+      "next_node": "Fiorenzo_rescue"
     },
     {
-      "id": "p8_firenze_rescue",
-      "image_id": "centaur_firenze",
+      "id": "Fiorenzo_rescue",
+      "image_id": "Fiorenzo_rescue",
       "type": "text",
-      "text": "Il centauro Fiorenzo irrompe spaventando la figura oscurata! Fiorenzo: 'Bere sangue di unicorno ti tiene in vita anche se sei a un passo dalla morte, ma al prezzo di vivere una vita dannata... Colui che era lì era Voldemort!'",
-      "next_node": "p8_common_room_deduction"
+      "text": "Fiorenzo: Harry Potter, devi andare via, molte creature ti conoscono. la foresta non è sicura a quest'ora, specialmente per te.",
+      "next_node": "Fiorenzo_dialog"
     },
     {
-      "id": "p8_common_room_deduction",
-      "image_id": "gryffindor_fireplace",
+      "id": "Fiorenzo_dialog",
+      "image_id": "Fiorenzo_dialog",
       "type": "text",
-      "text": "Tornati nella sala comune, capite il piano finale: l'uomo che ha dato l'uovo di drago ad Hagrid era un sicario che voleva scoprire come addormentare Fuffy. Voldemort vuole la pietra stasera!",
-      "next_node": "p8_trapdoor_plan_choice"
+      "text": "Fiorenzo: Bere sangue di unicorno ti tiene in vita anche se sei a un passo dalla morte, ma al prezzo di vivere una vita dannata... ",
+      "next_node": "discover_voldemort"
     },
     {
-      "id": "p8_trapdoor_plan_choice",
-      "image_id": "corridor_night",
-      "text": "Silente è stato attirato a Londra con un falso messaggio. Piton ha la strada spianata per la botola. Cosa si fa?",
+      "id": "discover_voldemort",
+      "image_id": "discover_voldemort",
+      "type": "text",
+      "text": "Harry: Intendi dire che quell'essere che stava bevendo il suo sangue era Vol... ? ",
+      "next_node": "discover_voldemort2"
+    },
+    {
+      "id": "discover_voldemort2",
+      "image_id": "Fiorenzo_dialog",
+      "text": "Fiorenzo: *WizardName*, Sai cosa c'è nascosto nella scuola in questo momento?",
       "options": [
         {
-          "text": "Scendi nella botola stanotte per fermare il furto!",
-          "impact": { "audacia": 20, "reputazione": 10 },
-          "next_node": "p8_neville_confrontation"
+          "text": "*WizardName*: La pietra filosofale",
+          "condition": "knowsPhilosophersStone == true",
+          "next_node": "Hagrid"
         },
         {
-          "text": "Rimani nel dormitorio e avvisa un altro professore",
-          "impact": { "audacia": -10 },
-          "next_node": "p8_neville_confrontation"
+          "text":  "*WizardName*: So che qualcosa di importante è stato portato a Hogwarts, ma non so cosa sia.",
+          "condition": "knowsPhilosophersStone == false",
+          "next_node": "Hagrid"
         }
       ]
     },
     {
-      "id": "p8_neville_confrontation",
-      "image_id": "neville_blocking",
+      "id": "Hagrid",
+      "image_id": "Hagrid",
       "type": "text",
-      "text": "Neville vi sbarra la strada nella sala comune: 'Non vi permetterò di far togliere altri punti a Grifondoro! Lotterò contro di voi!'. Hermione sospira: 'Petrificus Totalus!'. Neville si pietrifica e cade dritto a terra.",
-      "next_node": "p8_fluffy_room_enigma"
+      "text": "Hagrid: Salve fiorenzo, hai conosciuto il signor potter. Tutto a posto Harry e *WizardName*?",
+      "next_node": "discover_true_check"
     },
     {
-      "id": "p8_fluffy_room_enigma",
-      "image_id": "fluffy_harp",
-      "type": "enigma",
-      "enigma_id": "SLEEP_FLUFFY_HARP",
-      "success_node": "p8_enter_trapdoor",
-      "fail_node": "p8_fluffy_attack_fail"
+      "id": "discover_true_check",
+      "image_id": "discover_true_check",
+      "options": [
+        {
+          "text": "Harry: 'Adesso è tutto chiaro...'",
+          "condition": "knowsPhilosophersStone == true",
+          "next_node": "discover_true"
+        },
+        {
+          "text": "Harry: 'Quello che è stato portato dalla Gringott deve essere la chiave di tutto...'",
+          "condition": "knowsPhilosophersStone == false",
+          "next_node": "discover_true_unknown"
+        }
+      ]
     },
     {
-      "id": "p8_fluffy_attack_fail",
-      "image_id": "fluffy_awake",
+      "id": "discover_true_unknown",
+      "image_id": "discover_true",
       "type": "text",
-      "text": "L'arpa smette di suonare! Fuffy si sveglia e ruggisce ferocemente, costringendovi a un salto disperato nel buio della botola!",
-      "next_node": "final_part_start"
+      "text": "Harry: Quello che Hagrid ha portato via dalla camera 713 deve servire a Voldemort. Qualunque cosa sia, dobbiamo impedire a Piton di prenderla.",
+      "next_node": "discover_true2"
     },
     {
-      "id": "p8_enter_trapdoor",
-      "image_id": "open_trapdoor",
+      "id": "discover_true",
+      "image_id": "discover_true",
+      "type": "text",
+      "text": "Harry: Piton non vuole la pietra per se, la vuole rubare per Voldemort. Con l'elisir di lunga vita Voldemort tornerà",
+      "next_node": "discover_true2"
+    },
+    {
+      "id": "discover_true2",
+      "image_id": "discover_true2",
+      "type": "text",
+      "text": "Hermione: Voldemort teme Silente. Finche Silente sarà qui tu sarai in salvo, non potrà toccarti.",
+      "next_node": "HagridDragon"
+    },
+    {
+      "id": "avoid_Forest",
+      "image_id": "discover_true",
+      "type": "text",
+      "text": "*WizardName* La foresta e' troppo rischiosa",
+      "next_node": "HagridDragon"
+    },
+    {
+      "id": "HagridDragon",
+      "image_id": "HagridDragon",
+      "options": [
+        {
+          "text": "Harry: Hagrid, chi ti ha dato l'uovo di drago? Sembrava interessato a Fuffy?",
+          "condition": "visited3HeadsDog  == true",
+          "next_node": "HagridDragon2"
+        },
+        {
+          "text": "Harry: Hagrid, chi ti ha dato l'uovo di drago?",
+          "condition": "visited3HeadsDog  == false",
+          "next_node": "hagrid_fuffy"
+        }
+      ]
+    },
+    {
+      "id": "HagridDragon2",
+      "image_id": "HagridDragon2",
+      "type": "text",
+      "text": "Hagrid: Ma certo! Con Fuffi il difficile non è farlo stare buono. Sono le tre teste: non reagiscono mai allo stesso modo alle stesse cose.",
+       "set_flag": {  "knowsFuffy": true, "hasHagridHint": true},
+      "next_node": "Silente_London"
+    },
+    {
+      "id": "hagrid_fuffy",
+      "image_id": "HagridDragon2",
+      "type": "text",
+      "text": "Hagrid: Non lo so, pero' era interessato a Fuffi: il cane che Silente mi ha chiesto di mettere a guardia della botola al terzo piano. Gli ho detto come farlo stare buono",
+       "set_flag": { "hasHagridHint": false, "knowsFuffy": true},
+      "next_node": "Silente_London"
+    },
+    {
+      "id": "Silente_London",
+      "image_id": "Silente_London",
+      "options": [
+        {
+          "text": "Tutti: Dobbiamo vedere il professor Silente! Si tratta della pietra filosofale!",
+          "condition": "knowsPhilosophersStone == true",
+          "next_node": "Piton_Fuffy"
+        },
+        {
+          "text": "Tutti: Dobbiamo vedere il professor Silente! C'e' qualcosa di importante nascosto ad Hogwarts!",
+          "condition": "knowsPhilosophersStone == false",
+          "next_node": "Piton_Fuffy"
+        }
+      ]
+    },
+    {
+      "id": "Piton_Fuffy",
+      "image_id": "Piton_Fuffy",
+      "options": [
+        {
+          "text": "Harry: E se fosse stato Piton a dare l'uovo ad Hagrid? Adesso saprebbe superare Fuffy... e consegnare quello che protegge a Voldemort.",
+          "condition": "knowsVoldemortAlive == true",
+          "next_node": "Piton"
+        },
+        {
+          "text": "Harry: E se fosse stato Piton a dare l'uovo ad Hagrid? Adesso saprebbe superare Fuffy e prendere quello che sta proteggendo.",
+          "condition": "knowsVoldemortAlive == false",
+          "next_node": "Piton"
+        }
+      ]
+    },
+    {
+      "id": "Piton",
+      "image_id": "Piton",
+      "type": "text",
+      "text": "Piton: 3 giovani grifondoro come voi cosa ci fanno al chiuso in una giornata come questa .. Dovete fare attenzione, si potrebbe pensare che tramiate qualcosa!",
+      "next_node": "Botola_choice"
+    },
+    {
+      "id": "Botola_choice",
+      "image_id": "Botola_choice",
+      "text": "Harry: Silente è stato attirato a Londra con un falso messaggio. Piton ha la strada spianata per la botola. Cosa facciamo?",
+      "options": [
+        {
+          "text": "Scendi nella botola stanotte per fermare il furto!",
+          "impact": { "audacia": 0, "reputazione": 0 },
+          "set_flag": {"decidedToProtectStone": true},
+          "next_node": "neville_confrontation"
+        },
+        {
+          "text": "Rimani nel dormitorio e avvisa un altro professore",
+          "impact": { "audacia": 0 },
+          "set_flag": {"decidedToProtectStone": false},
+          "next_node": "avoid_botola"
+        }
+      ]
+    },
+    {
+      "id": "avoid_botola",
+      "image_id": "avoid_botola",
+      "type": "text",
+      "text": "Hermione: Abbiamo rischiato a sufficienza da quando siamo qui",
+      "next_node": "dormitory"
+    },
+    {
+      "id": "neville_confrontation",
+      "image_id": "neville_confrontation",
+      "text": "Neville: 'Non vi permetterò di far perdere altri punti a Grifondoro!'",
+      "options": [
+        {
+          "text": "Spiega a Neville che qualcuno sta tentando di rubare qualcosa di estremamente pericoloso da Hogwarts",
+          "set_flag": {
+            "earnedNevilleRespect": true
+          },
+          "impact": { "amicizia": 10},
+          "next_node": "neville_steps_aside"
+        },
+        {
+          "text": "Lascia che Hermione lo immobilizzi",
+          "impact": {"amicizia": -5},
+          "next_node": "neville_petrified"
+        }
+      ]
+    },
+    {
+      "id": "neville_steps_aside",
+      "image_id": "neville_steps_aside",
+      "type": "text",
+      "text": "Neville: Non so se state facendo la cosa giusta... ma se davvero Hogwarts è in pericolo, andate.",
+      "next_node": "fuffy_room"
+    },
+    {
+      "id": "neville_petrified",
+      "image_id": "neville_petrified",
       "type": "animation",
-      "text": "Spostate le zampe del cane addormentato, aprite la botola e vi lanciate uno ad uno nell'oscurità sottostante...",
-      "next_node": "final_part_start"
+      "next_node": "fuffy_room"
+    },
+    {
+      "id": "fuffy_room",
+      "image_id": "",
+      "type": "minigame",
+      "minigame_id": "FUFFY_DOOR_MINIGAME",
+      "success_node": "enter_fuffy",
+      "fail_node": "dormitory"
+    },
+    {
+      "id": "enter_fuffy",
+      "image_id": "enter_fuffy",
+      "type": "text",
+      "text": "Harry: Sta russando, significa che Piton è gia stato qui",
+      "next_node": "enter_trapdoor"
+    },
+    {
+      "id": "dormitory",
+      "image_id": "dormitory",
+      "type": "text",
+      "text": "Ron: Saremmo dovuti andare a fondo della questione!",
+      "next_node": "alternative_final"
+    },
+    {
+      "id": "enter_trapdoor",
+      "image_id": "",
+      "type": "enigma",
+      "enigma_id": "TRAPDOOR_ENIGMA",
+      "next_node": "final_part"
     }
   ]
 }

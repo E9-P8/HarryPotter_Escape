@@ -31,6 +31,15 @@
   *ngIf="enigmaId === 'STEALTH_FILCH_ENIGMA'"
   (quizSolved)="onQuizSolved($event)"
 ></app-library-enigma>
-<app-mirror-reveal   
+<app-mirror-reveal
   *ngIf="enigmaId === 'MIRROR_ENIGMA'"
-  (quizSolved)="onQuizSolved($event)"></app-mirror-reveal>
+  (quizSolved)="onQuizSolved($event)"
+></app-mirror-reveal>
+<app-enigma-forest
+  *ngIf="enigmaId === 'ENIGMA-FOREST'"
+  (quizSolved)="onQuizSolved($event)"
+></app-enigma-forest>
+<app-trapdoor-enigma
+  *ngIf="enigmaId === 'TRAPDOOR_ENIGMA'"
+  (quizSolved)="onQuizSolved($event)"
+></app-trapdoor-enigma>

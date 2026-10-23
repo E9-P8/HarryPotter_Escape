@@ -9,6 +9,8 @@ import { TrollEnigmaComponent } from '../troll-enigma/troll-enigma.component';
 import { QuidditchEnigmaComponent } from '../quidditch-enigma/quidditch-enigma.component';
 import { LibraryEnigmaComponent } from '../library-enigma/library-enigma.component';
 import { MirrorRevealComponent } from '../mirror-reveal/mirror-reveal.component';
+import { EnigmaForestComponent } from '../enigma-forest/enigma-forest.component';
+import { TrapdoorEnigmaComponent } from '../trapdoor-enigma/trapdoor-enigma.component';
 
 @Component({
   selector: 'app-enigma-hub',
@@ -37,6 +39,8 @@ export class EnigmaHubComponent implements OnInit {
       case 'QUIDDITCH_ENIGMA': return QuidditchEnigmaComponent;
       case 'STEALTH_FILCH_ENIGMA': return LibraryEnigmaComponent;
       case 'MIRROR_ENIGMA': return MirrorRevealComponent;
+      case 'ENIGMA-FOREST': return EnigmaForestComponent;
+      case 'TRAPDOOR_ENIGMA': return TrapdoorEnigmaComponent;
       default: return null;
     }
   }

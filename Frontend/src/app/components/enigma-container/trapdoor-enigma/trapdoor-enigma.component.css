@@ -1,0 +1,519 @@
+:host {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.enigma-wrapper {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: #121812;
+    overflow: hidden;
+    user-select: none;
+    font-family: 'Cinzel', 'Georgia', serif;
+}
+
+
+.background-container {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    object-fit: cover;
+}
+.bg-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.8s ease-in-out;
+}
+.interactive-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+.ui-overlay-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    pointer-events: none;
+}
+
+
+
+.character-png {
+    position: absolute;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.hermione-layer {
+    top: 30%;
+    right: 3%;
+    width: 31%;
+}
+
+.ron-layer {
+    top: 7%;
+    left: 15%;
+    width: 20%;
+}
+
+.vines-level-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.root-object {
+    position: absolute;
+    cursor: pointer;
+    pointer-events: auto;
+    z-index: 10;
+}
+
+.root-object img.root-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+
+
+.hotspot {
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hotspot img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.hotspot:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 8px rgba(143, 142, 138, 0.6));
+}
+
+.hotspot.playing {
+    animation: pulseObject 0.4s ease-in-out infinite alternate;
+}
+
+.trapdoor-hotspot {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.trapdoor-hotspot.interactive {
+    pointer-events: auto;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.glow-effect {
+    position: absolute;
+    inset: -10px;
+    border-radius: 50%;
+    box-shadow: 0 0 20px 10px rgba(211, 202, 142, 0.5);
+    animation: pulseGlow 1.5s infinite alternate;
+}
+
+.fuffy-heads-container {
+    position: absolute;
+    top: 8%;
+    left: 13%;
+    width: 60%;
+    height: 50%;
+    pointer-events: none;
+}
+
+.fuffy-head {
+    position: absolute;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.head-left {
+    left: 6%;
+}
+
+.head-center {
+    left: 40%;
+}
+
+.head-right {
+    left: 69%;
+}
+
+.fuffy-head.growl {
+    animation: growlShake 0.15s infinite alternate;
+    filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8));
+}
+
+.fuffy-head.look {
+    transform: translateY(-8px) scale(1.02);
+}
+
+.fuffy-head.sleep {
+    transform: translateY(15px);
+    filter: brightness(0.7);
+}
+
+.root-object.pulse {
+    animation: rootMove 0.6s ease;
+}
+
+.wall-symbols-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.wall-symbol {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, filter 0.3s ease;
+    pointer-events: none;
+}
+
+.wall-symbol.revealed {
+    opacity: 0.85;
+    visibility: visible;
+    pointer-events: auto;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+}
+
+.wall-symbol.selected {
+    opacity: 1;
+    filter: drop-shadow(0 0 15px rgba(0, 255, 128, 0.9));
+    transform: scale(1.1);
+}
+
+.vines-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+    transition: transform 0.8s ease-in-out, filter 0.8s ease;
+}
+
+.vine {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s ease-in-out, opacity 1s ease;
+    animation: gentleSway 6s infinite alternate ease-in-out;
+}
+
+.danger-0 .vine-front {
+    transform: scale(1) translateY(0);
+}
+
+.danger-1 .vine-front {
+    transform: scale(1.1) translateY(-10px);
+}
+
+.danger-1 .vine-left {
+    transform: translateX(5%);
+}
+
+.danger-1 .vine-right {
+    transform: translateX(-5%);
+}
+
+.danger-2 {
+    filter: brightness(0.85);
+}
+
+.danger-2 .vine-front {
+    transform: scale(1.25) translateY(-20px);
+}
+
+.danger-2 .vine-left {
+    transform: translateX(12%) scale(1.05);
+}
+
+.danger-2 .vine-right {
+    transform: translateX(-12%) scale(1.05);
+}
+
+.danger-3 {
+    filter: brightness(0.7);
+}
+
+.danger-3 .vine-front {
+    transform: scale(1.4) translateY(-30px);
+}
+
+.danger-3 .vine-left {
+    transform: translateX(20%) scale(1.15);
+}
+
+.danger-3 .vine-right {
+    transform: translateX(-20%) scale(1.15);
+}
+
+.danger-4 {
+    filter: brightness(0.4);
+}
+
+.danger-4 .vine {
+    transform: scale(1.6);
+}
+
+.vines-retreat .vine {
+    transform: translateY(100%) scale(0.5) !important;
+    opacity: 0;
+}
+
+.narrative-banner {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.75);
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    padding: 0px 20px;
+    border-radius: 20px;
+    color: #f0e6d2;
+    font-size: 0.7rem;
+    text-align: center;
+    backdrop-filter: blur(4px);
+    pointer-events: auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.hagrid-hint-container {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    pointer-events: auto;
+}
+
+.hint-trigger-btn {
+    background: rgba(20, 20, 20, 0.85);
+    color: #ffd700;
+    border: 1px solid #ffd700;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.hint-trigger-btn:hover {
+    background: #ffd700;
+    color: #000;
+}
+
+.hagrid-memory-card {
+    position: absolute;
+    bottom: 45px;
+    left: 0;
+    width: 280px;
+    background: #1a140e;
+    border: 2px solid #8b5a2b;
+    padding: 14px;
+    border-radius: 8px;
+    color: #e0d0b8;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+}
+
+.hagrid-memory-card .quote {
+    font-style: italic;
+    margin: 0 0 8px 0;
+    font-size: 0.85rem;
+    line-height: 1.3;
+}
+
+.close-hint {
+    font-size: 0.7rem;
+    color: #888;
+    display: block;
+    text-align: right;
+}
+
+.game-over-modal,
+.success-banner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(15, 10, 10, 0.92);
+    border: 2px solid #681a1a;
+    padding: 30px;
+    border-radius: 12px;
+    color: #fff;
+    text-align: center;
+    pointer-events: auto;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+    max-width: 400px;
+    width: 80%;
+}
+
+.success-banner {
+    border-color: #225e32;
+}
+
+.btn-retry {
+    margin-top: 15px;
+    background: #a32a2a;
+    color: #fff;
+    border: none;
+    padding: 10px 25px;
+    font-family: inherit;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-retry:hover {
+    background: #d43f3f;
+}
+
+/* ==================================================
+   6. ANIMAZIONI CSS GENERALI
+   ================================================== */
+@keyframes pulseGlow {
+    from {
+        opacity: 0.4;
+        transform: scale(0.98);
+    }
+
+    to {
+        opacity: 0.9;
+        transform: scale(1.03);
+    }
+}
+
+@keyframes pulseObject {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.12);
+    }
+}
+
+@keyframes growlShake {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(-2px, 2px) rotate(-1deg);
+    }
+
+    50% {
+        transform: translate(2px, -1px) rotate(1deg);
+    }
+
+    75% {
+        transform: translate(-1px, -1px) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(1px, 2px) rotate(1deg);
+    }
+}
+
+@keyframes rootMove {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(5deg) scale(1.08);
+    }
+
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+@keyframes gentleSway {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    100% {
+        transform: translateY(-8px) rotate(1deg);
+    }
+}
+
+.screen-shake {
+    animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-2px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(4px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-6px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(6px, 0, 0);
+    }
+}
+
+.fall-animation {
+    height: 120%;
+    top: -20%;
+    animation: fallDown 2.5s forwards ease-in;
+}
+
+@keyframes fallDown {
+    0% {
+        transform: translateY(0);
+        filter: blur(0);
+    }
+
+    50% {
+        filter: blur(2px);
+    }
+
+    100% {
+        /* Scende esattamente del margine extra, rimanendo sempre dentro i bordi dello schermo */
+        transform: translateY(16.66%);
+        filter: blur(6px);
+    }
+}

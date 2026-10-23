@@ -1,0 +1,272 @@
+<div class="enigma-wrapper" [ngClass]="{ 'screen-shake': screenShake }">
+  <div class="background-container">
+    <img
+      *ngIf="gamePhase === 'fuffy' || gamePhase === 'fuffySolved'"
+      [src]="assets.fuffyRoom"
+      class="bg-layer"
+      alt="Stanza di Fuffi"
+    />
+    <img
+      *ngIf="gamePhase === 'falling'"
+      [src]="assets.falling"
+      class="bg-layer fall-animation"
+      alt="Caduta nella botola"
+    />
+    <img
+      *ngIf="gamePhase === 'plants' || gamePhase === 'failurePlants'"
+      [src]="assets.plantsRoom"
+      class="bg-layer"
+      alt="Stanza delle Piante"
+    />
+    <img
+      *ngIf="gamePhase === 'plantsSolved' || gamePhase === 'success'"
+      [src]="assets.plantsRoomEscaped"
+      class="bg-layer"
+      alt="Fuga dalle Piante"
+    />
+  </div>
+
+  <!-- STEP 1 - STANZA DEL CANE -->
+  <div
+    class="interactive-layer"
+    *ngIf="gamePhase === 'fuffy' || gamePhase === 'fuffySolved'"
+  >
+    <!-- Teste di Fuffi (Gestione a 3 stati: sleep, look, awake) -->
+    <div class="fuffy-heads-container">
+      <!-- Testa Sinistra -->
+      <img
+        [src]="
+          headStates.left === 'sleep'
+            ? assets.fuffy.headLeftSleep
+            : headStates.left === 'look'
+              ? assets.fuffy.headLeftLook
+              : assets.fuffy.headLeftAwake
+        "
+        class="fuffy-head head-left"
+        [ngClass]="headStates.left"
+        alt="Testa Sinistra"
+      />
+
+      <!-- Testa Centrale -->
+      <img
+        [src]="
+          headStates.center === 'sleep'
+            ? assets.fuffy.headCenterSleep
+            : headStates.center === 'look'
+              ? assets.fuffy.headCenterLook
+              : assets.fuffy.headCenterAwake
+        "
+        class="fuffy-head head-center"
+        [ngClass]="headStates.center"
+        alt="Testa Centrale"
+      />
+
+      <!-- Testa Destra -->
+      <img
+        [src]="
+          headStates.right === 'sleep'
+            ? assets.fuffy.headRightSleep
+            : headStates.right === 'look'
+              ? assets.fuffy.headRightLook
+              : assets.fuffy.headRightAwake
+        "
+        class="fuffy-head head-right"
+        [ngClass]="headStates.right"
+        alt="Testa Destra"
+      />
+    </div>
+
+    <!-- Oggetti Sonori da Cliccare -->
+    <div
+      class="hotspot sound-object flute"
+      [ngStyle]="hotspots.fuffyObjects.flute"
+      [ngClass]="{ playing: activeSoundObject === 'flute' }"
+      (click)="onObjectClick('flute')"
+    >
+      <img [src]="assets.flute" alt="Flauto" />
+    </div>
+
+    <div
+      class="hotspot sound-object bell"
+      [ngStyle]="hotspots.fuffyObjects.bell"
+      [ngClass]="{ playing: activeSoundObject === 'bell' }"
+      (click)="onObjectClick('bell')"
+    >
+      <img [src]="assets.bell" alt="Campanello" />
+    </div>
+
+    <div
+      class="hotspot sound-object music-box"
+      [ngStyle]="hotspots.fuffyObjects.musicBox"
+      [ngClass]="{ playing: activeSoundObject === 'musicBox' }"
+      (click)="onObjectClick('musicBox')"
+    >
+      <img [src]="assets.musicBox" alt="Carillon" />
+    </div>
+
+    <!-- Botola (Attiva solo se Fuffi è addormentato) -->
+    <div
+      class="hotspot trapdoor-hotspot"
+      [ngStyle]="hotspots.trapdoor"
+      [ngClass]="{ interactive: gamePhase === 'fuffySolved' }"
+      (click)="onTrapdoorClick()"
+    >
+      <div class="glow-effect" *ngIf="gamePhase === 'fuffySolved'"></div>
+    </div>
+  </div>
+
+  <!-- STEP 2 - STANZA DELLE PIANTE  -->
+  <div
+    class="interactive-layer"
+    *ngIf="gamePhase === 'plants' || gamePhase === 'plantsSolved'"
+  >
+    <img
+      [src]="assets.plants.hermione"
+      class="character-png hermione-layer"
+      alt="Hermione intrappolata"
+    />
+    <img
+      [src]="assets.plants.ron"
+      class="character-png ron-layer"
+      alt="Ron intrappolato"
+    />
+
+    <!-- Simboli Incisi sulla Parete -->
+    <div class="wall-symbols-container">
+      <div
+        [class]="getSymbolClass('flower')"
+        [ngStyle]="hotspots.wallSymbols.flower"
+        (click)="onSymbolClick('flower')"
+      >
+        <img [src]="assets.plants.symbolFlower" alt="Simbolo Fiore" />
+      </div>
+
+      <div
+        [class]="getSymbolClass('leaf')"
+        [ngStyle]="hotspots.wallSymbols.leaf"
+        (click)="onSymbolClick('leaf')"
+      >
+        <img [src]="assets.plants.symbolLeaf" alt="Simbolo Foglia" />
+      </div>
+
+      <div
+        [class]="getSymbolClass('root')"
+        [ngStyle]="hotspots.wallSymbols.root"
+        (click)="onSymbolClick('root')"
+      >
+        <img [src]="assets.plants.symbolRoot" alt="Simbolo Radice" />
+      </div>
+    </div>
+
+    <!-- Radici Interattive -->
+    <div
+      class="hotspot root-object"
+      [ngStyle]="hotspots.roots.rootA"
+      [ngClass]="{ pulse: rootStates.rootA }"
+      (click)="onRootClick('rootA')"
+    >
+      <img [src]="assets.plants.rootA" alt="Radice A" />
+    </div>
+
+    <div
+      class="hotspot root-object"
+      [ngStyle]="hotspots.roots.rootB"
+      [ngClass]="{ pulse: rootStates.rootB }"
+      (click)="onRootClick('rootB')"
+    >
+      <img [src]="assets.plants.rootB" alt="Radice B" />
+    </div>
+
+    <div
+      class="hotspot root-object"
+      [ngStyle]="hotspots.roots.rootC"
+      [ngClass]="{ pulse: rootStates.rootC }"
+      (click)="onRootClick('rootC')"
+    >
+      <img [src]="assets.plants.rootC" alt="Radice C" />
+    </div>
+
+    <!-- Liane animate overlay che si stringono in base a plantDangerLevel -->
+    <img
+      *ngIf="plantDangerLevel === 1"
+      [src]="assets.plants.vinesLevel1"
+      class="vines-level-overlay"
+      [class.vines-retreat]="gamePhase === 'plantsSolved'"
+      alt="Liane Livello 1 (Front)"
+    />
+    <img
+      *ngIf="plantDangerLevel === 2"
+      [src]="assets.plants.vinesLevel2"
+      class="vines-level-overlay"
+      [class.vines-retreat]="gamePhase === 'plantsSolved'"
+      alt="Liane Livello 2 (Left)"
+    />
+    <img
+      *ngIf="plantDangerLevel >= 3"
+      [src]="assets.plants.vinesLevel3"
+      class="vines-level-overlay"
+      [class.vines-retreat]="gamePhase === 'plantsSolved'"
+      alt="Liane Livello 3 (Right)"
+    />
+  </div>
+
+  <div class="ui-overlay-layer">
+    <div
+      class="narrative-banner"
+      *ngIf="
+        narrativeText &&
+        gamePhase !== 'failureFluffy' &&
+        gamePhase !== 'failurePlants'
+      "
+    >
+      <p>{{ narrativeText }}</p>
+    </div>
+
+    <!-- Indizio di Hagrid (Se disponibile) -->
+    <div
+      class="hagrid-hint-container"
+      *ngIf="
+        hasHagridHint && (gamePhase === 'fuffy' || gamePhase === 'fuffySolved')
+      "
+    >
+      <button class="hint-trigger-btn" (click)="toggleHagridMemory()">
+        💡 Ricorda cosa ha detto Hagrid
+      </button>
+
+      <div
+        class="hagrid-memory-card"
+        *ngIf="showHagridMemory"
+        (click)="toggleHagridMemory()"
+      >
+        <p class="quote">
+          "Con Fuffi il difficile non è farlo stare buono. Sono le tre teste:
+          non reagiscono mai allo stesso modo alle stesse cose."
+        </p>
+        <span class="close-hint">Clicca per chiudere</span>
+      </div>
+    </div>
+
+    <!-- Schermata di Game Over per Fuffi -->
+    <div class="game-over-modal" *ngIf="gamePhase === 'failureFluffy'">
+      <h2>Fuffi si è svegliato completamente!</h2>
+      <p>I suoi ruggiti rimbombano nella stanza...</p>
+      <button class="btn-retry" (click)="retryFluffy()">Riprova</button>
+    </div>
+
+    <!-- Schermata di Game Over per le Piante -->
+    <div class="game-over-modal" *ngIf="gamePhase === 'failurePlants'">
+      <h2>Il Tranello del Diavolo vi ha completamente immobilizzati.</h2>
+      <p>Le liane stringono la presa ostacolando ogni movimento...</p>
+      <button class="btn-retry" (click)="retryPlants()">Riprova</button>
+    </div>
+
+    <!-- Messaggio Finale di Successo -->
+    <div class="success-banner" *ngIf="gamePhase === 'success'">
+      <h2>Enigma Superato!</h2>
+      <p>
+        Siete riusciti a fuggire dal Tranello del Diavolo e proseguire la
+        discesa.
+      </p>
+    </div>
+  </div>
+</div>

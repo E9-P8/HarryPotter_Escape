@@ -13,6 +13,8 @@ import { Subscription } from 'rxjs';
 })
 export class Part8Component implements OnInit, OnDestroy {
 
+  showDragonFire: boolean = false;
+
   constructor(private http: HttpClient,
       public gameService: GameDataService, 
       public audioService : AudioService,
@@ -57,14 +59,22 @@ export class Part8Component implements OnInit, OnDestroy {
         const savedNodeId = this.gameService.getCurrentNodeId();
         const savedNode = this.Data.nodes.find((n: any) => n.id === savedNodeId);
 
-        if (savedNode) {
-        // Riparte dal nodo salvato
+      if (savedNode) {
         this.actualPhase = JSON.parse(JSON.stringify(savedNode));
-        } else {
-          // Se non c'è un nodo salvato valido, parte dal primo
-          this.actualPhase = JSON.parse(JSON.stringify(this.Data.nodes[0]));
-        }
-        this.manageChoice({ next_node: 'greatHall_Hermione' });
+      } else { 
+        this.actualPhase = JSON.parse(JSON.stringify(this.Data.nodes[0]));
+        this.gameService.setCurrentNode(this.actualPhase.id, 8);
+      }
+
+
+      if (this.actualPhase.type === 'animation') {
+        this.handleAnimation(this.actualPhase.id);
+      } else if (this.actualPhase.next_node && (!this.actualPhase.options || this.actualPhase.options.length === 0)) {
+       const timer = setTimeout(() => {
+          this.manageChoice({ next_node: this.actualPhase.next_node });
+        }, 4000);
+        this.timeouts.push(timer);
+      }
       }
     });
   }
@@ -74,16 +84,22 @@ export class Part8Component implements OnInit, OnDestroy {
   }
   checkCondition(condition?: string): boolean {
     if (!condition) return true;
-    const isSeeker = this.gameService.getFlag('isSeeker');
 
-    if (condition === 'isSeeker == true') {
-      return this.isSeeker;
+    if (condition.includes('&&')) {
+      const subConditions = condition.split('&&').map(s => s.trim());
+      return subConditions.every(subCond => this.checkCondition(subCond));
     }
-    if (condition === 'isSeeker == false') {
-      return !this.isSeeker;
+    if (condition.includes('==')) {
+      const parts = condition.split('==').map(s => s.trim());
+      const flagName = parts[0];
+      const expectedValue = parts[1] === 'true';
+
+      const actualValue = !!this.gameService.getFlag(flagName);
+
+      return actualValue === expectedValue;
     }
 
-    return true;
+    return !!this.gameService.getFlag(condition);
   }
 
   manageChoice(option: any) {
@@ -145,7 +161,9 @@ export class Part8Component implements OnInit, OnDestroy {
 
   handleAnimation(animationId: string) {
     switch (animationId) {
-      case 'hagrid_dragon':
+      case 'dragon_fire':
+        this.playDragonFire();
+        break;
       break;
 
       default:
@@ -156,4 +174,14 @@ export class Part8Component implements OnInit, OnDestroy {
     }
   }
 
+  playDragonFire(): void {
+    this.showDragonFire = true;
+
+    const tEnd = setTimeout(() => {
+      this.showDragonFire = false;
+      this.manageChoice({ next_node: this.actualPhase.next_node });
+    }, 2000);
+    
+    this.timeouts.push(tEnd);
+  }
 }

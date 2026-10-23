@@ -36,6 +36,9 @@ import { FinalPartComponent } from './components/Film1/final-part/final-part.com
 import { DemoComponent } from './components/demo/demo.component';
 import { MirrorRevealComponent } from './components/enigma-container/mirror-reveal/mirror-reveal.component';
 import { HomeComponent } from './components/home/home.component';
+import { EnigmaForestComponent } from './components/enigma-container/enigma-forest/enigma-forest.component';
+import { TrapdoorEnigmaComponent } from './components/enigma-container/trapdoor-enigma/trapdoor-enigma.component';
+import { OpendoorMinigameComponent } from './components/minigame-container/opendoor-minigame/opendoor-minigame.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +71,10 @@ import { HomeComponent } from './components/home/home.component';
     FinalPartComponent,
     DemoComponent,
     MirrorRevealComponent,
-    HomeComponent
+    HomeComponent,
+    EnigmaForestComponent,
+    TrapdoorEnigmaComponent,
+    OpendoorMinigameComponent
   ],
   imports: [
     BrowserModule,

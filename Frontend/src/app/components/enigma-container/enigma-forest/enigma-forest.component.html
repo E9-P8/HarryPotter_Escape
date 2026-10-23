@@ -1,0 +1,272 @@
+<div class="puzzle-wrapper" [class.game-over]="isGameOver">
+  <div class="intro-overlay" *ngIf="introStep < 2">
+    <div class="hagrid-dialog-box">
+      <div class="hagrid-avatar">
+        <img
+          src="assets/img/Part8/forbiddenForest.png"
+          alt="Hagrid"
+          class="avatar-img"
+        />
+      </div>
+      <div class="dialog-content">
+        <h3>Hagrid</h3>
+        <p *ngIf="introStep === 0">
+          "Qualcosa ha inseguito quell'unicorno per tutta la foresta. Abbiamo
+          trovato tracce in diversi punti, ma non riusciamo a capire quale
+          percorso abbia seguito."
+        </p>
+        <p *ngIf="introStep === 1">
+          "Se riusciamo a ricostruire il suo tragitto, sapremo dove è stato
+          attaccato."
+        </p>
+        <button
+          class="primary-btn"
+          *ngIf="introStep === 0"
+          (click)="nextIntro()"
+        >
+          Continua
+        </button>
+        <button
+          class="primary-btn"
+          *ngIf="introStep === 1"
+          (click)="startInvestigation()"
+        >
+          Esamina gli indizi
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-puzzle-screen" *ngIf="introStep === 2">
+    <header class="puzzle-header">
+      <div class="subtitle-text">Le Ultime Tracce dell'Unicorno</div>
+      <div class="attempts-container">
+        <span>Tentativi rimasti: </span>
+        <span class="star gold" *ngFor="let s of starsArray">★</span>
+        <span class="star empty" *ngFor="let s of emptyStarsArray">☆</span>
+      </div>
+    </header>
+
+    <div class="puzzle-body">
+      <!-- MAPPA -->
+      <div class="map-container" [class.map-illuminated]="isVictorious">
+        <!-- IMMAGINE DI SFONDO DELLA MAPPA -->
+        <div class="map-bg-image"></div>
+
+        <div class="map-nodes">
+          <div
+            class="map-node node-lago"
+            [class.active-light]="currentWinStep >= 0"
+          >
+            <span class="node-label">Radura del Lago</span>
+          </div>
+          <div
+            class="map-node node-ruscello"
+            [class.active-light]="currentWinStep >= 1"
+          >
+            <span class="node-label">Ruscello d'Argento</span>
+          </div>
+          <div
+            class="map-node node-quercia"
+            [class.active-light]="currentWinStep >= 2"
+          >
+            <span class="node-label">Vecchia Quercia</span>
+          </div>
+          <div
+            class="map-node node-funghi"
+            [class.active-light]="currentWinStep >= 3"
+          >
+            <span class="node-label">Cerchio di Funghi</span>
+          </div>
+          <div
+            class="map-node node-sentiero"
+            [class.active-light]="currentWinStep >= 4"
+          >
+            <span class="node-label">Sentiero Roccioso</span>
+          </div>
+          <div
+            class="map-node node-oscura"
+            [class.active-light]="currentWinStep >= 5"
+          >
+            <span class="node-label">Radura Oscura</span>
+          </div>
+        </div>
+
+        <svg class="map-svg-paths">
+          <!-- 1. Lago (12%, 15%) -> Funghi (52%, 62%) -->
+          <path
+            d="M 120 75 L 400 250"
+            class="path-line"
+            [class.lit]="currentWinStep >= 1"
+          />
+
+          <!-- 2. Funghi (52%, 62%) -> Sentiero (72%, 42%) -->
+          <path
+            d="M 400 250 L 500 140"
+            class="path-line"
+            [class.lit]="currentWinStep >= 2"
+          />
+
+          <!-- 3. Sentiero (72%, 42%) -> Radura Oscura (82%, 18%) -->
+          <path
+            d="M 500 140 L 600 110"
+            class="path-line"
+            [class.lit]="currentWinStep >= 3"
+          />
+
+          <!-- 4. Radura Oscura (82%, 18%) -> Ruscello (38%, 28%) -->
+          <path
+            d="M 600 110 L 330 80"
+            class="path-line"
+            [class.lit]="currentWinStep >= 4"
+          />
+
+          <!-- 5. Ruscello (38%, 28%) -> Quercia (24%, 52%) -->
+          <path
+            d="M 330 80 L 210 240"
+            class="path-line"
+            [class.lit]="currentWinStep >= 5"
+          />
+        </svg>
+      </div>
+
+      <!-- PERGAMENA DEGLI INDIZI -->
+      <div class="clues-panel">
+        <div class="parchment-header">
+          <h3>INDIZI RACCOLTI</h3>
+        </div>
+        <ul class="clues-list">
+          <li>
+            <strong>Indizio 1:</strong> Le impronte più antiche, ancora intrise
+            di umidità fangosa, sono state rinvenute dove l'acqua della foresta
+            ristagna immobile senza corrente.
+          </li>
+          <li>
+            <strong>Indizio 2:</strong> I residui di sangue argentato sugli
+            zoccoli sembrano essere stati parzialmente lavati via da una
+            corrente d'acqua limpida, ma le ferite profonde mostrano che il
+            lavaggio è avvenuto poco prima della sosta finale
+          </li>
+          <li>
+            <strong>Indizio 3:</strong> Tra la terra secca sugli zoccoli sono
+            state rinvenute microscopiche spore luminose. Risultano però coperte
+            da terra, residui rocciosi e fango.
+          </li>
+          <li>
+            <strong>Indizio 4:</strong> La sequenza di zoccolate si interrompe
+            definitivamente all'ombra del vegetale più imponente e secolare
+            della foresta, dove l'animale stremato ha cessato di muoversi.
+          </li>
+          <li>
+            <strong>Indizio 5:</strong> Una serie di graffi profondi sulla
+            roccia mostra che la creatura ha attraversato un passaggio di pietre
+            affilate prima di addentrarsi nel punto più profondo e privo di luce
+            dell'intera boscaglia.
+          </li>
+          <li>
+            <strong>Indizio 6:</strong> Alcune gocce di sangue rappreso su rami
+            bassi indicano che la creatura si è addentrata nella zona più remota
+            e buia subito dopo essersi ferita lungo il varco roccioso.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FEEDBACK DI ERRORE -->
+    <div class="feedback-banner" *ngIf="errorMessage">
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <!-- BARRA TEMPORALE E TESSERE -->
+    <div class="timeline-section">
+      <div class="timeline-header-row">
+        <h3>Percorso Temporale Ricostruito</h3>
+        <button
+          class="primary-btn resolve-btn"
+          *ngIf="!isVictorious && !isGameOver"
+          (click)="checkSolution()"
+        >
+          Ricostruisci il percorso
+        </button>
+      </div>
+
+      <!-- 6 SLOT -->
+      <div class="timeline-slots">
+        <div
+          *ngFor="let slot of slots; let i = index"
+          class="timeline-slot"
+          [class.slot-active-glow]="currentWinStep >= i && isVictorious"
+          (dragover)="onDragOver($event)"
+          (drop)="onDropToSlot(i, $event)"
+        >
+          <div class="slot-number">{{ i + 1 }}</div>
+
+          <!-- TESSERA NELLO SLOT -->
+          <div
+            class="tile-card"
+            *ngIf="slot"
+            [draggable]="!isVictorious && !isGameOver"
+            (dragstart)="onDragStart(slot, 'slot', i, $event)"
+          >
+            <!-- IMMAGINE TESSERA -->
+            <img
+              [src]="'assets/img/Part8/' + slot.id + '.png'"
+              [alt]="slot.name"
+              class="tile-img"
+            />
+            <span class="tile-name">{{ slot.name }}</span>
+          </div>
+
+          <div class="slot-placeholder" *ngIf="!slot">Trascina qui</div>
+        </div>
+      </div>
+
+      <!-- TESSERE TRASCINABILI -->
+      <div class="available-tiles-container">
+        <div
+          class="tiles-pool"
+          (dragover)="onDragOver($event)"
+          (drop)="onDropToPool($event)"
+        >
+          <div
+            class="tile-card"
+            *ngFor="let item of availableLocations; let i = index"
+            [draggable]="!isVictorious && !isGameOver"
+            (dragstart)="onDragStart(item, 'pool', i, $event)"
+          >
+            <!-- IMMAGINE TESSERA -->
+            <img
+              [src]="'assets/img/Part8/' + item.id + '.png'"
+              [alt]="item.name"
+              class="tile-img"
+            />
+            <span class="tile-name">{{ item.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OVERLAYS FINALI -->
+    <div class="victory-overlay" *ngIf="isVictorious && currentWinStep >= 5">
+      <div class="narrative-box">
+        <p class="narrative-text">{{ winMessages[winMessageIndex] }}</p>
+        <button
+          class="primary-btn follow-btn"
+          *ngIf="winMessageIndex === winMessages.length - 1"
+          (click)="finishPuzzle()"
+        >
+          Segui le tracce
+        </button>
+      </div>
+    </div>
+
+    <div class="fail-overlay" *ngIf="isGameOver">
+      <div class="fail-box">
+        <p class="fail-sound-effect">
+          🔊 *Un fruscio minaccioso risuona nella nebbia...*
+        </p>
+        <h2>Hai perso la pista.</h2>
+      </div>
+    </div>
+  </div>
+</div>

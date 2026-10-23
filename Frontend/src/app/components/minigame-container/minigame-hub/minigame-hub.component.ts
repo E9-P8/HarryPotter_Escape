@@ -2,6 +2,7 @@ import { Component, OnInit, Type, Input,Output, EventEmitter } from '@angular/co
 import { SphereMinigameComponent } from '../sphere-minigame/sphere-minigame.component';
 import { HeadsDogMinigameComponent } from '../heads-dog-minigame/heads-dog-minigame.component'; 
 import { FireMinigameComponent } from '../fire-minigame/fire-minigame.component';
+import { OpendoorMinigameComponent } from '../opendoor-minigame/opendoor-minigame.component';
 
 @Component({
   selector: 'app-minigame-hub',
@@ -23,6 +24,7 @@ export class MinigameHubComponent implements OnInit {
       case 'SPHERE_MINIGAME': return SphereMinigameComponent;
       case 'HEADSDOG_MINIGAME': return HeadsDogMinigameComponent;
       case 'FIRE_MINIGAME' : return FireMinigameComponent;
+      case 'FUFFY_DOOR_MINIGAME' : return OpendoorMinigameComponent;
       default: return null;
     }
   }

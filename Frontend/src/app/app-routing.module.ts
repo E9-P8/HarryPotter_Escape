@@ -13,6 +13,8 @@ import { Part4Component } from './components/Film1/part4/part4.component';
 import { Part5Component } from './components/Film1/part5/part5.component';
 import { Part6Component } from './components/Film1/part6/part6.component';
 import { Part7Component } from './components/Film1/part7/part7.component';
+import { Part8Component } from './components/Film1/part8/part8.component';
+
 
 
 const routes: Routes = [
@@ -30,7 +32,8 @@ const routes: Routes = [
   { path: 'part4',  component: Part4Component },
   { path: 'Benvenuti-ad-Hogwarts',  component: Part5Component },
   { path: 'Segreti-a-3-teste',  component: Part6Component },
-  { path: 'Misteri-e-pericoli-di-Hogwarts',  component: Part7Component }
+  { path: 'Misteri-e-pericoli-di-Hogwarts',  component: Part7Component },
+  { path: 'part8',  component: Part8Component },
 ];
 
 @NgModule({
