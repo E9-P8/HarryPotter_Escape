@@ -318,10 +318,8 @@ export class TrapdoorEnigmaComponent implements OnInit {
 
     setTimeout(() => {
       this.gamePhase = 'success';
-      this.router.navigate(['/demo/Misteri-e-pericoli-di-Hogwarts']);
-      this.success.emit(
-
-      );
+      this.router.navigate(['/final_part']);
+      this.success.emit();
     }, 2000);
   }
 

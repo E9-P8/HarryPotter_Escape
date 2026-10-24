@@ -211,7 +211,7 @@ export class Part6Component implements OnInit, OnDestroy {
     ) {
       const timer = setTimeout(() => {
         this.manageChoice({ next_node: this.actualPhase.next_node });
-      }, 1000);
+      }, 4000);
       this.timeouts.push(timer);
     }
   }

@@ -1,124 +1,296 @@
 {
-  "part_id": 8,
+  "part_id": 9,
   "nodes":
     [
     {
-        "id": "final_part_start",
-        "image_id": "devils_snare",
+        "id": "keys",
+        "image_id": "",
+        "type": "animation",
+        "next_node": "enigma_trap"
+    },
+    {
+        "id": "enigma_trap",
+        "image_id": "",
         "type": "enigma",
-        "enigma_id": "DEVILS_SNARE_LIGHT",
-        "success_node": "final_flying_keys_room",
-        "fail_node": "final_devils_snare_escape"
+        "enigma_id": "TRAP_ENIGMA",
+        "success_node": "flying_keys",
+        "fail_node": "flying_keys"
     },
     {
-        "id": "final_devils_snare_escape",
-        "image_id": "devils_snare_choke",
-        "type": "text",
-        "text": "Hermione urla: 'Lumos Solem!'. La luce solare scaccia le radici velenose facendovi cadere sani e salvi sul pavimento sottostante.",
-        "next_node": "final_flying_keys_room"
+        "id": "flying_keys",
+        "image_id": "",
+        "type": "animation",
+        "next_node": "keys_room"
     },
     {
-        "id": "final_flying_keys_room",
-        "image_id": "flying_keys",
+        "id": "keys_room",
+        "image_id": "",
         "type": "minigame",
-        "minigame_id": "CATCH_BENT_WING_KEY",
-        "success_node": "final_chess_room",
-        "fail_node": "final_keys_door_forced"
+        "minigame_id": "CATCH__KEY",
+        "success_node": "keys_attacking",
+        "fail_node": "keys_attacking"
     },
     {
-        "id": "final_keys_door_forced",
-        "image_id": "keys_attacking",
+        "id": "keys_attacking",
+        "image_id": "",
+        "type": "animation",
+        "next_node": "chess_room"
+    },
+    {
+        "id": "chess_room",
+        "image_id": "",
         "type": "text",
-        "text": "Tra una pioggia di chiavi incantate affilate come rasoi, riuscite ad aprire la porta pesante e a chiuderla alle vostre spalle!",
-        "next_node": "final_chess_room"
+        "text": "Hermione: Dove siamo? Sembra un cimitero",
+        "next_node": "Ron_chess"
     },
     {
-        "id": "final_chess_room",
-        "image_id": "wizard_chess_board",
+        "id": "Ron_chess",
+        "image_id": "",
+        "type": "text",
+        "text": "Ron: Questo non è un cimitero, è una scacchiera.",
+        "next_node": "chess_enigma"
+    },
+    {
+        "id": "chess_enigma",
+        "image_id": "",
         "type": "enigma",
-        "enigma_id": "CHESS_TACTICAL_SACRIFICE",
-        "success_node": "final_chess_victory",
-        "fail_node": "final_chess_victory"
+        "enigma_id": "CHESS_ENIGMA",
+        "success_node": "chess_victory",
+        "fail_node": "chess_victory"
     },
     {
-        "id": "final_chess_victory",
-        "image_id": "ron_knocked_out",
-        "type": "animation",
-        "text": "Ron si sacrifica con un'azione magistrale per darvi lo Scacco Matto! La regina bianca distrugge il cavallo di Ron che cade svenuto. Harry vi guarda: 'Restate qui con Ron. Devo proseguire da solo.'",
-        "next_node": "final_quirrell_revelation"
-    },
-    {
-        "id": "final_quirrell_revelation",
-        "image_id": "mirror_room_quirrell",
-        "type": "text",
-        "text": "In fondo alle scale non c'è Piton, ma il balbettante Professor Raptor davanti allo Specchio delle Brame! Raptor sorride malvagio: 'Chi sospetterebbe mai del povero e balbettante Raptor? Sono stato io a far entrare il troll e a tentare di ucciderti al Quidditch!'",
-        "next_node": "final_voldemort_reveal"
-    },
-    {
-        "id": "final_voldemort_reveal",
-        "image_id": "voldemort_back_head",
-        "type": "animation",
-        "text": "Raptor si toglie il turbante: sulla nuca calva c'è il volto orribile di Voldemort! Voldemort: 'Vedi cosa sono diventato? Un parassita! Ma la pietra che hai in tasca può ridarmi un corpo!'",
-        "next_node": "final_voldemort_temptation"
-    },
-    {
-        "id": "final_voldemort_temptation",
-        "image_id": "voldemort_fire_ring",
-        "text": "La stanza si circonda di fiamme magiche. Voldemort sussurra: 'Unisciti a me! Possiamo far tornare i tuoi genitori... Non esiste il bene o il male, esiste solo il potere!'",
-        "options": [
+      "id": "chess_victory",
+      "image_id": "",
+      "text": "Ron: *WizardName*, devi proseguire tu",
+      "options": [
         {
-            "text": "Rifiuta con fermezza: 'MAI!'",
-            "impact": { "audacia": 50, "reputazione": 30 },
-            "next_node": "final_boss_enigma"
+          "text": "*WizardName*: Restate qui con Ron. Devo proseguire da solo.",
+          "impact": 
+            {
+            "amicizia": 60,
+            "audacia": -15
+            },
+          "set_flag": { },
+          "next_node": "Raptor_mirror"
         },
         {
-            "text": "Tentenna e fingi di cedere per guadagnare tempo",
-            "impact": { "audacia": 10 },
-            "next_node": "final_boss_enigma"
+          "text": "*WizardName*: Non vi lascero' qui da soli!",
+          "impact": {
+            "audacia": 50,
+            "amicizia": 10
+            },
+          "set_flag": { },
+          "next_node": "chess_victory2"
+        }
+      ]
+    },
+    {
+        "id": "chess_victory2",
+        "image_id": "",
+        "type": "text",
+        "text": "Hermione: Se restiamo qui nessuno fermerà Piton. Ma non possiamo nemmeno abbandonare Ron.",
+        "next_node": "chess_victory3"
+    },
+    {
+        "id": "chess_victory3",
+        "image_id": "",
+        "type": "text",
+        "text": "*WizardName*: Nessuna pietra vale la vita di un amico. Restiamo con lui.",
+        "set_flag": { "stayedWithRon": true },
+        "impact": {"amicizia": 20},
+        "next_node": "alternative_final_start"
+    },
+    {
+        "id": "Raptor_mirror",
+        "image_id": "",
+        "type": "text",
+        "text": "Raptor: Chi sospetterebbe mai del povero e balbettante Raptor? Sono stato io a far entrare il troll e a tentare di ucciderti al Quidditch! Se non fosse stato per Piton e il suo mantello!",
+        "next_node": "Raptor_mirror2"
+    },
+    {
+        "id": "Raptor_mirror2",
+        "image_id": "",
+        "type": "text",
+        "text": "Harry:  Allora e' lei ad aver fatto entrare il troll",
+        "next_node": "Raptor_mirror3"
+    },
+    {
+        "id": "Raptor_mirror3",
+        "image_id": "",
+        "type": "text",
+        "text": "Raptor: Che bravo potter, ma piton non ci è scascato e ha cercato di intercettarmi per non lasciarmi solo. Ma lui non capisce, io non sono mai solo.",
+        "next_node": "Harry_stone"
+    },
+    {
+      "id": "Harry_stone",
+      "image_id": "",
+      "text": "Raptor: Cosa fa questo specchio... Mi vedo con la pietra.. Vieni qui, potter, subito! E dimmi cosa vedi",
+      "options": [
+        {
+          "text": "*WizardName*: Sto stringendo la mano a Silente, ho vinto la coppa delle case",
+          "impact": 
+            {
+            "audacia": 25,
+            "reputazione": 25,
+            "sincerita": 15
+            },
+          "set_flag": { },
+          "next_node": "voldemort_reveal"
+        },
+        {
+          "text": "*WizardName*: Vedo la pietra ...",
+          "impact": 
+            {
+            "reputazione": -20,
+            "sincerita": -15
+            },
+          "set_flag": { },
+          "next_node": "voldemort_reveal"
+        }
+      ]
+    },
+    {
+        "id": "voldemort_reveal",
+        "image_id": "",
+        "type": "text",
+        "text": "Voldemort: Vedi cosa sono diventato? Un parassita! Ma la pietra che hai in tasca può ridarmi un corpo!",
+        "next_node": "room_fire"
+    },
+    {
+        "id": "room_fire",
+        "image_id": "",
+        "type": "animation",
+        "next_node": "voldemort_temptation"
+    },
+    {
+        "id": "voldemort_temptation",
+        "image_id": "",
+        "text": "Voldemort: Unisciti a me! Possiamo far tornare i tuoi genitori... Non esiste il bene o il male, esiste solo il potere! Insieme possiamo fare grandi cose",
+        "options": [
+        {
+            "text": "Rifiuta con fermezza: MAI! ",
+            "impact": 
+                {
+                "audacia": 50,
+                "sincerita": 40,
+                "amicizia": 20
+                },
+            "next_node": "voldemort_enigma"
+        },
+        {
+            "text": "Voldemort e' forte e persuasivo. Vuoi piu potere!",
+            "impact": 
+                {
+                "audacia": -30,
+                "reputazione": -60,
+                "amicizia": -60,
+                "sincerita": -50,
+                "sospetto": 40
+                },
+            "set_flag": {"joinedVoldemort" : true },
+            "next_node": "voldemort_union"
         }
         ]
     },
     {
-        "id": "final_boss_enigma",
-        "image_id": "voldemort_attack",
+        "id": "voldemort_enigma",
+        "image_id": "",
         "type": "enigma",
-        "enigma_id": "TOUCH_OF_LOVE_FINAL",
-        "success_node": "final_quirrell_destroyed",
-        "fail_node": "final_quirrell_destroyed"
+        "enigma_id": "VOLDEMORT_ENIGMA",
+        "success_node": "voldemort_defeat",
+        "fail_node": "alternative_final_start"
     },
     {
-        "id": "final_quirrell_destroyed",
-        "image_id": "quirrell_ashes",
-        "type": "animation",
-        "text": "Tocchi il viso di Raptor: la tua pelle brucia e sgretola il suo corpo trasformandolo in cenere! Lo spirito oscuro di Voldemort trapassa il petto di Harry prima di fuggire via. Harry sviene a terra.",
-        "next_node": "final_hospital_wing"
-    },
-    {
-        "id": "final_hospital_wing",
-        "image_id": "hospital_wing_dumbledore",
+        "id": "voldemort_defeat",
+        "image_id": "",
         "type": "text",
-        "text": "Ti risvegli nell'infermeria sommerso da dolciumi. Silente sorride: 'La pietra è stata distrutta. Tua madre si è sacrificata per te, lasciandoti addosso un segno indelebile: l'Amore, Harry.'",
-        "next_node": "final_house_cup_ceremony"
+        "text": "",
+        "impact": 
+            {
+            "audacia": 40,
+            "sincerita": 20
+            },
+        "set_flag": {"voldemortDefeated" : true },
+        "next_node": "hospital"
     },
     {
-        "id": "final_house_cup_ceremony",
-        "image_id": "great_hall_banners",
+        "id": "alternative_final_start",
+        "image_id": "",
         "type": "text",
-        "text": "Nella Sala Grande addobbata con i vessilli di Serpeverde, Silente fa battere il cucchiaio sul calice: 'Un altro anno è passato! Tuttavia, alcuni recenti avvenimenti vanno presi in considerazione...'",
+        "text": "Voldemort: Adesso che la pietra e' mia, avro' finalmente tutto il potere!",
+        "next_node": "voldemort_stone"
+    },
+    {
+        "id": "voldemort_stone",
+        "image_id": "",
+        "type": "text",
+        "text": "Harry: Ragazzi, Voldemort ha preso la pietra! Non siamo riusciti a sconfiggerlo...",
+        "options": 
+        {
+          "text": "*WizardName*: Torniamo ad Hogwarts e avvisiamo i professori",
+          "impact": 
+            {
+            "audacia": 40,
+            "amicizia": 20
+            },
+          "set_flag": { }
+        },
+        "next_node": "alternative_final"
+    },
+    {
+        "id": "voldemort_union",
+        "image_id": "",
+        "type": "text",
+        "text": "",
+        "next_node": "dark_ending"
+    },
+    {
+        "id": "dark_ending",
+        "image_id": "",
+        "type": "text",
+        "text": "Voldemort: Hai scelto il potere. Ottima scelta, *WizardName.*",
+        "next_node": "alternative_final"
+    },
+    {
+        "id": "hospital",
+        "image_id": "",
+        "type": "text",
+        "text": "Silente: Solo una persona che avesse voluto trovare la pietra ma non usarla avrebbe potuto prenderla.. è stata una delle mie idee pu brillanti! Ma che rimanga tra noi",
+        "next_node": "hospital_Silente"
+    },
+    {
+        "id": "hospital_Silente",
+        "image_id": "",
+        "type": "text",
+        "text": "Silente: La pietra è stata distrutta. Tua madre si è sacrificata per te, lasciandoti addosso un segno indelebile: l'Amore, Harry.",
+        "next_node": "cup_ceremony"
+    },
+    {
+        "id": "cup_ceremony",
+        "image_id": "",
+        "type": "text",
+        "text": "Silente: Un altro anno è passato! Alcuni recenti avvenimenti vanno presi in considerazione...",
         "next_node": "final_points_distribution"
     },
     {
         "id": "final_points_distribution",
         "image_id": "dumbledore_awards",
         "type": "text",
-        "text": "Silente: 'A Hermione, 50 punti per il lucido intelletto! A Ron, 50 punti per la miglior partita a scacchi! Ad Harry, 60 punti per il puro coraggio!'",
+        "text": "Silente: ",
+        "next_node": "final_points_Wizard"
+    },
+    {
+        "id": "final_points_Wizard",
+        "image_id": "dumbledore_awards",
+        "type": "text",
+        "text": "Silente: E a te, *WizardName* 50 punti per ",
         "next_node": "final_house_cup_winner"
     },
     {
         "id": "final_house_cup_winner",
         "image_id": "gryffindor_wins_cup",
         "type": "animation",
-        "text": "Silente sorride: 'I miei calcoli mostrano che un cambio di decorazioni è opportuno! Grifondoro vince la Coppa delle Case!'. Tutta la sala esplode in festa lanciando i cappelli in aria!",
+        "text": "Silente: I miei calcoli mostrano che un cambio di decorazioni è opportuno! Grifondoro vince la Coppa delle Case!",
         "next_node": "game_end"
     }
     ]

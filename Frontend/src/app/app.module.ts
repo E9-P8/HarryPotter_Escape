@@ -15,6 +15,10 @@ import { Part4Component } from './components/Film1/part4/part4.component';
 import { Part5Component } from './components/Film1/part5/part5.component';
 import { Part6Component } from './components/Film1/part6/part6.component';
 import { Part7Component } from './components/Film1/part7/part7.component';
+import { Part8Component } from './components/Film1/part8/part8.component';
+import { FinalPartComponent } from './components/Film1/final-part/final-part.component';
+import { AlternativeFinalComponent } from './components/Film1/alternative-final/alternative-final.component'; 
+
 
 import { HttpClientModule } from '@angular/common/http';
 import { ManualComponent } from './components/manual/manual.component';
@@ -31,8 +35,6 @@ import { TrollEnigmaComponent } from './components/enigma-container/troll-enigma
 import { QuidditchEnigmaComponent } from './components/enigma-container/quidditch-enigma/quidditch-enigma.component';
 import { FireMinigameComponent } from './components/minigame-container/fire-minigame/fire-minigame.component';
 import { LibraryEnigmaComponent } from './components/enigma-container/library-enigma/library-enigma.component';
-import { Part8Component } from './components/Film1/part8/part8.component';
-import { FinalPartComponent } from './components/Film1/final-part/final-part.component';
 import { DemoComponent } from './components/demo/demo.component';
 import { MirrorRevealComponent } from './components/enigma-container/mirror-reveal/mirror-reveal.component';
 import { HomeComponent } from './components/home/home.component';
@@ -53,6 +55,7 @@ import { OpendoorMinigameComponent } from './components/minigame-container/opend
     Part5Component,
     Part6Component,
     Part7Component,
+    Part8Component,
     ManualComponent,
     EnigmaHubComponent,
     SortingHatComponent,
@@ -67,14 +70,15 @@ import { OpendoorMinigameComponent } from './components/minigame-container/opend
     QuidditchEnigmaComponent,
     LibraryEnigmaComponent,
     FireMinigameComponent,
-    Part8Component,
     FinalPartComponent,
+    AlternativeFinalComponent,
     DemoComponent,
     MirrorRevealComponent,
     HomeComponent,
     EnigmaForestComponent,
     TrapdoorEnigmaComponent,
-    OpendoorMinigameComponent
+    OpendoorMinigameComponent,
+    AlternativeFinalComponent
   ],
   imports: [
     BrowserModule,

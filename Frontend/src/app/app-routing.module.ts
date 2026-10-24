@@ -14,6 +14,8 @@ import { Part5Component } from './components/Film1/part5/part5.component';
 import { Part6Component } from './components/Film1/part6/part6.component';
 import { Part7Component } from './components/Film1/part7/part7.component';
 import { Part8Component } from './components/Film1/part8/part8.component';
+import { FinalPartComponent } from './components/Film1/final-part/final-part.component';
+import { AlternativeFinalComponent } from './components/Film1/alternative-final/alternative-final.component';
 
 
 
@@ -34,6 +36,8 @@ const routes: Routes = [
   { path: 'Segreti-a-3-teste',  component: Part6Component },
   { path: 'Misteri-e-pericoli-di-Hogwarts',  component: Part7Component },
   { path: 'part8',  component: Part8Component },
+  { path: 'final_part',  component: FinalPartComponent },
+  { path: 'alternative_final', component: AlternativeFinalComponent}
 ];
 
 @NgModule({
