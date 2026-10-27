@@ -11,6 +11,7 @@ import { LibraryEnigmaComponent } from '../library-enigma/library-enigma.compone
 import { MirrorRevealComponent } from '../mirror-reveal/mirror-reveal.component';
 import { EnigmaForestComponent } from '../enigma-forest/enigma-forest.component';
 import { TrapdoorEnigmaComponent } from '../trapdoor-enigma/trapdoor-enigma.component';
+import { ChessEnigmaComponent } from '../chess-enigma/chess-enigma.component';
 
 @Component({
   selector: 'app-enigma-hub',
@@ -41,6 +42,7 @@ export class EnigmaHubComponent implements OnInit {
       case 'MIRROR_ENIGMA': return MirrorRevealComponent;
       case 'ENIGMA-FOREST': return EnigmaForestComponent;
       case 'TRAPDOOR_ENIGMA': return TrapdoorEnigmaComponent;
+      case 'CHESS_ENIGMA' : return ChessEnigmaComponent;
       default: return null;
     }
   }

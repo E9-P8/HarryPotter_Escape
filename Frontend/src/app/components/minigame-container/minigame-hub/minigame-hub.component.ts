@@ -3,6 +3,7 @@ import { SphereMinigameComponent } from '../sphere-minigame/sphere-minigame.comp
 import { HeadsDogMinigameComponent } from '../heads-dog-minigame/heads-dog-minigame.component'; 
 import { FireMinigameComponent } from '../fire-minigame/fire-minigame.component';
 import { OpendoorMinigameComponent } from '../opendoor-minigame/opendoor-minigame.component';
+import { CatchKeyMinigameComponent } from '../catch-key-minigame/catch-key-minigame.component';
 
 @Component({
   selector: 'app-minigame-hub',
@@ -25,6 +26,7 @@ export class MinigameHubComponent implements OnInit {
       case 'HEADSDOG_MINIGAME': return HeadsDogMinigameComponent;
       case 'FIRE_MINIGAME' : return FireMinigameComponent;
       case 'FUFFY_DOOR_MINIGAME' : return OpendoorMinigameComponent;
+      case 'CATCH_KEY_MINIGAME' : return CatchKeyMinigameComponent;
       default: return null;
     }
   }

@@ -1,24 +1,9 @@
 {
   "part_id": 9,
   "nodes":
-    [
-    {
-        "id": "keys",
-        "image_id": "",
-        "type": "animation",
-        "next_node": "enigma_trap"
-    },
-    {
-        "id": "enigma_trap",
-        "image_id": "",
-        "type": "enigma",
-        "enigma_id": "TRAP_ENIGMA",
-        "success_node": "flying_keys",
-        "fail_node": "flying_keys"
-    },
-    {
+    [{
         "id": "flying_keys",
-        "image_id": "",
+        "image_id": "empty_room",
         "type": "animation",
         "next_node": "keys_room"
     },
@@ -26,26 +11,26 @@
         "id": "keys_room",
         "image_id": "",
         "type": "minigame",
-        "minigame_id": "CATCH__KEY",
+        "minigame_id": "CATCH_KEY_MINIGAME",
         "success_node": "keys_attacking",
         "fail_node": "keys_attacking"
     },
     {
         "id": "keys_attacking",
-        "image_id": "",
+        "image_id": "keys_attacking",
         "type": "animation",
         "next_node": "chess_room"
     },
     {
         "id": "chess_room",
-        "image_id": "",
+        "image_id": "chess_room",
         "type": "text",
         "text": "Hermione: Dove siamo? Sembra un cimitero",
         "next_node": "Ron_chess"
     },
     {
         "id": "Ron_chess",
-        "image_id": "",
+        "image_id": "Ron_chess",
         "type": "text",
         "text": "Ron: Questo non è un cimitero, è una scacchiera.",
         "next_node": "chess_enigma"
@@ -60,7 +45,7 @@
     },
     {
       "id": "chess_victory",
-      "image_id": "",
+      "image_id": "chess_victory",
       "text": "Ron: *WizardName*, devi proseguire tu",
       "options": [
         {
@@ -86,14 +71,14 @@
     },
     {
         "id": "chess_victory2",
-        "image_id": "",
+        "image_id": "chess_victory2",
         "type": "text",
         "text": "Hermione: Se restiamo qui nessuno fermerà Piton. Ma non possiamo nemmeno abbandonare Ron.",
         "next_node": "chess_victory3"
     },
     {
         "id": "chess_victory3",
-        "image_id": "",
+        "image_id": "chess_victory3",
         "type": "text",
         "text": "*WizardName*: Nessuna pietra vale la vita di un amico. Restiamo con lui.",
         "set_flag": { "stayedWithRon": true },
@@ -111,7 +96,7 @@
         "id": "Raptor_mirror2",
         "image_id": "",
         "type": "text",
-        "text": "Harry:  Allora e' lei ad aver fatto entrare il troll",
+        "text": "Harry: Allora e' lei ad aver fatto entrare il troll",
         "next_node": "Raptor_mirror3"
     },
     {

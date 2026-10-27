@@ -169,7 +169,7 @@ export class Part8Component implements OnInit, OnDestroy {
       default:
         setTimeout(() => {
           this.manageChoice({ next_node: this.actualPhase.next_node });
-        }, 2000);
+        }, 4000);
         break;
     }
   }
@@ -180,7 +180,7 @@ export class Part8Component implements OnInit, OnDestroy {
     const tEnd = setTimeout(() => {
       this.showDragonFire = false;
       this.manageChoice({ next_node: this.actualPhase.next_node });
-    }, 2000);
+    }, 4000);
     
     this.timeouts.push(tEnd);
   }

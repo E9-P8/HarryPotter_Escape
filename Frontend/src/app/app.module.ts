@@ -41,6 +41,9 @@ import { HomeComponent } from './components/home/home.component';
 import { EnigmaForestComponent } from './components/enigma-container/enigma-forest/enigma-forest.component';
 import { TrapdoorEnigmaComponent } from './components/enigma-container/trapdoor-enigma/trapdoor-enigma.component';
 import { OpendoorMinigameComponent } from './components/minigame-container/opendoor-minigame/opendoor-minigame.component';
+import { CatchKeyMinigameComponent } from './components/minigame-container/catch-key-minigame/catch-key-minigame.component';
+import { VoldemortEnigmaComponent } from './components/enigma-container/voldemort-enigma/voldemort-enigma.component';
+import { ChessEnigmaComponent } from './components/enigma-container/chess-enigma/chess-enigma.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +81,10 @@ import { OpendoorMinigameComponent } from './components/minigame-container/opend
     EnigmaForestComponent,
     TrapdoorEnigmaComponent,
     OpendoorMinigameComponent,
-    AlternativeFinalComponent
+    AlternativeFinalComponent,
+    CatchKeyMinigameComponent,
+    VoldemortEnigmaComponent,
+    ChessEnigmaComponent
   ],
   imports: [
     BrowserModule,

@@ -45,28 +45,89 @@ export class FinalPartComponent implements OnInit, OnDestroy {
 
   bgAnimationClass: string = ''; 
 
-  loadPart() {
+  isFloatingKeysActive: boolean = false;
+  isKeysAttackingActive: boolean = false;
 
+  assets = {
+  keySingle: 'assets/img/final_part/key.png',   
+  keysBunch: 'assets/img/final_part/keys_attack.png',
+  keysCloud: 'assets/img/final_part/keys_cloud.png'
+  };
+
+
+
+loadPart() {
     this.http.get('assets/data/final_part.json').subscribe(data => {
-
       this.Data = data;
 
       if (this.Data && this.Data.nodes && this.Data.nodes.length > 0) {
-
-      //  this.manageChoice({ next_node: this.Data.nodes[0].id });
         const savedNodeId = this.gameService.getCurrentNodeId();
         const savedNode = this.Data.nodes.find((n: any) => n.id === savedNodeId);
 
         if (savedNode) {
-        // Riparte dal nodo salvato
-        this.actualPhase = JSON.parse(JSON.stringify(savedNode));
+          this.actualPhase = JSON.parse(JSON.stringify(savedNode));
         } else {
-          // Se non c'è un nodo salvato valido, parte dal primo
           this.actualPhase = JSON.parse(JSON.stringify(this.Data.nodes[0]));
         }
-        this.manageChoice({ next_node: 'great_hall_dinner1' });
+
+        if (this.actualPhase.type === 'animation') {
+          this.handleAnimation(this.actualPhase.id);
+        } else if (this.actualPhase.next_node && (!this.actualPhase.options || this.actualPhase.options.length === 0)) {
+          const t = setTimeout(() => {
+            this.manageChoice({ next_node: this.actualPhase.next_node });
+          }, 4000);
+          this.timeouts.push(t);
+        }
       }
     });
+  }
+
+  manageChoice(option: any) {
+    const nextNodeId = (typeof option === 'string') ? option : option.next_node;
+    const nextNode = this.Data.nodes.find((n: any) => n.id === nextNodeId);
+
+    if (option.impact) {
+      this.gameService.updateStats(option.impact);
+    }
+    if (option && option.set_flag) {
+      Object.keys(option.set_flag).forEach(key => {
+        this.gameService.setFlag(key, option.set_flag[key]);
+      });
+    }
+    if (nextNodeId === 'part_8' || nextNodeId === '/part8') {
+      this.router.navigate(['/part8']);
+      return;
+    }
+    if (nextNode) {
+      this.actualPhase = JSON.parse(JSON.stringify(nextNode));
+      this.gameService.setCurrentNode(this.actualPhase.id, 7);
+
+      if (this.actualPhase.text) {
+        this.actualPhase.text = this.actualPhase.text.replace('*wizardName*', this.gameService.wizardName);
+      }
+      if (this.actualPhase.set_flag) {
+        Object.keys(this.actualPhase.set_flag).forEach(key => {
+          this.gameService.setFlag(key, this.actualPhase.set_flag[key]);
+        });
+      }
+
+      if (this.actualPhase.type === 'enigma') {
+        console.log("Nodo enigma caricato:", this.actualPhase.enigma_id);
+      } 
+      else if (this.actualPhase.type === 'animation') {
+        this.handleAnimation(this.actualPhase.id);
+      } 
+      else {
+        console.log("Nodo di testo caricato:", this.actualPhase.id);
+
+        if (this.actualPhase.next_node && (!this.actualPhase.options || this.actualPhase.options.length === 0)) {
+          const t = setTimeout(() => {
+            this.manageChoice({ next_node: this.actualPhase.next_node });
+          }, 4000);
+          this.timeouts.push(t);
+        }
+      }
+    }
   }
   updateTextWithWizardName(text: string): string {
     if (!text) return "";
@@ -76,64 +137,9 @@ export class FinalPartComponent implements OnInit, OnDestroy {
     if (!condition) return true;
     const isSeeker = this.gameService.getFlag('isSeeker');
 
-    if (condition === 'isSeeker == true') {
-      return this.isSeeker;
-    }
-    if (condition === 'isSeeker == false') {
-      return !this.isSeeker;
-    }
-
     return true;
   }
 
-  manageChoice(option: any) {
-    const nextNodeId = (typeof option === 'string') ? option : option.next_node;
-    const nextNode = this.Data.nodes.find((n: any) => n.id === nextNodeId);
-
-   
-    if (option.impact) {
-      this.gameService.updateStats(option.impact);
-    }
-    if (option && option.set_flag) {
-      Object.keys(option.set_flag).forEach(key => {
-        this.gameService.setFlag(key, option.set_flag[key]);
-      });
-      }
-    if (nextNodeId === 'part_8' || nextNodeId === '/part8') {
-      this.router.navigate(['/part8']);
-      return;
-    }
-    if (nextNode) {
-        //this.actualPhase = nextNode; 
-        this.actualPhase = JSON.parse(JSON.stringify(nextNode));
-        this.gameService.setCurrentNode(this.actualPhase.id, 7);
-
-        if (this.actualPhase.text) {
-          this.actualPhase.text = this.actualPhase.text.replace('*wizardName*', this.gameService.wizardName);
-        }
-        if (this.actualPhase.set_flag) {
-          Object.keys(this.actualPhase.set_flag).forEach(key => {
-            this.gameService.setFlag(key, this.actualPhase.set_flag[key]);
-          });
-        }
-
-        if (this.actualPhase.type === 'enigma') {
-            console.log("Nodo enigma caricato:", this.actualPhase.enigma_id);
-        }
-        if (this.actualPhase.type === 'animation') {
-            this.handleAnimation(this.actualPhase.id);
-        }
-        else {
-          console.log("Nodo di testo caricato:", this.actualPhase.id);
-
-        if (this.actualPhase.next_node && (!this.actualPhase.options || this.actualPhase.options.length === 0)) {
-            setTimeout(() => {
-                this.manageChoice({ next_node: this.actualPhase.next_node });
-            }, 4000); 
-        }
-        }
-      }
-  }
 
   openManual(){ 
     this.gameService.isManualOpen= true;
@@ -143,17 +149,49 @@ export class FinalPartComponent implements OnInit, OnDestroy {
     this.gameService.closeManual();
   }
 
+  
   handleAnimation(animationId: string) {
+    this.isFloatingKeysActive = false;
+    this.isKeysAttackingActive = false;
+
     switch (animationId) {
-      case 'troll_Girlsbathroom':
+      case 'flying_keys':
+        this.playEmptyRoomAnimation();
+      break;
+      case 'keys_attacking':
+        this.playKeysAttackingAnimation();
       break;
 
       default:
         setTimeout(() => {
           this.manageChoice({ next_node: this.actualPhase.next_node });
-        }, 2000);
+        }, 4000);
         break;
     }
   }
 
+    private playEmptyRoomAnimation() {
+      this.isFloatingKeysActive = true;
+
+      if (this.actualPhase.next_node) {
+        const t = setTimeout(() => {
+          this.manageChoice({ next_node: this.actualPhase.next_node });
+          
+        this.isFloatingKeysActive = false;
+        }, 4000); 
+        this.timeouts.push(t);
+      }
+    }
+
+    private playKeysAttackingAnimation() {
+      this.isKeysAttackingActive = true;
+
+      if (this.actualPhase.next_node) {
+        const t = setTimeout(() => {
+          this.manageChoice({ next_node: this.actualPhase.next_node });
+          this.isKeysAttackingActive = false;
+        }, 4000); 
+        this.timeouts.push(t);
+      }
+    }
 }

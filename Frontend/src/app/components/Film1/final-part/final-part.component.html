@@ -31,9 +31,7 @@
             [ngClass]="bgAnimationClass"
             [src]="
               actualPhase.image_id
-                ? '../../../../assets/img/final_part/' +
-                  actualPhase.image_id +
-                  '.png'
+                ? 'assets/img/final_part/' + actualPhase.image_id + '.png'
                 : 'assets/img/default.png'
             "
             alt="Scena"
@@ -67,6 +65,7 @@
           </ng-container>
         </div>
       </div>
+
       <!-- AREA ENIGMA -->
       <div class="enigma-area" *ngIf="actualPhase?.type === 'enigma'">
         <app-enigma-hub
@@ -83,6 +82,23 @@
         >
           ></app-minigame-hub
         >
+      </div>
+
+      <div *ngIf="isFloatingKeysActive" class="floating-keys-container">
+        <div *ngIf="isFloatingKeysActive" class="floating-keys-container">
+          <img
+            [src]="assets.keysCloud"
+            class="keys-cloud-img"
+            alt="Nuvola di chiavi volanti"
+          />
+        </div>
+      </div>
+      <div *ngIf="isKeysAttackingActive" class="keys-attacking-container">
+        <img
+          [src]="assets.keysBunch"
+          class="keys-group-img"
+          alt="Branco di chiavi in arrivo"
+        />
       </div>
     </div>
   </div>

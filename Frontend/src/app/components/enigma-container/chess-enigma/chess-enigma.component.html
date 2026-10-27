@@ -1,0 +1,178 @@
+<div
+  class="chess-fullscreen"
+  [style.backgroundImage]="
+    'url(/assets/img/final_part/chess-board-background.png)'
+  "
+>
+  <!-- 1. SCHERMATA INIZIALE (INTRO) -->
+  <div class="overlay-backdrop" *ngIf="currentPhase === 'intro'">
+    <div class="dialogue-box">
+      <p class="dialogue-text">
+        Ron: "Questa scacchiera non vuole una mossa vincente. Vuole un
+        ragionamento corretto."
+      </p>
+      <p class="dialogue-text highlight-text">
+        "Esattamente due pezzi stanno dicendo la verità."
+      </p>
+      <button class="btn-action" (click)="currentPhase = 'puzzle'">
+        Inizia
+      </button>
+    </div>
+  </div>
+
+  <!-- 2. SCHERMATA PRINCIPALE (PUZZLE 2x2) -->
+  <div
+    class="main-puzzle-container"
+    *ngIf="
+      currentPhase === 'puzzle' ||
+      currentPhase === 'sacrifice' ||
+      currentPhase === 'success_final'
+    "
+  >
+    <!-- Header: Titolo e Contatore Tentativi -->
+    <div class="puzzle-header">
+      <div class="title-group">
+        <h1 class="main-title">IL GIUDIZIO DELLA REGINA</h1>
+        <p class="subtitle">Solo due pezzi stanno dicendo la verità.</p>
+      </div>
+      <div class="attempts-display">
+        <span class="stars">
+          {{
+            errorsCount === 0
+              ? "★★★"
+              : errorsCount === 1
+                ? "★★☆"
+                : errorsCount === 2
+                  ? "★☆☆"
+                  : "☆☆☆"
+          }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Griglia 2x2 delle Carte -->
+    <div class="grid-2x2">
+      <div
+        class="piece-card"
+        *ngFor="let piece of pieces"
+        [ngClass]="[piece.cardClass, isPuzzleValidated ? 'validated-card' : '']"
+      >
+        <div class="card-image-box">
+          <img
+            [src]="'assets/img/final_part/' + piece.image"
+            [alt]="piece.name"
+            class="piece-img"
+          />
+        </div>
+
+        <p class="piece-statement" *ngIf="!isPuzzleValidated">
+          "{{ piece.statement }}"
+        </p>
+        <p class="piece-statement solved-statement" *ngIf="isPuzzleValidated">
+          La tua intuizione era corretta.
+        </p>
+
+        <!-- Pulsanti di Scelta (Visibili solo finché non è validato) -->
+        <div class="claim-buttons" *ngIf="!isPuzzleValidated">
+          <button
+            class="btn-claim"
+            [class.selected]="piece.selectedClaim === true"
+            (click)="selectClaim(piece.id, true)"
+          >
+            <span *ngIf="piece.selectedClaim === true">✓ </span>Dice la verità
+          </button>
+          <button
+            class="btn-claim"
+            [class.selected]="piece.selectedClaim === false"
+            (click)="selectClaim(piece.id, false)"
+          >
+            <span *ngIf="piece.selectedClaim === false">✓ </span>Sta mentendo
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pulsante di Verifica (Prima che sia risolto) -->
+    <div class="verify-footer" *ngIf="!isPuzzleValidated">
+      <button
+        class="btn-verify"
+        [disabled]="!areAllPiecesAnswered"
+        [class.enabled]="areAllPiecesAnswered"
+        (click)="verifyReasoning()"
+      >
+        Verifica Ragionamento
+      </button>
+    </div>
+
+    <!-- Pulsante per procedere al Sacrificio (Appare in basso quando le carte diventano verdi) -->
+    <div
+      class="verify-footer"
+      *ngIf="isPuzzleValidated && currentPhase === 'puzzle'"
+    >
+      <button class="btn-verify enabled" (click)="proceedToSacrifice()">
+        Procedi al Sacrificio
+      </button>
+    </div>
+  </div>
+
+  <!-- 3 & 4. FASE SACRIFICIO (Gestita tramite showSacrificeDialogue) -->
+  <div class="overlay-backdrop" *ngIf="currentPhase === 'sacrifice'">
+    <!-- Step A: Dialogo iniziale di Ron -->
+    <div class="dialogue-box" *ngIf="showSacrificeDialogue">
+      <p class="dialogue-text">Ron: "Perfetto. Abbiamo compreso il piano."</p>
+      <p class="dialogue-text highlight-text">
+        "Ma una sola pedina può aprire la strada agli altri."
+      </p>
+      <button class="btn-action" (click)="openSacrificeGrid()">Continua</button>
+    </div>
+
+    <!-- Step B: Griglia di scelta del pezzo da sacrificare -->
+    <div class="dialogue-box sacrifice-box" *ngIf="!showSacrificeDialogue">
+      <h2 class="sacrifice-title">Quale pezzo dovrà essere sacrificato?</h2>
+      <div class="sacrifice-grid">
+        <button class="btn-sacrifice" (click)="selectSacrifice('queen')">
+          Regina
+        </button>
+        <button class="btn-sacrifice" (click)="selectSacrifice('rook')">
+          Torre
+        </button>
+        <button class="btn-sacrifice" (click)="selectSacrifice('bishop')">
+          Alfiere
+        </button>
+        <button class="btn-sacrifice" (click)="selectSacrifice('knight')">
+          Cavallo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. OVERLAY FINALE (SUCCESSO TOTALE) -->
+  <div class="overlay-backdrop" *ngIf="currentPhase === 'success_final'">
+    <div class="dialogue-box">
+      <p class="dialogue-text">Ron: "Esatto."</p>
+      <p class="dialogue-text highlight-text">
+        "Sarò io ad attirare l'attacco."
+      </p>
+      <button class="btn-action" (click)="finishGame()">Prosegui</button>
+    </div>
+  </div>
+
+  <!-- POPUP ERRORI (Stile Scacchiera) -->
+  <div class="overlay-backdrop error-popup-backdrop" *ngIf="showErrorPopup">
+    <div class="chess-popup-box">
+      <p class="popup-message">{{ errorMessage }}</p>
+      <button
+        class="btn-action popup-btn"
+        (click)="
+          errorsCount < 3
+            ? currentPhase === 'sacrifice'
+              ? closeSacrificeError()
+              : closeErrorPopup()
+            : null
+        "
+      >
+        {{ errorButtonText }}
+      </button>
+    </div>
+  </div>
+</div>

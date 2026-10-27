@@ -377,6 +377,10 @@
 
 @media screen and (max-height: 500px) and (orientation: landscape) {
 
+    .scene-header p {
+        font-size: 0.65rem;
+    }
+
     .troll-composite-container {
         width: 250px;
         height: 250px;

@@ -1,0 +1,280 @@
+.keys-minigame-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: rgba(10, 15, 30, 0.4);
+    user-select: none;
+    z-index: 150;
+}
+
+/* HUD */
+.hud-bar {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 800px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    z-index: 210;
+    color: #f0e6d2;
+    font-family: 'Georgia', serif;
+}
+
+.instructions {
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    color: #e2cc51;
+    text-shadow: 0 0 5px rgba(189, 161, 4, 0.5);
+}
+
+.hud-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    margin-right: 6px;
+    opacity: 0.8;
+}
+
+.hud-value {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #00ffcc;
+}
+
+.hud-value.danger-text {
+    color: #8f2d2d;
+    animation: pulseWarning 0.8s infinite alternate;
+}
+
+.attempts-icons {
+    font-size: 1.2rem;
+}
+
+.heart-icon {
+    color: #b8a32d;
+    margin-left: 2px;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.heart-icon.lost {
+    opacity: 0.2;
+    transform: scale(0.8);
+}
+
+/* Campo Chiavi */
+.keys-field {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 160;
+}
+
+.key-item {
+    position: absolute;
+    width: 42px;
+    height: auto;
+    cursor: pointer;
+    transition: filter 0.2s, transform 0.1s;
+}
+
+.key-img {
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));
+}
+
+.key-item:hover {
+    transform: scale(1.25) !important;
+    filter: drop-shadow(0 0 10px #ffffff);
+}
+
+/* Solo la chiave corretta ha il fade/bagliore dorato unico */
+.key-item.target-golden {
+    animation-name: swarmMove1, goldenGlow;
+    animation-duration: 2s, 1.5s;
+    animation-iteration-count: infinite, infinite;
+    animation-direction: alternate, alternate;
+    animation-timing-function: ease-in-out, ease-in-out;
+}
+
+@keyframes goldenGlow {
+    0% {
+        filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.5));
+    }
+
+    100% {
+        filter: drop-shadow(0 0 16px rgb(224, 192, 10)) brightness(1.25);
+    }
+}
+
+/* --- MOVIMENTO AMPIO E CAOTICO (SOBBALZI FORTI A 360°) --- */
+.anim-pattern-1 {
+    animation: swarmMove1 ease-in-out infinite alternate;
+}
+
+.anim-pattern-2 {
+    animation: swarmMove2 ease-in-out infinite alternate;
+}
+
+.anim-pattern-3 {
+    animation: swarmMove3 ease-in-out infinite alternate;
+}
+
+.anim-pattern-4 {
+    animation: swarmMove4 ease-in-out infinite alternate;
+}
+
+@keyframes swarmMove1 {
+    0% {
+        transform: translate(0px, 0px) rotate(-15deg);
+    }
+
+    33% {
+        transform: translate(120px, -80px) rotate(35deg);
+    }
+
+    66% {
+        transform: translate(-100px, 90px) rotate(-25deg);
+    }
+
+    100% {
+        transform: translate(70px, -50px) rotate(20deg);
+    }
+}
+
+@keyframes swarmMove2 {
+    0% {
+        transform: translate(0px, 0px) rotate(15deg);
+    }
+
+    33% {
+        transform: translate(-130px, -70px) rotate(-35deg);
+    }
+
+    66% {
+        transform: translate(90px, 110px) rotate(30deg);
+    }
+
+    100% {
+        transform: translate(-80px, -90px) rotate(-15deg);
+    }
+}
+
+@keyframes swarmMove3 {
+    0% {
+        transform: translate(0px, 0px) rotate(-10deg);
+    }
+
+    25% {
+        transform: translate(90px, 120px) rotate(25deg);
+    }
+
+    50% {
+        transform: translate(-110px, -70px) rotate(-20deg);
+    }
+
+    75% {
+        transform: translate(130px, -80px) rotate(40deg);
+    }
+
+    100% {
+        transform: translate(-50px, 60px) rotate(-5deg);
+    }
+}
+
+@keyframes swarmMove4 {
+    0% {
+        transform: translate(0px, 0px) rotate(5deg);
+    }
+
+    33% {
+        transform: translate(-90px, 100px) rotate(-25deg);
+    }
+
+    66% {
+        transform: translate(140px, -100px) rotate(35deg);
+    }
+
+    100% {
+        transform: translate(-110px, -50px) rotate(-20deg);
+    }
+}
+
+/* Scopa in primo piano */
+.first-person-broom {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    max-width: 650px;
+    pointer-events: none;
+    z-index: 200;
+    animation: broomSway 4s ease-in-out infinite alternate;
+}
+
+.broom-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+@keyframes broomSway {
+    0% {
+        transform: translateX(-52%) translateY(0px) rotate(-1deg);
+    }
+
+    100% {
+        transform: translateX(-48%) translateY(-10px) rotate(1deg);
+    }
+}
+
+/* Scossa di errore */
+.screen-shake {
+    animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-2px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(4px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-6px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(6px, 0, 0);
+    }
+}
+
+@keyframes pulseWarning {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.15);
+    }
+}

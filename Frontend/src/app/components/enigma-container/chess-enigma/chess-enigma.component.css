@@ -1,0 +1,356 @@
+.chess-fullscreen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Georgia', serif;
+    user-select: none;
+    overflow: hidden;
+}
+
+/* Backdrop per Overlay */
+.overlay-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 15, 25, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 300;
+}
+
+/* Dialog Box Stile Hogwarts */
+.dialogue-box {
+    background: rgb(18 18 23 / 80%);
+    border: 2px solid #433924;
+    border-radius: 10px;
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.dialogue-text {
+    color: #f0e6d2;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.highlight-text {
+    color: #745f32;
+    font-weight: bold;
+}
+
+.btn-action {
+    background: linear-gradient(135deg, #c5a059, #8c6d33);
+    color: #1a1a1a;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 35px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.btn-action:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #967c26, #725a29);
+}
+
+.main-puzzle-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 25px 40px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 100;
+}
+
+.puzzle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.main-title {
+    color: #f0e6d2;
+    font-size: 1.4rem;
+    margin: 0 0 5px 0;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.subtitle {
+    color: #cb9f3d;
+    font-size: 0.8rem;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.attempts-display .stars {
+    font-size: 1.8rem;
+    color: #e4c01f;
+    letter-spacing: 4px;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+/* Griglia 2x2 */
+.grid-2x2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+    max-width: 820px;
+    margin: 0 auto;
+    width: 100%;
+    flex-grow: 1;
+    padding: 15px 0;
+    box-sizing: border-box;
+}
+
+.piece-card {
+    border-radius: 8px;
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    transition: border-color 0.3s;
+}
+.piece-card.card-light {
+    background: rgba(185, 170, 140, 0.88);
+    border: 1px solid #d4af37;
+}
+
+.piece-card.card-dark {
+    background: rgb(26 16 11 / 79%);
+    border: 1px solid #7c6c48;
+}
+
+
+.card-image-box {
+    width: 50%;
+    height: auto;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.piece-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+}
+
+.piece-statement {
+    color: #e0d5be;
+    font-size: 0.9rem;
+    font-style: italic;
+    margin: 5px 0 5px 0;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+}
+.piece-card.card-light .piece-statement {
+    color: #2b2518;
+    font-weight: 500;
+}
+
+.piece-card.card-light .btn-claim {
+    background: rgba(140, 125, 95, 0.9);
+    color: #fff;
+    border-color: #5c4e30;
+}
+
+.piece-card.card-dark .piece-statement {
+    color: #e0d5be;
+}
+
+.piece-card.card-dark .btn-claim {
+    background: rgba(26, 16, 11, 0.877);
+    color: #dcd6cd;
+    border-color: #7c6c48;
+}
+
+.piece-card.validated-card {
+    background: rgb(31 41 34 / 92%);
+    border: 1px solid #3a553b;
+}
+
+.piece-card.validated-card .piece-statement {
+    color: #69866a;
+    font-weight: bold;
+}
+
+.solved-statement {
+    color: #628663;
+    font-style: normal;
+    font-weight: bold;
+}
+
+.claim-buttons {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+}
+
+.btn-claim {
+    color: #dcd6cd;
+    border: 1px solid #7c6c48;
+    border-radius: 4px;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-claim:hover {
+    background: rgba(60, 68, 90, 0.9);
+    color: #fff;
+}
+
+/* Stato Selezionato (Verde Tenue) */
+.btn-claim.selected {
+    background: rgba(30, 90, 40, 0.85);
+    border-color: #4caf50;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.4);
+}
+
+/* Footer Verifica */
+.verify-footer {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.btn-verify {
+    background: #333;
+    color: #777;
+    border: 1px solid #444;
+    padding: 10px 30px;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: not-allowed;
+    font-weight: bold;
+    font-family: 'Georgia', serif;
+    transition: all 0.3s;
+}
+
+.btn-verify.enabled {
+    background: linear-gradient(135deg, #c5a059, #8c6d33);
+    color: #1a1a1a;
+    border-color: #e0c52ad3;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
+}
+
+.btn-verify.enabled:hover {
+    transform: scale(1.03);
+    background: linear-gradient(135deg, #d4af37, #a4823d);
+}
+
+
+.dialogue-box.sacrifice-box {
+    background-color: #3d3121;
+    background-image: linear-gradient(45deg, #282015 25%, transparent 25%),
+        linear-gradient(-45deg, #282015 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #282015 75%),
+        linear-gradient(-45deg, transparent 75%, #282015 75%);
+    background-size: 24px 24px;
+    background-position: 0 0, 0 12px, 12px -12px, -12px 0px;
+    border: 2px solid #c5a059;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
+}
+
+/* Pulsanti della griglia di sacrificio coordinati */
+.sacrifice-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.sacrifice-title {
+    color: #c2a759;
+    font-size: 1.4rem;
+    margin-bottom: 25px;
+}
+
+
+
+.btn-sacrifice {
+    background: rgba(140, 125, 95, 0.9);
+    color: #2b2518;
+    border: 2px solid #c5a059;
+    border-radius: 8px;
+    padding: 18px;
+    font-size: 1.1rem;
+    font-family: 'Georgia', serif;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.btn-sacrifice:hover {
+    background: rgba(185, 170, 140, 0.95);
+    border-color: #ffd700;
+    transform: translateY(-2px);
+}
+
+
+.chess-popup-box {
+    background: #1e1e24;
+    border: 3px solid #c5a059;
+    background-image: linear-gradient(45deg, #222 25%, transparent 25%),
+        linear-gradient(-45deg, #222 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #222 75%),
+        linear-gradient(-45deg, transparent 75%, #222 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    background-color: #16161a;
+    border-radius: 10px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
+}
+
+.popup-message {
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 25px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.75);
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid #c5a059;
+}

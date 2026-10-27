@@ -1,0 +1,46 @@
+<div class="keys-minigame-wrapper" [class.screen-shake]="isShaking">
+  <!-- HUD Superiore -->
+  <div class="hud-bar">
+    <div class="timer-box">
+      <span class="hud-label">Tempo:</span>
+      <span class="hud-value" [class.danger-text]="timeLeft <= 10"
+        >{{ timeLeft }}s</span
+      >
+    </div>
+    <div class="instructions">Afferra la chiave alata!</div>
+    <div class="attempts-box">
+      <span class="hud-label">Tentativi:</span>
+      <span class="attempts-icons">
+        <span
+          *ngFor="let a of [1, 2, 3]; let i = index"
+          class="heart-icon"
+          [class.lost]="i >= attemptsLeft"
+          >★</span
+        >
+      </span>
+    </div>
+  </div>
+
+  <!-- Sciame di Chiavi Dinamico a 360° -->
+  <div class="keys-field">
+    <div
+      *ngFor="let k of keysList"
+      class="key-item"
+      [class.target-golden]="k.isTarget"
+      [ngClass]="'anim-pattern-' + k.animType"
+      [style.top]="k.top"
+      [style.left]="k.left"
+      [style.transform]="'scale(' + k.scale + ')'"
+      [style.animation-duration]="k.duration"
+      [style.animation-delay]="k.delay"
+      (click)="onKeyClick(k)"
+    >
+      <img [src]="keyImageSrc" alt="Chiave Alata" class="key-img" />
+    </div>
+  </div>
+
+  <!-- Primo Piano: Giocatore sulla Scopa -->
+  <div class="first-person-broom">
+    <img [src]="broomImageSrc" alt="Manico della scopa" class="broom-img" />
+  </div>
+</div>
