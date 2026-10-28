@@ -91,13 +91,21 @@
       "options": [
         {
           "text": "Malfoy ha ragione, scappiamo via.",
-          "impact": { "audacia": 0, "reputazione":  0},
+          "impact": 
+          {
+            "audacia": -30,
+            "reputazione": -20
+          },
           "set_flag": { "enteredForbiddenForest": false},
           "next_node": "avoid_Forest"
         },
         {
           "text": "Siamo in castigo, dobbiamo entrarci.",
-          "impact": { "audacia": 0 , "reputazione":  0},
+          "impact": 
+          {
+            "audacia": 30,
+            "reputazione": 30
+          },
           "set_flag": { "enteredForbiddenForest": true},
           "next_node": "forbiddenForest"
         }
@@ -245,8 +253,11 @@
       "image_id": "HagridDragon2",
       "type": "text",
       "text": "Hagrid: Ma certo! Con Fuffi il difficile non è farlo stare buono. Sono le tre teste: non reagiscono mai allo stesso modo alle stesse cose.",
-       "set_flag": {  "knowsFuffy": true, "hasHagridHint": true},
-      "next_node": "Silente_London"
+      "set_flag": {  "knowsFuffy": true, "hasHagridHint": true},
+      "impact": 
+        {
+          "sincerita": 20
+        },"next_node": "Silente_London"
     },
     {
       "id": "hagrid_fuffy",
@@ -302,13 +313,21 @@
       "options": [
         {
           "text": "Scendi nella botola stanotte per fermare il furto!",
-          "impact": { "audacia": 0, "reputazione": 0 },
+          "impact": 
+          {
+            "audacia": 50,
+            "reputazione": -20
+          },
           "set_flag": {"decidedToProtectStone": true},
           "next_node": "neville_confrontation"
         },
         {
           "text": "Rimani nel dormitorio e avvisa un altro professore",
-          "impact": { "audacia": 0 },
+          "impact": {
+              "reputazione": 35,
+              "sincerita": 15,
+              "audacia": -10
+            },
           "set_flag": {"decidedToProtectStone": false},
           "next_node": "avoid_botola"
         }
@@ -318,7 +337,14 @@
       "id": "avoid_botola",
       "image_id": "avoid_botola",
       "type": "text",
-      "text": "Hermione: Abbiamo rischiato a sufficienza da quando siamo qui",
+      "text": "Hermione: Abbiamo rischiato abbastanza. Questa volta dobbiamo fidarci dei professori.",
+      "next_node": "avoid_botola_2"
+    },
+    {
+      "id": "avoid_botola_2",
+      "image_id": "avoid_botola",
+      "type": "text",
+      "text": "Harry: Spero solo che non sia già troppo tardi.",
       "next_node": "dormitory"
     },
     {
@@ -331,12 +357,20 @@
           "set_flag": {
             "earnedNevilleRespect": true
           },
-          "impact": { "amicizia": 10},
+            "impact": 
+          {
+            "amicizia": 35,
+            "sincerita": 25
+          },
           "next_node": "neville_steps_aside"
         },
         {
           "text": "Lascia che Hermione lo immobilizzi",
-          "impact": {"amicizia": -5},
+          "impact": 
+          {
+            "amicizia": -20,
+            "sospetto": 15
+          },
           "next_node": "neville_petrified"
         }
       ]
@@ -367,6 +401,10 @@
       "image_id": "enter_fuffy",
       "type": "text",
       "text": "Harry: Sta russando, significa che Piton è gia stato qui",
+      "impact": 
+      {
+        "audacia": 30
+      },
       "next_node": "enter_trapdoor"
     },
     {
@@ -381,7 +419,12 @@
       "image_id": "",
       "type": "enigma",
       "enigma_id": "TRAPDOOR_ENIGMA",
-      "next_node": "final_part"
+       "impact": 
+          {
+            "audacia": 40,
+            "sincerita": 10
+          },
+      "success_node": "final_part"
     }
   ]
 }

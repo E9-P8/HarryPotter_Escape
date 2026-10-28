@@ -36,13 +36,23 @@
     "options": [
       {
         "text": "Rischia la punizione e vai a salvare Hermione con Harry e Ron",
-        "impact": { "audacia": 10, "reputazione": 5 },
+        "impact": 
+          {
+            "audacia": 40,
+            "amicizia": 30,
+            "reputazione": -20
+          },
         "set_flag": {"friendshipChoice": true},
         "next_node": "troll_Girlsbathroom"
       },
       {
         "text": "Segui il prefetto al dormitorio",
-        "impact": { "audacia": -10, "reputazione": 10 },
+        "impact": 
+          {
+            "audacia": -20,
+            "amicizia": -30,
+            "reputazione": 25
+          },
         "next_node": "abandon_hermione"
       }
     ]
@@ -100,12 +110,23 @@
     "options": [
       {
         "text": "Lascia che Hermione si prenda la colpa per proteggervi",
-        "impact": { "audacia": -10, "reputazione": -5 },
+        "impact": 
+        {
+          "audacia": -15,
+          "amicizia": -25,
+          "sincerita": -20
+        },
         "next_node": "snape_injury_notice"
       },
       {
         "text": "Prendi la parola e difendi l'operato del gruppo",
-        "impact": { "audacia": 10, "reputazione": -5 },
+        "impact": 
+          {
+            "audacia": 25,
+            "amicizia": 25,
+            "sincerita": 20,
+            "reputazione": -10
+          },
         "set_flag": {"protectFriends": true},
         "next_node": "snape_injury_notice"
       }
@@ -353,13 +374,22 @@
     "options": [
       {
         "text": "Accompagna Harry nella Sezione Proibita",
-        "impact": { "audacia": 10 },
+        "impact": 
+          {
+            "audacia": 40,
+            "reputazione": -20,
+            "sospetto": 10
+          },
         "set_flag": {"enteredRestrictedSection": true},
         "next_node": "library_stealth"
       },
       {
         "text": "Rimani nel letto al sicuro nel dormitorio",
-        "impact": { "audacia": -5 },
+        "impact": 
+        {
+          "reputazione": 20,
+          "audacia": -10
+        },
         "next_node": "dormitory"
       }
     ]
@@ -377,7 +407,11 @@
     "image_id": "filch_catch_warning",
     "type": "text",
     "text": "Gaza: ho trovato *WizardName* nella zona proibita!",
-     "impact": { "reputazione": -25 },
+     "impact": 
+      {
+        "reputazione": -40,
+        "sospetto": 20
+      },
     "next_node": "dormitory"
   },
   {
@@ -394,13 +428,22 @@
     "options": [
       {
         "text": "Scegliete di entrare nella porta",
-        "impact": { "audacia": 10 }, 
+        "impact": 
+          {
+            "audacia": 30,
+            "sincerita": 10,
+            "reputazione": -10
+          }, 
         "set_flag": { "mirrorRevealed": true},
         "next_node": "mirror_erised_room"
       },
       {
         "text": "Scappate verso il dormitorio, avete gia rischiato abbastanza!",
-        "impact": { "audacia": -5 },
+        "impact": 
+        { 
+          "audacia": -5,
+            "reputazione": 20
+        },
         "next_node": "dormitory"
       }
     ]
@@ -411,13 +454,19 @@
     "options": [
       {
         "text": "La curiosità è troppa. Chiedi a Ron di venire con te",
-        "impact": { },
+        "impact": {
+          "audacia": 20,
+          "sincerita": 10,
+          "reputazione": -10
+        },
         "set_flag": { "mirrorRevealed": true},
         "next_node": "mirror_erised"
       },
       {
         "text": "Vai a dormire, per oggi è stato sufficiente.",
-        "impact": { },
+        "impact": {
+           "reputazione": 15
+        },
         "next_node": "part_8"
       }
     ]
@@ -433,6 +482,10 @@
     "id": "dumbledore_mirror_speech",
     "image_id": "dumbledore_mirror_speech",
     "type": "text",
+    "impact": 
+        {
+          "sincerita": 25
+        },
     "text": "Silente: L'uomo più felice della Terra vedrebbe solo se stesso... Questo specchio ci mostra solo i più profondi e tormentati desideri del nostro cuore. Domani sarà trasferito in una nuova dimora. Non serve a niente rifugiarsi nei sogni e dimenticarsi di vivere.",
     "next_node": "part_8"
   }

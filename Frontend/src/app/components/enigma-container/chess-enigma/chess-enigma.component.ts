@@ -34,7 +34,7 @@ export class ChessEnigmaComponent {
       id: 'queen',
       name: 'Regina',
       image: 'queen-white.png',
-      statement: 'La Torre protegge il Re.',
+      statement: 'La Torre si muove in diagonale.',
       selectedClaim: null,
       isCorrectClaim: false, // Mente
       cardClass: 'card-light'

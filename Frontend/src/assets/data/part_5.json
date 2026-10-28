@@ -6,8 +6,23 @@
       "image_id": "HogwartsWelcome",
       "text": "Benvenuti ad hogwarts. tra qualche minuto varcherete questa soglia e vi unirete ai vostri compagni ma prima verrete smistati nelle vostre case. Sono: GRIFONDORO, TASSOROSSO, CORVONERO e SERPEVERDE. Per il tempo che starete qui la vostra casa sarà la vostra famiglia. I trionfi che otterrete le faranno guadagnare punti e ogni violazione delle regole le farà perdere punti. A fine anno, alla casa con più punti verrà assegnata la coppa delle case. La cerimonia dello smistamento inizierà tra pochissimo!",
       "options": [
-        { "text": "Consulta il Manuale dello Studente", "set_flag": { "studentManualRead": true }, "next_node": "manual" },
-        { "text": "Procedi alla Cerimonia", "next_node": "smistamento" }
+        {
+          "text": "Consulta il Manuale dello Studente",
+          "impact": {
+            "reputazione": 15,
+            "sincerita": 15
+          },
+          "set_flag": {
+            "studentManualRead": true
+          },
+          "next_node": "manual"
+        },
+        { "text": "Procedi alla Cerimonia", 
+          "impact": {
+          "reputazione": 0
+        },
+        "next_node": "smistamento" 
+      }
       ]
     },
     {
@@ -54,8 +69,18 @@
       "image_id": "lateness",
       "text": "Buongiorno, ragazzi",
       "options": [
-        { "text": "È stata maledettamente brava!", "impact": { "reputazione": 0 }, "next_node": "piton_1" },
-        { "text": "Siamo stati fortunati a non essere espulsi.", "impact": { "reputazione": 0 }, "next_node": "piton_1" }
+        { "text": "È stata maledettamente brava!", 
+          "impact": {
+            "audacia": 15,
+            "reputazione": -15
+        },
+        "next_node": "piton_1" },
+        { "text": "Siamo stati fortunati a non essere espulsi.", 
+            "impact": {
+              "reputazione": 15,
+              "sincerita": 10
+          },
+        "next_node": "piton_1" }
       ]
     },
     {
@@ -64,12 +89,12 @@
       "text": "Piton: *WizardName*! Dimmi, cosa ottengo se verso radice di asfodelo in un infuso di artemisia?'",
       "options": [
         { "text": "Rispondi correttamente (Pozione di morte vivente)", 
-         "impact": { "reputazione": 20 }, 
+         "impact": { "reputazione": 30 }, 
          "set_flag": {"knowledgeInterest": true},
          "next_node": "posta" 
         },
         { "text": "Non lo so, professore.", 
-          "impact": { "reputazione": -10 }, 
+          "impact": { "reputazione": -15 }, 
           "next_node": "piton_2" 
         }
       ]
@@ -81,13 +106,13 @@
         "options": [
         { 
         "text": "Nello stomaco di una capra.", 
-        "impact": { "reputazione": 10 }, 
+        "impact": { "reputazione": 25 }, 
         "set_flag": {"knowledgeInterest": true},
         "next_node": "posta" 
         },
         { 
         "text": "Non lo so, professore.", 
-        "impact": { "reputazione": -20 }, 
+        "impact": { "reputazione": -25 }, 
         "next_node": "posta" 
         }
       ]
@@ -130,8 +155,20 @@
       "image_id": "malfoy_volo",
       "text": "Malfoy: Cosa c'è *WizardName*, pensi di non arrivarci?",
       "options": [
-        { "text": "Insegui Malfoy", "impact": { "audacia": 0 }, "set_flag": {"riskTaker": true}, "next_node": "catch_sphere" },
-        { "text": "Ascolta Hermione e resta a terra", "impact": { "reputazione": 0 }, "next_node": "Seeker" }
+        { "text": "Insegui Malfoy", 
+          "impact": 
+          { 
+            "audacia": 40, 
+            "reputazione": -20
+          }, 
+          "set_flag": {"riskTaker": true}, 
+          "next_node": "catch_sphere" },
+        { "text": "Ascolta Hermione e resta a terra", 
+          "impact": {
+            "reputazione": 25,
+            "audacia": -10
+          }, 
+          "next_node": "Seeker" }
       ] 
     },
     {
@@ -169,13 +206,17 @@
       "text": "Chiedi di entrare in squadra", 
       "condition": "isSeeker == false",
       "set_flag": { "isSeeker": true, "wantsRecognition": true },
-      "impact": { "status": "quidditch_team" },
+      "impact": {
+        "audacia": 10,
+        "reputazione": 10
+      },
       "next_node": "part_6" 
     },
     { 
       "text": "Rifiuta, preferisci concentrarti sullo studio", 
       "condition": "isSeeker == false",
       "set_flag": { "isSeeker": false },
+       "impact": { "reputazione": 20 },
       "next_node": "part_6" 
     }
   ]

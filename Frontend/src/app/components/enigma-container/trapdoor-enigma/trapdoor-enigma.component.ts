@@ -112,7 +112,8 @@ export class TrapdoorEnigmaComponent implements OnInit {
   constructor(private router: Router) { }
 
   @Input() hasHagridHint: boolean = false;
-  @Output() success = new EventEmitter<void>();
+  @Output() quizSolved = new EventEmitter<string>();
+  //@Output() success = new EventEmitter<void>();
 
   readonly assets = ASSET_PATHS;
   readonly settings = GAME_SETTINGS;
@@ -160,8 +161,11 @@ export class TrapdoorEnigmaComponent implements OnInit {
   };
 
   ngOnInit(): void {
+     console.log('TRAPDOOR INIT');
     this.resetStep1();
   }
+
+  
 
   toggleHagridMemory(): void {
     this.showHagridMemory = !this.showHagridMemory;
@@ -318,8 +322,9 @@ export class TrapdoorEnigmaComponent implements OnInit {
 
     setTimeout(() => {
       this.gamePhase = 'success';
-      this.router.navigate(['/final_part']);
-      this.success.emit();
+      //this.router.navigate(['/final_part']);
+      console.log('TRAPDOOR EMIT');
+      this.quizSolved.emit('final_part');
     }, 2000);
   }
 

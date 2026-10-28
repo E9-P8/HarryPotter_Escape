@@ -103,6 +103,7 @@ export class Part8Component implements OnInit, OnDestroy {
   }
 
   manageChoice(option: any) {
+     console.trace('manageChoice CHIAMATO', option);
     const nextNodeId = (typeof option === 'string') ? option : option.next_node;
     const nextNode = this.Data.nodes.find((n: any) => n.id === nextNodeId);
 
@@ -122,7 +123,7 @@ export class Part8Component implements OnInit, OnDestroy {
     if (nextNode) {
         //this.actualPhase = nextNode; 
         this.actualPhase = JSON.parse(JSON.stringify(nextNode));
-        this.gameService.setCurrentNode(this.actualPhase.id, 7);
+        this.gameService.setCurrentNode(this.actualPhase.id, 8);
 
         if (this.actualPhase.text) {
           this.actualPhase.text = this.actualPhase.text.replace('*wizardName*', this.gameService.wizardName);
